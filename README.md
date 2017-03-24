@@ -15,7 +15,7 @@ Software Engineering project.
 
 ### Project Ogranization
 * [Task Management](https://github.com/ReneHerthel/ConveyorBelt/projects/1)
-* [Wiki](https://github.com/ReneHerthel/ConveyorBelt/projects/1)
+* [Wiki](https://github.com/ReneHerthel/ConveyorBelt/wiki)
 
 ### Quick Code Contribution Checklist
 * Fork the master branch
