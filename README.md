@@ -20,8 +20,10 @@ Software Engineering project.
 ### Quick Code Contribution Checklist
 * Fork the master branch
 * Implement your feature on your own fork
+* Create a new branch on your fork
+* One feature - One branch
 * No warning's and No error's
-* Create a Pull-Request
+* Create a Pull-Request of your fork
 * Code review from all members
 * Respond to feedback
 * Help rework/update code as needed
