@@ -37,7 +37,7 @@ Software Engineering project.
 
 ### GitHub Guides
 * [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
-* [Contributing to Open Ssource](https://guides.github.com/activities/contributing-to-open-source/)
+* [Contributing to Open Source](https://guides.github.com/activities/contributing-to-open-source/)
 * [Forking Projects](https://guides.github.com/activities/forking/)
 * [Issue Tracker](https://guides.github.com/features/issues/)
 * [Markdown](https://guides.github.com/features/mastering-markdown/)
