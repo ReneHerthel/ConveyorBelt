@@ -13,6 +13,10 @@ Software Engineering project.
 | Stephan Jaenecke    | stephan.jaenecke@haw-hamburg.de    |
 | René Herthel        | rene.herthel@haw-hamburg.de        |
 
+### Project Ogranization
+* [Task Management](https://github.com/ReneHerthel/ConveyorBelt/projects/1)
+* [Wiki](https://github.com/ReneHerthel/ConveyorBelt/projects/1)
+
 ### Quick Code Contribution Checklist
 * Fork the master branch
 * Implement your feature on your own fork
