@@ -16,6 +16,7 @@ Software Engineering project.
 ### Project Ogranization
 * [Task Management](https://github.com/ReneHerthel/ConveyorBelt/projects/1)
 * [Wiki](https://github.com/ReneHerthel/ConveyorBelt/wiki)
+* [Docs](https://docs.google.com/document/d/1H4GNMWUgCzGvoqF1uf7Y6a-Gn9ZF2DZ6b4UcOegxSjE/edit?ts=58d9023c#heading=h.uzk72c6rsjma)
 
 ### Quick Code Contribution Checklist
 * Fork the master branch
@@ -47,5 +48,5 @@ Software Engineering project.
 Download the GitHub [Desktop](https://desktop.github.com/) application.
 
 #### TODO's
-* Add Link to google docs for the agenda meetings documentation
+* ~~Add Link to google docs for the agenda meetings documentation~~
 * Add Link to other documents/materials like diagrams, etc.
