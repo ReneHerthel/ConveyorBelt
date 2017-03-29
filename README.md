@@ -14,16 +14,17 @@ Software Engineering project.
 | René Herthel        | rene.herthel@haw-hamburg.de        |
 
 ### Quick Code Contribution Checklist
-* Fork the master branch
-* Implement your feature on your own fork
-* Create a new branch on your fork
-* One feature - One branch
+* One branch - One feature
 * No warning's and No error's
-* Create a Pull-Request of your fork
-* Code review from all members
-* Respond to feedback
-* Help rework/update code as needed
-* Don't merge without the Ack(knowledge) of all members.
+
+1. Clone
+2. Pull, just to be sure.
+3. Create a branch on your **local** repository for a **single** feature
+4. **Only** pull, if you are still implement your feature
+5. When your feature is **ready** -> pull a last time.
+6. Merge your local feature branch into your local master branch
+7. Make sure **no one else** is pushing
+8. Push to the remote master branch
 
 ### GitHub Help
 * [Set Up Git](https://help.github.com/articles/set-up-git/)
