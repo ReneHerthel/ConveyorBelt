@@ -10,10 +10,12 @@
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Ampelsteuerung
+LightSignal
 -
 &lt;&lt;provided interface&gt;&gt;
-ILightSystem</panel_attributes>
+ILightSystem
+&lt;&lt;required interface&gt;&gt;
+ITimer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -24,7 +26,7 @@ ILightSystem</panel_attributes>
       <w>30</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>lt=()-[v]</panel_attributes>
+    <panel_attributes>lt=()-[^]</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
@@ -35,7 +37,8 @@ ILightSystem</panel_attributes>
       <w>50</w>
       <h>110</h>
     </coordinates>
-    <panel_attributes>lt=[v]-(</panel_attributes>
+    <panel_attributes>lt=[^]-(
+</panel_attributes>
     <additional_attributes>20.0;90.0;20.0;20.0</additional_attributes>
   </element>
   <element>
@@ -47,7 +50,7 @@ ILightSystem</panel_attributes>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Zentrale Controlle
+MainControl
 -
 &lt;&lt;provided interface&gt;&gt;
 TO DO needs interface
@@ -58,49 +61,54 @@ ILightSystem</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>60</x>
+      <x>170</x>
       <y>230</y>
       <w>200</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Serielle Schnitstelle</panel_attributes>
+SerialPort
+-</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>60</x>
-      <y>120</y>
+      <x>170</x>
+      <y>70</y>
       <w>200</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Förderband</panel_attributes>
+ConveyerBelt
+-
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>60</x>
-      <y>340</y>
+      <x>170</x>
+      <y>400</y>
       <w>200</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Kalibrierung</panel_attributes>
+Calibration
+-</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>60</x>
-      <y>450</y>
+      <x>500</x>
+      <y>560</y>
       <w>200</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Konsole</panel_attributes>
+Console
+-</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -122,13 +130,15 @@ Timer
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>60</x>
-      <y>560</y>
+      <x>820</x>
+      <y>570</y>
       <w>200</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>symbol=component
-Weiche
+SortingSwitch
+-
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -164,5 +174,20 @@ Weiche
     </coordinates>
     <panel_attributes>lt=()-[&gt;]</panel_attributes>
     <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>170</x>
+      <y>560</y>
+      <w>200</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+LED
+-
+
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
