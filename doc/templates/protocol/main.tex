@@ -1,0 +1,60 @@
+%        File: main.tex
+%     Created: Sat Jan 14 12:59  2017 C
+% Last Change: Mon Jan 16 10:48  2017 C
+
+\documentclass[a4paper, oneside]{scrreprt}
+\usepackage{scrlayer-scrpage}
+\KOMAoptions{
+    footnotes = multiple,
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{hyperref}
+
+\usepackage{minutes}
+\usepackage{vhistory}
+
+\newcommand{\docTitle}{Vorlage für ein Protokoll}
+\author{Stephan Jänecke}
+
+% Set header
+\pagestyle{scrheadings}
+
+
+\ifoot{\docTitle\ -- Version \vhCurrentVersion}
+\cfoot[]{}
+\ofoot[\thepage]{\thepage}
+
+\begin{document}
+    \title{\docTitle}
+    \author{\vhListAllAuthors}
+    \date{Version \vhCurrentVersion\ vom \vhCurrentDate}
+    \maketitle
+
+    \begin{versionhistory}
+        \vhEntry{0.1}{30.03.17}{SJE}{Erster Entwurf}
+    \end{versionhistory}
+
+    \begin{Minutes}{Titel des Protokolls}
+        \moderation{Moderator}
+        \minutetaker{Protokollant}
+        \minutesdate{Datum}
+        \starttime{Beginn}
+        \endtime{Ende}
+        \participant{Liste der Teilnehmer}
+        \maketitle
+
+        \topic{Tagesordnungspunkt 1}
+        Ganz wichtig.
+
+        \topic{Aufgaben}
+        \task{SJE}{Protokoll-Vorlage schreiben}
+
+        \topic{Entscheidungen}
+            \subtopic{Wichtige Entscheidung}
+            Gegenstand der Entscheidung.
+            \decision{ref:t01}{Entscheidung}[Begründung]
+    \end{Minutes}
+\end{document}
