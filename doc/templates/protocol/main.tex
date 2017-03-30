@@ -16,19 +16,17 @@
 \usepackage{minutes}
 \usepackage{vhistory}
 
-\newcommand{\docTitle}{Vorlage für ein Protokoll}
-\author{Stephan Jänecke}
+\clearscrheadings
+\cfoot{v\vhCurrentVersion}
+\ofoot{\pagemark}
 
 % Set header
 \pagestyle{scrheadings}
-
-
-\ifoot{\docTitle\ -- Version \vhCurrentVersion}
-\cfoot[]{}
-\ofoot[\thepage]{\thepage}
+% Put header on chapter pages
+\renewcommand*{\chapterpagestyle}{scrheadings}
 
 \begin{document}
-    \title{\docTitle}
+    \title{Vorlage für ein Protokoll}
     \author{\vhListAllAuthors}
     \date{Version \vhCurrentVersion\ vom \vhCurrentDate}
     \maketitle

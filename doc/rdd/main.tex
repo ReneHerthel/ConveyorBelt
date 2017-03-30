@@ -1,0 +1,52 @@
+%        File: main.tex
+%     Created: Thu Mar 30 22:00  2017 C
+% Last Change: Thu Mar 30 23:26  2017 C
+
+\documentclass[a4paper, oneside]{scrreprt}
+\usepackage{scrlayer-scrpage}
+\KOMAoptions{
+    footnotes = multiple,
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{hyperref}
+
+\usepackage{vhistory}
+
+\clearscrheadings
+\cfoot{v\vhCurrentVersion}
+\ofoot{\pagemark}
+
+% Set header
+\pagestyle{scrheadings}
+% Put header on chapter pages
+\renewcommand*{\chapterpagestyle}{scrheadings}
+
+\begin{document}
+    \title{Requirements and Design Documentation}
+    % FIXME: Add IDs and mail addresses
+    \author{\vhListAllAuthors}
+    \date{Version \vhCurrentVersion}
+    \subject{ESEP -- Praktikum -- SS 2017}
+    \maketitle
+
+    \begin{versionhistory}
+        \vhEntry{0.1}{30.03.17}{Stephan Jänecke}{Erster Entwurf}
+    \end{versionhistory}
+
+    \tableofcontents
+
+    % TODO: Merge Google Docs file into the following chapters
+    \input{chapters/1-teamorganisation.tex}
+    \input{chapters/2-projektmanagement.tex}
+    \input{chapters/3-randbedingungen.tex}
+    \input{chapters/4-requirements.tex}
+    \input{chapters/5-design.tex}
+    \input{chapters/6-implemetierung.tex}
+    \input{chapters/7-testen.tex}
+    \input{chapters/8-lessons.tex}
+    \input{chapters/9-anhang.tex}
+
+\end{document}
