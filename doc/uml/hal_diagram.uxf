@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>642</y>
+      <w>192</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>ConveyorBelt
+--
++ SetState ( ConveyorBeltStates state ) : void
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>522</y>
+      <w>126</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+ConveyorBeltStates
+--
+RIGHTFAST
+RIGHTSLOW
+LEFTFAST
+LEFTSLOW
+STOPP
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>282</x>
+      <y>522</y>
+      <w>168</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>LightBarrier
+--
++ LightBarrier ( Port : int, pin : int ) : void
++ Read (  ) : int
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>204</x>
+      <y>594</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>462</x>
+      <y>522</y>
+      <w>138</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>LED
+--
++ LED (Port : int, pin : int) : void
++ Set (  ) : void
++ Clear (  ) : void
++ Write (  ) : void
++ Read (  ) : int
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>612</x>
+      <y>522</y>
+      <w>144</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Button
+--
++ Button ( port : int, pin : int) : void
++ Read (  ) : int
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>768</x>
+      <y>522</y>
+      <w>180</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>SortingSwitch
+--
++ SortingSwitch ( port : int, pin : int ) : void
++ Read (  ) : bool
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>522</y>
+      <w>180</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>MetalDetector
+--
++ MetalDetector ( port : int, pin : int) : void
++ Read (  ) : int
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1152</x>
+      <y>522</y>
+      <w>210</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>HeightMeasurement
+--
++ HeightMeasurement ( port : int, pin : int ) : void
++ ReadAnalog ( offset : int ) // TODO!
++ ReadPattern ( ) // TODO!
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1572</x>
+      <y>138</y>
+      <w>60</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>60</x>
+      <y>468</y>
+      <w>1338</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Hardware Abstraction Layer
+--
+bg=green
+fontsize=30</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1524</x>
+      <y>54</y>
+      <w>60</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>282</y>
+      <w>258</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>All components using the HAL
+to access the hardware.
+
+bg=cyan
+fontsize=30</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1530</x>
+      <y>390</y>
+      <w>54</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;70.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>324</y>
+      <w>18</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;270.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
