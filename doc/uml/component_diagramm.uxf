@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>10</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>460</x>
-      <y>20</y>
-      <w>200</w>
-      <h>100</h>
+      <x>182</x>
+      <y>21</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 LightSignal
@@ -21,10 +21,10 @@ ITimer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>550</x>
-      <y>110</y>
-      <w>30</w>
-      <h>100</h>
+      <x>245</x>
+      <y>84</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=()-[^]</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -32,10 +32,10 @@ ITimer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>190</y>
-      <w>50</w>
-      <h>110</h>
+      <x>238</x>
+      <y>140</y>
+      <w>35</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=[^]-(
 </panel_attributes>
@@ -44,10 +44,10 @@ ITimer</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>460</x>
-      <y>280</y>
-      <w>210</w>
-      <h>100</h>
+      <x>182</x>
+      <y>203</y>
+      <w>147</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 MainControl
@@ -61,39 +61,41 @@ ILightSystem</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>800</x>
-      <y>180</y>
-      <w>200</w>
-      <h>100</h>
+      <x>420</x>
+      <y>350</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 SerialPort
--</panel_attributes>
+-
+&lt;&lt;provided interface&gt;&gt;
+ISerial</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>140</x>
-      <y>20</y>
-      <w>200</w>
-      <h>100</h>
+      <x>665</x>
+      <y>21</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 ConveyerBelt
 -
-&lt;&lt;provided interface&gt;&gt;
-IConveyerBelt
+    &lt;&lt;provided interface&gt;&gt;
+    IConveyerBelt
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>140</x>
-      <y>280</y>
-      <w>200</w>
-      <h>130</h>
+      <x>665</x>
+      <y>196</y>
+      <w>140</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>symbol=component
 Calibration
@@ -110,23 +112,25 @@ ILightBarrier
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>470</x>
-      <y>510</y>
-      <w>200</w>
-      <h>100</h>
+      <x>182</x>
+      <y>350</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 Console
--</panel_attributes>
+-
+&lt;&lt;provided interface&gt;&gt;
+IConsole</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>800</x>
-      <y>20</y>
-      <w>200</w>
-      <h>100</h>
+      <x>420</x>
+      <y>21</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 Timer
@@ -139,14 +143,16 @@ Timer
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>800</x>
-      <y>510</y>
-      <w>200</w>
-      <h>100</h>
+      <x>672</x>
+      <y>574</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 SortingSwitch
 -
+&lt;&lt;provided interface&gt;&gt;
+ISortingSwitch
 
 </panel_attributes>
     <additional_attributes/>
@@ -154,10 +160,10 @@ SortingSwitch
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>0</x>
+      <x>112</x>
       <y>0</y>
-      <w>1140</w>
-      <h>760</h>
+      <w>798</w>
+      <h>693</h>
     </coordinates>
     <panel_attributes>cd - </panel_attributes>
     <additional_attributes/>
@@ -165,10 +171,10 @@ SortingSwitch
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
-      <y>50</y>
-      <w>90</w>
-      <h>50</h>
+      <x>315</x>
+      <y>42</y>
+      <w>63</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=[&gt;]-(</panel_attributes>
     <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
@@ -176,10 +182,10 @@ SortingSwitch
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-      <y>60</y>
-      <w>100</w>
-      <h>30</h>
+      <x>364</x>
+      <y>49</y>
+      <w>70</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=()-[&gt;]</panel_attributes>
     <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
@@ -187,14 +193,16 @@ SortingSwitch
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>140</x>
-      <y>680</y>
-      <w>200</w>
-      <h>100</h>
+      <x>182</x>
+      <y>455</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 LED
 -
+&lt;&lt;provided interface&gt;&gt;
+ILED
 
 </panel_attributes>
     <additional_attributes/>
@@ -202,10 +210,10 @@ LED
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>140</x>
-      <y>510</y>
-      <w>200</w>
-      <h>100</h>
+      <x>665</x>
+      <y>364</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 LightBarrier
@@ -218,24 +226,26 @@ ILightBarrier
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>800</x>
-      <y>350</y>
-      <w>200</w>
-      <h>100</h>
+      <x>420</x>
+      <y>469</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>symbol=component
 MetalDetector
 -
+&lt;&lt;provided interface&gt;&gt;
+IMetalDetector
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>110</y>
-      <w>30</w>
-      <h>100</h>
+      <x>728</x>
+      <y>84</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=()-[^]</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -243,21 +253,21 @@ MetalDetector
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>220</x>
-      <y>190</y>
-      <w>50</w>
-      <h>110</h>
+      <x>721</x>
+      <y>140</y>
+      <w>35</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=[^]-(</panel_attributes>
-    <additional_attributes>20.0;90.0;20.0;20.0</additional_attributes>
+    <additional_attributes>20.0;80.0;20.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>460</y>
-      <w>30</w>
-      <h>70</h>
+      <x>728</x>
+      <y>329</y>
+      <w>21</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=()-[v]</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -265,12 +275,67 @@ MetalDetector
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>220</x>
-      <y>400</y>
-      <w>50</w>
-      <h>80</h>
+      <x>721</x>
+      <y>280</y>
+      <w>35</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=[v]-(</panel_attributes>
-    <additional_attributes>20.0;10.0;20.0;50.0</additional_attributes>
+    <additional_attributes>20.0;10.0;20.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>553</x>
+      <y>49</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=()-[&lt;]</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>609</x>
+      <y>42</y>
+      <w>105</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=[^]-(</panel_attributes>
+    <additional_attributes>130.0;220.0;130.0;150.0;60.0;150.0;60.0;20.0;20.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>483</x>
+      <y>315</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=()-[v]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>798</x>
+      <y>245</y>
+      <w>70</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=[&gt;]-(</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0;70.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>455</y>
+      <w>56</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=()-[&lt;]</panel_attributes>
+    <additional_attributes>60.0;10.0;60.0;220.0;10.0;220.0</additional_attributes>
   </element>
 </diagram>
