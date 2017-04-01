@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>460</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Frequency
+--
+AlwaysOff
+AlwaysOn
+FastBlinking
+SlowBlinking
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>230</y>
+      <w>250</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;boundary&gt;&gt;
+LightSystemHAL
+--
++setLight(Color) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>460</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Color
+--
+Green
+Yellow
+Red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>460</y>
+      <w>240</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Event
+--
+operating
+notOperating
+warning
+clearWarning
+clearError
+errorOccured
+errorAcknowledged
+errorGoneUnacknowledged
+clearAll
+setAll</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>20</y>
+      <w>250</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ILightSystem
+--
+do(Event) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>20</y>
+      <w>250</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+LightSystem
+--
++setLights(Color, Frequency) : </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>230</y>
+      <w>250</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controller&gt;&gt;
+LightSystemController
+--
+Thread 
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
