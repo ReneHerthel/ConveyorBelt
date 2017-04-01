@@ -24,22 +24,22 @@ ITimer</panel_attributes>
       <x>245</x>
       <y>84</y>
       <w>21</w>
-      <h>112</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=()-[^]</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>238</x>
-      <y>182</y>
-      <w>189</w>
-      <h>70</h>
+      <x>252</x>
+      <y>126</y>
+      <w>252</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=[&lt;]-(
 </panel_attributes>
-    <additional_attributes>250.0;80.0;20.0;80.0;20.0;20.0</additional_attributes>
+    <additional_attributes>340.0;120.0;340.0;20.0;20.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -116,7 +116,7 @@ ILightBarrier
     <id>UMLGeneric</id>
     <coordinates>
       <x>182</x>
-      <y>364</y>
+      <y>413</y>
       <w>140</w>
       <h>70</h>
     </coordinates>
@@ -347,10 +347,10 @@ IMetalDetector
       <x>315</x>
       <y>252</y>
       <w>77</w>
-      <h>168</h>
+      <h>217</h>
     </coordinates>
     <panel_attributes>lt=()-[&lt;]</panel_attributes>
-    <additional_attributes>90.0;10.0;90.0;220.0;10.0;220.0</additional_attributes>
+    <additional_attributes>90.0;10.0;90.0;290.0;10.0;290.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -461,5 +461,42 @@ IMetalDetector
     </coordinates>
     <panel_attributes>lt=[v]-(</panel_attributes>
     <additional_attributes>80.0;10.0;80.0;70.0;20.0;70.0;20.0;380.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>182</x>
+      <y>322</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+HeightMeasurement
+-
+&lt;&lt;provided interface&gt;&gt;
+IHightMeasurement</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>217</y>
+      <w>21</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=()-[v]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>259</x>
+      <y>210</y>
+      <w>168</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=[&lt;]-(</panel_attributes>
+    <additional_attributes>220.0;20.0;20.0;20.0</additional_attributes>
   </element>
 </diagram>
