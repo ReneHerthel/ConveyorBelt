@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
-      <y>150</y>
+      <x>20</x>
+      <y>200</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -18,8 +18,8 @@ ILightSystem
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>150</x>
-      <y>0</y>
+      <x>90</x>
+      <y>50</y>
       <w>140</w>
       <h>70</h>
     </coordinates>
@@ -34,35 +34,36 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>110</x>
-      <y>60</y>
-      <w>60</w>
+      <x>70</x>
+      <y>110</y>
+      <w>40</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;90.0;40.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>300</x>
-      <y>130</y>
+      <x>240</x>
+      <y>180</y>
       <w>210</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IHeightMeasurement
 --
-+registerToChannel(int chid, int prio):int
++registerToChannel(int chid, int prio, byte id):int
 +getHeightMeasurements(TO DO: usefull datatype
-</panel_attributes>
+
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>410</x>
-      <y>10</y>
+      <x>350</x>
+      <y>60</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
@@ -75,8 +76,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>390</x>
-      <y>60</y>
+      <x>330</x>
+      <y>110</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
@@ -86,8 +87,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>110</y>
+      <x>780</x>
+      <y>160</y>
       <w>210</w>
       <h>130</h>
     </coordinates>
@@ -106,17 +107,17 @@ STOPP
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
-      <y>110</y>
-      <w>210</w>
+      <x>480</x>
+      <y>160</y>
+      <w>260</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ICalibration
 --
-+calibrate():void
++calibrate():int
 +getThroughputTime(Speed speed):int
-+getCmPerSecond(Speed speed):int
++getMMPerSec(Speed speed):int
 
 </panel_attributes>
     <additional_attributes/>
@@ -124,8 +125,8 @@ ICalibration
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>260</y>
+      <x>780</x>
+      <y>310</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -140,65 +141,96 @@ IConveyerBelt
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>420</y>
+      <x>780</x>
+      <y>470</y>
       <w>260</w>
-      <h>60</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IConsole
 -
 +printWorkpieceInfo(string wp_info):void
++println(String):void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>340</y>
+      <x>780</x>
+      <y>390</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ISortingSwitch
 -
-+openSwitch():void
++openSwitch():int
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>500</y>
-      <w>220</w>
+      <x>780</x>
+      <y>580</y>
+      <w>300</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ISerial
 -
-+registerToChannel(int chid, int prio):int
++registerToChannel(int chid, int prio, byte id):int
 +getMassage():String
 +sendMessage(String message, int prio):int
-</panel_attributes>
+
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>630</y>
-      <w>220</w>
-      <h>100</h>
+      <x>780</x>
+      <y>710</y>
+      <w>290</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-ISerial
+ILightBarrier
 -
-+registerToChannel(int chid, int prio):int
-+getMassage():String
-+sendMessage(String message, int prio):int
-</panel_attributes>
++registerToChannel(int chid, int prio, byte id):int
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>680</x>
+      <y>50</y>
+      <w>410</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Intrefaces, hinder denen eigene Threads liegen, welche mit 
+dem Maincontroller u.a mit Pulse messages kommunnizieren,
+sind hier grün markiert
+customelement=
+drawArc(width-25,5,10,50,50,80,false) fg=red bg=red //Parameters (x, y, width, height, start, extent, open)
+drawCircle(width-20,40,3) fg=red bg=red //Parameters (x, y, radius)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>810</y>
+      <w>290</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IButton
+-
++registerToChannel(int chid, int prio, byte id):int
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
