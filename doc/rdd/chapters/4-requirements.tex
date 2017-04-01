@@ -21,6 +21,86 @@ Atribuierung.
 Berücksichtigen sie auch mögliche Fehlbedienungen und Fehlverhalten des
 Systems.
 
+Requirements:\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 01 & Laufband starten  \\
+	\hline
+\end{tabular}
+	Die Software soll das Laufband starten sobald ein Werkst{\"u}ck auf den Anfang gelegt wird.\\
+	\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 02 & Werkst{\"u}cke sortieren\\
+	\hline
+\end{tabular}
+	Die Software sortiert Werkst{\"u}cke laut dem vorgegebenen Schema: Bohrung oben ohne Metalleinsatz, Bohrung oben ohne Metalleinsatz, Bohrung oben mit Metalleinsatz. \\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 03 & Durchlaufzeiten messen \\
+	\hline
+\end{tabular}
+Die Software misst die Durchlaufzeiten der  Werkst{\"u}cke, damit das Hinzuf{\"u}gen und verloren gehen von  Werkst{\"u}cken registriert wird.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 04 & Weichen steuern \\
+	\hline
+\end{tabular}
+Die Software kann die Weichen {\"o}ffnen und so die Werkst{\"u}cke sortieren.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 05 & B{\"a}nder stoppen\\
+	\hline
+\end{tabular}
+Die Software stoppt die Laufb{\"a}nder, wenn siche keine Werkst{\"u}cke darauf befinden.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 06 & Fehler signalisieren \\
+	\hline
+\end{tabular}
+Die Software gibt bei Fehlern Fehlermeldungen auf der Konsole aus und signalisiert einen Fehler zus{\"a}tzlich durch die Rote Ampel.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 07 &Werkst{\"u}cke erkennen \\
+	\hline
+\end{tabular}
+Die Software erkennt verschiedene Typen von Werkst{\"u}cken und gibt die Typkennung auf der Konsole aus sobald sie bekannt ist.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 08 &Kommunikation \\
+	\hline
+\end{tabular}
+Die Software erm{\"o}glicht Kommunikation zwischen zwei Laufb{\"a}ndern.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 09 & Volle Rutschen \\
+	\hline
+\end{tabular}
+Die Software erkennt wenn die Rutschen zum Aussortieren voll sind und Sortiert die Werkst{\"u}cke dann auf dem anderen Band.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 10 &Mehrerer Werkst{\"u}cke \\
+	\hline
+\end{tabular}
+Die Software kann mehrere Werkst{\"u}cke auf dem ersten Laufband bearbeiten und sorgt daf{\"u}r, dass sich nur ein einziges Werkst{\"u}ck zur Zeit auf dem zweiten Laufband befindet.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 11 &Sortierte Werkst{\"u}cke \\
+	\hline
+\end{tabular}
+Die Software gibt f{\"u}r Werkst{\"u}cke die das Ende des zweiten Laufbandes erreichen, die ID, den Typ, H{\"o}henmesswert 1 und H{\"o}henmesswert 2 auf der Konsole aus.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 12 &Bedientaster \\
+	\hline
+\end{tabular}
+Die Software kann mit den Bedientastern Ein/Aus geschaltet werden und verf{\"ugt} {\"u}ber eine E-Stop Funktion, die die komplette Anlage zum Stillstand bringt.\\\\
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	REQ -- 13 &Geschwindigkeit anpassen \\
+	\hline
+\end{tabular}
+Die Software passt die Geschwindigkeit der Laufb{\"a}nder so an das sie langsam durch die H{\"o}henmessung fahren.\\\\
 \subsection{Systemkontext}
 
 Use Cases werden aus einer bestimmten Sicht erstellt. Dokumentieren sie
@@ -32,6 +112,52 @@ Test Cases müssen zu der hier verwendeten Nomenklatur konsistent sein.
 Dokumentieren sie hier, welche Use Cases sie auf der Systemebene
 implementieren müssen. Die Test Cases sollen später zu den Use Cases
 konsistent sein.
+
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	ID & UC-01 \\
+	\hline
+	Name & Werkst{\"u}ck sortieren\\
+	\hline
+	Autoren & Dennis Kochinky\\
+	\hline
+	Priorit{\"a}t & Hoch\\
+	\hline
+	Verantwortliche & ESEP-Team 1.2\\
+	\hline
+	Akteure & Band, Lichtschranken, Weichen, Steuerungssoftware, Person die ein Werkst{\"u}ck einlegt\\
+	\hline
+	Kurzbeschreibung & Ein Werkst{\"u}ck wird auf das Laufband, vermessen und  einsortiert.\\
+	\hline
+	Ausl{\"o}sendes Ereignis & Werkst{\"u}ck wird auf das erste Laufband gelegt.\\
+	\hline
+	Vorbedingung & Anfang des ersten Laufbandes ist frei, Anlage ist Betriebsbereit.\\
+	\hline
+	Nachbedingung & Werkst{\"u}ck hat Ende des zweiten Laufbandes erreicht.\\
+	\hline
+	Ergebnis & Werkst{\"u}ck einsortiert\\
+	\hline
+	Hauptszenario & \begin{enumerate}
+	\item Werkst{\"u}ck wird auf Band 1 gelegt.  
+	\item Die Software erkennt Unterbrechung der Lichtschranke und startet das Band.	
+	\item Werkst{\"u}ck erreicht im vorgegeben Zeitfenster die H{\"o}henmessung und wird analysiert. 
+	\item Weiche wird ge{\"o}ffnet.
+	\item Werkst{\"u}ck wird auf Band 2 {\"u}bergeben.
+	\item Erfassung, H{\"o}henmessung des Werkst{\"u}ckes und {\"o}ffnen der Weiche auf Band 2. 
+	\item Werkst{\"u}ck hat das Ende von Band 2 erreicht.
+	\end{enumerate}
+           \\
+	\hline
+	Alternativszenario 1 & 4a) Das Werkst{\"u}ck ist zu flach, die Weiche bleibt geschlossen und das Werkst{\"u}ck wird auf die Rutsche geleitet.\\
+	\hline
+	Alternativszenario 2 & 6a) Werkst{\"u}ck wird f{\"u}r die Sortierung nicht gebraucht, die Weiche auf Band 2 bleibt geschlossen und das Werkst{\"u}ck wird auf Rutsche 2 aussortiert. \\
+	\hline
+	Fehlerszenario &  3a) Werkst{\"u}ck ist zu schnell (ein weiteres Werkst{\"u}ck wurde zwischendurch aufs Band gelegt) oder Werkst{\"u}ck ist zu langsam ( ein Werkst{\"u}ck wurde entfernt), das Band wird gestoppt.\\
+
+	\hline
+	
+	
+\end{tabular}
 
 \section{Systemanalyse}
 Ihr technisches System hat aus Sicht der Software bestimmte
