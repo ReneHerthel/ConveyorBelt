@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>20</x>
+      <x>100</x>
       <y>200</y>
       <w>210</w>
       <h>60</h>
@@ -18,7 +18,7 @@ ILightSystem
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>90</x>
+      <x>170</x>
       <y>50</y>
       <w>140</w>
       <h>70</h>
@@ -34,7 +34,7 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>70</x>
+      <x>150</x>
       <y>110</y>
       <w>40</w>
       <h>110</h>
@@ -45,7 +45,7 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>240</x>
+      <x>320</x>
       <y>180</y>
       <w>210</w>
       <h>80</h>
@@ -62,7 +62,7 @@ bg=green</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>350</x>
+      <x>430</x>
       <y>60</y>
       <w>120</w>
       <h>60</h>
@@ -76,7 +76,7 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
+      <x>410</x>
       <y>110</y>
       <w>40</w>
       <h>90</h>
@@ -87,7 +87,7 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>160</y>
       <w>210</w>
       <h>130</h>
@@ -107,7 +107,7 @@ STOPP
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
+      <x>560</x>
       <y>160</y>
       <w>260</w>
       <h>100</h>
@@ -125,7 +125,7 @@ ICalibration
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>310</y>
       <w>210</w>
       <h>60</h>
@@ -141,7 +141,7 @@ IConveyerBelt
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>470</y>
       <w>260</w>
       <h>80</h>
@@ -157,7 +157,7 @@ IConsole
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>390</y>
       <w>210</w>
       <h>60</h>
@@ -172,7 +172,7 @@ ISortingSwitch
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>580</y>
       <w>300</w>
       <h>100</h>
@@ -190,7 +190,7 @@ bg=green</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>710</y>
       <w>290</w>
       <h>70</h>
@@ -205,13 +205,13 @@ bg=green</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>680</x>
+      <x>760</x>
       <y>50</y>
       <w>410</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Intrefaces, hinder denen eigene Threads liegen, welche mit 
-dem Maincontroller u.a mit Pulse messages kommunnizieren,
+    <panel_attributes>Interfaces, hinter denen eigene Threads liegen, welche mit 
+dem Maincontroller u.a mit Pulse Messages kommunnizieren,
 sind hier grün markiert
 customelement=
 drawArc(width-25,5,10,50,50,80,false) fg=red bg=red //Parameters (x, y, width, height, start, extent, open)
@@ -221,7 +221,7 @@ drawCircle(width-20,40,3) fg=red bg=red //Parameters (x, y, radius)</panel_attri
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
+      <x>860</x>
       <y>810</y>
       <w>290</w>
       <h>70</h>
@@ -231,6 +231,55 @@ IButton
 -
 +registerToChannel(int chid, int prio, byte id):int
 bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>300</y>
+      <w>310</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IMetallDetector
+-
++registerToChannel(int chid, int prio, byte id):int
+
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>810</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ILED
+-
++turnOnLED(LED led)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>810</y>
+      <w>310</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IButton
+-
++registerToChannel(int chid, int prio, byte id):int
+
+bg=green
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
