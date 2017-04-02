@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 René Herthel
+ * Copyright (C) 2017 Rene Herthel
  *
  * This file is subject to the terms and conditions of the MIT License.
  * See the file LICENSE in the top level directory for more details.
@@ -11,7 +11,7 @@
  *
  * @brief      Header declaration of the LED component
  *
- * @author     René Herthel <rene.herthel@haw-hamburg.de>
+ * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
 #ifndef LED_H_
@@ -28,10 +28,7 @@ namespace HAL {
 			 * @param The port of the LED.
 			 * @param The pin of the LED.
 			 */
-			LED(const int port, const int pin) : port_(port), pin_(pin)
-			{
-				// No need for assigment here.
-			}
+			LED(const int port, const int pin);
 
 			~LED();
 
