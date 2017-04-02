@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 René Herthel
+ * Copyright (C) 2017 Rene Herthel
  *
  * This file is subject to the terms and conditions of the MIT License.
  * See the file LICENSE in the top level directory for more details.
@@ -11,7 +11,7 @@
  *
  * @brief      Function of the ConveyorBelt component
  *
- * @author     René Herthel <rene.herthel@haw-hamburg.de>
+ * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
 #include "ConveyorBelt.h"
@@ -59,6 +59,7 @@ void HAL::ConveyorBelt::NextState(ConveyorBeltState state) {
 
 		default:
 			// TODO
+			break;
 	}
 }
 
