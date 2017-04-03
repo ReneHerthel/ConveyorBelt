@@ -5,23 +5,17 @@
  * See the file LICENSE in the top level directory for more details.
  */
 
-/**
- * @ingroup    conveyor_belt
- * @{
- *
- * @brief      Function of the ConveyorBelt component
- *
- * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
- */
+ /**
+  * @ingroup    conveyor_belt
+  * @{
+  *
+  * @brief      Function of the ConveyorBelt component
+  *
+  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+  */
 
 #include "ConveyorBelt.h"
 #include <iostream>
-
-HAL::ConveyorBelt::ConveyorBelt()
-// Empty initialization list.
-{
-	// Nothing todo so far.
-}
 
 HAL::ConveyorBelt::ConveyorBelt(const int port, const int pin)
 	: port_(port)
@@ -34,32 +28,26 @@ HAL::ConveyorBelt::~ConveyorBelt() {
 	// TODO: Reset the port and pin in the IO register.
 }
 
-void HAL::ConveyorBelt::NextState(ConveyorBeltState state) {
+void HAL::ConveyorBelt::nextState(ConveyorBeltState state) {
 	switch (state) {
-
-		case RightFast:
-			// TODO
-			break;
-
-		case RightSlow:
-			// TODO
-			break;
-
-		case LeftFast:
-			// TODO
-			break;
-
-		case LeftSlow:
-			// TODO
-			break;
-
-		case Stopp:
-			// TODO
-			break;
-
-		default:
-			// TODO
-			break;
+	case RightFast:
+		// TODO
+		break;
+	case RightSlow:
+		// TODO
+		break;
+	case LeftFast:
+		// TODO
+		break;
+	case LeftSlow:
+		// TODO
+		break;
+	case Stopp:
+		// TODO
+		break;
+	default:
+		// TODO
+		break;
 	}
 }
 

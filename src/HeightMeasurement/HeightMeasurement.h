@@ -18,30 +18,34 @@
 #define HEIGHTMEASUREMENT_H_
 
 namespace HAL {
-	class HeightMeasurement	{
-		public:
-			HeightMeasurement();
+	class HeightMeasurement {
+	public:
+		/**
+		 * @brief Constructor with port and pin initialization.
+		 *
+		 * @param The port of the ConveyorBelt.
+		 * @param The pin of the ConveyorBelt.
+		 */
+		HeightMeasurement(const int port, const int pin);
 
-			HeightMeasurement(const int port, const int pin);
+		~HeightMeasurement();
 
-			~HeightMeasurement();
+		/* TODO:
+		 * Reads the analog value of the sensor.
+		 * Maybe it is better to return the whole pattern..
+		 */
+		int readAnalog(int offset);
 
-			/* TODO:
-			 * Reads the analog value of the sensor.
-			 * Maybe it is better to return the whole pattern..
-			 */
-			int ReadAnalog(int offset);
+		/* TODO:
+		 * @brief Reads the whole pattern-code of the working piece.
+		 *
+		 * @return The code of the working peace?
+		 */
+		int readPattern(int offset);
 
-			/* TODO:
-			 * @brief Reads the whole pattern-code of the working piece.
-			 *      
-			 * @return The code of the working peace?
-			 */
-			int ReadPattern(int offset);
-
-		private:
-			int port_;
-			int pin_;
+	private:
+		int port_;
+		int pin_;
 	};
 }
 

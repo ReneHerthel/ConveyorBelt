@@ -5,21 +5,17 @@
  * See the file LICENSE in the top level directory for more details.
  */
 
-/**
- * @ingroup    metal_detector
- * @{
- *
- * @brief      Header of the MetalDetector component
- *
- * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
- */
+ /**
+  * @ingroup    metal_detector
+  * @{
+  *
+  * @brief      Header of the MetalDetector component
+  *
+  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+  */
 
 #include "MetalDetector.h"
 #include <iostream>
-
-HAL::MetalDetector::MetalDetector() {
-	// Nothing todo so far.
-}
 
 HAL::MetalDetector::MetalDetector(const int port, const int pin)
 	: port_(port)
@@ -32,7 +28,7 @@ HAL::MetalDetector::~MetalDetector() {
 	// TODO: Reset the port and pin in the IO register.
 }
 
-int HAL::MetalDetector::Read()
+int HAL::MetalDetector::read()
 {
 	// TODO: Read the IO register and return it.
 	return -1;
