@@ -5,14 +5,14 @@
  * See the file LICENSE in the top level directory for more details.
  */
 
-/**
- * @ingroup    conveyor_belt
- * @{
- *
- * @brief      Header of the ConveyorBelt component
- *
- * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
- */
+ /**
+  * @ingroup    conveyor_belt
+  * @{
+  *
+  * @brief      Header of the ConveyorBelt component
+  *
+  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+  */
 
 #ifndef CONVEYORBELT_H_
 #define CONVEYORBELT_H_
@@ -20,31 +20,29 @@
 #include "ConveyorBeltState.h"
 
 namespace HAL {
-    class ConveyorBelt {
-        public:
-            ConveyorBelt();
+	class ConveyorBelt {
+	public:
+		/**
+		 * @brief Constructor with port and pin initialization.
+		 *
+		 * @param The port of the ConveyorBelt.
+		 * @param The pin of the ConveyorBelt.
+		 */
+		ConveyorBelt(const int port, const int pin);
 
-            /**
-             * @brief Constructor with port and pin initialization.
-             *
-             * @param The port of the ConveyorBelt.
-             * @param The pin of the ConveyorBelt.
-             */
-			ConveyorBelt(const int port, const int pin);
+		~ConveyorBelt();
 
-            ~ConveyorBelt();
+		/**
+		 * @brief Switch to the next state of the ConveyorBeltState's.
+		 *
+		 * @param The next state the ConveyorBelt will go in.
+		 */
+		void nextState(ConveyorBeltState state);
 
-            /** 
-             * @brief Switch to the next state of the ConveyorBeltState's.
-             * 
-             * @param The next state the ConveyorBelt will go in.
-             */
-            void NextState(ConveyorBeltState state);
-
-        private:
-            int port_;
-            int pin_;
-    };
+	private:
+		int port_;
+		int pin_;
+	};
 }
 
 #endif /* CONVEYORBELT_H_ */

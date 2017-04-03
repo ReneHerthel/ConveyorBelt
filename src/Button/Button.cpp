@@ -5,21 +5,17 @@
  * See the file LICENSE in the top level directory for more details.
  */
 
-/**
- * @ingroup    button
- * @{
- *
- * @brief      Function declaration of the button component
- *
- * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
- */
+ /**
+  * @ingroup    button
+  * @{
+  *
+  * @brief      Function declaration of the button component
+  *
+  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+  */
 
 #include "Button.h"
 #include <iostream>
-
-HAL::Button::Button(){
-	// Nothing todo so far.
-}
 
 HAL::Button::Button(const int port, const int pin)
 	: port_(port)
@@ -32,7 +28,7 @@ HAL::Button::~Button() {
 	// TODO: Reset the port and pin in the IO register.
 }
 
-int HAL::Button::Read()
+int HAL::Button::read()
 {
 	// TODO: Read the IO register and return.
 	return -1;

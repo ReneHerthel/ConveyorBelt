@@ -17,10 +17,6 @@
 #include "HeightMeasurement.h"
 #include <iostream>
 
-HAL::HeightMeasurement::HeightMeasurement() {
-	// Nothing todo so far.
-}
-
 HAL::HeightMeasurement::HeightMeasurement(const int port, const int pin)
 	: port_(port)
 	, pin_(pin)
@@ -32,12 +28,12 @@ HAL::HeightMeasurement::~HeightMeasurement() {
 	// TODO: Reset the port and pin in the IO register.
 }
 
-int HAL::HeightMeasurement::ReadAnalog(int offset) {
+int HAL::HeightMeasurement::readAnalog(int offset) {
 	// TODO: discuss how that could work nice.
 	return -1;
 }
 
-int HAL::HeightMeasurement::ReadPattern(int offset) {
+int HAL::HeightMeasurement::readPattern(int offset) {
 	// TODO: discuss how that could work  nice.
 	return -1;
 }

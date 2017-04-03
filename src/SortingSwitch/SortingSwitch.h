@@ -5,44 +5,43 @@
  * See the file LICENSE in the top level directory for more details.
  */
 
-/**
- * @ingroup    sorting_switch
- * @{
- *
- * @brief      Header of the SortingSwitch component
- *
- * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
- */
+ /**
+  * @ingroup    sorting_switch
+  * @{
+  *
+  * @brief      Header of the SortingSwitch component
+  *
+  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+  */
 
 #ifndef SORTINGSWITCH_H_
 #define SORTINGSWITCH_H_
 
 namespace HAL {
-	class SortingSwitch	{
-		public:
-			SortingSwitch();
+	class SortingSwitch {
+	public:
 
-			/**
-			 * @brief Constructor with port and pin initialization.
-			 *
-			 * @param The port of the SortingSwitch.
-			 * @param The pin of the SortingSwitch.
-			 */
-			SortingSwitch(const int port, const int pin);
+		/**
+		 * @brief Constructor with port and pin initialization.
+		 *
+		 * @param The port of the SortingSwitch.
+		 * @param The pin of the SortingSwitch.
+		 */
+		SortingSwitch(const int port, const int pin);
 
-			~SortingSwitch();
+		~SortingSwitch();
 
-			/**
-			 * @brief Reads the currently input of the SortingSwitch.
-			 *
-			 * @return 0, when the SortingSwitch is open.
-			 * @return 1, when the SortingSwitch is closed.
-			 */
-			int Read();
+		/**
+		 * @brief Reads the currently input of the SortingSwitch.
+		 *
+		 * @return 0, when the SortingSwitch is open.
+		 * @return 1, when the SortingSwitch is closed.
+		 */
+		int read();
 
-		private:
-			int port_;
-			int pin_;
+	private:
+		int port_;
+		int pin_;
 	};
 }
 
