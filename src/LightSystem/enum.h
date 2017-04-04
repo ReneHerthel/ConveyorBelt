@@ -5,5 +5,11 @@
 //
 // =============================================================================
 
+#ifndef ENUM_H
+#define ENUM_H
+
 enum Frequency { AlwaysOn, AlwaysOff, FastBlinking, SlowBlinking };
 enum Color { Green, Yellow, Red };
+enum Level { operating, notOperating, warning, clearWarning, clearError, errorOccured, errorAcknowledged, errorGoneUnacknowledged, clearAll };
+
+#endif
