@@ -16,7 +16,7 @@ namespace HAL {
             void lightOn(Color color);
             void lightOff(Color color);
         private:
-            void stub(void);
+            void stub(Color color);
     };
 }
 

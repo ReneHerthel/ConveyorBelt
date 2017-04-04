@@ -4,8 +4,13 @@
 //    Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
 // =====================================================================================
 
-#define "enum.h"
+#ifndef ILIGHTSYSTEM_H
+#define ILIGHTSYSTEM_H
+
+#include "enum.h"
 
 class ILightSystem {
     public virtual void setWarningLevel(Level warningLevel);
 }
+
+#endif

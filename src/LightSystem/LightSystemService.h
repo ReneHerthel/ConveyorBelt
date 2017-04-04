@@ -11,7 +11,9 @@
 #include "LightSystemHAL.h"
 
 class LightSystemService {
-    // TODO: Define member to register halObject
+    private:
+        Timer* timerId;
+        LightSystemHAL halObject;
     public:
         LightSystemService(LightSystemHAL halObject);
         void setLights(Color lightColor, Frequency lightFrequency);

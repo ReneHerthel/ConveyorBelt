@@ -98,6 +98,8 @@ ILightSystem
     <panel_attributes>&lt;&lt;service&gt;&gt;
 LightSystemService
 --
+-Timer* timerID 
+--
 +setLights(Color, Frequency) : void</panel_attributes>
     <additional_attributes/>
   </element>
@@ -114,7 +116,6 @@ LightSystemService
 LightSystemController
 --
 -Thread* threadID
--Timer* timerID 
 --
 -main(void) : int
 </panel_attributes>

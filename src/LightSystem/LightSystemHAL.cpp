@@ -6,24 +6,29 @@
 
 #include "LightSystemHAL.h"
 
-// FIXME: Move declarations to header file
 namespace HAL {
     void LightSystemHAL::lightOn(Color color) {
         switch (color) {
         case Green:
-            ;
+        case Yellow:
+        case Red:
+        default:
+            // TODO: Pass current function
+            stub(color);
         }
-        stub();
     }
 
     void LightSystemHAL::lightOff(Color color) {
         switch (color) {
         case Green:
-            ;
+        case Yellow:
+        case Red:
+        default:
+            // TODO: Pass current function
+            stub(color);
         }
-        stub();
     }
-    void LightSystemHAL::stub(void) {
-        std::cout << "Stub." << std::endl;
+    void LightSystemHAL::stub(Color color) {
+        std::cout << color << " stub." << std::endl;
     }
 }
