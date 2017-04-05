@@ -53,7 +53,11 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     	// TODO: Specify default case
     }
 
+    // Cast enums to 16 bit uints
+    // Concat uints
+
     controller->setLights(COLOR, FREQUENCY); // FIXME: Replace by pulse message send
-    res = MsgSendPulse ( coid, priority, code, value ) ;
+    res = MsgSendPulse(channelId, LOW_PRIORITY, code, value);
+    if ( res )
 }
 
