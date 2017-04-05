@@ -1,10 +1,20 @@
 \chapter{Testen}
 
-Machen sie sich auf Basis ihrer Überlegungen zur Qualitätssicherung
-Gedanken darüber, wie sie die Erfüllung der Anforderungen möglichst
-automatisiert im Rahmen von Unit-Test, Komponententest,
-Integrationstest, Systemtest, Regressionstest und Abnahmetest überprüfen
-werden.
+\section{Test Konzept}
+Das Testen soll nach dem V-Modell von der kleinsten zur Größten Einheit ablaufen.
+Alle Klassen werden gegen Interfaces Implementiert (Design for Testability).
+
+\subsection{Unit Test}
+Nach dem fertig stellen einer Klasse sollte dieses mithilfe eines Unit Tests geprüft werden (simple Funktionen wie z.B setter und getter müssen nicht getestet werden).
+Nach dem ändern dieser Klasse ist der Unit Test nochmals durchzuführen (Regressionstest).
+
+\subsection{Komponenten Test}
+Nach dem Fertigstellen einer Komponente soll diese, mithilfe des nach außen Sichtbaren Interfaces zuerst mit Stubs und Mocks (ohne Hardware) auf ihre Funktionalität geprüft werden.
+Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgeführt ohne Stub und Moch Objekte in der Komponente. 
+
+Nach ändern der Komponente sind die Tests erneut durchzuführen.
+
+
 
 \section{Testplan}
 
