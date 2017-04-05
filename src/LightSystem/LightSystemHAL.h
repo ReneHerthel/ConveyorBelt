@@ -31,14 +31,13 @@
 #define PORTA_ADDR 0x300
 #define PORTB_ADDR 0x301
 #define INPUT_MASK 0x01
-//TO DO  exclude Port_ADDRS in an other global header
+//TODO  exclude Port_ADDRS in an other global header
 namespace HAL {
     class LightSystemHAL : public BLightSystem {
         public:
             void lightOn(Color color);
             void lightOff(Color color);
-        private:
-            void stub(Color color);
+
     };
 }
 
