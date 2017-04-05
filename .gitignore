@@ -5,9 +5,11 @@
 #Ignore All
 *
 
-#Do not ignore .gitignore and txt files
+#Do not ignore .gitignore and usefull plain text files
 !.gitignore
 !*.txt
+!LICENSE
+!README.*
 
 #C++ Files
 !*.cpp
