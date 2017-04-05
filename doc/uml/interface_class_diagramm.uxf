@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>288</x>
-      <y>216</y>
+      <y>224</y>
       <w>168</w>
       <h>48</h>
     </coordinates>
@@ -19,7 +19,7 @@ ILightSystem
     <id>UMLNote</id>
     <coordinates>
       <x>280</x>
-      <y>96</y>
+      <y>104</y>
       <w>112</w>
       <h>56</h>
     </coordinates>
@@ -35,7 +35,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>272</x>
-      <y>144</y>
+      <y>152</y>
       <w>80</w>
       <h>88</h>
     </coordinates>
@@ -46,7 +46,7 @@ bg=cyan</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>512</x>
-      <y>192</y>
+      <y>200</y>
       <w>168</w>
       <h>64</h>
     </coordinates>
@@ -63,7 +63,7 @@ bg=green</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>488</x>
-      <y>104</y>
+      <y>112</y>
       <w>96</w>
       <h>48</h>
     </coordinates>
@@ -77,7 +77,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>480</x>
-      <y>144</y>
+      <y>152</y>
       <w>128</w>
       <h>64</h>
     </coordinates>
@@ -88,7 +88,7 @@ bg=cyan</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1032</x>
-      <y>192</y>
+      <y>200</y>
       <w>168</w>
       <h>104</h>
     </coordinates>
@@ -108,7 +108,7 @@ STOPP
     <id>UMLClass</id>
     <coordinates>
       <x>736</x>
-      <y>184</y>
+      <y>192</y>
       <w>208</w>
       <h>80</h>
     </coordinates>
@@ -126,7 +126,7 @@ ICalibration
     <id>UMLClass</id>
     <coordinates>
       <x>1024</x>
-      <y>352</y>
+      <y>360</y>
       <w>168</w>
       <h>48</h>
     </coordinates>
@@ -142,7 +142,7 @@ IConveyerBelt
     <id>UMLClass</id>
     <coordinates>
       <x>792</x>
-      <y>728</y>
+      <y>736</y>
       <w>208</w>
       <h>64</h>
     </coordinates>
@@ -158,7 +158,7 @@ IConsole
     <id>UMLClass</id>
     <coordinates>
       <x>216</x>
-      <y>424</y>
+      <y>432</y>
       <w>168</w>
       <h>48</h>
     </coordinates>
@@ -173,7 +173,7 @@ ISortingSwitch
     <id>UMLClass</id>
     <coordinates>
       <x>1024</x>
-      <y>432</y>
+      <y>440</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -191,7 +191,7 @@ bg=green</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1136</x>
-      <y>568</y>
+      <y>576</y>
       <w>272</w>
       <h>72</h>
     </coordinates>
@@ -199,7 +199,7 @@ bg=green</panel_attributes>
 ITimer
 -
 +registerToChannel(int chid, int prio, byte id):int
-+setAlarm(int timeMs):int
++setAlarm("Time type" time):int
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
@@ -207,7 +207,7 @@ bg=green</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>752</x>
-      <y>96</y>
+      <y>104</y>
       <w>480</w>
       <h>48</h>
     </coordinates>
@@ -224,7 +224,7 @@ drawCircle(width-20,40,3) fg=black bg=red //Parameters (x, y, radius)</panel_att
     <id>UMLClass</id>
     <coordinates>
       <x>144</x>
-      <y>296</y>
+      <y>304</y>
       <w>248</w>
       <h>48</h>
     </coordinates>
@@ -241,7 +241,7 @@ bg=green
     <id>UMLClass</id>
     <coordinates>
       <x>608</x>
-      <y>664</y>
+      <y>672</y>
       <w>168</w>
       <h>48</h>
     </coordinates>
@@ -256,7 +256,7 @@ ILED
     <id>UMLClass</id>
     <coordinates>
       <x>112</x>
-      <y>704</y>
+      <y>712</y>
       <w>248</w>
       <h>48</h>
     </coordinates>
@@ -273,7 +273,7 @@ bg=green
     <id>UMLGeneric</id>
     <coordinates>
       <x>616</x>
-      <y>408</y>
+      <y>416</y>
       <w>160</w>
       <h>80</h>
     </coordinates>
@@ -285,7 +285,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>696</x>
-      <y>256</y>
+      <y>264</y>
       <w>152</w>
       <h>168</h>
     </coordinates>
@@ -296,7 +296,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>248</y>
+      <y>256</y>
       <w>128</w>
       <h>176</h>
     </coordinates>
@@ -307,7 +307,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>432</x>
-      <y>256</y>
+      <y>264</y>
       <w>232</w>
       <h>168</h>
     </coordinates>
@@ -318,7 +318,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>936</x>
-      <y>216</y>
+      <y>224</y>
       <w>112</w>
       <h>32</h>
     </coordinates>
@@ -330,7 +330,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1088</x>
-      <y>288</y>
+      <y>296</y>
       <w>56</w>
       <h>80</h>
     </coordinates>
@@ -342,7 +342,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>768</x>
-      <y>368</y>
+      <y>376</y>
       <w>272</w>
       <h>96</h>
     </coordinates>
@@ -353,7 +353,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>768</x>
-      <y>456</y>
+      <y>464</y>
       <w>272</w>
       <h>32</h>
     </coordinates>
@@ -364,7 +364,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>712</x>
-      <y>480</y>
+      <y>488</y>
       <w>168</w>
       <h>264</h>
     </coordinates>
@@ -375,7 +375,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>664</x>
-      <y>480</y>
+      <y>488</y>
       <w>40</w>
       <h>200</h>
     </coordinates>
@@ -386,7 +386,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>240</x>
-      <y>480</y>
+      <y>488</y>
       <w>408</w>
       <h>240</h>
     </coordinates>
@@ -397,7 +397,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>384</x>
-      <y>312</y>
+      <y>320</y>
       <w>248</w>
       <h>144</h>
     </coordinates>
@@ -408,7 +408,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>376</x>
-      <y>440</y>
+      <y>448</y>
       <w>256</w>
       <h>40</h>
     </coordinates>
@@ -419,7 +419,7 @@ MainControl</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>768</x>
-      <y>480</y>
+      <y>488</y>
       <w>488</w>
       <h>104</h>
     </coordinates>
@@ -430,7 +430,7 @@ MainControl</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>352</x>
-      <y>776</y>
+      <y>784</y>
       <w>168</w>
       <h>72</h>
     </coordinates>
@@ -453,7 +453,7 @@ ESTOP
     <id>UMLClass</id>
     <coordinates>
       <x>552</x>
-      <y>760</y>
+      <y>768</y>
       <w>168</w>
       <h>104</h>
     </coordinates>
@@ -477,7 +477,7 @@ LED_Q2
     <id>Relation</id>
     <coordinates>
       <x>632</x>
-      <y>704</y>
+      <y>712</y>
       <w>88</w>
       <h>72</h>
     </coordinates>
@@ -489,7 +489,7 @@ LED_Q2
     <id>Relation</id>
     <coordinates>
       <x>768</x>
-      <y>264</y>
+      <y>272</y>
       <w>280</w>
       <h>160</h>
     </coordinates>
@@ -501,7 +501,7 @@ LED_Q2
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>480</y>
+      <y>488</y>
       <w>104</w>
       <h>296</h>
     </coordinates>
@@ -513,7 +513,7 @@ LED_Q2
     <id>UMLClass</id>
     <coordinates>
       <x>104</x>
-      <y>560</y>
+      <y>568</y>
       <w>256</w>
       <h>56</h>
     </coordinates>
@@ -528,7 +528,7 @@ bg=green</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>352</x>
-      <y>472</y>
+      <y>480</y>
       <w>280</w>
       <h>136</h>
     </coordinates>
@@ -539,7 +539,7 @@ bg=green</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1024</x>
-      <y>656</y>
+      <y>664</y>
       <w>272</w>
       <h>72</h>
     </coordinates>
@@ -547,7 +547,7 @@ bg=green</panel_attributes>
 IDistanceTracker
 -
 +registerToChannel(int chid, int prio, byte id):int
-+setAlarm(int distanceMM):int
++setAlarm("distance_type" distance):int
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
@@ -555,7 +555,7 @@ bg=green</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>736</x>
-      <y>480</y>
+      <y>488</y>
       <w>328</w>
       <h>192</h>
     </coordinates>
@@ -566,7 +566,7 @@ bg=green</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>352</x>
-      <y>720</y>
+      <y>728</y>
       <w>104</w>
       <h>72</h>
     </coordinates>
