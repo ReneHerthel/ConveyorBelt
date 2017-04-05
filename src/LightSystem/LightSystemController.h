@@ -7,14 +7,17 @@
 #ifndef LIGHTSYSTEMCONTROLLER_H
 #define LIGHTSYSTEMCONTROLLER_H
 
-class LightSystemController : public ILightSystem {
+class LightSystemController {
     public:
         LightSystemController(LightSystemService* serviceId);
-        void setWarningLevel(Level warningLevel);
         int main(void);
+        void setLights(Color lightColor, Frequency lightFrequency);
+
     private:
         Thread* threadId;
         LightSystemService* serviceId;
-}
+        Timer* timerId;
+        LightSystemHAL halObject;
+};
 
 #endif

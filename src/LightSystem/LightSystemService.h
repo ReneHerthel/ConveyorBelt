@@ -8,15 +8,14 @@
 #define LIGHTSYSTEMSERVICE_H
 
 #include "enum.h"
-#include "LightSystemHAL.h"
+#include "LightSystemController.h"
 
-class LightSystemService {
-    private:
-        Timer* timerId;
-        LightSystemHAL halObject;
-    public:
-        LightSystemService(LightSystemHAL halObject);
-        void setLights(Color lightColor, Frequency lightFrequency);
-}
+class LightSystemService : public ILightSystem {
+	public:
+		void setWarningLevel(Level warningLevel);
+	private:
+		LightSystemController* controller;
+		chid;
+} ;
 
 #endif

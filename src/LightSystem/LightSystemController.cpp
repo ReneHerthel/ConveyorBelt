@@ -8,3 +8,11 @@
 LightSystemController(LightSystemController* serviceId) :
 serviceId(
 {};
+
+void LightSystemService::setLights(Color lightColor, Frequency lightFrequency) {
+            if ( !lightFrequency ) {
+                halObject.lightOn(lightColor);
+            } else {
+                // TODO: Start timer according to frequency
+            }
+}

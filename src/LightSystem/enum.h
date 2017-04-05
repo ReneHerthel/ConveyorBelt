@@ -8,9 +8,8 @@
 #ifndef ENUM_H
 #define ENUM_H
 
-// TODO: Put all enums in a single place
-enum Frequency { AlwaysOn, AlwaysOff, FastBlinking, SlowBlinking };
-enum Color { Green, Yellow, Red };
-enum Level { operating, notOperating, warning, clearWarning, clearError, errorOccured, errorAcknowledged, errorGoneUnacknowledged, clearAll };
+enum Frequency { ALWAYS_ON, ALWAYS_OFF, FAST_BLINKING, SLOW_BLINKING };
+enum Color { GREEN, YELLOW, RED, ALL };
+enum Level { OPERATING, NOT_OPERATING, WARNING, CLEAR_WARNING, CLEAR_ERROR, ERROR_OCCURED, ERROR_ACKNOWLEDGED, ERROR_GONE_UNACKNOWLEDGED, CLEAR_ALL };
 
 #endif
