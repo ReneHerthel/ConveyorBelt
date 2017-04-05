@@ -199,7 +199,7 @@ bg=green</panel_attributes>
 ITimer
 -
 +registerToChannel(int chid, int prio, byte id):int
-+setAlarm("Time type" time):int
++setAlarm("Time type" time, int identifier):int
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
