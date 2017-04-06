@@ -9,8 +9,8 @@ Nach dem fertig stellen einer Klasse sollte dieses mithilfe eines Unit Tests gep
 Nach dem ändern dieser Klasse ist der Unit Test nochmals durchzuführen (Regressionstest).
 Zur Verifikation des Unit Test sind über einen Whitebox-Test folgende Metriken zu beachten:
 \begin{itemize} 
-\item \textbf{Code Coverage:} Diese muss bei 100\% liegen, daraus folgt auch eine 100\%Branch coverage.
-\item\textbf{Condition Coverage:} Komplexe Conditions sollten mit einer Kompletten Wertetabelle getestet werden.
+	\item \textbf{Code Coverage:} Diese muss bei 100\% liegen, daraus folgt auch eine 100\%Branch coverage.
+	\item\textbf{Condition Coverage:} Komplexe Conditions sollten mit einer Kompletten Wertetabelle getestet werden.
 \end{itemize}
 
 \subsection{Komponenten Test}
@@ -20,7 +20,27 @@ Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgefü
 Nach ändern der Komponente sind die Tests erneut durchzuführen.
 
 \subsection{Integrationstest}
+Fast alle Komponenten Kommuniezieren zentral über den Main Controller.
+Je nach dem ob eine Komponente Input für den Controller oder vom Controller gestuert wird(Output), sind folgende Test Durchzuführen.
+Bei Komponenten mit in und Output mit In- und Output ist beides zu beachten. 
 
+\subsubsection{Input}
+Erhält der Controller die spezifizierten Signale von der Komponente? Liefert die Komponente die richtigen Signale zum Hardware Input?
+
+\subsubsection{Output}
+Verhält sich die Komponente entsprechend zum Eingangssignal?
+
+\subsubsection{Test der MainControll}
+Die MainControll wird mit Moch/Stub/Fake und Spy Objekten umgeben, die das Interface der Komponenten implementieren.
+Zuerst ist sicherzustellen, das alle Basisfunktionen einzeln funktionieren. Dazu gehören:
+\begin{itemize} 
+	\item Transport der Pucks
+	\item Höhenmessung
+	\item 
+\end{itemize}
+
+\subsection{System Test}
+Sind alle Komponenten 
 
 \section{Testplan}
 
