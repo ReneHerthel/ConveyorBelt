@@ -2,7 +2,7 @@
 
 \section{Test Konzept}
 Das Testen soll der kleinsten zur Größten Einheit ablaufen.
-Alle Klassen werden gegen Basis Klassen zu Implementiert (Design for Testability).
+Alle Klassen werden gegen Basis Klassen implementiert (Design for Testability).
 
 \subsection{Unit Test}
 Nach dem fertig stellen einer Klasse sollte dieses mithilfe eines Unit Tests geprüft werden (simple Funktionen wie z.B setter und getter müssen nicht getestet werden).
@@ -20,12 +20,13 @@ Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgefü
 Nach ändern der Komponente sind die Tests erneut durchzuführen.
 
 \subsection{Integrationstest}
-Fast alle Komponenten Kommuniezieren zentral über den Main Controller.
+Fast alle Komponenten kommuniezieren zentral über den Main Controller.
 Je nach dem ob eine Komponente Input für den Controller oder vom Controller gestuert wird(Output), sind folgende Test Durchzuführen.
 Bei Komponenten mit in und Output mit In- und Output ist beides zu beachten. Zuerst werden diese Test in einer Testumgebung (ohne Hardware) durchgeführt, 
 dabb auf dem echten Anlagen.
 
 TODO Calibration Komponente beachten
+TODO Differenzierung vom Komponenten Test
 
 \subsubsection{Input}
 Erhält der Controller die spezifizierten Signale von der Komponente? Liefert die Komponente die richtigen Signale zum Hardware Input?
@@ -57,16 +58,19 @@ Hier wird eingetragen, ob der Test zum Requirement bestanden wurde oder nicht.
 
 \section{Testplan}
 TODO Dies ist nur ein Konzept, an Milestones anpassen
-\subsection{Unit Tests}
+\subsubsection{Unit Tests}
 Der Test zu einer Unit soll Parallel zur Unit entwickelt werden. Sobald beide fertig sind, ist der Test durchzuführen.
-\subsection{Komponenten Test}
+\subsubsection{Komponenten Test}
 Der Test zu einer Komponente soll vor der Komponente fertig sein, damit mit die Komponente Test-Driven entwickelt werden kann.
 Der Test ist nach jedem Entwicklungsschritt der Komponente durchzuführen. An ihm soll sich messen lassen, wie weit die Komponente fortgeschritten ist.
-\
-
+\subsubsection{Integrationstest}
+Mit der MainControl zu entwickeln.
+\subsubsection {Systemtest}
+Nach fertigstellung aller Komponenten.
 \section{Abnahmetest}
+TODO Dies ist ein Test durch den Kunden, was stellen wir uns hier drunter vor?
 
-Leiten sie die Abnahmebedingungen aus den Kunden-Anforderungen her.
+Leiten sie die Abnahmebedingungen aus den Kunden-Anforderungen her. [Ist das nicht Systemtest?]
 Dokumentieren sie hier, welche Schritte für die Abnahme erforderlich
 sind und welches Ergebnis jeweils erwartet wird (Test Cases).
 
