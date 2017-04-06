@@ -22,7 +22,8 @@ Nach ändern der Komponente sind die Tests erneut durchzuführen.
 \subsection{Integrationstest}
 Fast alle Komponenten Kommuniezieren zentral über den Main Controller.
 Je nach dem ob eine Komponente Input für den Controller oder vom Controller gestuert wird(Output), sind folgende Test Durchzuführen.
-Bei Komponenten mit in und Output mit In- und Output ist beides zu beachten. 
+Bei Komponenten mit in und Output mit In- und Output ist beides zu beachten. Zuerst werden diese Test in einer Testumgebung (ohne Hardware) durchgeführt, 
+dabb auf dem echten Anlagen.
 
 \subsubsection{Input}
 Erhält der Controller die spezifizierten Signale von der Komponente? Liefert die Komponente die richtigen Signale zum Hardware Input?
@@ -36,8 +37,18 @@ Zuerst ist sicherzustellen, das alle Basisfunktionen einzeln funktionieren. Dazu
 \begin{itemize} 
 	\item Transport der Pucks
 	\item Höhenmessung
-	\item 
+	\item Sortieren der Pucks
+	\item Rampe Voll
+	\item Übergabe an die hintere Anlage (nur bei Anlage 1);
+	\item E-Stopp
+	\item Fehlerbehandlung
+	\begin{itemize}
+		\item Ampelanlage
+		\item Knöpfe
+	\end{itemize}
 \end{itemize}
+
+
 
 \subsection{System Test}
 Sind alle Komponenten 
