@@ -1,12 +1,17 @@
 \chapter{Testen}
 
 \section{Test Konzept}
-Das Testen soll nach dem V-Modell von der kleinsten zur Größten Einheit ablaufen.
-Alle Klassen werden gegen Interfaces Implementiert (Design for Testability).
+Das Testen soll der kleinsten zur Größten Einheit ablaufen.
+Alle Klassen werden gegen Basis Klassen zu Implementiert (Design for Testability).
 
 \subsection{Unit Test}
 Nach dem fertig stellen einer Klasse sollte dieses mithilfe eines Unit Tests geprüft werden (simple Funktionen wie z.B setter und getter müssen nicht getestet werden).
 Nach dem ändern dieser Klasse ist der Unit Test nochmals durchzuführen (Regressionstest).
+Zur Verifikation des Unit Test sind über einen Whitebox-Test folgende Metriken zu beachten:
+\begin{itemize} 
+\item \textbf{Code Coverage:} Diese muss bei 100\% liegen, daraus folgt auch eine 100\%Branch coverage.
+\item\textbf{Condition Coverage:} Komplexe Conditions sollten mit einer Kompletten Wertetabelle getestet werden.
+\end{itemize}
 
 \subsection{Komponenten Test}
 Nach dem Fertigstellen einer Komponente soll diese, mithilfe des nach außen Sichtbaren Interfaces zuerst mit Stubs und Mocks (ohne Hardware) auf ihre Funktionalität geprüft werden.
@@ -14,6 +19,7 @@ Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgefü
 
 Nach ändern der Komponente sind die Tests erneut durchzuführen.
 
+\subsection{Integrationstest}
 
 
 \section{Testplan}
