@@ -15,7 +15,7 @@ Zur Verifikation des Unit Test sind über einen Whitebox-Test folgende Metriken 
 
 \subsection{Komponenten Test}
 Nach dem Fertigstellen einer Komponente soll diese, mithilfe des nach außen Sichtbaren Interfaces zuerst mit Stubs und Mocks (ohne Hardware) auf ihre Funktionalität geprüft werden.
-Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgeführt ohne Stub und Moch Objekte in der Komponente. 
+Ist dieser Test erfolgreich, so wird der Test erneut auf der Hardware durchgeführt ohne Stub und Mock Objekte in der Komponente. 
 
 Nach ändern der Komponente sind die Tests erneut durchzuführen.
 
@@ -24,6 +24,8 @@ Fast alle Komponenten Kommuniezieren zentral über den Main Controller.
 Je nach dem ob eine Komponente Input für den Controller oder vom Controller gestuert wird(Output), sind folgende Test Durchzuführen.
 Bei Komponenten mit in und Output mit In- und Output ist beides zu beachten. Zuerst werden diese Test in einer Testumgebung (ohne Hardware) durchgeführt, 
 dabb auf dem echten Anlagen.
+
+TODO Calibration Komponente beachten
 
 \subsubsection{Input}
 Erhält der Controller die spezifizierten Signale von der Komponente? Liefert die Komponente die richtigen Signale zum Hardware Input?
@@ -48,15 +50,19 @@ Zuerst ist sicherzustellen, das alle Basisfunktionen einzeln funktionieren. Dazu
 	\end{itemize}
 \end{itemize}
 
-
-
 \subsection{System Test}
-Sind alle Komponenten 
+Jedem Requirement wird mindestens ein Test zugewiesen. Dieser Test wird auf der Gesamten Anlage durchgeführt. 
+Die Zuordnung von Requirement auf Test erfolgt mithilfe einer Trace Matrix.
+Hier wird eingetragen, ob der Test zum Requirement bestanden wurde oder nicht.
 
 \section{Testplan}
-
-Definieren sie Zeitpunkte für die jeweiligen Teststufen in ihrer
-Projektplanung. Dazu können sie die Meilensteine zu Hilfe nehmen.
+TODO Dies ist nur ein Konzept, an Milestones anpassen
+\subsection{Unit Tests}
+Der Test zu einer Unit soll Parallel zur Unit entwickelt werden. Sobald beide fertig sind, ist der Test durchzuführen.
+\subsection{Komponenten Test}
+Der Test zu einer Komponente soll vor der Komponente fertig sein, damit mit die Komponente Test-Driven entwickelt werden kann.
+Der Test ist nach jedem Entwicklungsschritt der Komponente durchzuführen. An ihm soll sich messen lassen, wie weit die Komponente fortgeschritten ist.
+\
 
 \section{Abnahmetest}
 
