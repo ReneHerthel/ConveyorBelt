@@ -8,14 +8,15 @@
 #ifndef TESTLIGHTSYSTEMHAL_H_
 #define TESTLIGHTSYSTEMHAL_H_
 
+#include <iostream>
+#include <chrono>
+#include <thread>
 #include "../LightSystemHAL.h"
 
-class TestLightSystemHal: public HAL::LightSystemHAL {
-	public :
+class TestLightSystemHal {
+public:
 	int main(int argc, char *argv[]);
 	void task();
 };
-
-
 
 #endif /* TESTLIGHTSYSTEMHAL_H_ */
