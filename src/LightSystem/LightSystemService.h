@@ -15,7 +15,7 @@ class LightSystemService : public ILightSystem {
 		void setWarningLevel(Level warningLevel);
 	private:
 		LightSystemController* controller;
-		chid;
+		int channelId;
 } ;
 
 #endif
