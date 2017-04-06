@@ -16,7 +16,7 @@
 #define MILLI 100000
 #define NONE 0
 
-class TimerService: public ITimer {
+class TimerService : public ITimer {
 private:
 	timer_t timerid;
 	struct sigevent event;
