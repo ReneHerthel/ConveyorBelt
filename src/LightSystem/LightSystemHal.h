@@ -33,7 +33,7 @@
 #define INPUT_MASK 0x01
 //TODO  exclude Port_ADDRS in an other global header
 namespace HAL {
-    class LightSystemHAL : public BLightSystem {
+    class LightSystemHal : public BLightSystem {
         public:
             void lightOn(Color color);
             void lightOff(Color color);

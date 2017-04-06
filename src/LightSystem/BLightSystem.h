@@ -13,8 +13,9 @@
 namespace HAL {
     class BLightSystem {
         public:
-            void lightOn(Color color);
-            void lightOff(Color color);
+    		// This virtual function is virtual, really.
+            virtual void lightOn(Color color) = 0;
+            virtual void lightOff(Color color) = 0;
     };
 }
 
