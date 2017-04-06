@@ -11,7 +11,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "../LightSystemHal.h"
+#include "LightSystemHal.h"
 
 class TestLightSystemHal {
 public:

@@ -7,19 +7,18 @@
 
 #include "LightSystemHal.h"
 
-
 namespace HAL {
     void LightSystemHal::lightOn(Color color) {
         unsigned char bitMask;
         bitMask = 0;
     	switch (color) {
-        case Green:
+        case GREEN:
         	bitMask = GREEN_SHIFT;
         	break;
-        case Yellow:
+        case YELLOW:
         	bitMask = YELLOW_SHIFT;
         	break;
-        case Red:
+        case RED:
         	bitMask = RED_SHIFT;
         	break;
         default:
@@ -36,13 +35,13 @@ namespace HAL {
     void LightSystemHal::lightOff(Color color) {
     	unsigned char bitMask;
     	switch (color) {
-        case Green:
+        case GREEN:
         	bitMask = GREEN_SHIFT;
 			break;
-		case Yellow:
+		case YELLOW:
 			bitMask = YELLOW_SHIFT;
 			break;
-		case Red:
+		case RED:
 			bitMask = RED_SHIFT;
 			break;
 		default:

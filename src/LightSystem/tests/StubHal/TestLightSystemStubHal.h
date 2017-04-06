@@ -10,7 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "../LightSystemStubHal.h"
+#include "LightSystemStubHal.h"
 
 class TestLightSystemStubHal {
 public:

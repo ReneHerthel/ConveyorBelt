@@ -7,8 +7,9 @@
 
 #include "LightSystemController.h"
 
-
-LightSystemController :: LightSystemController(int chid, ITimer* timer, BLightSystem* boundary)
+LightSystemController :: LightSystemController(int chid
+		//, ITimer* timer
+		, BLightSystem* boundary)
 	: chid(chid)
 	, timer(timer)
 	, boundary(boundary)

@@ -9,8 +9,8 @@
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
 	// Send light color and frequency to Controller
-	const Color COLOR;
-	const Frequency FREQUENCY;
+	Color COLOR;
+	Frequency FREQUENCY;
 
     switch (warningLevel) {
     case OPERATING:
@@ -53,7 +53,7 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     	// TODO: Specify default case
     }
 
-    controller->setLights(COLOR, FREQUENCY); // FIXME: Replace by pulse message send
-    res = MsgSendPulse ( coid, priority, code, value ) ;
+    //controller->setLights(COLOR, FREQUENCY); // FIXME: Replace by pulse message send
+    //res = MsgSendPulse ( coid, priority, code, value ) ;
 }
 

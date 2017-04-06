@@ -11,7 +11,7 @@ using namespace HAL;
 using namespace std;
 
 void task() {
-	LightSystemStubHal hal;
+	LightSystemHal hal;
     cout << __FUNCTION__ << ": Thread started!" << endl;
 
 	for (int i = 0; i<10; i++) {
@@ -42,5 +42,5 @@ int main(int argc, char *argv[]) {
 	}
 
 	thread thd(task);
-	task.join();
+	thd.join();
 }

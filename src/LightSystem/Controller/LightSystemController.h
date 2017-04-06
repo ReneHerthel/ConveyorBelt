@@ -7,16 +7,18 @@
 #ifndef LIGHTSYSTEMCONTROLLER_H
 #define LIGHTSYSTEMCONTROLLER_H
 
-#include "ITimer.h"
+//#include "ITimer.h"
 #include "BLightSystem.h"
 
 class LightSystemController {
     public:
-		LightSystemController(int chid, ITimer* timer, BLightSystem* boundary);
+		LightSystemController(int chid
+				//, ITimer* timer
+				, BLightSystem* boundary);
 
     private:
 		int chid;
-        ITimer* timer;
+        //ITimer* timer;
         BLightSystem* halObject;
         int task(void);
         void setLights(Color lightColor, Frequency lightFrequency);

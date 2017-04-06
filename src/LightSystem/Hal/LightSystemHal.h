@@ -7,6 +7,7 @@
 #ifndef LIGHTSYSTEMHAL_H
 #define LIGHTSYSTEMHAL_H
 
+#include "BLightSystem.h"
 #include "enum.h"
 #include <iostream>
 #include <hw/inout.h>
@@ -31,13 +32,12 @@
 #define PORTA_ADDR 0x300
 #define PORTB_ADDR 0x301
 #define INPUT_MASK 0x01
-//TODO  exclude Port_ADDRS in an other global header
+//TODO:  Move Port_ADDRS to global header
 namespace HAL {
-    class LightSystemHal : public BLightSystem {
+    class LightSystemHal: public BLightSystem {
         public:
             void lightOn(Color color);
             void lightOff(Color color);
-
     };
 }
 

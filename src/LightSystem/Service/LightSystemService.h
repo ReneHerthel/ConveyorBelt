@@ -9,6 +9,7 @@
 
 #include "enum.h"
 #include "LightSystemController.h"
+#include "ILightSystem.h"
 
 class LightSystemService : public ILightSystem {
 	public:
