@@ -8,6 +8,8 @@
 #ifndef BLIGHTSYSTEM_H_
 #define BLIGHTSYSTEM_H_
 
+#include "enum.h"
+
 namespace HAL {
     class BLightSystem {
         public:

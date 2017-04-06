@@ -8,7 +8,7 @@
 #ifndef TESTLIGHTSYSTEMHAL_H_
 #define TESTLIGHTSYSTEMHAL_H_
 
-#include "LightSystemHAL.h"
+#include "../LightSystemHAL.h"
 
 class TestLightSystemHal: public HAL::LightSystemHAL {
 	public :
