@@ -17,33 +17,20 @@
 #ifndef LEDHAL_H_
 #define LEDHAL_H_
 
-#include "BLED.h"
+#include"BLED.h"
 
-class LEDHAL : public BLED {
+class LEDHal : public BLED {
 public:
-	/**
-	* @brief Constructor with port and pin initialization.
-	*
-	* @param The port of the LED.
-	* @param The pin of the LED.
-	*/
-	LEDHAL(const int port, const int pin);
-
-	~LEDHAL();
-
-	/**
-	* @brief Turn the LED on by setting the corresponding bit in the register.
-	*/
-	void on();
-
 	/*
-	* @brief Turn the LED off by deleting the corresponding bit int the register.
-	*/
+	 * @brief Creates a new LEDHal object with a port-pin (see HWadresses.h).
+	 */
+	LEDHal(const int ledPinMask);
+	virtual ~LEDHal();
+	void on();
 	void off();
-
+	int read();
 private:
-	int port_;
-	int pin_;
+	int ledPinMask_;
 };
 
 #endif /* LED_H_ */

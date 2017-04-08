@@ -19,8 +19,22 @@
 
 class BLED {
 public:
+	virtual ~BLED();
+
+	/**
+	 * @brief Turn the LED on by setting the corresponding bit in the register.
+	 */
 	virtual void on() = 0;
+
+	/*
+	 * @brief Turn the LED off by deleting the corresponding bit int the register.
+	 */
 	virtual void off() = 0;
+
+	/*
+	 * @brief Reads the corresponding bit of the LED out of the registry and returns it.
+	 */
+	virtual int read() = 0;
 };
 
 #endif /* BLED_H_ */

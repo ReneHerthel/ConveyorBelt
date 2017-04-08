@@ -14,31 +14,37 @@
 * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
 */
 
-#include "LEDHAL.h"
+#include "LEDHal.h"
 #include "HWaddresses.h"
 #include "HWaccess.h"
 #include <iostream>
 
-LEDHAL::LEDHAL(const int port, const int pin)
-	: port_(port)
-	, pin_(pin)
-{
-	unsigned char tmp = in8(CTRL_REG_GROUP0);
-	out8(port_, DEFAULT_PORT_SETTINGS);
-}
+#define PORTPIN_MASK 0x0F
 
-LEDHAL::~LEDHAL() {
+BLED::~BLED() {
 	// Nothing todo so far.
 }
 
-void LEDHAL::on() {
-	unsigned char tmp = in8(port_);
-	out8(port_, (tmp | (1 << pin_)));
+LEDHal::LEDHal(const int ledPinMask)
+	: ledPinMask_(ledPinMask)
+{
+	// Nothing todo so far.
 }
 
-void LEDHAL::off() {
-	unsigned char tmp = in8(port_);
-	out8(port_, (tmp & ~(1 << pin_)));
+LEDHal::~LEDHal(){
+	// Nothing todo so far.
+}
+
+void LEDHal::on() {
+	out8(PORTC_REG_ADDR, (in8(PORTC_REG_ADDR) | ledPinMask_));
+}
+
+void LEDHal::off() {
+	out8(PORTC_REG_ADDR, (in8(PORTC_REG_ADDR) & ~ledPinMask_));
+}
+
+int LEDHal::read() {
+	return in8(PORTC_REG_ADDR) & (PORTPIN_MASK | ledPinMask_);
 }
 
 /** @} */
