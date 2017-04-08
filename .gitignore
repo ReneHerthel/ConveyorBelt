@@ -15,10 +15,13 @@
 !*.cpp
 !*.h
 
+#C Files
+!*.c
+
 #LaTex Files
-!.tex
+!*.tex
 
 #UMLet Files
-!.uxf
+!*.uxf
 
 
