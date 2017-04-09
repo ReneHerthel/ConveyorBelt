@@ -17,15 +17,13 @@
 #ifndef CONVEYORBELTSTATE_H_
 #define CONVEYORBELTSTATE_H_
 
-namespace HAL {
-	enum ConveyorBeltState {
-		RightFast,
-		RightSlow,
-		LeftFast,
-		LeftSlow,
-		Stopp,
-	};
-}
+enum ConveyorBeltState {
+	RIGHTFAST,
+	RIGHTSLOW,
+	LEFTFAST,
+	LEFTSLOW,
+	STOP,
+};
 
 #endif /* CONVEYORBELTSTATE_H_ */
 /** @} */
