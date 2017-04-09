@@ -1,0 +1,31 @@
+#gitignore for SE2 lab
+#Sebastian Brueckner
+#05.04.17
+
+#Ignore All
+*
+
+#Do not ignore .gitignore and usefull plain text files
+!.gitignore
+!*.txt
+!LICENSE
+!README.*
+
+Do not ignore subfolders
+!*/
+!*/
+
+#C++ Files
+!*.cpp
+!*.h
+
+#C Files
+!*.c
+
+#LaTex Files
+!*.tex
+
+#UMLet Files
+!*.uxf
+
+

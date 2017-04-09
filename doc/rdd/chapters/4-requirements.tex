@@ -125,15 +125,15 @@ konsistent sein.
 	\hline
 	Verantwortliche & ESEP-Team 1.2\\
 	\hline
-	Akteure & Band, Lichtschranken, Weichen, Steuerungssoftware, Person die ein Werkst{\"u}ck einlegt\\
+	Akteure & Band, Lichtschranken, Weichen, Steuerungssoftware, User\\
 	\hline
-	Kurzbeschreibung & Ein Werkst{\"u}ck wird auf das Laufband, vermessen und  einsortiert.\\
+	Kurzbeschreibung & Ein Werkst{\"u}ck wird auf das Band, vermessen und  einsortiert.\\
 	\hline
 	Ausl{\"o}sendes Ereignis & Werkst{\"u}ck wird auf das erste Laufband gelegt.\\
 	\hline
-	Vorbedingung & Anfang des ersten Laufbandes ist frei, Anlage ist Betriebsbereit.\\
+	Vorbedingung & Anfang des ersten Bandes ist frei, Anlage ist Betriebsbereit.\\
 	\hline
-	Nachbedingung & Werkst{\"u}ck hat Ende des zweiten Laufbandes erreicht.\\
+	Nachbedingung & Werkst{\"u}ck hat Ende des zweiten Bandes erreicht.\\
 	\hline
 	Ergebnis & Werkst{\"u}ck einsortiert\\
 	\hline
@@ -157,6 +157,123 @@ konsistent sein.
 	\hline
 	
 	
+\end{tabular}
+
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	ID & UC-02 \\
+	\hline
+	Name &  Rutsche voll.\\
+	\hline
+	Autoren & Dennis Kochinky\\
+	\hline
+	Priorit{\"a}t &  Mittel\\
+	\hline
+	Verantwortliche & ESEP-Team 1.2\\
+	\hline
+	Akteure & Band, Lichtschranken, Weichen, Steuerungssoftware, User\\
+	\hline
+	Kurzbeschreibung & Die Software erkennt, dass eine der Rutschen voll ist und setzt das Aussortieren auf dem anderen Band mit  		freier Rutsche fort\\
+	\hline
+	Ausl{\"o}sendes Ereignis & Die Lichtschranke an der Rutsche ist dauerhaft unterbrochen.\\
+	\hline
+	Vorbedingung & Werkst{\"u}cke sind auf dem Band. \\
+	\hline
+	Nachbedingung & Sortierung wird auf dem Band mit freier Rutsche fortgesetzt.\\
+	\hline
+	Ergebnis & Dem User wird die volle Rutsche signalisiert und Sortierung läuft weiter. \\
+	\hline
+	Hauptszenario & \begin{enumerate}
+	\item Ein Werkst{\"u}ck wird auf Band 1 gelegt.  
+	\item Die Software erkennt, dass die Rutsche voll ist und signalisiert dies durch die gelbe Ampel.	
+	\item Die Weiche wird ge{\"o}ffnet.
+	\item Werkst{\"u}ck erreicht Ende von Band 1 und wird auf Band 2 {\"u}bergeben.
+	\item Sortierung wie in UC-01.
+	\end{enumerate}
+           \\
+	\hline
+	Alternativszenario & \begin{itemize} 
+	\item [2.1a] Beide B{\"a}nder melden Rutsche voll. 
+	\item [2.1b] Band wird gestoppt und Fehler signalisiert.
+	\end{itemize}
+	\\
+	\hline
+\end{tabular}
+	
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	ID & UC-03 \\
+	\hline
+	Name & Kalibrierung\\
+	\hline
+	Autoren & Dennis Kochinky\\
+	\hline
+	Priorit{\"a}t & Hoch\\
+	\hline
+	Verantwortliche & ESEP-Team 1.2\\
+	\hline
+	Akteure & Band, Lichtschranken, Weichen, Steuerungssoftware, User\\
+	\hline
+	Kurzbeschreibung & System wird nach dem einschalten kalibriert, dazu wird ein Werkst{\"u}ck  auf das Band gelegt.\\
+	\hline
+	Ausl{\"o}sendes Ereignis & System wird eingeschaltet und ein Werkst{\"u}ck wird vom User auf das erste Band gelegt.\\
+	\hline
+	Vorbedingung & Das System ist im Startzustand.\\
+	\hline
+	Nachbedingung & Alle Sensoren und Aktore funktionieren.\\
+	\hline
+	Ergebnis & Werkst{\"u}ck ist am Ende von Band 2 angekommen.\\
+	\hline
+	Hauptszenario & \begin{enumerate}
+	\item Das System wird eingeschaltet.
+	\item Ein Werkst{\"u}ck wird auf Band 1 gelegt.  
+	\item Die Software erkennt Unterbrechung der Lichtschranke und startet das Band (Timer).	
+	\item Werkst{\"u}ck erreicht die H{\"o}henmessung, Bandgeschwindigkeit wird verlangsamt.
+	\item Die Weiche wird ge{\"o}ffnet.
+	\item Werkst{\"u}ck erreicht Ende von Band 1 und wird auf Band 2 {\"u}bergeben.
+	\item Daten werden auf der Konsole ausgegeben.
+	\item Weiter mit Band 2.
+	\end{enumerate}
+           \\
+	\hline
+	Fehlerszenario & Band oder Weiche kann nicht angesteuert werden, Werkst{\"u}ck landet auf Rutsche. \\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|p{3 cm} |p{9 cm}|}
+	\hline
+	ID & UC-04 \\
+	\hline
+	Name & E-Stopp\\
+	\hline
+	Autoren & Dennis Kochinky\\
+	\hline
+	Priorit{\"a}t & Mittel\\
+	\hline
+	Verantwortliche & ESEP-Team 1.2\\
+	\hline
+	Akteure & E-Stopp-Taster, Band, Weichen, User\\
+	\hline
+	Kurzbeschreibung &  Bet{\"a}tigung des E-Stopp-Tasters sorgt f{\"u}r Abschaltung der B{\"a}nder.\\
+	\hline
+	Ausl{\"o}sendes Ereignis & E-Stopp-Taster wird vom User gedr{\"u}ckt\\
+	\hline
+	Vorbedingung & Das System in Betrieb.\\
+	\hline
+	Nachbedingung & B{\"a}nder stehen still und Weichen sind geschlossen.\\
+	\hline
+	Ergebnis & Komplette Anlage steht still.\\
+	\hline
+	Hauptszenario & \begin{enumerate}
+	\item E-Stopp-Taster wird vom User gedr{\"u}ckt.
+	\item Die B{\"a}nder werden gestoppt.
+	\item Die Weichen werden geschlossen.
+	\item Die Ampel wird ausgeschaltet.
+	\item Warten auf Reset.
+	\end{enumerate}
+           \\
+	\hline
+
 \end{tabular}
 
 \section{Systemanalyse}
