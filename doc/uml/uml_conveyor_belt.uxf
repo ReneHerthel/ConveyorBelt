@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>946</x>
+      <x>825</x>
       <y>726</y>
       <w>231</w>
       <h>77</h>
@@ -19,7 +19,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>242</x>
+      <x>66</x>
       <y>341</y>
       <w>165</w>
       <h>143</h>
@@ -37,21 +37,21 @@ STOP</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>517</x>
+      <x>341</x>
       <y>341</y>
-      <w>330</w>
+      <w>385</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IConveyorBelt
 --
-+ changeState(state: ConveyorBeltState)</panel_attributes>
++ changeConveyorBeltState(state: ConveyorBeltState)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
+      <x>220</x>
       <y>374</y>
       <w>143</w>
       <h>44</h>
@@ -63,7 +63,7 @@ IConveyorBelt
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
+      <x>484</x>
       <y>407</y>
       <w>33</w>
       <h>132</h>
@@ -74,7 +74,7 @@ IConveyorBelt
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2695</x>
+      <x>2519</x>
       <y>0</y>
       <w>110</w>
       <h>33</h>
@@ -85,7 +85,7 @@ IConveyorBelt
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>979</x>
+      <x>858</x>
       <y>517</y>
       <w>176</w>
       <h>99</h>
@@ -101,7 +101,7 @@ ConveyorBeltHal
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>968</x>
+      <x>847</x>
       <y>341</y>
       <w>187</w>
       <h>77</h>
@@ -115,7 +115,7 @@ ConveyorBeltHal
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1056</x>
+      <x>935</x>
       <y>407</y>
       <w>33</w>
       <h>132</h>
@@ -126,22 +126,22 @@ ConveyorBeltHal
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>517</x>
+      <x>341</x>
       <y>517</y>
-      <w>330</w>
+      <w>385</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>&lt;&lt;service&gt;&gt;
 ConveyorBeltService
 --
-+ changeState(state: ConveyorBeltState)
++ changeConveyorBeltState(state: ConveyorBeltState)
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>836</x>
+      <x>715</x>
       <y>528</y>
       <w>165</w>
       <h>44</h>
@@ -153,7 +153,7 @@ knows</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1056</x>
+      <x>935</x>
       <y>605</y>
       <w>33</w>
       <h>143</h>
@@ -164,7 +164,7 @@ knows</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1144</x>
+      <x>1023</x>
       <y>539</y>
       <w>132</w>
       <h>44</h>
@@ -176,7 +176,7 @@ knows</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1254</x>
+      <x>1133</x>
       <y>506</y>
       <w>143</w>
       <h>110</h>
