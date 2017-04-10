@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>9</zoom_level>
+  <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>531</y>
-      <w>270</w>
-      <h>63</h>
+      <x>946</x>
+      <y>726</y>
+      <w>231</w>
+      <h>77</h>
     </coordinates>
-    <panel_attributes>ConveyorBeltHal
+    <panel_attributes>GPIO
 --
-+  nextState(state : ConveyorBeltState) : void</panel_attributes>
++ setPortPin(port: int, pin: int)
++ clearPortPin(port: int, pin: int)
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
-      <y>279</y>
-      <w>153</w>
-      <h>180</h>
+      <x>242</x>
+      <y>341</y>
+      <w>165</w>
+      <h>143</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enumeration&gt;&gt;
 ConveyorBeltState
@@ -33,15 +35,158 @@ STOP</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>517</x>
+      <y>341</y>
+      <w>330</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IConveyorBelt
+--
++ changeState(state: ConveyorBeltState)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>450</y>
-      <w>63</w>
-      <h>99</h>
+      <x>396</x>
+      <y>374</y>
+      <w>143</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>407</y>
+      <w>33</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2695</x>
+      <y>0</y>
+      <w>110</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>979</x>
+      <y>517</y>
+      <w>176</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;boundary&gt;&gt;
+ConveyorBeltHal
+--
++ set(port: int, pin: int)
++ clr(port: int, pin: int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>968</x>
+      <y>341</y>
+      <w>187</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>/BConveyorBelt/
+--
+/+ set(port: int, pin: int)/
+/+ clr(port: int, pin: int)/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1056</x>
+      <y>407</y>
+      <w>33</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>517</x>
+      <y>517</y>
+      <w>330</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+ConveyorBeltService
+--
++ changeState(state: ConveyorBeltState)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>836</x>
+      <y>528</y>
+      <w>165</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-x
+knows</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1056</x>
+      <y>605</y>
+      <w>33</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1144</x>
+      <y>539</y>
+      <w>132</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1254</x>
+      <y>506</y>
+      <w>143</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Port
+--
+PORTA
+PORTB
+PORTC</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
