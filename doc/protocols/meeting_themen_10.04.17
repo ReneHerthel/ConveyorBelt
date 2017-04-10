@@ -13,7 +13,7 @@ Themen für das kommende Meeting 10.04.17:
 # Die nächsten Issues für das kommende Praktikum besprechen
 
 # Eine Allgemeine GPIO Klasse
- - Beinhaltet EINE Implementierung für das setzen von Bits in den Registern
+ - Beinhaltet EINE Implementierung für das setzen von Bits in den Registern für alle Klassen der HAL
  
  
  
