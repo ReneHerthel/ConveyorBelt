@@ -5,8 +5,8 @@
     <id>UMLClass</id>
     <coordinates>
       <x>825</x>
-      <y>726</y>
-      <w>231</w>
+      <y>682</y>
+      <w>242</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>GPIO
@@ -156,29 +156,29 @@ knows</panel_attributes>
       <x>935</x>
       <y>605</y>
       <w>33</w>
-      <h>143</h>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1023</x>
+      <x>220</x>
       <y>539</y>
-      <w>132</w>
+      <w>143</w>
       <h>44</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1133</x>
+      <x>66</x>
       <y>506</y>
-      <w>143</w>
+      <w>165</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enumeration&gt;&gt;

@@ -123,19 +123,19 @@ knows</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1030</x>
+      <x>460</x>
       <y>410</y>
       <w>140</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1150</x>
+      <x>340</x>
       <y>380</y>
       <w>130</w>
       <h>100</h>
