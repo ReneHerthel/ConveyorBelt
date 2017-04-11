@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>550</x>
-      <y>350</y>
+      <x>530</x>
+      <y>330</y>
       <w>170</w>
       <h>70</h>
     </coordinates>
@@ -17,8 +17,8 @@ MessageReceiver
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>500</x>
-      <y>620</y>
+      <x>480</x>
+      <y>600</y>
       <w>250</w>
       <h>110</h>
     </coordinates>
@@ -35,8 +35,8 @@ MessageReceiver
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>530</x>
-      <y>490</y>
+      <x>510</x>
+      <y>470</y>
       <w>200</w>
       <h>70</h>
     </coordinates>
@@ -49,12 +49,27 @@ MessageReceiver
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>830</x>
+      <x>1000</x>
+      <y>510</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ErrorHandler
+-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
       <y>500</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>ErrorHandler</panel_attributes>
+    <panel_attributes>PuckEvaluation
+-
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
