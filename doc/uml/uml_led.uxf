@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>11</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>583</x>
-      <y>352</y>
-      <w>242</w>
+      <x>590</x>
+      <y>350</y>
+      <w>220</w>
       <h>110</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;service&gt;&gt;
-LedService
---
-+ LedOn(led: Led)
-+ LedOff(led: Led)
-+ LedRead(led: Led): int</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>583</x>
-      <y>154</y>
-      <w>242</w>
-      <h>121</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ILed
@@ -36,10 +20,10 @@ ILed
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
-      <y>264</y>
-      <w>33</w>
-      <h>110</h>
+      <x>690</x>
+      <y>450</y>
+      <w>30</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -47,26 +31,26 @@ ILed
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>583</x>
-      <y>528</y>
-      <w>242</w>
-      <h>110</h>
+      <x>590</x>
+      <y>530</y>
+      <w>220</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;boundary&gt;&gt;
 LedHal
 --
-+ set(port: int, pin: int)
-+ clr(port: int, pin: int)
-+ read...</panel_attributes>
++ LedOn(led: Led)
++ LedOff(led: Led)
++ LedRead(led: Led): int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>913</x>
-      <y>528</y>
-      <w>242</w>
-      <h>110</h>
+      <x>890</x>
+      <y>530</y>
+      <w>220</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>GPIO
 --
@@ -78,59 +62,21 @@ LedHal
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>814</x>
-      <y>572</y>
-      <w>121</w>
-      <h>33</h>
+      <x>800</x>
+      <y>570</y>
+      <w>110</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>693</x>
-      <y>451</y>
-      <w>77</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-x
-knows</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>253</x>
-      <y>528</y>
-      <w>242</w>
+      <x>270</x>
+      <y>350</y>
+      <w>220</w>
       <h>110</h>
-    </coordinates>
-    <panel_attributes>/BLed/
---
-/+ set(port: int, pin: int)/
-/+ clr(port: int, pin: int)/
-/+ read.../</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>484</x>
-      <y>572</y>
-      <w>121</w>
-      <h>33</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>253</x>
-      <y>154</y>
-      <w>242</w>
-      <h>121</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enumeration&gt;&gt;
 Led
@@ -144,22 +90,22 @@ Q2</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>484</x>
-      <y>187</y>
-      <w>121</w>
-      <h>44</h>
+      <x>480</x>
+      <y>380</y>
+      <w>130</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>253</x>
-      <y>352</y>
-      <w>242</w>
-      <h>110</h>
+      <x>270</x>
+      <y>530</y>
+      <w>220</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enumeration&gt;&gt;
 Port
@@ -172,13 +118,13 @@ PORT_C</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>484</x>
-      <y>385</y>
-      <w>121</w>
-      <h>44</h>
+      <x>480</x>
+      <y>560</y>
+      <w>130</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
   </element>
 </diagram>
