@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>350</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>type=actclass
+MessageReceiver
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>500</x>
+      <y>620</y>
+      <w>250</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Puck
+-
+-_info : struct puck_info
+-
++getInfo() : struct puck_info
++setInfo(struct puck_info info)
++evalutaeMessage() : puck_states
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>490</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>PuckStorage
+-
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>830</x>
+      <y>500</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>ErrorHandler</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

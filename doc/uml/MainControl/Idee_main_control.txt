@@ -1,0 +1,18 @@
+Idee:
+1.Die MainControl empfängt alle Pulse Messages
+2.Die Pulse Messages werden an die Pucks weitergegeben
+3.Die Pucks antworten damit, ob und wie sie bewegt werden können. 
+
+Fragen?
+-Fehlerbehandlung, eingene Klasse ohne Pucks zu benutzen
+-Fehler an Pucks weitergeben? Kommen manche Fehler nicht eh von einem Puk
+-Zwei Pucks in einem Zustand, woher weiß der Puk das es jetzt nicht seine Lichtschranke wahr sondern die des Vorgängers
+-Jeder Lichtschrankenzustand hat eigenen Fehler?
+ Beispiel:
+ Zwei Pucks warten auf die gleiche Lichtschranke (Befinden sich dich hintereinander). 
+ Der eine sagt nun Fehler, ich bin zu früh, der andere sagt alles okay. 
+ Die wird dann durch die auswertung der Puk Signale ausgeglichen?
+
+Pucks:
+Jeder Puck hat sein eigenes Objekt, mit State Machine zur fehlerbehebung und zum speichern der einzelnen Positionen.
+(Anfang, Höhenmessung, Soll aussortiert werden, Hinter Sortierung, In der Übergabe).
