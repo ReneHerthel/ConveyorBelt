@@ -156,9 +156,9 @@ Q2</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1040</x>
+      <x>300</x>
       <y>440</y>
-      <w>130</w>
+      <w>120</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enumeration&gt;&gt;
@@ -172,13 +172,13 @@ PORTC</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>940</x>
+      <x>410</x>
       <y>470</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;uses&gt;&gt;</panel_attributes>
-    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
   </element>
 </diagram>
