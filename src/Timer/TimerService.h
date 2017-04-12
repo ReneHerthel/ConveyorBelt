@@ -10,21 +10,21 @@
 
 #include "ITimer.h"
 
-#include <time.h>
-#include <signal.h>
+#include <thread>
 
-#define MILLI 100000
-#define NONE 0
+#define MILLISECOND 100000
 
 class TimerService : public ITimer {
 private:
 	timer_t timerid;
+	char code;
+	int value;
+	int coid;
 	struct sigevent event;
 	struct itimerspec timer;
 public:
 	TimerService(int chid, char code, int value);
-	~TimerService();
-	void setAlarm(milliseconds time, unsigned int messageData);
+	void setAlarm(milliseconds time);
 };
 
 #endif /* SRC_TIMER_TIMERSERVICE_H_ */
