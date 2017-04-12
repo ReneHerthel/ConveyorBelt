@@ -39,7 +39,7 @@ Absprachen:
 	Coding Style:
 		keine \n für {
 		Camelcase für Variablennamen vergabe
-		Für Konstanten mit _
+		Für Konstanten mit ALLCAPS Snakecase (gilt auch für ENUMs)
 		Doxygen
 		Kommentar auf Englisch
 		EP02_coding bis zum 5.4.17 lesen --> alle

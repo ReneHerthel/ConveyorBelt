@@ -11,14 +11,21 @@
 !LICENSE
 !README.*
 
+Do not ignore subfolders
+!*/
+!*/
+
 #C++ Files
 !*.cpp
 !*.h
 
+#C Files
+!*.c
+
 #LaTex Files
-!.tex
+!*.tex
 
 #UMLet Files
-!.uxf
+!*.uxf
 
 
