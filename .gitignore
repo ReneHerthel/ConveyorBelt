@@ -5,12 +5,14 @@
 #Ignore All
 *
 
+# Include directories
+!/**/
+
 #Do not ignore .gitignore and usefull plain text files
 !.gitignore
 !*.txt
 !LICENSE
 !README.*
-
 
 #C++ Files
 !*.cpp
