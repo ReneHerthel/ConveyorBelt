@@ -36,7 +36,7 @@ void TimerService::setAlarm(milliseconds time) {
 	}
 
 	timer.it_value.tv_nsec = time * MILLISECOND;
-	timer.it_value.tv_sec = seconds / INV_SECOND;
+	timer.it_value.tv_sec = seconds / SECOND;
 	timer.it_interval = { 0, 0 }; // Make it a one shot timer
 	timer_settime(timerid, 0, &timer, NULL);
 }
