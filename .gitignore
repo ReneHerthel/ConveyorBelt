@@ -11,9 +11,6 @@
 !LICENSE
 !README.*
 
-Do not ignore subfolders
-!*/
-!*/
 
 #C++ Files
 !*.cpp
