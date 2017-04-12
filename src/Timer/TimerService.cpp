@@ -27,8 +27,21 @@ void TimerService::setAlarm(milliseconds time) {
 		// TODO error handling
 	}
 
+<<<<<<< HEAD
 	timer.it_value.tv_nsec = time * MILLISECOND;
 	timer.it_value.tv_sec = 0;
+=======
+	unsigned int milliseconds = time;
+	unsigned int seconds = 0;
+
+	if(time >= SECOND) {
+		milliseconds = time % SECOND;
+		seconds = (time - milliseconds);
+	}
+
+	timer.it_value.tv_nsec = time * MILLISECOND;
+	timer.it_value.tv_sec = seconds / SECOND;
+>>>>>>> 40196ba03028676478194e37328067d1b9460365
 	timer.it_interval = { 0, 0 }; // Make it a one shot timer
 	timer_settime(timerid, 0, &timer, NULL);
 }
