@@ -1,0 +1,21 @@
+Themen für das kommende Meeting 10.04.17:
+
+# HWaddresses.h
+ - Defines / Bennenung  
+ 
+# Threads
+ - Wissen auf einem Stand bringen
+ 
+# Aufbau/Darstellung unseres Layer-Systems
+ - Wie sind alle unsere Diagramme letzendlich verknüpft?
+ - Grobe Übersicht / Erklärung
+ 
+# Die nächsten Issues für das kommende Praktikum besprechen
+
+# Eine Allgemeine GPIO Klasse
+ - Beinhaltet EINE Implementierung für das setzen von Bits in den Registern für alle Klassen der HAL  
+ 
+ # InterprozessKommuinkation  
+ - außschließlich über PulseMessages?
+ 
+ 
