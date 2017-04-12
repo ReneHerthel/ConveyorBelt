@@ -30,7 +30,7 @@ void TimerService::setAlarm(milliseconds time) {
 	unsigned int milliseconds = time;
 	unsigned int seconds = 0;
 
-	if(time > SECOND) {
+	if(time >= SECOND) {
 		milliseconds = time % SECOND;
 		seconds = (time - milliseconds);
 	}
