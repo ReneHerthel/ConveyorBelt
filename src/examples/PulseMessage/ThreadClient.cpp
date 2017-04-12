@@ -17,11 +17,11 @@ ThreadClient::~ThreadClient() {
 }
 
 void ThreadClient::task(int chid) {
-	int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
-	if(coid < 0) {
-		// TODO error handling
-		std::cout << "client connectAttach failed" << std::endl;
-	}
+//	int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
+//	if(coid < 0) {
+//		// TODO error handling
+//		std::cout << "client connectAttach failed" << std::endl;
+//	}
 
 	struct _pulse pulse;
 
