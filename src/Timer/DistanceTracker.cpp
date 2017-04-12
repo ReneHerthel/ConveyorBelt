@@ -6,9 +6,14 @@
  */
 
 #include "DistanceTracker.h"
+#include "TimerService.h"
 
 DistanceTracker::DistanceTracker(int chid, char code, int value)
-	: timer(chid, code, value) {}
+	: timer(new TimerService(chid, code, value)) {}
+
+DistanceTracker::~DistanceTracker() {
+	delete timer;
+}
 
 void DistanceTracker::setAlarm(DistanceAdapter distance) {
 	timer.setAlarm(distance.getTime());

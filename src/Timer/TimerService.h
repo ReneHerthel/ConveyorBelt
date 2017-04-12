@@ -12,7 +12,9 @@
 
 #include <thread>
 
-#define MILLISECOND 100000
+#define MILLISECOND 1000000
+#define SECOND MILLISECOND * 1000
+#define INV_SECOND 1000
 
 class TimerService : public ITimer {
 private:
