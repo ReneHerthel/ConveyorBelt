@@ -8,13 +8,11 @@
 #ifndef SRC_TIMER_IDISTANCETRACKER_H_
 #define SRC_TIMER_IDISTANCETRACKER_H_
 
-typedef unsigned int centimeters;
-typedef unsigned int millimeters;
+#include "DistanceAdapter.h"
 
 class IDistanceTracker {
 public:
-	virtual void setAlarm(centimeters distance);
-	virtual void setAlarm(millimeters distance);
+	virtual void setAlarm(DistanceAdapter distance) = 0;
 };
 
 

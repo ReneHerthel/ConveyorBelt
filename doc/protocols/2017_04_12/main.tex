@@ -1,0 +1,90 @@
+%        File: main.tex
+%     Created: Sat Jan 14 12:59  2017 C
+% Last Change: Mon Jan 16 10:48  2017 C
+
+\documentclass[a4paper, oneside]{scrreprt}
+\usepackage{scrlayer-scrpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{hyperref}
+
+\usepackage{minutes}
+\usepackage{vhistory}
+
+\clearscrheadings
+\cfoot{v\vhCurrentVersion}
+\ofoot{\pagemark}
+
+% Set header
+\pagestyle{scrheadings}
+% Put header on chapter pages
+\renewcommand*{\chapterpagestyle}{scrheadings}
+
+\begin{document}
+    \title{Protokoll}
+    \author{\vhListAllAuthors}
+    \date{Version \vhCurrentVersion\ vom \vhCurrentDate}
+    \maketitle
+
+    \begin{versionhistory}
+        \vhEntry{0.1}{12.04.2017}{SJE}{Erster Entwurf}
+    \end{versionhistory}
+
+    \begin{Minutes}{Protokoll}
+        \moderation{Jonas Fuhrman}
+        \minutetaker{Stephan Jänecke}
+        \minutesdate{2017-04-12}
+        \starttime{8:50}
+        \endtime{9:42}
+        \participant{Alle} % TODO: Insert names
+        \maketitle
+
+        Die Anwesenheit wurde festgestellt.
+
+        \topic{UML-Ordnerstruktur}
+        Sebastian um Einhaltung der beschlossenen Ordnerstruktur. 
+
+        \topic{Distancetracker}
+
+        \topic{Interface}
+        RegisterToChannel() wird aus Interface in Konstruktur
+        verschoben.
+
+        \topic{Threads}
+        Nichts neues.
+
+        \topic{Interfaces}
+        Komponentendiagram hat Vorrang. Interfaces in
+        Hardwarenahenklassen beginnen mit \texttt{I}.
+
+        \topic{MainController}
+        MsgHandler empfängt PulseMessage. Weitere Klasse PuckSpace
+        beinhaltet alle Pucks auf der aktuelle Anlage. Alle Pucks in
+        erhalten alle eingetroffenen Nachrichten.
+        Puck bildet jeden Puck auf Automaten ab. Nachrichten werden
+        von jedem Puck ausgewertet. Hier erfolgt auch die
+        Fehlererkennung. Error handling erfolgt in anderer Klasse, die
+        nur dem MsgHandler bekannt ist. PuckSpace fragt die Stati aller
+        Pucks ab.
+        Abhängig von den Stati der Pucks erfolgt die Steuerung der
+        Anlage über MachineControl.
+
+        \topic{HWaddresses}
+        Enums und Defines für LEDs und Buttons.
+
+        \topic{Serielle Schnittstelle}
+        Protokoll muss definiert werden.
+
+        \topic{Interprozesskommunikation}
+        Interprozesskommunikation erfolgt über PulseMessages.
+
+        \topic{Aufgaben}
+        \task{Sebastian}{Definierte Interfaces implementieren}
+        \task{Mathis, Stephan}{Control for LightSystem}
+        \task{Jonas}{DistanceTracker}
+        \task{Dennis}{Serielle Schnittstelle: Dokumentation und
+        Implementierungskonzept}
+    \end{Minutes}
+\end{document}
