@@ -1,28 +1,33 @@
 /*
- * Steuerung ob Simulation oder HW Plattform (C Interface)
+ * Copyright (C) 2017 Rene Herthel
  *
- * Diese Datei MUSS ueberall includiert werden, wo auf die HW zugegriffen wird.
- *
+ * This file is subject to the terms and conditions of the MIT License.
+ * See the file LICENSE in the top level directory for more details.
  */
 
-
-/*
- * Ueber SIMULATION wird zwischen Simulation und HW umgeschaltet
+/**
+ * @ingroup    hw
+ * @{
  *
- * Damit die Aenderungen beachtet werden, muss Check Dependencies On/Off -> Check User Headers Only
- * gesetzt sein.
+ * @brief      bundle of header for the hw access.
  *
- * Zur Not : Ein Clean auf das Projekt ausführen
+ * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-// Die drei folgenden includes dürfen nur in dieser Datei stehen
+#ifndef HWACCESS_H_
+#define HWACCESS_H_
 
 #include <stdio.h>
 #include <sys/neutrino.h>
 #include <hw/inout.h>
 
-// End of File
-
+/*
+ * @brief Switch between simulation and h if needed.
+ */
 #ifdef SIMULATION
 #include <ioaccess.h>
 #endif
+
+
+#endif /* HWACCESS_H_ */
+/** @} */

@@ -13,23 +13,29 @@
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
+#ifndef CONVEYORBELTHAL_H_
+#define CONVEYORBELTHAL_H_
 
-#ifndef BCONVEYORBELT_H_
-#define BCONVEYORBELT_H_
+#include "BConveyorBelt.h"
 
-class BConveyorBelt {
+class ConveyorBeltHal : public BConveyorBelt {
 public:
-	/*
-	 * @brief Virtual deconstructor.
-	 */
-	virtual ~BConveyorBelt();
 
 	/*
-	 * @brief Set the corresponding pin in the port.
+	 * @brief Default constructor.
 	 */
-	virtual void setMask(const int mask) = 0;
+	ConveyorBeltHal(const int port);
+
+	/*
+	 * @brief Default deconstructor.
+	 */
+	~ConveyorBeltHal();
+
+	void setMask(const int mask);
+private:
+	int port_;
 };
 
+#endif /* CONVEYORBELTHAL_H_ */
 
-#endif /* BCONVEYORBELT_H_ */
 /** @} */

@@ -14,27 +14,27 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef BLED_H_
-#define BLED_H_
+#ifndef ISORTINGSWITCH_H_
+#define ISORTINGSWITCH_H_
 
-class BLed {
+class ISortingSwitch {
 public:
 
 	/*
-	 * @brief default virtual constructor of the BLed interface.
+	 * @brief The virtual destructor.
 	 */
-	virtual ~BLed();
+	virtual ~ISortingSwitch();
 
 	/*
-	 * @brief Enables the corresponding led.
+	 * @brief Open the SortingSwitch.
 	 */
-	virtual void set() = 0;
+	virtual void sortingSwitchOpen() = 0;
 
 	/*
-	 * @brief Disables the corresponding led.
+	 * @brief Close the SortingSwitch.
 	 */
-	virtual void clear() = 0;
+	virtual void sortingSwitchClose() = 0;
 };
 
-#endif /* BLED_H_ */
+#endif /* ISORTINGSWITCH_H_ */
 /** @} */

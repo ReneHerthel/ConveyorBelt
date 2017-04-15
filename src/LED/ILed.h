@@ -14,27 +14,31 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef BLED_H_
-#define BLED_H_
+#ifndef ILED_H_
+#define ILED_H_
 
-class BLed {
+#include "Led.h"
+
+class ILed {
 public:
 
 	/*
-	 * @brief default virtual constructor of the BLed interface.
+	 * @brief The virtual deconstructor.
 	 */
-	virtual ~BLed();
+	virtual ~ILed();
 
 	/*
-	 * @brief Enables the corresponding led.
+	 * @brief Turns the led on
+	 * @param The led which should be turned on
 	 */
-	virtual void set() = 0;
+	virtual void ledOn(const Led led) = 0;
 
 	/*
-	 * @brief Disables the corresponding led.
+	 * @brief Turn the led off
+	 * @param The led which should be turned off
 	 */
-	virtual void clear() = 0;
+	virtual void ledOff(const Led led) = 0;
 };
 
-#endif /* BLED_H_ */
+#endif /* ILED_H_ */
 /** @} */

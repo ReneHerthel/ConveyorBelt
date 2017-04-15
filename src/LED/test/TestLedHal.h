@@ -6,24 +6,25 @@
  */
 
 /**
- * @ingroup    conveyor_belt
+ * @ingroup    led
  * @{
  *
- * @brief      Enum declaration of the ConveyorBelt component
+ * @brief      test of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef CONVEYORBELTSTATE_H_
-#define CONVEYORBELTSTATE_H_
+#ifndef TESTLEDHAL_H_
+#define TESTLEDHAL_H_
 
-enum ConveyorBeltState {
-	RIGHTFAST,
-	RIGHTSLOW,
-	LEFTFAST,
-	LEFTSLOW,
-	STOP,
+class TestLedHal {
+public:
+
+	/*
+	 * @brief Quickly test the functionality of the led component.
+	 */
+	static void startTest();
 };
 
-#endif /* CONVEYORBELTSTATE_H_ */
+#endif /* TESTLEDHAL_H_ */
 /** @} */
