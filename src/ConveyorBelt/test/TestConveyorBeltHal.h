@@ -14,22 +14,17 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef BCONVEYORBELT_H_
-#define BCONVEYORBELT_H_
+#ifndef TESTCONVEYORBELTHAL_H_
+#define TESTCONVEYORBELTHAL_H_
 
-class BConveyorBelt {
+class TestConveyorBeltHal {
 public:
-	/*
-	 * @brief Virtual deconstructor.
-	 */
-	virtual ~BConveyorBelt();
 
 	/*
-	 * @brief Set the corresponding pin in the port.
+	 * @brief Quickly test the functionality of the led component.
 	 */
-	virtual void setMask(const int mask) = 0;
+	static void startTest();
 };
 
-
-#endif /* BCONVEYORBELT_H_ */
+#endif /* TESTCONVEYORBELTHAL_H_ */
 /** @} */

@@ -6,24 +6,23 @@
  */
 
 /**
- * @ingroup    conveyor_belt
+ * @ingroup    led
  * @{
  *
- * @brief      Enum declaration of the ConveyorBelt component
+ * @brief      Function declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef CONVEYORBELTSTATE_H_
-#define CONVEYORBELTSTATE_H_
+#ifndef LED_H_
+#define LED_H_
 
-enum ConveyorBeltState {
-	RIGHTFAST,
-	RIGHTSLOW,
-	LEFTFAST,
-	LEFTSLOW,
-	STOP,
+enum Led {
+	START,
+	RESET,
+	Q1,
+	Q2,
 };
 
-#endif /* CONVEYORBELTSTATE_H_ */
+#endif /* LED_H_ */
 /** @} */

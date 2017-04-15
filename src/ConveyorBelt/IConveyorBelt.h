@@ -14,22 +14,24 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef BCONVEYORBELT_H_
-#define BCONVEYORBELT_H_
+#ifndef ICONVEYORBELT_H_
+#define ICONVEYORBELT_H_
 
-class BConveyorBelt {
+#include "ConveyorBeltState.h"
+
+class IConveyorBelt {
 public:
-	/*
-	 * @brief Virtual deconstructor.
-	 */
-	virtual ~BConveyorBelt();
 
 	/*
-	 * @brief Set the corresponding pin in the port.
+	 * @brief Virtual destructor.
 	 */
-	virtual void setMask(const int mask) = 0;
+	virtual ~IConveyorBelt();
+
+	/*
+	 * @brief Changes the state of the conveyor belt by using the ConveyorBeltStates.
+	 */
+	virtual void ConveyorBeltChangeState(const ConveyorBeltState state) = 0;
 };
 
-
-#endif /* BCONVEYORBELT_H_ */
+#endif /* ICONVEYORBELT_H_ */
 /** @} */

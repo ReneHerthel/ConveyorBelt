@@ -1,35 +1,40 @@
 /*
-* Copyright (C) 2017 Rene Herthel
-*
-* This file is subject to the terms and conditions of the MIT License.
-* See the file LICENSE in the top level directory for more details.
-*/
+ * Copyright (C) 2017 Rene Herthel
+ *
+ * This file is subject to the terms and conditions of the MIT License.
+ * See the file LICENSE in the top level directory for more details.
+ */
 
 /**
- * @ingroup    led
+ * @ingroup    sortingswitch
  * @{
  *
- * @brief      Function declaration of the LED component
+ * @brief      Function declaration of the SortingSwitch component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef B_SORTING_SWITCH_H_
-#define B_SORTING_SWITCH_H_
+#ifndef BSORTINGSWITCH_H_
+#define BSORTINGSWITCH_H_
 
 class BSortingSwitch {
 public:
+
+	/*
+	 * @brief The virtual destructor.
+	 */
 	virtual ~BSortingSwitch();
 
 	/*
-	 * @brief Opens the sorting switch by setting the corresponding bit.
+	 * @brief Set the corresponding pin in the register.
 	 */
-	virtual void open() = 0;
+	virtual void setPin(const int pin) = 0;
 
 	/*
-	 * @brief Close the sorting switch by setting the corresponding bit.
+	 * @brief Clear the corresponding pin in the register.
 	 */
-	virtual void close() = 0;
+	virtual void clearPin(const int pin) = 0;
 };
 
-#endif /* B_SORTING_SWITCH_H_ */
+#endif /* BSORTINGSWITCH_H_ */
+/** @} */
