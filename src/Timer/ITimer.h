@@ -12,11 +12,9 @@ typedef unsigned int milliseconds;
 
 class ITimer {
 public:
-<<<<<<< HEAD
+
 	virtual void setAlarm(milliseconds time, unsigned int messageData) = 0;
-=======
-	virtual void setAlarm(milliseconds time) = 0;
->>>>>>> 40196ba03028676478194e37328067d1b9460365
+
 };
 
 
