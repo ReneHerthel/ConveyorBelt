@@ -42,8 +42,8 @@ valign=top
       <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-msg(OPERARTING,
-ALWASYS_ON)</panel_attributes>
+msg(GREEN,
+ALWAYS_ON)</panel_attributes>
     <additional_attributes>160.0;130.0;10.0;130.0;10.0;10.0</additional_attributes>
   </element>
   <element>
@@ -69,8 +69,8 @@ ALWASYS_ON)</panel_attributes>
 
 
 
-msg(OPERARTING,ALWAYS_OFF)
-msg(CLEAR_ALL,ALWAYS_OFF)
+msg(GREEN,ALWAYS_OFF)
+msg(ALL_COLORS,ALWAYS_OFF)
 </panel_attributes>
     <additional_attributes>110.0;20.0;130.0;20.0;130.0;150.0</additional_attributes>
   </element>
@@ -83,7 +83,7 @@ msg(CLEAR_ALL,ALWAYS_OFF)
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-msg(WARNING,SLOW_BLINKING)</panel_attributes>
+msg(YELLOW,SLOW_BLINKING)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
@@ -91,7 +91,7 @@ msg(WARNING,SLOW_BLINKING)</panel_attributes>
     <coordinates>
       <x>594</x>
       <y>504</y>
-      <w>144</w>
+      <w>126</w>
       <h>306</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
@@ -108,7 +108,7 @@ msg(WARNING,SLOW_BLINKING)</panel_attributes>
 
 
 msg(
-ERROR_OCCURED,
+RED,
 FAST_BLINKING)</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0;10.0;320.0;100.0;320.0</additional_attributes>
   </element>
@@ -122,7 +122,7 @@ FAST_BLINKING)</panel_attributes>
     </coordinates>
     <panel_attributes>lt=-&gt;
 msg(
-OPERATING,
+GREEN,
 ALWAYS_ON)</panel_attributes>
     <additional_attributes>550.0;730.0;550.0;750.0;10.0;750.0;10.0;10.0;420.0;10.0;420.0;60.0</additional_attributes>
   </element>
@@ -131,12 +131,12 @@ ALWAYS_ON)</panel_attributes>
     <coordinates>
       <x>810</x>
       <y>549</y>
-      <w>243</w>
+      <w>135</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 msg(
-ERROR_GONE_UNACKNOWLEDGED
+RED
 ,SLOW_BLINKING)</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
   </element>
@@ -159,7 +159,7 @@ ERROR_GONE_UNACKNOWLEDGED
 
 
 msg(
-ERROR_OCCURED,
+RED,
 FAST_BLINKING)</panel_attributes>
     <additional_attributes>230.0;10.0;10.0;10.0;10.0;580.0;390.0;580.0</additional_attributes>
   </element>
@@ -188,7 +188,7 @@ FAST_BLINKING)</panel_attributes>
 
 
 msg(
-ERROR_GONE_UNACKNOWLEDGED,
+RED,
 SLOW_BLINKING)</panel_attributes>
     <additional_attributes>140.0;10.0;10.0;10.0;10.0;530.0;300.0;530.0</additional_attributes>
   </element>
@@ -197,7 +197,7 @@ SLOW_BLINKING)</panel_attributes>
     <coordinates>
       <x>702</x>
       <y>549</y>
-      <w>216</w>
+      <w>108</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
@@ -207,7 +207,7 @@ SLOW_BLINKING)</panel_attributes>
 
 
 
-msg(ERROR_ACKNOWLEDGED,
+msg(RED,
 ALWAYS_ON)</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
   </element>
@@ -230,7 +230,7 @@ ALWAYS_ON)</panel_attributes>
 
 
 
-msg(WARNING,
+msg(YELLOW,
 SLOW_BLINKING)</panel_attributes>
     <additional_attributes>320.0;50.0;320.0;10.0;760.0;10.0;760.0;750.0;10.0;750.0;10.0;730.0</additional_attributes>
   </element>
@@ -239,7 +239,7 @@ SLOW_BLINKING)</panel_attributes>
     <coordinates>
       <x>837</x>
       <y>513</y>
-      <w>306</w>
+      <w>288</w>
       <h>297</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
@@ -250,9 +250,9 @@ SLOW_BLINKING)</panel_attributes>
 
 
 
-msg(CLEAR_ERROR,
+msg(RED,
 ALWAYS_OFF)
-msg(CLEAR_ALL,
+msg(ALL_COLORS,
 ALWAYS_OFF)</panel_attributes>
     <additional_attributes>10.0;310.0;180.0;310.0;180.0;10.0;20.0;10.0</additional_attributes>
   </element>
@@ -285,15 +285,15 @@ symbol=substate</panel_attributes>
     <coordinates>
       <x>846</x>
       <y>351</y>
-      <w>315</w>
+      <w>288</w>
       <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
 
-msg(CLEAR_WARNING,
+msg(YELLOW,
 ALWAYS_OFF)
-msg(CLEAR_ALL,
+msg(ALL_COLORS,
 ALWAYS_OFF)
 </panel_attributes>
     <additional_attributes>180.0;10.0;180.0;140.0;10.0;140.0</additional_attributes>
@@ -303,11 +303,11 @@ ALWAYS_OFF)
     <coordinates>
       <x>837</x>
       <y>279</y>
-      <w>675</w>
+      <w>567</w>
       <h>585</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-msg(ERROR_ACKNOWLEDGED,
+msg(RED,
 ALWAYS_ON)</panel_attributes>
     <additional_attributes>350.0;10.0;520.0;10.0;520.0;630.0;10.0;630.0</additional_attributes>
   </element>
@@ -322,8 +322,8 @@ ALWAYS_ON)</panel_attributes>
     <panel_attributes>lt=-&gt;
 
 
-msg(OPERARTING,
-ALWASYS_ON)</panel_attributes>
+msg(GREEN,
+ALWAYS_ON)</panel_attributes>
     <additional_attributes>410.0;60.0;410.0;20.0;10.0;20.0;10.0;70.0</additional_attributes>
   </element>
   <element>
@@ -335,7 +335,7 @@ ALWASYS_ON)</panel_attributes>
       <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-msg(WARNING,
+msg(YELLOW,
 SLOW_BLINKING)</panel_attributes>
     <additional_attributes>10.0;140.0;10.0;10.0;190.0;10.0</additional_attributes>
   </element>
@@ -352,7 +352,7 @@ SLOW_BLINKING)</panel_attributes>
 
 
 
-msg(ERROR_ACKNOWLEDGED,
+msg(RED,
 ALWAYS_ON)</panel_attributes>
     <additional_attributes>280.0;10.0;10.0;10.0;10.0;630.0;440.0;630.0</additional_attributes>
   </element>
@@ -361,7 +361,7 @@ ALWAYS_ON)</panel_attributes>
     <coordinates>
       <x>837</x>
       <y>333</y>
-      <w>459</w>
+      <w>441</w>
       <h>495</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
@@ -376,7 +376,7 @@ ALWAYS_ON)</panel_attributes>
 
 
 msg(
-ERROR_OCCURED,
+RED,
 FAST_BLINKING)</panel_attributes>
     <additional_attributes>350.0;10.0;360.0;10.0;360.0;530.0;10.0;530.0</additional_attributes>
   </element>
@@ -385,7 +385,7 @@ FAST_BLINKING)</panel_attributes>
     <coordinates>
       <x>837</x>
       <y>306</y>
-      <w>666</w>
+      <w>549</w>
       <h>540</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
@@ -395,7 +395,7 @@ FAST_BLINKING)</panel_attributes>
 
 
 msg(
-ERROR_GONE_UNACKNOWLEDGED,
+RED,
 SLOW_BLINKING)</panel_attributes>
     <additional_attributes>350.0;10.0;470.0;10.0;470.0;580.0;10.0;580.0</additional_attributes>
   </element>
