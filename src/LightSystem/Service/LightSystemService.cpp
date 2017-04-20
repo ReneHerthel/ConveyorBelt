@@ -12,6 +12,8 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
 	Color COLOR;
 	Frequency FREQUENCY;
 
+        /* TODO: Replace switch case by array of structs. The structs
+         * contain color and frequency.  */
     switch (warningLevel) {
     case OPERATING:
     	COLOR = GREEN;
