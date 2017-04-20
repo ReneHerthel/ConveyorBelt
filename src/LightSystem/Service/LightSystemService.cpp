@@ -25,7 +25,7 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     	break;
     case WARNING:
     	COLOR = YELLOW;
-    	FREQUENCY = SLOW_BLINKING; // FIXME: Specify frequency
+    	FREQUENCY = SLOW_BLINKING;
     	break;
     case CLEAR_WARNING:
     	COLOR = YELLOW;
@@ -59,3 +59,7 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     //res = MsgSendPulse ( coid, priority, code, value ) ;
 }
 
+
+void LightSystemService::setLights(Color lightColor, Frequency lightFrequency) {
+
+}

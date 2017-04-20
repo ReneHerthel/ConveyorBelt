@@ -17,6 +17,7 @@ class LightSystemService : public ILightSystem {
 	private:
 		LightSystemController* controller;
 		int channelId;
+        void setLights(Color lightColor, Frequency lightFrequency);
 } ;
 
 #endif
