@@ -9,7 +9,7 @@
 
 //#include "ITimer.h"
 #include "BLightSystem.h"
-
+#include "enum.h"
 class LightSystemController {
     public:
 		LightSystemController(int chid
@@ -21,8 +21,6 @@ class LightSystemController {
         //ITimer* timer;
         BLightSystem* halObject;
         int task(void);
-        void setLights(Color lightColor, Frequency lightFrequency);
-
 };
 
 #endif
