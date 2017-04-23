@@ -90,8 +90,8 @@ valign=top
       <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[height &lt; PUK_HEIGHT + DELTA
-&amp;&amp; height &gt; PUK_HEIGHT - DELTA]</panel_attributes>
+[height &lt; PUCK_HEIGHT + DELTA
+&amp;&amp; height &gt; PUCK_HEIGHT - DELTA]</panel_attributes>
     <additional_attributes>10.0;210.0;280.0;210.0;280.0;10.0</additional_attributes>
   </element>
   <element>
@@ -102,7 +102,7 @@ valign=top
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>BIT_OR_FLIPPED_PUK
+    <panel_attributes>BIT_OR_FLIPPED_PUCK
 --
 entry / startTimer()
             bitCount = 0
@@ -122,7 +122,7 @@ valign=top
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>NORMAL_PUK
+    <panel_attributes>NORMAL_PUCK
 --
 entry / startTimer()
 do / height = refHeight
@@ -141,8 +141,8 @@ valign=top
       <h>161</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-[height &lt; PUK_HOLE_HEIGHT + DELTA
-&amp;&amp; height &gt; PUK_HOLE_HEIGHT - DELTA]</panel_attributes>
+[height &lt; PUCK_HOLE_HEIGHT + DELTA
+&amp;&amp; height &gt; PUCK_HOLE_HEIGHT - DELTA]</panel_attributes>
     <additional_attributes>10.0;20.0;310.0;20.0;310.0;210.0</additional_attributes>
   </element>
   <element>
@@ -213,7 +213,7 @@ PATTERN_READ</panel_attributes>
       <w>917</w>
       <h>546</h>
     </coordinates>
-    <panel_attributes>BIT_OR_FLIPPED_PUK</panel_attributes>
+    <panel_attributes>BIT_OR_FLIPPED_PUCK</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -286,12 +286,12 @@ valign=top
       <x>448</x>
       <y>700</y>
       <w>168</w>
-      <h>91</h>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [height &lt; refHeight + DELTA
 &amp;&amp; height &gt; refHeight - DELTA]</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -302,8 +302,8 @@ valign=top
       <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[height &lt; PUK_HEIGHT + DELTA
-&amp;&amp; height &gt; PUK_HEIGHT - DELTA]</panel_attributes>
+[height &lt; PUCK_HEIGHT + DELTA
+&amp;&amp; height &gt; PUCK_HEIGHT - DELTA]</panel_attributes>
     <additional_attributes>10.0;100.0;320.0;100.0;320.0;10.0</additional_attributes>
   </element>
   <element>
@@ -314,7 +314,7 @@ valign=top
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>PUK_SURFACE
+    <panel_attributes>PUCK_SURFACE
 --
 do / height = refHeight
         - getHeight()
@@ -343,7 +343,7 @@ TIMEOUT / msgSend(error)</panel_attributes>
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>FLIPPED_PUK
+    <panel_attributes>FLIPPED_PUCK
 --
 entry / msgSend(flipped)
             PATTERN_READ
@@ -444,31 +444,16 @@ valign=top
     <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
   </element>
   <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>392</x>
-      <y>777</y>
-      <w>126</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>MESUREMENT_END
---
-
-valign=top
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
       <x>154</x>
       <y>805</y>
-      <w>252</w>
+      <w>301</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [bitCount = 0]</panel_attributes>
-    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>410.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
@@ -478,7 +463,7 @@ valign=top
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>INVALID_PUK
+    <panel_attributes>INVALID_PUCK
 --
 entry / msgSend(invalid)
             PATTERN_READ
@@ -491,26 +476,26 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>511</x>
+      <x>462</x>
       <y>805</y>
-      <w>259</w>
+      <w>308</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [bitCount &gt; MAX_BIT_SIZE]</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;420.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>448</x>
-      <y>847</y>
+      <y>826</y>
       <w>42</w>
-      <h>105</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [else]</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
@@ -520,12 +505,23 @@ valign=top
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>BIT_CODED_PUK
+    <panel_attributes>BIT_CODED_PUCK
 --
 entry / msgSend(pattern)
             PATTERN_READ
 valign=top
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>441</x>
+      <y>805</y>
+      <w>28</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
