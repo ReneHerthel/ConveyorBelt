@@ -6,10 +6,10 @@
  */
 
  /**
-  * @ingroup    conveyor_belt
+  * @ingroup    hw
   * @{
   *
-  * @brief      Enums declaration of the ConveyorBelt component
+  * @brief      Handy hardware definitions.
   *
   * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
   */
@@ -35,6 +35,8 @@
 #define PORT_ADDR_A        0x300
 #define PORT_ADDR_B        0x301
 #define PORT_ADDR_C        0x302
+#define PORT_ADDR_AIO      0x320
+#define PORT_ADDR_DIO      0x300
 
 /*
  * @brief The mask of the Led pins.
@@ -57,6 +59,14 @@
  * @brief Mask of the SortingSwitch.
  */
 #define SORTING_SWITCH_MASK 0x10
+
+/*
+ * @brief Defines for the AIO port.
+ */
+#define HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE    0x02
+#define HEIGHT_MEASUREMENT_START_CODE         0x10
+#define HEIGHT_MEASUREMENT_OFFSET_HIGH_BYTE   0x03
+
 
 #endif /* HWDEFINES_H_ */
 /** @} */
