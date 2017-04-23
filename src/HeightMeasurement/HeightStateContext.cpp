@@ -9,22 +9,15 @@
  * @ingroup    height_measurement
  * @{
  *
- * @brief      Enum declaration of the HeightMeasurement component
+ * @brief      Interface declaration of the HeightMeasurement component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef HEIGHTMEASUREMENTSTATE_H_
-#define HEIGHTMEASUREMENTSTATE_H_
+#include "HeightStateContext.h"
 
-enum HeightMeasurementState {
-	START,
-	MEASURING,
-	NORMAL_PUK,
-	PUK_SURFACE,
-	BIT_OR_FLIPPED_PUK,
-};
+void HeightStateContext::registerToChannel() {
+    // TODO    
+}
 
-
-#endif /* HEIGHTMEASUREMENTSTATE_H_ */
 /** @} */

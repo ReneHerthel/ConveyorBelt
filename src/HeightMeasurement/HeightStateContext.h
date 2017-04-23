@@ -14,18 +14,33 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef IHEIGHTMEASUREMENT_H_
-#define IHEIGHTMEASUREMENT_H_
+#ifndef HEIGHTSTATECONTEXT_H_
+#define HEIGHTSTATECONTEXT_H_
 
-class IHeightMeasurement {
+include "HeightState.h"
+
+class HeightStateContext : public IHeightMeasurement {
 public:
 
     /*
      * @brief TODO
      */
-    void registerToChannel() = 0;
+    void registerToChannel( /* TODO */);
+
+    // TODO declare more interface functionality.
+
+private:
+
+    /*
+     * @brief TODO
+     */
+    HeightState *state;
+
+    /*
+     * @brief TODO
+     */
+    int heightReference;
 }
 
-
-#endif /* IHEIGHTMEASUREMENT_H_ */
+#endif /* HEIGHTSTATECONTEXT_H_ */
 /** @} */
