@@ -28,8 +28,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
-      <y>315</y>
+      <x>405</x>
+      <y>378</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -49,8 +49,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>666</x>
-      <y>315</y>
+      <x>783</x>
+      <y>378</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -69,8 +69,8 @@ bg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>504</x>
-      <y>378</y>
+      <x>621</x>
+      <y>441</y>
       <w>180</w>
       <h>54</h>
     </coordinates>
@@ -83,8 +83,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>666</x>
-      <y>522</y>
+      <x>783</x>
+      <y>585</y>
       <w>117</w>
       <h>81</h>
     </coordinates>
@@ -99,8 +99,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
-      <y>522</y>
+      <x>918</x>
+      <y>585</y>
       <w>135</w>
       <h>81</h>
     </coordinates>
@@ -116,8 +116,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>954</x>
-      <y>522</y>
+      <x>1071</x>
+      <y>585</y>
       <w>180</w>
       <h>81</h>
     </coordinates>
@@ -133,8 +133,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1152</x>
-      <y>522</y>
+      <x>1269</x>
+      <y>585</y>
       <w>180</w>
       <h>81</h>
     </coordinates>
@@ -150,8 +150,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1350</x>
-      <y>522</y>
+      <x>1467</x>
+      <y>585</y>
       <w>180</w>
       <h>81</h>
     </coordinates>
@@ -166,8 +166,8 @@ bg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>468</y>
+      <x>828</x>
+      <y>531</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -177,8 +177,8 @@ bg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
-      <y>468</y>
+      <x>972</x>
+      <y>531</y>
       <w>27</w>
       <h>72</h>
     </coordinates>
@@ -188,8 +188,8 @@ bg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>441</y>
+      <x>999</x>
+      <y>504</y>
       <w>171</w>
       <h>99</h>
     </coordinates>
@@ -199,8 +199,8 @@ bg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>405</y>
+      <x>999</x>
+      <y>468</y>
       <w>378</w>
       <h>135</h>
     </coordinates>
@@ -210,8 +210,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
-      <y>81</y>
+      <x>405</x>
+      <y>144</y>
       <w>225</w>
       <h>27</h>
     </coordinates>
@@ -223,8 +223,8 @@ Thread / Client
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>99</y>
+      <x>513</x>
+      <y>162</y>
       <w>63</w>
       <h>234</h>
     </coordinates>
@@ -235,8 +235,8 @@ Thread / Client
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>207</x>
-      <y>162</y>
+      <x>324</x>
+      <y>225</y>
       <w>171</w>
       <h>99</h>
     </coordinates>
@@ -252,8 +252,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>639</x>
-      <y>270</y>
+      <x>756</x>
+      <y>333</y>
       <w>927</w>
       <h>504</h>
     </coordinates>
@@ -264,8 +264,8 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>369</y>
+      <x>999</x>
+      <y>432</y>
       <w>576</w>
       <h>171</h>
     </coordinates>
@@ -275,8 +275,8 @@ bg=green</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>999</x>
-      <y>108</y>
+      <x>1116</x>
+      <y>171</y>
       <w>153</w>
       <h>144</h>
     </coordinates>
@@ -296,8 +296,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>639</x>
-      <y>90</y>
+      <x>756</x>
+      <y>153</y>
       <w>342</w>
       <h>162</h>
     </coordinates>
@@ -309,8 +309,8 @@ bg=red</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>468</x>
-      <y>729</y>
+      <x>585</x>
+      <y>792</y>
       <w>153</w>
       <h>90</h>
     </coordinates>
@@ -325,8 +325,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>468</y>
+      <x>603</x>
+      <y>531</y>
       <w>198</w>
       <h>108</h>
     </coordinates>
@@ -337,8 +337,8 @@ context 1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>468</y>
+      <x>585</x>
+      <y>531</y>
       <w>414</w>
       <h>180</h>
     </coordinates>
@@ -348,8 +348,8 @@ context 1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>468</y>
+      <x>549</x>
+      <y>531</y>
       <w>828</w>
       <h>234</h>
     </coordinates>
@@ -359,8 +359,8 @@ context 1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>468</y>
+      <x>567</x>
+      <y>531</y>
       <w>612</w>
       <h>207</h>
     </coordinates>
@@ -370,12 +370,34 @@ context 1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
-      <y>468</y>
+      <x>531</x>
+      <y>531</y>
       <w>1044</w>
       <h>261</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;270.0;1140.0;270.0;1140.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>54</x>
+      <y>378</y>
+      <w>342</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Note:
+Implementiert wird das State-Pattern dadurch,
+dass man für jeden Zustand eine eigene Klasse 
+realisiert. Diese besitzen eine gemeinsame 
+Basisklasse. Für jede *FUNKTION*, deren *VERHALTEN* 
+sich ändern soll, wird in der Basisklasse eine 
+virtuelle Methode angelegt, die in den abgeleiteten 
+Klassen überschrieben wird. Ruft man von außen eine 
+Methode des Objekts auf, wird in Wirklichkeit 
+eine Methode des gerade aktiven inneren 
+Zustand-Objekts aufgerufen. 
+bg=cyan</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
