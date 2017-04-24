@@ -10,7 +10,8 @@
 #include "enum.h"
 
 class ILightSystem {
-    public virtual void setWarningLevel(Level warningLevel);
-}
+	public:
+		virtual void setWarningLevel(Level warningLevel);
+};
 
 #endif
