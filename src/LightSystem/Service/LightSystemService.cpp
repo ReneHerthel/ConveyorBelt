@@ -8,9 +8,7 @@
 #include "LightSystemService.h"
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
-	// Send light color and frequency to Controller
-	Color COLOR;
-	Frequency FREQUENCY;
+    LightMessage[] 
 
         /* TODO: Replace switch case by array of structs. The structs
          * contain color and frequency.  */
@@ -55,11 +53,5 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     	// TODO: Specify default case
     }
 
-    //controller->setLights(COLOR, FREQUENCY); // FIXME: Replace by pulse message send
     //res = MsgSendPulse ( coid, priority, code, value ) ;
-}
-
-
-void LightSystemService::setLights(Color lightColor, Frequency lightFrequency) {
-
 }
