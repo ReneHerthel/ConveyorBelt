@@ -11,13 +11,17 @@
 #include "LightSystemController.h"
 #include "ILightSystem.h"
 
+struct LightMessage {
+    Color color;
+    Frequency frequency;
+}
+
 class LightSystemService : public ILightSystem {
 	public:
 		void setWarningLevel(Level warningLevel);
 	private:
 		LightSystemController* controller;
 		int channelId;
-        void setLights(Color lightColor, Frequency lightFrequency);
 } ;
 
 #endif
