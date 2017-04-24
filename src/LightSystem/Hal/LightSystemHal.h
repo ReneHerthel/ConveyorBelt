@@ -19,6 +19,7 @@
 #define GREEN_SHIFT		5
 #define YELLOW_SHIFT	6
 #define RED_SHIFT		7
+#define ALL_SHIFT		(GREEN_SHIFT | YELLOW_SHIFT | RED_SHIFT)
 #define CTRL_REG_GROUP0     0x303
 /*
  * PORT A : OUTPUT

@@ -1,12 +1,13 @@
-// =====================================================================================
-// LightSystemController.cpp : Controller sets Lights according to
-// warning level
-// 
-//    Copyright (c) 2017 Stephan Jaenecke <stephan.jaenecke@haw-hamburg.de>
-// =====================================================================================
+/*
+ * LightSystemController_new.cpp
+ *
+ *  Created on: 24.04.2017
+ *      Author: Matthis Keppner
+ */
 
 #include "LightSystemController.h"
 #include "ITimer.h"
+
 LightSystemController :: LightSystemController(int chid
 		//, ITimer* timer
 		, BLightSystem* boundary)
@@ -23,320 +24,97 @@ int LightSystemController::task(){
 				<< std::endl;
 		return EXIT_FAILURE;
 	}
-	int state = ALL_ALWAYS_OFF;
-	int msg;
-	while(1){
-		// Wait for pulse message
-		// Process message
 
-		switch(state){
-			case ALL_ALWAYS_OFF:
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case WARNING and SLOW_BLINKING :
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					default:
 
-				}
-				break;
-			case GREEN_ALWAYS_ON:
-				switch(msg){
-					case WARNING and SLOW_BLINKING :
-						lightOff(GREEN);
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						lightOff(GREEN);
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						lightOff(GREEN);
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						lightOff(GREEN);
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					case NOT_OPERATING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						lightOff(GREEN);
-						state = ALL_ALWAYS_OFF;
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case YELLOW_ON    :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-					 	lightOff(YELLOW);
-					 	state = GREEN_ALWAYS_ON;
-					 	lightOn(GREEN);
-					 	break;
-					case TIMER_OFF and MSG_YELLOW :
-						lightOff(YELLOW);
-						state = YELLOW_OFF;
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						lightOff(YELLOW);
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						lightOff(YELLOW);
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						lightOff(YELLOW);
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						lightOff(YELLOW);
-						state = ALL_ALWAYS_OFF;
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case YELLOW_OFF   :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case TIMER_OFF and MSG_YELLOW :
-						state = YELLOW_ON;
-						lightON(YELLOW);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						state = ALL_ALWAYS_OFF;
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case RED_ALWAYS_ON:
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						lightOff(RED);
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						lightOff(RED);				//cause of exit action
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case WARNING and SLOW_BLINKING:
-						lightOff(RED);
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						lightOff(RED);
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						lightOff(RED);
-						state = ALL_ALWAYS_OFF;
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case RED_FAST_ON  :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						lightOff(RED);
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						lightOff(RED);				//cause of exit action
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case WARNING and SLOW_BLINKING:
-						lightOff(RED);
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						lightOff(RED);
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
+return 1;
+}
 
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						lightOff(RED);
-						state = ALL_ALWAYS_OFF;
-						break;
-					case TIMER_OFF and RED_FAST :
-						lightOff(RED);
-						state = RED_FAST_OFF;
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case RED_FAST_OFF :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case ERROR_GONE_UNACKNOWLEDGED and SLOW_BLINKING:
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case WARNING and SLOW_BLINKING:
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						state = ALL_ALWAYS_OFF;
-						break;
-					case TIMER_OFF and MSG_RED_FAST :
-						state = RED_FAST_ON;
-						lightOn(RED);
-						timer.setAlarm(FAST_BLINKING);	//todo replace by clever message
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case RED_SLOW_ON  :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						lightOff(RED);
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						lightOff(RED);				//cause of exit action
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case WARNING and SLOW_BLINKING:
-						lightOff(RED);
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						lightOff(RED);
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						lightOff(RED);
-						state = ALL_ALWAYS_OFF;
-						break;
-					case TIMER_OFF and MSG_RED_SLOW :
-						lightOff(RED);
-						state = RED_SLOW_OFF;
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			case RED_SLOW_OFF :
-				switch(msg){
-					case OPERATING and ALWAYS_ON:
-						state = GREEN_ALWAYS_ON;
-						lightOn(GREEN);
-						break;
-					case ERROR_OCCURED and FAST_BLINKING:
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					case WARNING and SLOW_BLINKING:
-						state = YELLOW_ON;
-						lightOn(YELLOW);
-						break;
-					case ERROR_ACKNOWLEDGED and ALWAYS_ON:
-						state = RED_ALWAYS_ON;
-						lightOn(RED);
-						break;
-					case CLEAR_WARNING and ALWAYS_OFF or CLEAR_ALL and ALWAYS_OFF:
-						state = ALL_ALWAYS_OFF;
-						break;
-					case TIMER_OFF and MSG_RED_SLOW :
-						state = RED_SLOW_ON;
-						lightOn(RED);
-						timer.setAlarm(SLOW_BLINKING);	//todo replace by clever message
-						break;
-					default:
-							//todo error handling
-				}
-				break;
-			default:
-				//todo error handling
+
+
+class Context {
+private:
+	struct State {//top-level state
+		//virtual void signalA(){}//put code here for signalA in superstate
+		virtual void green(){
+			boundary.lightOff(ALL);
+			new (this) Green;// change to state Green
 		}
+		virtual void yellow(){
+			boundary.lightOff(ALL);
+			new (this) Yellow_slow;// change to state Green
+		}
+		virtual void red(){
+			boundary.lightOff(ALL);
+			new (this) RED_on;
+		}
+		virtual void all(){
+			new (this) all;
+		}
+		virtual void always_on(){}
+		virtual void always_off(){}
+		virtual void slow_blinking(){}
+		virtual void fast_blinking(){}
+		virtual void timer_sig(){}
+
+	} *statePtr;   // a pointer to current state. Used for polymorphism.
+
+	struct INIT : public State { //start state
+	};
+	struct Green : public State {
+		virtual void always_on(){
+			boundary.lightOn(GREEN);
+		}
+		virtual void always_off(){
+			boundary.lightOff(GREEN);
+		}
+	};
+
+	struct Yellow_slow : public State {
+		virtual void always_on(){   //unsure if necessary
+			boundary.lightOn(YELLOW);
+		}
+		virtual void always_off(){
+			boundary.lightOff(YELLOW);
 		}
 
+		virtual void slow_blinking(){
+			boundary.lightOn(YELLOW);
+			setTimer(1000,123); //123 is a bad message FIXME real message
+			new (this) Yellow_on;
+		}
+
+	};
+	struct Yellow_on : public State {
+			virtual void Timer_sig(){   //unsure if necessary
+				if(msg)
+				boundary.LightOff(YELLOW);
+				setTimer(1000,)
+			}
+	};
+
+	StateA stateMember;//The memory for the state is part of context object
+	Data contextdata;  //Data is also kept inside the context object
+
+	public:
+	Context()
+	: statePtr(&stateMember) // assigning start state
+	, contextdata(0)         // initializing data
+	{
+		statePtr->data = &contextdata; // connecting state->data with the context data
 	}
 
-	// Set lamp
+	void green(){statePtr->signalA();} // context delegates signals to state
+	void yellow(){statePtr->signalA();}
+	void red(){statePtr->signalA();}
+	void all(){statePtr->signalA();} 	//Colors
+	void always_on(){statePtr->signalA();}
+	void always_off(){statePtr->signalA();}
+	void slow_blinking(){statePtr->signalA();}
+	void fast_blinking(){statePtr->signalA();}	//frequencies
+	void timer_sig(){statePtr->signalA();}
 
-	// Start timer
 
-}
+};
+
+
+

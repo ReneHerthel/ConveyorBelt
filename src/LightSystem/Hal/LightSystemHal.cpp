@@ -21,6 +21,9 @@ namespace HAL {
         case RED:
         	bitMask = RED_SHIFT;
         	break;
+        case ALL:
+        	bitMask = ALL_SHIFT;
+        	break;
         default:
            bitMask = 0;
            // nothing will happen
@@ -43,6 +46,9 @@ namespace HAL {
 			break;
 		case RED:
 			bitMask = RED_SHIFT;
+			break;
+		case ALL:
+			bitMask = ALL_SHIFT;
 			break;
 		default:
 		   bitMask = 0;
