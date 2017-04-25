@@ -14,7 +14,7 @@
 struct LightMessage {
     Color color;
     Frequency frequency;
-}
+};
 
 class LightSystemService : public ILightSystem {
 	public:

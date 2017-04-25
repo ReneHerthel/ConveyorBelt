@@ -7,51 +7,25 @@
 
 #include "LightSystemService.h"
 
+void LightSystemService(coid):
+    coid(coid)
+{};
+
 void LightSystemService::setWarningLevel(Level warningLevel) {
-    LightMessage[] 
+    /* TODO: Make static and share among class instances */
+    const LightMessage LightMessageMapping[] = {
+            { GREEN, ALWAYS_ON }, // OPERATING
+            { GREEN, ALWAYS_OFF }, // NOT_OPERATING
+            { YELLOW, SLOW_BLINKING }, // WARNING
+            { YELLOW, ALWAYS_OFF }, // CLEAR_WARNING 
+            { RED, ALWAYS_OFF }, // CLEAR_ERROR
+            { RED, FAST_BLINKING }, // ERROR_OCCURED
+            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
+            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
+            { ALL, ALWAYS_OFF } // CLEAR_ALL
+    }; 
 
-        /* TODO: Replace switch case by array of structs. The structs
-         * contain color and frequency.  */
-    switch (warningLevel) {
-    case OPERATING:
-    	COLOR = GREEN;
-    	FREQUENCY = ALWAYS_ON;
-    	break;
-    case NOT_OPERATING:
-    	COLOR = GREEN;
-    	FREQUENCY = ALWAYS_OFF;
-    	break;
-    case WARNING:
-    	COLOR = YELLOW;
-    	FREQUENCY = SLOW_BLINKING;
-    	break;
-    case CLEAR_WARNING:
-    	COLOR = YELLOW;
-    	FREQUENCY = SLOW_BLINKING;
-    	break;
-    case CLEAR_ERROR:
-    	COLOR = RED;
-    	FREQUENCY = ALWAYS_OFF;
-    	break;
-    case ERROR_OCCURED:
-    	COLOR = RED;
-    	FREQUENCY = FAST_BLINKING;
-    	break;
-    case ERROR_ACKNOWLEDGED:
-    	COLOR = RED;
-    	FREQUENCY = ALWAYS_ON;
-    	break;
-    case ERROR_GONE_UNACKNOWLEDGED:
-    	COLOR = RED;
-    	FREQUENCY = SLOW_BLINKING;
-    	break;
-    case CLEAR_ALL:
-    	COLOR = ALL;
-    	FREQUENCY = ALWAYS_OFF;
-    	break;
-    default:
-    	// TODO: Specify default case
-    }
-
+    LightMessage value = LightMessageMapping[warningLevel];
+    /* TODO: Send pulse message */
     //res = MsgSendPulse ( coid, priority, code, value ) ;
 }
