@@ -13,12 +13,12 @@
 class LightSystemController {
     public:
 		LightSystemController(int chid
-				//, ITimer* timer
+				, ITimer* timer
 				, BLightSystem* boundary);
 
     private:
 		int chid;
-        //ITimer* timer;
+        ITimer* timer;
         BLightSystem* halObject;
         int task(void);
 };
