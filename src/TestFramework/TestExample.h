@@ -10,11 +10,13 @@
 
 class TestExample : public TestCase{
 protected:
+    int32_t testint = 12345;
     TEST(test1);
     TEST(test2);
     TEST(test3);
 protected:
     TEST_CASE_METHODS
+    int32_t testinteger;
 };
 
 

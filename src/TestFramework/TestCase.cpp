@@ -6,49 +6,47 @@
 #include "TestCase.h"
 #include <fstream>
 
-testResu TestCase::run(logLvl logl, std::string log_path) {
-    if(log_path != STD_LOG){
-        logfile.open(log_path, std::fstream::out);
-        if(logfile.fail()){
-            std::cout << "Opening logfile failed" << std::endl;
-            logToFile = false;
-        } else {
-            logToFile = true;
-        }
-    }
-
-    std::cout << "Now running" << std::endl;
+testResu TestCase::run(logLvl logl, std::ostream* logfile) {
+    logstream = logfile;
     setup();
     beforeTC();
+    (*logstream)<< "\nTEST_" << id << ":::" << brief  << std::endl;
     int nbrOfTests = tests.size();
-    for(int i = 0; i < nbrOfTests; i++){
+    for(int i = 0; i < nbrOfTests; i++){  //for each test registered
         before();
         test curTest = tests.front();
-        int32_t resu= curTest.fct();
+        int32_t tstResu= (this->*curTest.fct)();//call memeber funktion
 
         std::string msg;
-        switch(resu){
-            case PASSED: msg = "PASSED"; break;
-            case WARNING: msg = "WARNING"; break;
-            case FAILED: msg = "FAILED"; break;
+        switch(tstResu){ //determin results
+            case PASSED:
+                msg = "PASSED";
+                resu.passed++;
+                break;
+            case WARNING:
+                msg = "WARNING";
+                resu.warning++;
+                break;
+            case FAILED:
+                msg = "FAILED";
+                resu.failed++;
+                break;
             default: msg = "Unknown Result";
         }
-        if(resu == logl or logl == ALL){
+        if(tstResu == logl or logl == ALL){ //log result? (log lvl)
             logTest(curTest, msg);
         }
-        tests.pop_front();
+        tests.pop_front(); //remove executed test
         after();
     }
     afterTC();
+    return resu; //done
 }
 
 void TestCase::logTest(test tst, std::string msg) {
-    if(logToFile){
-        logfile << tst.id << "| " << tst.brief << " => "<< msg << std::endl;
-    } else {
-        std::cout << tst.id << "| " << tst.brief << " => "<< msg << std::endl;
-    }
+    (*logstream)<< tst.id << "| " << tst.brief << " => "<< msg << std::endl;
 }
+
 
 void TestCase::setTCid(int32_t id) {
     this->id = id;

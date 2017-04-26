@@ -14,7 +14,15 @@
 
 class TestCase {
 public:
-    testResu run(logLvl logl, std::string log_path);
+    typedef   int(TestCase::*testFct) (); //Define a funtionpointer type test, takes no argument, return int, maybe this needs TestCase::
+
+    struct test{
+        testFct fct;
+        int32_t id;
+        std::string brief;
+    };
+
+    testResu run(logLvl logl, std::ostream* logfile);
 protected:
     std::list<test> tests;
     int32_t id;
@@ -33,8 +41,8 @@ protected:
     virtual int32_t after() = 0;
 
 private:
-    testResu resu;
-    std::fstream logfile;
+    testResu resu = {0,0,0}; //At the beginning, nothing passed
+    std::ostream* logstream;
     bool logToFile;
     void logTest(test tst, std::string msg);
 };

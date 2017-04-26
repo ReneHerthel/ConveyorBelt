@@ -10,25 +10,24 @@
 struct testResu{
     int32_t passed;
     int32_t failed;
-};
-
-typedef int32_t (*testFct)(void); //Define a funtionpointer type test, takes no argument, return int
-
-struct test{
-    testFct fct;
-    int32_t id;
-    std::string brief;
+    int32_t warning;
 };
 
 typedef int32_t  logLvl;
 
-#define STD_LOG "std::cout"
+#define STD_LOG "stdlog"
+#define STD_LOG_STREAM &std::cout
 
 #define FAILED (-1)
 #define ALL (0)
 #define WARNING (2)
 #define PASSED (1)
 
+//////////////TestSuite Defs start here//////////////
+#define TESTCASE(x) registerTc(x);
+#define START_TEST(x,y) run(x,y);
+
+/////////////TestCase Defs start Here//////////////
 #define SETUP(TC) int32_t TC::setup()
 #define REG_TEST(fct, id, brief) registerTest((testFct)fct, id, brief)
 
