@@ -20,7 +20,6 @@ class LightSystemService : public ILightSystem {
 	public:
 		void setWarningLevel(Level warningLevel);
 	private:
-		LightSystemController* controller;
 		int channelId;
 } ;
 

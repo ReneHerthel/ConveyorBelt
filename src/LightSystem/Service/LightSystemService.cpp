@@ -26,6 +26,9 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     }; 
 
     LightMessage value = LightMessageMapping[warningLevel];
-    /* TODO: Send pulse message */
-    //res = MsgSendPulse ( coid, priority, code, value ) ;
+    /* TODO: Read up on parameters */
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),0,333999);
+    if(err) {
+        // TODO: Dump to log
+    }
 }
