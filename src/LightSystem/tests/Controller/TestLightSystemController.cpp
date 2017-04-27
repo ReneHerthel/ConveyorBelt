@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
     if(coid < 0) {
         // TODO: Dump to log
     }
-    TimerService timer(chid, LS_MODULE_ID, NULL);
+    TimerService timer(chid, LS_MODULE_ID);
     LightSystemHal boundary = LightSystemHal();
-    LightSystemController controller = LightSystemController(chid, timer, boundary);
+    LightSystemController controller = LightSystemController(chid, &timer, &boundary);
     LightSystemService lightSystem = LightSystemService(chid);
      
 
@@ -29,6 +29,6 @@ int main(int argc, char *argv[]) {
     /* FIXME: Cardinality of enum instead of last definition plus 1 */
     for ( int warning = OPERATING; warning < CLEAR_ALL+1; warning++ )
     {
-        lightSystem.setWarningLevel(warning);
+        lightSystem.setWarningLevel(static_cast<Level>(warning));
     }
 }

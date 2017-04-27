@@ -11,7 +11,7 @@
 #include <thread>
 #include <vector>
 #include <sys/neutrino.h>
-#include "ITimer.h"
+#include "TimerService.h"
 #include "BLightSystem.h"
 #include "enum.h"
 
@@ -21,7 +21,7 @@ using namespace HAL;
 class LightSystemController {
     public:
 		LightSystemController(int chid
-				, ITimer* timer
+				, TimerService* timer
 				, BLightSystem* boundary);
 		bool isRunning;
 

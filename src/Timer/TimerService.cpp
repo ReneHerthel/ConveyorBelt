@@ -11,22 +11,20 @@
 #include <time.h>
 #include <signal.h>
 
-TimerService::TimerService(int chid, char code, int value)
+TimerService::TimerService(int chid, char code)
 	: timerid()
-	, code(code)
-	, value(value) {
+	, code(code) {
 	coid = ConnectAttach_r(0, 0, chid, 0, 0);
 	if(coid < 0) {
 		// TODO error handling
 	}
 }
 
-void TimerService::setAlarm(milliseconds time) {
+void TimerService::setAlarm(milliseconds time, int value) {
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
 		// TODO error handling
 	}
-
 
 	unsigned int milliseconds = time;
 	unsigned int seconds = 0;

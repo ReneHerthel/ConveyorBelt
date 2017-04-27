@@ -200,7 +200,7 @@ class Context {
 };
 
 
-LightSystemController :: LightSystemController(int chid, ITimer* timer, BLightSystem* boundary)
+LightSystemController :: LightSystemController(int chid, TimerService* timer, BLightSystem* boundary)
 	:isRunning(true) // FIXME: Lookup setting default values in constructor
 	, chid(chid)
 	, timer(timer)
