@@ -5,22 +5,24 @@
 //						 Matthis Keppner <matthis.keppner@haw-hamburg.de>
 // =====================================================================================
 
-#include "LightSystemHAL.h"
-
+#include "LightSystemHal.h"
 
 namespace HAL {
-    void LightSystemHAL::lightOn(Color color) {
+    void LightSystemHal::lightOn(Color color) {
         unsigned char bitMask;
         bitMask = 0;
     	switch (color) {
-        case Green:
+        case GREEN:
         	bitMask = GREEN_SHIFT;
         	break;
-        case Yellow:
+        case YELLOW:
         	bitMask = YELLOW_SHIFT;
         	break;
-        case Red:
+        case RED:
         	bitMask = RED_SHIFT;
+        	break;
+        case ALL:
+        	bitMask = ALL_SHIFT;
         	break;
         default:
            bitMask = 0;
@@ -33,17 +35,20 @@ namespace HAL {
 
     }
 
-    void LightSystemHAL::lightOff(Color color) {
+    void LightSystemHal::lightOff(Color color) {
     	unsigned char bitMask;
     	switch (color) {
-        case Green:
+        case GREEN:
         	bitMask = GREEN_SHIFT;
 			break;
-		case Yellow:
+		case YELLOW:
 			bitMask = YELLOW_SHIFT;
 			break;
-		case Red:
+		case RED:
 			bitMask = RED_SHIFT;
+			break;
+		case ALL:
+			bitMask = ALL_SHIFT;
 			break;
 		default:
 		   bitMask = 0;

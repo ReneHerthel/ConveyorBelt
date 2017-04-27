@@ -7,17 +7,20 @@
 #ifndef LIGHTSYSTEMCONTROLLER_H
 #define LIGHTSYSTEMCONTROLLER_H
 
+//#include "ITimer.h"
+#include "BLightSystem.h"
+#include "enum.h"
 class LightSystemController {
     public:
-        LightSystemController(LightSystemService* serviceId);
-        int main(void);
-        void setLights(Color lightColor, Frequency lightFrequency);
+		LightSystemController(int chid
+				, ITimer* timer
+				, BLightSystem* boundary);
 
     private:
-        Thread* threadId;
-        LightSystemService* serviceId;
-        Timer* timerId;
-        LightSystemHAL halObject;
+		int chid;
+        ITimer* timer;
+        BLightSystem* halObject;
+        int task(void);
 };
 
 #endif

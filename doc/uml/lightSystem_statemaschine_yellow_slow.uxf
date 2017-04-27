@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>528</x>
+      <y>275</y>
+      <w>198</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>Yellow_on
+--
+entry: lightOn(yellow)
+	          setTimer(1000)
+
+exit: ligthOff(yellow)	
+
+valign=top
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>528</x>
+      <y>495</y>
+      <w>198</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>Yellow_off
+--
+entry: setTImer(1000)
+
+valign=top
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>561</x>
+      <y>385</y>
+      <w>99</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+Timer(0ff)</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>154</x>
+      <y>297</y>
+      <w>275</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+msg(YELLOW,SLOW_BLINKING)</panel_attributes>
+    <additional_attributes>10.0;20.0;230.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>693</x>
+      <y>385</y>
+      <w>99</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Timer(off)</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>814</x>
+      <y>594</y>
+      <w>330</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+msg(YELLOW,ALWAYS_OFF)
+msg(ALL_COLORS,ALWAYS_OFF)
+</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>814</x>
+      <y>231</y>
+      <w>330</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+msg(
+RED,
+SLOW_LINKING)</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>814</x>
+      <y>330</y>
+      <w>330</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+msg(
+RED,
+FAST_BLINKING)</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>462</x>
+      <y>286</y>
+      <w>22</w>
+      <h>22</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>473</x>
+      <y>286</y>
+      <w>77</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>407</x>
+      <y>220</y>
+      <w>418</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>yellow_slow
+--
+
+
+valign=top
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>814</x>
+      <y>429</y>
+      <w>330</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+msg(
+RED,
+ALWAYS_ON)</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>814</x>
+      <y>528</y>
+      <w>330</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+msg(
+GREEN,
+ALWAYS_ON)</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+</diagram>
