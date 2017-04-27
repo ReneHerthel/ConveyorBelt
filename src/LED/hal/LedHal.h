@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      Header declaration of the LedHal component
+ * @brief      Hal header declaration of the Led component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -17,17 +17,24 @@
 #ifndef LEDHAL_H_
 #define LEDHAL_H_
 
-#include "BLed.h"
-
-class LedHal : public BLed{
+class LedHal {
 public:
 
 	/*
 	 * @brief Constructor with port and pin initialization.
+	 * @param [port] The corresponding port of the led.
+	 * @param [pin] The corresponding pin of the led.
 	 */
 	LedHal(const int port, const int pin);
 
+	/*
+	 * @brief Enables the corresponding led.
+	 */
 	void set();
+
+	/*
+	 * @brief Disables the corresponding led.
+	 */
 	void clear();
 private:
 	int port_;

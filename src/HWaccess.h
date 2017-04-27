@@ -9,7 +9,7 @@
  * @ingroup    hw
  * @{
  *
- * @brief      bundle of header for the hw access.
+ * @brief      All needed header files to access the hardware.
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
