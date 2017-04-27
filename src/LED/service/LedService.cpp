@@ -20,10 +20,6 @@
 
 #include <iostream>
 
-ILed::~ILed() {
-	// Nothing todo so far.
-}
-
 LedService::LedService() {
 	// Put new LedHal objects at the end of the vector.
 	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_0)); /**< START */

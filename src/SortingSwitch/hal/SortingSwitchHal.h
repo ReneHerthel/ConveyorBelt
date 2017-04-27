@@ -1,28 +1,40 @@
 /*
- * SortingSwitchHal.h
+ * Copyright (C) 2017 Rene Herthel
  *
- *  Created on: 12.04.2017
- *      Author: abo000
+ * This file is subject to the terms and conditions of the MIT License.
+ * See the file LICENSE in the top level directory for more details.
+ */
+
+/**
+ * @ingroup    sortingswitch
+ * @{
+ *
+ * @brief      Header declaration of the SortingSwitch component
+ *
+ * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
 #ifndef SORTINGSWITCHHAL_H_
 #define SORTINGSWITCHHAL_H_
 
-#include "BSortingSwitch.h"
-
-class SortingSwitchHal : public BSortingSwitch {
+class SortingSwitchHal {
 public:
 
 	/*
 	 * @brief Default constructor.
 	 */
-	SortingSwitchHal(const int port);
+	SortingSwitchHal();
 
-	void setPin(const int pin);
-	void clearPin(const int pin);
+	/*
+	 * @brief Set the corresponding pin into the register of the sorting switch.
+	 */
+	void set();
 
-private:
-	int port_;
+	/*
+	 * @brief Set the corresponding pin into the register of the sorting switch.
+	 */
+	void clear();
 };
 
 #endif /* SORTINGSWITCHHAL_H_ */
+/** @} */

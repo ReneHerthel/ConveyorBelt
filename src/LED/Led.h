@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      Function declaration of the LED component
+ * @brief      Enum declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */

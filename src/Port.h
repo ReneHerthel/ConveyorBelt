@@ -9,7 +9,7 @@
   * @ingroup    port
   * @{
   *
-  * @brief      Enums declaration for the port addresses.
+  * @brief      Enums declaration for the ports.
   *
   * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
   */
@@ -21,6 +21,7 @@ enum Port {
 	A,
 	B,
 	C,
+	AIO,
 };
 
 #endif /* PORT_H_ */
