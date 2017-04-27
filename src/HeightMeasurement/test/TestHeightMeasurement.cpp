@@ -16,11 +16,13 @@
 
 #include "TestHeightMeasurement.h"
 
-#include "HeightMeasurementHal.h"
-#include "HWdefines.h"
+//#include "HeightMeasurementHal.h"
+#include "HeightContext.h"
+//#include "HWdefines.h"
 
 #include <iostream>
-#include <stdint.h>
+#include <chrono>
+#include <thread>
 
 
 void TestHeightMeasurement::startTest() {
@@ -31,12 +33,26 @@ void TestHeightMeasurement::startTest() {
 
 	std::cout<<"[TestHeightMeasurement] start.."<<std::endl;
 
-	std::cout<<"[TestHeightMeasurement] read.."<<std::endl;
-
+	/*
 	HeightMeasurementHal hal;
 	int16_t data = 0;
 	hal.read(data);
 
 	std::cout<<"[TestHeightMeasurement] output: "<<(int)data<<std::endl;
+	*/
+
+	HeightContext context(9);
+
+	context.process(HeightContext::START);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	context.process(HeightContext::HOLE_HEIGHT);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	context.process(HeightContext::SURFACE_HEIGHT);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	context.process(HeightContext::REF_HEIGHT);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+
+	std::cout<<"[TestHeightMeasurement] Done."<<std::endl;
 }
 /** @} */
