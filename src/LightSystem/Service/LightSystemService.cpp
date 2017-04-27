@@ -7,13 +7,12 @@
 
 #include "LightSystemService.h"
 
-void LightSystemService(coid):
+void LightSystemService(int coid):
     coid(coid)
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
-    /* TODO: Make static and share among class instances */
-    const LightMessage LightMessageMapping[] = {
+    static const LightMessage LightMessageMapping[] = {
             { GREEN, ALWAYS_ON }, // OPERATING
             { GREEN, ALWAYS_OFF }, // NOT_OPERATING
             { YELLOW, SLOW_BLINKING }, // WARNING
@@ -26,8 +25,14 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     }; 
 
     LightMessage value = LightMessageMapping[warningLevel];
-    /* TODO: Read up on parameters */
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),0,333999);
+    /* FIXME: Discuss Priorities */
+    /* TODO: Merge messages */
+    /* 80 is ID for lightSystem */
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value->color);
+    if(err) {
+        // TODO: Dump to log
+    }
+    err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value->frequyency);
     if(err) {
         // TODO: Dump to log
     }

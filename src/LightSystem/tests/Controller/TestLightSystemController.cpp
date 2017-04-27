@@ -4,7 +4,7 @@
  * Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  */
 
-#include "TestLightSystemHal.h"
+#include "TestLightSystemController.h"
 
 using namespace HAL;
 using namespace std;
@@ -16,15 +16,15 @@ int main(int argc, char *argv[]) {
     if(coid < 0) {
         // TODO: Dump to log
     }
-    TimerService timer = TimerService(chid, code, NULL);
-    LightSystemHAL boundary;
+    ITimer timer = TimerService(chid, code, NULL);
+    LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, timer, boundary);
     LightSystemService lightSystem = LightSystemService(chid);
      
 
     // Set different warning levels
     /* FIXME: Cardinality of enum instead of last definition plus 1 */
-    for ( Level warning = OPERATING; warning < CLEAR_ALL+1; warning++ )
+    for ( int warning = OPERATING; warning < CLEAR_ALL+1; warning++ )
     {
         lightSystem.setWarningLevel(warning);
     }

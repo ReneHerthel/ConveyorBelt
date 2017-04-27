@@ -13,6 +13,7 @@ enum Level { OPERATING, NOT_OPERATING, WARNING, CLEAR_WARNING, CLEAR_ERROR, ERRO
 enum Color { GREEN , YELLOW, RED, ALL }; //0-3
 enum Frequency { ALWAYS_ON = 4, ALWAYS_OFF = 5, FAST_BLINKING = 6, SLOW_BLINKING = 7};
 enum TimerMsg{ YELLOW_SLOW = 8, RED_SLOW = 9 , RED_FAST = 10};
+enum pulseIds { LIGHT_SYSTEM = 80 };
 
 /**
  *	in Millisec
