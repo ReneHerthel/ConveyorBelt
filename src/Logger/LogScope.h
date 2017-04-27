@@ -8,6 +8,10 @@
 #ifndef SRC_LOGGER_LOGSCOPE_H_
 #define SRC_LOGGER_LOGSCOPE_H_
 
+#include <string>
+#include "Logger.h"
+using namespace std;
+
 class LogScope {
 public:
 	LogScope(const string& s);

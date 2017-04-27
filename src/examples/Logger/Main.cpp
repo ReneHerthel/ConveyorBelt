@@ -5,8 +5,8 @@
  *      Author: jonasfuhrmann
  */
 
-#include "Logger/Logger.h"
-#include "Logger/LogScope.h"
+#include "src/Logger/Logger.h"
+#include "src/Logger/LogScope.h"
 
 int main(void) {
 	LOG_SCOPE; // Log scope for function - log enter, exit
