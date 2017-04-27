@@ -6,6 +6,7 @@
 #define SE2_TEST_FRAMEWORK_TESTFRAMEWORK_H
 
 #include <string>
+#include <stdint.h>
 
 struct testResu{
     int32_t passed;
@@ -29,7 +30,7 @@ typedef int32_t  logLvl;
 
 /////////////TestCase Defs start Here//////////////
 #define SETUP(TC) int32_t TC::setup()
-#define REG_TEST(fct, id, brief) registerTest((testFct)fct, id, brief)
+#define REG_TEST(fct, id, brief) registerTest([&](){this.fct}, id, brief)
 
 #define TEST(name) int32_t name(void)
 #define TEST_IMPL(TC, name) int32_t TC::name(void)

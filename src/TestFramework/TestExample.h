@@ -7,6 +7,7 @@
 
 
 #include "TestCase.h"
+#include <stdint.h>
 
 class TestExample : public TestCase{
 protected:

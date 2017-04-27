@@ -6,15 +6,14 @@
 #define SE2_TEST_FRAMEWORK_TESTCASE_H
 
 
-#include <gmon.h>
 #include <string>
 #include <list>
 #include <fstream>
 #include "TestFramework.h"
+#include <stdint.h>
 
 class TestCase {
 public:
-    typedef   int(TestCase::*testFct) (); //Define a funtionpointer type test, takes no argument, return int, maybe this needs TestCase::
 
     struct test{
         testFct fct;
@@ -24,12 +23,12 @@ public:
 
     testResu run(logLvl logl, std::ostream* logfile);
 protected:
-    std::list<test> tests;
+    std::list<std::function<int32_t(void)>> tests;
     int32_t id;
     std::string brief;
 
     virtual int32_t setup() = 0;
-    void  registerTest(testFct fct, int32_t id, std::string brief);
+    void  registerTest(std::function<int32_t(void)> fct, int32_t id, std::string brief);
 
     void setTCid(int32_t id);
     void setTCbrief(std::string brief);
