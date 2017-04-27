@@ -9,7 +9,7 @@
   * @ingroup    led
   * @{
   *
-  * @brief      Service declaration of the LED component
+  * @brief      Service header declaration of the LED component
   *
   * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
   */
@@ -23,10 +23,24 @@
 #include <iostream>
 #include <vector>
 
-class LedService : ILed {
+class LedService : public ILed {
 public:
+
+	/*
+	 * @brief Default constructor.
+	 */
 	LedService();
+
+	/*
+	 * @brief Turns a predefined led on.
+	 * @param [led] The led which should be turned on.
+	 */
 	void ledOn(const Led led);
+
+	/*
+	 * @brief Turns a predefined led off.
+	 * @param [led] The led which should be turned off.
+	 */
 	void ledOff(const Led led);
 
 private:

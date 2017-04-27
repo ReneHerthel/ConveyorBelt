@@ -9,7 +9,7 @@
  * @ingroup    conveyor_belt
  * @{
  *
- * @brief      Function declaration of the ConveyorBelt component
+ * @brief      Service Header declaration of the ConveyorBelt component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -22,17 +22,23 @@
 
 class ConveyorBeltService : public IConveyorBelt {
 public:
+
 	/*
 	 * @brief Default constructor.
 	 */
 	ConveyorBeltService();
 
 	/*
-	 * @brief Default deconstructor.
+	 * @brief Default destructor.
 	 */
 	~ConveyorBeltService();
 
+	/*
+	 * @brief Changes the state of the conveyor belt by using the ConveyorBeltStates.
+	 * @param The next state of the ConveyorBelt component.
+	 */
 	void ConveyorBeltChangeState(const ConveyorBeltState state);
+
 private:
 	ConveyorBeltHal* hal_;
 };

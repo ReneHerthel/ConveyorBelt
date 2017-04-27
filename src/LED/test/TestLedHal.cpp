@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      test declaration of the LED component
+ * @brief      Test function declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
