@@ -9,7 +9,7 @@
 
 class Context {
 	private:
-		struct State {//top-level state
+		struct State { //top-level state
 			virtual void green(){
 				boundary->lightOff(Color::ALL);
 				new (this) Green;// change to state Green
@@ -20,10 +20,10 @@ class Context {
 			}
 			virtual void red(){
 				boundary->lightOff(Color::ALL);
-				new (this) RED_on;
+				new (this) Red;
 			}
 			virtual void all(){
-				new (this) all;
+				new (this) All;
 			}
 			virtual void always_on(){}
 			virtual void always_off(){}
@@ -37,6 +37,16 @@ class Context {
 
 		struct Init : public State { //start state
 		};
+
+		struct All : public State {
+			virtual void always_on(){
+				boundary->lightOn(Color::ALL);
+			}
+			virtual void always_off(){
+				boundary->lightOff(Color::ALL);
+			}
+		};
+
 		struct Green : public State {
 			virtual void always_on(){
 				boundary->lightOn(Color::GREEN);
@@ -64,7 +74,7 @@ class Context {
 		struct Yellow_on : public State {
 				virtual void Timer_sig(){   //unsure if necessary
 					if(msg==YELLOW_SLOW) {
-						boundary->LightOff(Color::YELLOW);
+						boundary->lightOff(Color::YELLOW);
 						timer->setAlarm(SLOW,YELLOW_SLOW);
 						new (this) Yellow_off;
 					}
@@ -73,7 +83,7 @@ class Context {
 		struct Yellow_off : public State {
 					virtual void Timer_sig(){   //unsure if necessary
 						if(msg==YELLOW_SLOW){
-							boundary->LightOn(Color::YELLOW);
+							boundary->lightOn(Color::YELLOW);
 							timer->setAlarm(SLOW,YELLOW_SLOW);
 							new (this) Yellow_on;
 						}
@@ -103,7 +113,7 @@ class Context {
 		struct Red_slow_on : public State {
 			virtual void Timer_sig(){   //unsure if necessary
 				if(msg==RED_SLOW) {
-					boundary->LightOff(Color::RED);
+					boundary->lightOff(Color::RED);
 					timer->setAlarm(SLOW,RED_SLOW);
 					new (this) Red_slow_off;
 				}
@@ -112,7 +122,7 @@ class Context {
 		struct Red_slow_off : public State {
 			virtual void Timer_sig(){   //unsure if necessary
 				if(msg==RED_SLOW){
-					boundary->LightOn(Color::RED);
+					boundary->lightOn(Color::RED);
 					timer->setAlarm(SLOW,RED_SLOW);
 					new (this) Red_slow_on;
 				}
@@ -121,7 +131,7 @@ class Context {
 		struct Red_fast_on : public State {
 			virtual void Timer_sig(){   //unsure if necessary
 				if(msg==RED_FAST) {
-					boundary->LightOff(Color::RED);
+					boundary->lightOff(Color::RED);
 					timer->setAlarm(FAST,RED_FAST);
 					new (this) Red_fast_off;
 				}
@@ -130,7 +140,7 @@ class Context {
 		struct Red_fast_off : public State {
 			virtual void Timer_sig(){   //unsure if necessary
 				if(msg==RED_FAST){
-					boundary->LightOn(Color::RED);
+					boundary->lightOn(Color::RED);
 					timer->setAlarm(FAST,RED_FAST);
 					new (this) Red_fast_on;
 				}
@@ -139,6 +149,7 @@ class Context {
 
 		Init StateMember;
 		BLightSystem* boundary;
+		ITimer* timer;
 
 	public:
 		Context(BLightSystem* boundary, ITimer* timer)
@@ -162,7 +173,8 @@ class Context {
 			YELLOW_SLOW,  //timermsg
 			RED_SLOW,	  //timermsg
 			RED_FAST	  //timermsg
-		};
+		} ;
+		static Signal msg;
 
 		void process(Signal s){
 			cout<<typeid(*statePtr).name()<<"(signal="<<s<<") => ";
@@ -170,28 +182,31 @@ class Context {
 			cout << typeid(*statePtr).name() <<endl;
 		}
 
-		vector<function<void(void)>> funcArray = { // initializer list for funcArray
-				 [&] ( ) { statePtr->green();}, // context delegates signals to state
-				 [&] ( ) { statePtr->yellow();},
-				 [&] ( ) { statePtr->red();},
-				 [&] ( ) { statePtr->all();},	//Colors
-				 [&] ( ) { statePtr->always_on();},
-				 [&] ( ) { statePtr->always_off();},
-				 [&] ( ) { statePtr->slow_blinking();},
-				 [&] ( ) { statePtr->fast_blinking();},	//frequencies
-				 [&] ( ) { statePtr->timer_sig();},
-				 [&] ( ) { statePtr->timer_sig();},
-				 [&] ( ) { statePtr->timer_sig();}	//Timermsg
-		};
+		vector<function<void(void)>> funcArray;
+
+//		vector<function<void(void)>> funcArray = { // initializer list for funcArray
+//				 [&] ( ) { statePtr->green();}, // context delegates signals to state
+//				 [&] ( ) { statePtr->yellow();},
+//				 [&] ( ) { statePtr->red();},
+//				 [&] ( ) { statePtr->all();},	//Colors
+//				 [&] ( ) { statePtr->always_on();},
+//				 [&] ( ) { statePtr->always_off();},
+//				 [&] ( ) { statePtr->slow_blinking();},
+//				 [&] ( ) { statePtr->fast_blinking();},	//frequencies
+//				 [&] ( ) { statePtr->timer_sig();},
+//				 [&] ( ) { statePtr->timer_sig();},
+//				 [&] ( ) { statePtr->timer_sig();}	//Timermsg
+//		};
 };
 
+
 LightSystemController :: LightSystemController(int chid, ITimer* timer, BLightSystem* boundary)
-	: chid(chid)
+	:isRunning(true) // FIXME: Lookup setting default values in constructor
+	, chid(chid)
 	, timer(timer)
 	, boundary(boundary)
-	, isRunning(true) // FIXME: Lookup setting default values in constructor
 {
-	 std::thread controller(task);
+	 std::thread controller([&](){LightSystemController::task();});
 }
 
 
@@ -212,7 +227,8 @@ int LightSystemController::task(){
 				// TODO error handling
 				std::cout << "client MsgReceive_r failed" << std::endl;
 			}
-		c.process(pulse.value);
+//		c.process(Context::(Signal)pulse.value.sival_int);
+//			c.process(static_cast<Context::Signal>(pulse.value.sival_int));
 	}
 
 	return 1;

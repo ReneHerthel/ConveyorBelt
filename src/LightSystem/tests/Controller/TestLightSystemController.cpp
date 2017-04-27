@@ -10,13 +10,16 @@ using namespace HAL;
 using namespace std;
 
 int main(int argc, char *argv[]) {
-
+	int chid = ChannelCreate_r(0);
+		if(chid < 0){
+			std::cout << "Channel Create failed" << std::endl;
+		}
     // TODO: Readup on parameters
     int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
     if(coid < 0) {
         // TODO: Dump to log
     }
-    ITimer timer = TimerService(chid, code, NULL);
+    TimerService timer(chid, LS_MODULE_ID, NULL);
     LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, timer, boundary);
     LightSystemService lightSystem = LightSystemService(chid);

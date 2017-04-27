@@ -7,7 +7,7 @@
 
 #include "LightSystemService.h"
 
-void LightSystemService(int coid):
+LightSystemService :: LightSystemService(int coid):
     coid(coid)
 {};
 
@@ -28,11 +28,11 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
     /* FIXME: Discuss Priorities */
     /* TODO: Merge messages */
     /* 80 is ID for lightSystem */
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value->color);
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value.color);
     if(err) {
         // TODO: Dump to log
     }
-    err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value->frequyency);
+    err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,value.frequency);
     if(err) {
         // TODO: Dump to log
     }
