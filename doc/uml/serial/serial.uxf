@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
+      <x>70</x>
       <y>120</y>
       <w>310</w>
       <h>170</h>
@@ -18,7 +18,8 @@ SerialController
 -PulseConverter conv;
 --
 SerialController(SerialReceiver receiver, 
-SerialSender serial, PulseConverter conv);
+SerialSender serial, PulseConverter conv, 
+string SerDev);
 -receivePulse(): 
 -setupSerial():</panel_attributes>
     <additional_attributes/>
@@ -26,7 +27,7 @@ SerialSender serial, PulseConverter conv);
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>560</x>
+      <x>570</x>
       <y>130</y>
       <w>180</w>
       <h>100</h>
@@ -44,7 +45,7 @@ kill();</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>220</x>
+      <x>230</x>
       <y>510</y>
       <w>160</w>
       <h>130</h>
@@ -53,16 +54,17 @@ kill();</panel_attributes>
 --
 char buff[BYTE_MAX];
 --
++SerialSender(int fid);
 +send(string msg): int;
 -frame(string msg): int;
--checksum(string msg);
--sendSerial(int )</panel_attributes>
+-checksum(int size);
+-sendSerial(int size):int;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
+      <x>370</x>
       <y>130</y>
       <w>220</w>
       <h>50</h>
@@ -76,7 +78,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
+      <x>280</x>
       <y>280</y>
       <w>30</w>
       <h>250</h>
@@ -87,7 +89,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>80</x>
+      <x>90</x>
       <y>510</y>
       <w>100</w>
       <h>30</h>
@@ -98,7 +100,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
+      <x>130</x>
       <y>280</y>
       <w>30</w>
       <h>250</h>
