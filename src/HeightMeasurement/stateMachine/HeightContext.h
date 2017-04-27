@@ -24,6 +24,7 @@
 
 class HeightContext {
 private:
+	// Forward declaration
 	struct State *statePtr;
 	struct Idle;
 	struct Measuring;
