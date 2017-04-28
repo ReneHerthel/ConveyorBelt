@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 Rene Herthel
+ * Copyright (C) 2017 Jonas Fuhrmann
  *
  * This file is subject to the terms and conditions of the MIT License.
  * See the file LICENSE in the top level directory for more details.
@@ -12,6 +13,7 @@
  * @brief      Hal Function declaration of the HeightMeasurement component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+ * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>
  */
 
 #include "HeightMeasurementHal.h"
@@ -39,7 +41,7 @@ void HeightMeasurementHal::read(int16_t &data) {
 	// Send an opcode to start the conversion.
 	out8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE, HEIGHT_MEASUREMENT_START_CODE);
 
-	// Wait a few µs to complete the conversion
+	// Wait a few microseconds to complete the conversion
 	usleep(WAIT_TIME);
 
 	// Read the low byte

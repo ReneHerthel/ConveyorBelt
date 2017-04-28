@@ -22,272 +22,287 @@
 #include <sys/neutrino.h>
 
 HeightContext::HeightContext(int send_chid)
-: statePtr(&state)
-, send_chid(send_chid)
+    :    statePtr(&state)
+    ,    send_chid(send_chid)
 {
-	statePtr->entry();
+    // Make sure the first state is calling the entry function.
+    statePtr->entry();
 }
 
 void HeightContext::process(Signal signal) {
-	switch(signal) {
+    // Switch between defined signals and invoke the function of the statePtr.
+    switch(signal) {
 
-		case INVALID:
-			statePtr->invalid();
-			break;
+        case INVALID:
+            statePtr->invalid();
+            break;
 
-		case TIMEOUT:
-			statePtr->timeout();
-			break;
+        case TIMEOUT:
+            statePtr->timeout();
+            break;
 
-		case START:
-			statePtr->start();
-			break;
+        case START:
+            statePtr->start();
+            break;
 
-		case WAIT:
-			statePtr->wait();
-			break;
+        case WAIT:
+            statePtr->wait();
+            break;
 
-		case RESUME:
-			statePtr->resume();
-			break;
+        case RESUME:
+            statePtr->resume();
+            break;
 
-		case HOLE_HEIGHT:
-			statePtr->holeHeight();
-			break;
+        case HOLE_HEIGHT:
+            statePtr->holeHeight();
+            break;
 
-		case SURFACE_HEIGHT:
-			statePtr->surfaceHeight();
-			break;
+        case SURFACE_HEIGHT:
+            statePtr->surfaceHeight();
+            break;
 
-		case REF_HEIGHT:
-			statePtr->refHeight();
-			break;
+        case REF_HEIGHT:
+            statePtr->refHeight();
+            break;
 
-		case PATTERN_READ:
-			statePtr->patternRead();
-			break;
+        case PATTERN_READ:
+            statePtr->patternRead();
+            break;
 
-		case LOW_HEIGHT:
-			statePtr->lowHeight();
-			break;
+        case LOW_HEIGHT:
+            statePtr->lowHeight();
+            break;
 
-		case HIGH_HEIGHT:
-			statePtr->highHeight();
-			break;
+        case HIGH_HEIGHT:
+            statePtr->highHeight();
+            break;
 
-		default:
-			std::cout<<"Process() - Undefined Signal"<<std::endl;
-			break;
-	}
+        default:
+            std::cout<<"[HeightContext.cpp] Undefined signal."<<std::endl;
+            return; // Do not do anything more.
+    } /* switch (signal) */
 
-	statePtr->entry();
+    // Invoke the entry function of every state.
+    statePtr->entry();
 }
 
 ///
 /// STATE
 ///
 void HeightContext::State::entry() {
-	std::cout<<"STATE - ENTRY"<<std::endl;
-	new (this) Idle;
+    std::cout<<"STATE - entry"<<std::endl;
+    new (this) Idle;
 }
 
 void HeightContext::State::invalid() {
-	// todo MsgSendPulse_r(invalid)
-	std::cout<<"STATE - INVALID"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(invalid)
+    std::cout<<"STATE - invalid"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::timeout() {
-	// todo MsgSendPulse_r(timeout)
-	std::cout<<"STATE - TIMEOUT"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(timeout)
+    std::cout<<"STATE - timeout"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::start() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - start - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::wait() {
-	// todo stoptimer()
-	std::cout<<"STATE - stopTimer()"<<std::endl;
+    // TODO stoptimer()
+    std::cout<<"STATE - wait"<<std::endl;
 }
 
 void HeightContext::State::resume() {
-	// todo resumeTimer()
-	std::cout<<"STATE - resumeTimer()"<<std::endl;
+    // TODO resumeTimer()
+    std::cout<<"STATE - resume"<<std::endl;
 }
 
 void HeightContext::State::holeHeight() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - holeHeight - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::surfaceHeight() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - surfaceHeight - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::refHeight() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - refHeight - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::patternRead() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - patternRead - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::lowHeight() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - lowHeight - unexpected"<<std::endl;
+    new (this) State;
 }
 
 void HeightContext::State::highHeight() {
-	// todo MsgSendPulse_r(unexpected)
-	std::cout<<"STATE - UNEXPECTED"<<std::endl;
-	new (this) State;
+    // TODO MsgSendPulse_r(unexpected)
+    std::cout<<"STATE - highHeight - unexpected"<<std::endl;
+    new (this) State;
 }
 
 ///
 /// IDLE
 ///
 void HeightContext::Idle::entry() {
-	// todo stopMeasuring()
-	// todo stopTimer()
-	std::cout<<"Idle"<<std::endl;
+    // TODO stopMeasuring()
+    // TODO stopTimer()
+    std::cout<<"IDLE - entry"<<std::endl;
 }
 
 void HeightContext::Idle::start() {
-	new (this) Measuring;
+    std::cout<<"IDLE - start"<<std::endl;
+    new (this) Measuring;
 }
 
 ///
 /// MEASURING
 ///
 void HeightContext::Measuring::entry() {
-	// todo startMeasuring()
-	// todo startTimer()
-	std::cout<<"Measuring"<<std::endl;
+    // TODO startMeasuring()
+    // TODO startTimer()
+    std::cout<<"MEASURING - entry"<<std::endl;
 }
 
 void HeightContext::Measuring::holeHeight() {
-	new (this) Normal;
+    std::cout<<"MEASURING - holeHeight"<<std::endl;
+    new (this) Normal;
 }
 
 ///
 /// NORMAL
 ///
 void HeightContext::Normal::entry() {
-	std::cout<<"Normal"<<std::endl;
+    std::cout<<"NORMAL - entry"<<std::endl;
 }
 
 void HeightContext::Normal::surfaceHeight() {
-	new (this) Surface;
+    std::cout<<"NORMAL - surfaceHeight"<<std::endl;
+    new (this) Surface;
 }
 
 ///
 /// SURFACE
 ///
 void HeightContext::Surface::entry() {
-	std::cout<<"Surface"<<std::endl;
+    std::cout<<"SURFACE - entry"<<std::endl;
 }
 
 void HeightContext::Surface::refHeight() {
-	new (this) Idle;
+    std::cout<<"SURFACE - refHeight"<<std::endl;
+    new (this) Idle;
 }
 
 ///
 /// BIT OR FLIPPED
 ///
 void HeightContext::BitOrFlipped::entry() {
-	std::cout<<"BitOrFlipped"<<std::endl;
-	index = 0;
-	//pattern = {0, 0, 0};
-	new (this) Top;
+    std::cout<<"BITORFLIPPED - entry"<<std::endl;
+    index = 0;
+    //pattern = {0, 0, 0};
+    new (this) Top;
 }
 
 void HeightContext::BitOrFlipped::patternRead() {
-	new (this) Idle;
+    std::cout<<"BITORFLIPPED - patternRead"<<std::endl;
+    new (this) Idle;
 }
 
 ///
 /// Top
 ///
 void HeightContext::Top::entry() {
-	std::cout<<"Top"<<std::endl;
-	if (index > MAX_BIT_SIZE || index < MIN_BIT_SIZE) {
-		invalid();
-	}
+    std::cout<<"TOP - entry"<<std::endl;
+
+    // Check if the index is in the range of the min/max bit size.
+    if (index > MAX_BIT_SIZE || index < MIN_BIT_SIZE) {
+        invalid();
+    }
 }
 
 void HeightContext::Top::refHeight() {
-	if (index == 0) {
-		new (this) Flipped;
-	}
-	else {
-		new (this) BitCoded;
-	}
+    std::cout<<"TOP - refHeight"<<std::endl;
+
+    // Check the value of the index to make sure the next transition is correct.
+    if (index == 0) {
+        new (this) Flipped;
+    }
+    else {
+        new (this) BitCoded;
+    }
 }
 
 void HeightContext::Top::lowHeight() {
-	new (this) Low;
+    std::cout<<"TOP - lowHeight"<<std::endl;
+    new (this) Low;
 }
 
 void HeightContext::Top::highHeight() {
-	new (this) High;
+    std::cout<<"TOP - highHeight"<<std::endl;
+    new (this) High;
 }
 
 ///
 /// HIGH
 ///
 void HeightContext::High::entry () {
-	std::cout<<"High"<<std::endl;
-	pattern[index] = 1;
-	index++;
+    std::cout<<"HIGH - entry"<<std::endl;
+    pattern[index] = 1;
+    index++;
 }
 
 void HeightContext::High::surfaceHeight() {
-	new (this) Top;
+    std::cout<<"HIGH - surfaceHeight"<<std::endl;
+    new (this) Top;
 }
 
 ///
 /// LOW
 ///
 void HeightContext::Low::entry() {
-	std::cout<<"Low"<<std::endl;
-	pattern[index] = 0;
-	index++;
+    std::cout<<"LOW - entry"<<std::endl;
+    pattern[index] = 0;
+    index++;
 }
 
 void HeightContext::Low::surfaceHeight() {
-	new (this) Top;
+    std::cout<<"LOW - surfaceHeight"<<std::endl;
+    new (this) Top;
 }
 
 ///
 /// FLIPPED
 ///
 void HeightContext::Flipped::entry() {
-	std::cout<<"Flipped"<<std::endl;
-	//todo msgSend(flipped)
-	std::cout<<"fLIPPED - msgSend(Flipped)"<<std::endl;
-	patternRead();
+    std::cout<<"FLIPPED - entry"<<std::endl;
+    //TODO msgSend(flipped)
+    patternRead();
 }
 
 ///
 /// BITCODED
 ///
 void HeightContext::BitCoded::entry() {
-	std::cout<<"BitCoded"<<std::endl;
-	//todo msgSend(pattern)
-	std::cout<<"BitCoded - msgSend(Pattern)"<<std::endl;
-	patternRead();
+    std::cout<<"BITCODED - entry"<<std::endl;
+    //TODO msgSend(pattern)
+    patternRead();
 }
 
 /** @} */

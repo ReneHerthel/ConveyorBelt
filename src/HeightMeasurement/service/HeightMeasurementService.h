@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 Rene Herthel
+ * Copyright (C) 2017 Jonas Fuhrmann
  *
  * This file is subject to the terms and conditions of the MIT License.
  * See the file LICENSE in the top level directory for more details.
@@ -12,49 +13,91 @@
  * @brief      Service header declaration of the HeightMeasurement component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
+ * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>
  */
 
 #ifndef HEIGHTMEASUREMENTSERVICE_H_
 #define HEIGHTMEASUREMENTSERVICE_H_
 
+/*
+ * @brief Access macros for the calibrationDataPtr.
+ * @{
+ */
 #define DELTA_VAL (calibrationDataPtr->delta)
 #define REF_HEIGHT_VAL (calibrationDataPtr->refHeight)
 #define HOLE_HEIGHT_VAL (calibrationDataPtr->holeHeight)
 #define SURFACE_HEIGHT_VAL (calibrationDataPtr->surfaceHeight)
 #define LOW_HEIGHT_VAL (calibrationDataPtr->lowHeight)
 #define HIGH_HEIGHT_VAL (calibrationDataPtr->highHeight)
-
-#include <sys/siginfo.h>
-#include <sys/neutrino.h>
-#include <thread>
-#include <iostream>
-#include <sys/netmgr.h>
-#include <stdint.h>
-
+/** @} */
 
 #include "HeightContext.h"
 
+#include <stdint.h>
+#include <iostream>
+#include <sys/siginfo.h>
+#include <sys/neutrino.h>
+#include <thread>
+#include <sys/netmgr.h>
+
 class HeightMeasurementService {
 public:
-	struct CalibrationData {
-		int16_t delta;
-		int16_t refHeight;
-		int16_t holeHeight;
-		int16_t surfaceHeight;
-		int16_t highHeight;
-		int16_t lowHeight;
-	};
+    /*
+     * @brief The calibration data, which is initialized at the begining once.
+     */
+    struct CalibrationData {
+        int16_t delta;         /*< The range, which makes the data still valid.*/
+        int16_t refHeight;     /*< The height of the belt.*/
+        int16_t holeHeight;    /*< The height of the puck's hole.*/
+        int16_t surfaceHeight; /*< The height of the puck's top.*/
+        int16_t highHeight;    /*< The height of the Bit-coded puck's 1.*/
+        int16_t lowHeight;     /*< The height of the Bit-coded puck's 0.*/
+    };
 
-	HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
-	virtual ~HeightMeasurementService();
+    /*
+     * @brief The constructor with two channels and the calibrated data.
+     *
+     * @param[receive_chid] The channel id for the receive channel.
+     * @param[send_chid] The channel id for the sending channel.
+     * @param[*calibrationDataPtr] A pointer to the calibrated data.
+     */
+    HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
+
+    /*
+     * @brief The default virtual destructor.
+     */
+    virtual ~HeightMeasurementService();
+
 private:
-	HeightContext stateMachine;
-	CalibrationData *calibrationDataPtr;
-	void measuringTask(int measuring_chid);
-	void stateMachineTask(int receive_chid);
+    /*
+     * @brief The statemachine object.
+     */
+    HeightContext stateMachine;
 
-	std::thread measurementThread;
-	std::thread stateMachineThread;
+    /*
+     * @brief A pointer to the calibrated data.
+     */
+    CalibrationData *calibrationDataPtr;
+
+    /*
+     * @brief The superloop task of the measurement-thread.
+     */
+    void measuringTask(int measuring_chid);
+
+    /*
+     * @brief The superloop task of the statemachine-thread.
+     */
+    void stateMachineTask(int receive_chid);
+
+    /*
+     * @brief The measurement thread.
+     */
+    std::thread measurementThread;
+
+    /*
+     * @brief The statemachine thread.
+     */
+    std::thread stateMachineThread;
 };
 
 #endif /* HEIGHTMEASUREMENTSERVICE_H_ */
