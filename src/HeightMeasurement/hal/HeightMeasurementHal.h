@@ -23,11 +23,11 @@
 
 class HeightMeasurementHal {
 public:
-	/*
-	 * @brief Reads a signed 16 bit data value from the AIO port.
-	 * @param [&data] A reference to a signed 16 bit data.
-	 */
-	void read(int16_t &data);
+    /*
+     * @brief Reads a signed 16 bit data value from the AIO port.
+     * @param [&data] A reference to a signed 16 bit data.
+     */
+    void read(int16_t &data);
 };
 
 #endif /* HEIGHTMEASUREMENT_H_ */

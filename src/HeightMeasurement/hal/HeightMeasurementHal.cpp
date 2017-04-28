@@ -38,20 +38,20 @@
 
 void HeightMeasurementHal::read(int16_t &data) {
 
-	// Send an opcode to start the conversion.
-	out8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE, HEIGHT_MEASUREMENT_START_CODE);
+    // Send an opcode to start the conversion.
+    out8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE, HEIGHT_MEASUREMENT_START_CODE);
 
-	// Wait a few microseconds to complete the conversion
-	usleep(WAIT_TIME);
+    // Wait a few microseconds to complete the conversion
+    usleep(WAIT_TIME);
 
-	// Read the low byte
-	data = in8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE);
+    // Read the low byte
+    data = in8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE);
 
-	// Read the high byte and shift it 8 bits to left.
-	data |= (in8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_HIGH_BYTE) << BYTE);
+    // Read the high byte and shift it 8 bits to left.
+    data |= (in8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_HIGH_BYTE) << BYTE);
 
-	// Mask it to the 12-bit resolution of the distance laser.
-	data &= RESOLUTION_MASK;
+    // Mask it to the 12-bit resolution of the distance laser.
+    data &= RESOLUTION_MASK;
 }
 
 /** @} */
