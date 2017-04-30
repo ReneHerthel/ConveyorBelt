@@ -2,15 +2,12 @@
 // Created by Silt on 23.04.2017.
 //
 
-#include <iostream>
 #include "TestExample.h"
 
 SETUP(TestExample){
-    SET_TEST_CASE_ID(1);
-    SET_TEST_CASE_BRIEF("This is an example TestCase");
-    REG_TEST(&test1, 1, "Test1 Brief");
-    REG_TEST(&test2, 2, "Test2 Brief");
-    REG_TEST(&test3, 4, "Test3 Brief");
+    REG_TEST(test1, 1, "Test1 Brief");
+    REG_TEST(test2, 2, "Test2 Brief");
+    REG_TEST(test3, 3, "Test3 Brief");
 };
 
 BEFORE_TC(TestExample){
@@ -34,7 +31,7 @@ AFTER(TestExample){
 };
 
 TEST_IMPL(TestExample, test1){
-    std::cout << "Hier ist Test1, guckmal wurde gändert: " << testint<<std::endl;
+    std::cout << "Hier ist Test1, guckmal wurde gaendert: " << testint<<std::endl;
     return PASSED;
 }
 

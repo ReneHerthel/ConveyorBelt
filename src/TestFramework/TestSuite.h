@@ -13,7 +13,7 @@
 
 struct tsTestCase{
     TestCase* tc; //pointer becouse abstract
-    testResu resu;
+    testResu resu; //this is unused, but could come in handy later
 };
 
 class TestSuite {
@@ -22,8 +22,15 @@ private:
     std::ostream* logstream;
     std::fstream logfile;
     struct testResu resuSummary = {0,0,0};
-    std::list<struct tsTestCase> tcs;
+    std::vector<struct tsTestCase> tcs;
+    std::queue<int32_t> testsToRun; //!< The Tests to run as choosen by chooseTestCase();
+
     void summary();
+    void chooseTestCase();
+    void printAllTestCases();
+    void openLog(std::string log_path);
+    void runTests();
+    void printSeperator();
 public:
     void run(logLvl, std::string loh_path);
     void registerTc(TestCase* tc);

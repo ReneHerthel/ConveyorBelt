@@ -2,20 +2,22 @@
 // Created by Silt on 20.04.2017.
 //
 
-#include <iostream>
 #include "TestCase.h"
-#include <fstream>
+
+TestCase::TestCase(int id, std::string brief) {
+    this->id = id;
+    this->brief = brief;
+}
 
 testResu TestCase::run(logLvl logl, std::ostream* logfile) {
     logstream = logfile;
     setup();
     beforeTC();
-    (*logstream)<< "\nTEST_" << id << ":::" << brief  << std::endl;
+    printInfo(logstream);
     int nbrOfTests = tests.size();
     for(int i = 0; i < nbrOfTests; i++){  //for each test registered
         before();
-        test curTest = tests.front();
-        int32_t tstResu= (this->*curTest.fct)();//call memeber funktion
+        int32_t tstResu= tests[i].fct();//call memeber funktion
 
         std::string msg;
         switch(tstResu){ //determin results
@@ -34,9 +36,8 @@ testResu TestCase::run(logLvl logl, std::ostream* logfile) {
             default: msg = "Unknown Result";
         }
         if(tstResu == logl or logl == ALL){ //log result? (log lvl)
-            logTest(curTest, msg);
+            logTest(tests[i], msg);
         }
-        tests.pop_front(); //remove executed test
         after();
     }
     afterTC();
@@ -47,19 +48,16 @@ void TestCase::logTest(test tst, std::string msg) {
     (*logstream)<< tst.id << "| " << tst.brief << " => "<< msg << std::endl;
 }
 
-
-void TestCase::setTCid(int32_t id) {
-    this->id = id;
-}
-
-void TestCase::setTCbrief(std::string brief) {
-    this->brief =  brief;
-}
-
 void TestCase::registerTest(testFct fct, int32_t id, std::string brief) {
     test new_test = {fct, id, brief};
     tests.push_back(new_test);
 }
+
+void TestCase::printInfo(std::ostream *log) {
+    (*log)<< "TEST_" << id << "  " << brief  << std::endl;
+}
+
+
 
 
 

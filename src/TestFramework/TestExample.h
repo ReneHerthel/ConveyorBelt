@@ -7,8 +7,11 @@
 
 
 #include "TestCase.h"
+#include <iostream>
 
 class TestExample : public TestCase{
+public:
+    TestExample(int id, std::string brief): TestCase(id, brief){};
 protected:
     int32_t testint = 12345;
     TEST(test1);
@@ -16,7 +19,6 @@ protected:
     TEST(test3);
 protected:
     TEST_CASE_METHODS
-    int32_t testinteger;
 };
 
 
