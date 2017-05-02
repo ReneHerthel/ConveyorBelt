@@ -10,16 +10,17 @@ using namespace HAL;
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	// TODO: Create channel
+
 	int chid = ChannelCreate_r(0);
-	if(chid < 0){
-		std::cout << "Channel Create failed" << std::endl;
-	}
+		if(chid < 0){
+			std::cout << "Channel Create failed" << std::endl;
+		}
     // TODO: Readup on parameters
     int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
     if(coid < 0) {
         // TODO: Dump to log
     }
+
     LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, &boundary);
     LightSystemService lightSystem = LightSystemService(chid);
@@ -33,5 +34,6 @@ int main(int argc, char *argv[]) {
         this_thread::sleep_for(chrono::seconds(PAUSE_TIME));
         // TODO: Output to log
         cout << "Set Warning Level: " << warning << endl;
+
     }
 }
