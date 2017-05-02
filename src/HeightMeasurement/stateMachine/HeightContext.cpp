@@ -21,6 +21,8 @@
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
 
+#define HEIGHT_SEND_PRIO    (0)
+
 HeightContext::HeightContext(int send_chid)
     :    statePtr(&state)
     ,    send_chid(send_chid)
@@ -80,9 +82,10 @@ void HeightContext::process(Signal signal) {
         default:
             std::cout<<"[HeightContext.cpp] Undefined signal."<<std::endl;
             return; // Do not do anything more.
+
     } /* switch (signal) */
 
-    // Invoke the entry function of every state.
+    // Invoke the entry function of every new state.
     statePtr->entry();
 }
 
@@ -96,6 +99,7 @@ void HeightContext::State::entry() {
 
 void HeightContext::State::invalid() {
     // TODO MsgSendPulse_r(invalid)
+    //int err = MsgSendPulse_r(send_chid, sched_get_priority_min(HEIGHT_SEND_PRIO), 0);
     std::cout<<"STATE - invalid"<<std::endl;
     new (this) State;
 }
@@ -159,7 +163,7 @@ void HeightContext::State::highHeight() {
 }
 
 ///
-/// IDLE
+/// IDLE : STATE
 ///
 void HeightContext::Idle::entry() {
     // TODO stopMeasuring()
@@ -173,7 +177,7 @@ void HeightContext::Idle::start() {
 }
 
 ///
-/// MEASURING
+/// MEASURING : STATE
 ///
 void HeightContext::Measuring::entry() {
     // TODO startMeasuring()
@@ -187,7 +191,7 @@ void HeightContext::Measuring::holeHeight() {
 }
 
 ///
-/// NORMAL
+/// NORMAL : STATE
 ///
 void HeightContext::Normal::entry() {
     std::cout<<"NORMAL - entry"<<std::endl;
@@ -199,7 +203,7 @@ void HeightContext::Normal::surfaceHeight() {
 }
 
 ///
-/// SURFACE
+/// SURFACE : STATE
 ///
 void HeightContext::Surface::entry() {
     std::cout<<"SURFACE - entry"<<std::endl;
@@ -211,7 +215,7 @@ void HeightContext::Surface::refHeight() {
 }
 
 ///
-/// BIT OR FLIPPED
+/// BIT OR FLIPPED : STATE
 ///
 void HeightContext::BitOrFlipped::entry() {
     std::cout<<"BITORFLIPPED - entry"<<std::endl;
@@ -226,7 +230,7 @@ void HeightContext::BitOrFlipped::patternRead() {
 }
 
 ///
-/// Top
+/// TOP : BIT OR FLIPPED
 ///
 void HeightContext::Top::entry() {
     std::cout<<"TOP - entry"<<std::endl;
@@ -260,7 +264,7 @@ void HeightContext::Top::highHeight() {
 }
 
 ///
-/// HIGH
+/// HIGH : BIT OR FLIPPED
 ///
 void HeightContext::High::entry () {
     std::cout<<"HIGH - entry"<<std::endl;
@@ -274,7 +278,7 @@ void HeightContext::High::surfaceHeight() {
 }
 
 ///
-/// LOW
+/// LOW : BIT OR FLIPPED
 ///
 void HeightContext::Low::entry() {
     std::cout<<"LOW - entry"<<std::endl;
@@ -288,7 +292,7 @@ void HeightContext::Low::surfaceHeight() {
 }
 
 ///
-/// FLIPPED
+/// FLIPPED : BIT OR FLIPPED
 ///
 void HeightContext::Flipped::entry() {
     std::cout<<"FLIPPED - entry"<<std::endl;
@@ -297,7 +301,7 @@ void HeightContext::Flipped::entry() {
 }
 
 ///
-/// BITCODED
+/// BITCODED : BIT OR FLIPPED
 ///
 void HeightContext::BitCoded::entry() {
     std::cout<<"BITCODED - entry"<<std::endl;
