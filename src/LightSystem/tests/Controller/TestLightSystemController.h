@@ -5,8 +5,10 @@
  */
 
 #include <sys/neutrino.h>
+#include <sys/netmgr.h>
 #include "enum.h"
-#include "TimerService.h"
 #include "LightSystemController.h"
 #include "LightSystemHal.h"
 #include "LightSystemService.h"
+
+#define PAUSE_TIME 5

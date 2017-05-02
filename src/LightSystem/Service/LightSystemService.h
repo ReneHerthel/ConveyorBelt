@@ -18,9 +18,10 @@ struct LightMessage {
 
 class LightSystemService : public ILightSystem {
 	public:
+		LightSystemService(int coid);
 		void setWarningLevel(Level warningLevel);
 	private:
-		int channelId;
+		int coid;
 } ;
 
 #endif

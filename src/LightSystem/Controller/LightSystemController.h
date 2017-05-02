@@ -11,9 +11,9 @@
 #include <thread>
 #include <vector>
 #include <sys/neutrino.h>
-#include "ITimer.h"
 #include "BLightSystem.h"
 #include "enum.h"
+#include "LightSystemService.h"
 
 using namespace std;
 using namespace HAL;
@@ -21,15 +21,18 @@ using namespace HAL;
 class LightSystemController {
     public:
 		LightSystemController(int chid
-				, ITimer* timer
 				, BLightSystem* boundary);
 		bool isRunning;
 
     private:
 		int chid;
-        ITimer* timer;
         BLightSystem* boundary;
         int task(void);
+        int control(void);
+        Frequency frequency;
+        Color color;
+        thread controlThread;
+        thread taskThread;
 };
 
 #endif
