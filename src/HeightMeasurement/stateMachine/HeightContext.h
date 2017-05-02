@@ -32,7 +32,6 @@
 
 class HeightContext {
 private:
-
     /*
      * @brief The super state from where all states will be inherit.
      */
@@ -198,7 +197,6 @@ private:
     State state;
 
 public:
-
     /*
      * @brief This enum describes the signals to be processed.
      */

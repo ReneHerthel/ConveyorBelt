@@ -18,6 +18,8 @@
 
 #include "HeightMeasurementService.h"
 #include "HeightMeasurementHal.h"
+#include "ITimer.h"
+#include "TimerService.h"
 
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
@@ -50,6 +52,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
     int err = 0;                                         /*< Return value of msgSend.*/
     struct _pulse pulse;                                 /*< Structure that describes a pulse.*/
+    TimerService timerService;                           /*< A timer for timeouts */
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -87,6 +90,8 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
             state = HeightContext::HIGH_HEIGHT;
         }
 
+        // TODO: Check for timeouts.
+
         // Only send a message, when there was a new state.
         if (state != oldState) {
             err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (sigval)state);
@@ -95,11 +100,15 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
                 // TODO Error handling.
                 std::cout<<"[measuringTask] Error on sending pulse message."<<std::endl;
             }
+
+
         }
 
         // Remember the current state as old state for the next loop.
         oldState = state;
     }
+
+    // TODO: delete timerService;
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {
