@@ -19,6 +19,16 @@
 #include "HeightMeasurementService.h"
 #include "HeightMeasurementHal.h"
 
+/*
+ * @brief Macros to check if the measured data is in range of the corresponding state.
+ *
+ * @param [DATA] The measured data.
+ * @param [CAL]  The reference value of the calibrated data.
+ * @{
+ */
+#define DATA_IS_IN_RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
+/** @} */
+
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(send_chid)
     ,    calibrationDataPtr(calibrationDataPtr)
@@ -30,64 +40,65 @@ HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_ch
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
-    // Nothing todo so far.
+    // TODO Kill the threads.
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {
-    int16_t data = 0;                                    /*< The current measured data. */
-    HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine. */
-    int16_t maxHeight = 0;                               /*< The maximum valid height. */
-    int16_t minHeight = 0;                               /*< The minimum valid height. */
-    HeightMeasurementHal hal;                            /*< The hal object to access the HW. */
+    int16_t data = 0;                                    /*< The current measured data.*/
+    HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
+    Heightcontext::Signal oldState = state;              /*< The old state of the statemachine.*/
+    HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
+    int err = 0;                                         /*< Return value of msgSend.*/
+    struct _pulse pulse;                                 /*< Structure that describes a pulse.*/
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
 
     // Do error handling, if there is no channel available.
     if (coid < 0) {
-      // TODO: Error handling.
+        // TODO: Error handling.
+        std::cout<<"[measuringTask] Coid error."<<std::endl;
     }
 
     /* TODO: Make this thread terminating from outside.
      *       -> volatile bool isRunning.
-     * TODO: Make this more fancy.
      *
      * Check if the current measured data is in a valid range of the
      * corresponding calibrated data. If it is so, send a signal to the receive-
-     * channel, where the statemachine is listening and could do the next
+     * channel, where the statemachine is listening and will do the next
      * transition.
      */
     while (1) {
         hal.read(data);
 
-        maxHeight = data + DELTA_VAL;
-        minHeight = data - DELTA_VAL;
+        if (DATA_IS_IN_RANGE(data, REF_HEIGHT_VAL)) {
+            state = HeightContext::REF_HEIGHT;
+        }
+        else if (DATA_IS_IN_RANGE(data, HOLE_HEIGHT_VAL)) {
+            state = HeightContext::HOLE_HEIGHT;
+        }
+        else if (DATA_IS_IN_RANGE(data, SURFACE_HEIGHT_VAL)) {
+            state = HeightContext::SURFACE_HEIGHT;
+        }
+        else if (DATA_IS_IN_RANGE(data, LOW_HEIGHT_VAL)) {
+            state = HeightContext::LOW_HEIGHT;
+        }
+        else if (DATA_IS_IN_RANGE(data, HIGH_HEIGHT_VAL)) {
+            state = HeightContext::HIGH_HEIGHT;
+        }
 
-        if (state != HeightContext::REF_HEIGHT) {
-            if (maxHeight < REF_HEIGHT_VAL && minHeight > REF_HEIGHT_VAL) {
-                // TODO
+        // Only send a message, when there was a new state.
+        if (state != oldState) {
+            err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (sigval)state);
+
+            if (err < 0) {
+                // TODO Error handling.
+                std::cout<<"[measuringTask] Error on sending pulse message."<<std::endl;
             }
         }
-        else if (state != HeightContext::HOLE_HEIGHT) {
-            if (maxHeight < HOLE_HEIGHT_VAL && minHeight > HOLE_HEIGHT_VAL) {
-                // TODO
-            }
-        }
-        else if (state != HeightContext::SURFACE_HEIGHT) {
-            if (maxHeight < SURFACE_HEIGHT_VAL && minHeight > SURFACE_HEIGHT_VAL) {
-                // TODO
-            }
-        }
-        else if (state != HeightContext::LOW_HEIGHT) {
-            if (maxHeight < LOW_HEIGHT_VAL && minHeight > LOW_HEIGHT_VAL) {
-                // TODO
-            }
-        }
-        else if (state != HeightContext::HIGH_HEIGHT) {
-            if (maxHeight < HIGH_HEIGHT_VAL && minHeight > HIGH_HEIGHT_VAL) {
-                // TODO
-            }
-        }
+
+        // Remember the current state as old state for the next loop.
+        oldState = state;
     }
 }
 
@@ -98,6 +109,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
     // Do error handling if there is no channel to connect.
     if (coid < 0) {
         // TODO: Error handling.
+        std::cout<<"[stateMachineTask] Coid error."
     }
 
     // Structure that describes a pulse.
@@ -117,6 +129,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
         if (err < 0) {
             // TODO: Error handling.
             // EFAULT, EINTR, ESRCH, ETIMEDOUT -> see qnx-manual.
+            std::cout<<"[stateMachineTask] Error on receiving pulse message."<<std::endl;
         }
 
         // Signalize the statemachine for the next transition.
