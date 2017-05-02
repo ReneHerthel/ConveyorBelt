@@ -6,6 +6,7 @@
 #define SE2_TEST_FRAMEWORK_TESTFRAMEWORK_H
 
 #include <string>
+#include <stdint.h>
 
 struct testResu{
     int32_t passed;

@@ -6,7 +6,6 @@
 #define SE2_TEST_FRAMEWORK_TESTCASE_H
 
 
-#include <gmon.h>
 #include <string>
 #include <list>
 #include <fstream>
@@ -14,6 +13,7 @@
 #include <vector>
 #include <queue>
 #include "TestFramework.h"
+#include <stdint.h>
 
 class TestCase {
 public:
@@ -35,7 +35,7 @@ protected:
     std::string brief;
 
     virtual int32_t setup() = 0;
-    void  registerTest(testFct fct, int32_t id, std::string brief);
+    void  registerTest(std::function<int32_t(void)> fct, int32_t id, std::string brief);
 
     virtual int32_t beforeTC() = 0;
     virtual int32_t afterTC() = 0;
