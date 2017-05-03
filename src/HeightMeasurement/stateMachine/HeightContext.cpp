@@ -27,8 +27,7 @@ HeightContext::HeightContext(int send_chid)
     :    statePtr(&state)
     ,    send_chid(send_chid)
 {
-    // Make sure the first state is calling the entry function.
-    statePtr->entry();
+	statePtr->entry();
 }
 
 void HeightContext::process(Signal signal) {
@@ -92,6 +91,10 @@ void HeightContext::process(Signal signal) {
 ///
 /// STATE
 ///
+//HeightContext::State::State() {
+//	std::cout<<"STATE - state"<<std::endl;
+//}
+
 void HeightContext::State::entry() {
     std::cout<<"STATE - entry"<<std::endl;
     new (this) Idle;

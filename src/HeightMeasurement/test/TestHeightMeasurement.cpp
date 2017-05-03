@@ -28,8 +28,8 @@
 #include <thread>
 
 #define TEST_HEIGHT_HAL             (0)
-#define TEST_HEIGHT_STATEMACHINE    (0)
-#define TEST_HEIGHT_SERVICE         (1)
+#define TEST_HEIGHT_STATEMACHINE    (1)
+#define TEST_HEIGHT_SERVICE         (0)
 #define SLEEP_TIME                  (1000)
 
 void TestHeightMeasurement::startTest() {
@@ -44,7 +44,7 @@ void TestHeightMeasurement::startTest() {
 #endif /* TEST_HEIGHT_HAL */
 
 #if TEST_HEIGHT_STATEMACHINE
-    std::cout<<"[TestHeightMeasurement] Testing context: "<<(int)data<<std::endl;
+    std::cout<<"[TestHeightMeasurement] Testing context: "<<std::endl;
     // Use the chid in the constructor.
     HeightContext context(9); // Non available chid!
     context.process(HeightContext::START);

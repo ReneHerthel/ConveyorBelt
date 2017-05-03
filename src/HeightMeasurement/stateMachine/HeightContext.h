@@ -36,6 +36,7 @@ private:
      * @brief The super state from where all states will be inherit.
      */
     struct State {
+    	//State();
         virtual void invalid();
         virtual void timeout();
         virtual void start();

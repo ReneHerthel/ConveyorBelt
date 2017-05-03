@@ -18,8 +18,8 @@
 
 #include "HeightMeasurementService.h"
 #include "HeightMeasurementHal.h"
-#include "ITimer.h"
-#include "TimerService.h"
+//#include "ITimer.h"
+//#include "TimerService.h"
 
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
@@ -48,11 +48,11 @@ HeightMeasurementService::~HeightMeasurementService() {
 void HeightMeasurementService::measuringTask(int receive_chid) {
     int16_t data = 0;                                    /*< The current measured data.*/
     HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
-    Heightcontext::Signal oldState = state;              /*< The old state of the statemachine.*/
+    HeightContext::Signal oldState = state;              /*< The old state of the statemachine.*/
     HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
     int err = 0;                                         /*< Return value of msgSend.*/
     struct _pulse pulse;                                 /*< Structure that describes a pulse.*/
-    TimerService timerService;                           /*< A timer for timeouts */
+    //TimerService timerService;                           /*< A timer for timeouts */
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -94,7 +94,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
         // Only send a message, when there was a new state.
         if (state != oldState) {
-            err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (sigval)state);
+            err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
 
             if (err < 0) {
                 // TODO Error handling.
@@ -118,7 +118,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
     // Do error handling if there is no channel to connect.
     if (coid < 0) {
         // TODO: Error handling.
-        std::cout<<"[stateMachineTask] Coid error."
+        std::cout<<"[stateMachineTask] Coid error."<<std::endl;
     }
 
     // Structure that describes a pulse.
