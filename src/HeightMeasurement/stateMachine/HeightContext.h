@@ -19,6 +19,8 @@
 #ifndef HEIGHTCONTEXT_H_
 #define HEIGHTCONTEXT_H_
 
+#include "HeightSignal.h"
+
 #include <functional>
 #include <vector>
 
@@ -49,6 +51,7 @@ private:
         virtual void lowHeight();
         virtual void highHeight();
         virtual void entry();
+        int chid;
     } *statePtr;
 
     /*
@@ -196,6 +199,12 @@ private:
      * @brief A reference to the current state of the state machine.
      */
     State state;
+
+    /*
+     * @brief
+     * @param[signal]
+     */
+    static void send(int chid, signal_t signal);
 
 public:
     /*

@@ -21,6 +21,9 @@
 //#include "ITimer.h"
 //#include "TimerService.h"
 
+// TODO delete
+#include <iostream>
+
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
  *
@@ -46,13 +49,14 @@ HeightMeasurementService::~HeightMeasurementService() {
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {
+	std::cout<<"[measuringTask] Thread task start."<<std::endl;
     int16_t data = 0;                                    /*< The current measured data.*/
     HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
     HeightContext::Signal oldState = state;              /*< The old state of the statemachine.*/
     HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
     int err = 0;                                         /*< Return value of msgSend.*/
     struct _pulse pulse;                                 /*< Structure that describes a pulse.*/
-    //TimerService timerService;                           /*< A timer for timeouts */
+    //TimerService timerService;                         /*< A timer for timeouts */
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -88,6 +92,8 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
         }
         else if (DATA_IS_IN_RANGE(data, HIGH_HEIGHT_VAL)) {
             state = HeightContext::HIGH_HEIGHT;
+        } else {
+        	state = HeightContext::INVALID;
         }
 
         // TODO: Check for timeouts.
@@ -100,8 +106,6 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
                 // TODO Error handling.
                 std::cout<<"[measuringTask] Error on sending pulse message."<<std::endl;
             }
-
-
         }
 
         // Remember the current state as old state for the next loop.
@@ -112,14 +116,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {
-    // Connect the statemachine to the receive channel to listen on it.
-    int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
-
-    // Do error handling if there is no channel to connect.
-    if (coid < 0) {
-        // TODO: Error handling.
-        std::cout<<"[stateMachineTask] Coid error."<<std::endl;
-    }
+	std::cout<<"[stateMachineTask] Thread task start."<<std::endl;
 
     // Structure that describes a pulse.
     struct _pulse pulse;
@@ -131,6 +128,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
      */
     while (1) {
 
+        std::cout<<"[stateMachineTask] wait for msg: "<<std::endl;
         // Returns 0 on success and a negative value on error.
         int err = MsgReceivePulse_r(receive_chid, &pulse, sizeof(_pulse), NULL);
 
@@ -140,6 +138,8 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
             // EFAULT, EINTR, ESRCH, ETIMEDOUT -> see qnx-manual.
             std::cout<<"[stateMachineTask] Error on receiving pulse message."<<std::endl;
         }
+
+        std::cout<<"[stateMachineTask] received: "<<pulse.value.sival_int<<std::endl;
 
         // Signalize the statemachine for the next transition.
         stateMachine.process((HeightContext::Signal) pulse.value.sival_int);
