@@ -23,7 +23,7 @@ void TestSuite::registerTc(TestCase* tc) {
 
 void TestSuite::summary() {
     double passed = ((double)resuSummary.passed / (double)(resuSummary.failed + resuSummary.passed + resuSummary.warning))*100;
-    (*logstream)<<  "\nSUMMARY OF TEST: "  << passed << "% passed" //precision so that xx.yy %
+    (*logstream)<<  "\nSUMMARY OF TEST: "  << passed << "% passed"
                 << "\nFailed: \t" << resuSummary.failed
                 << "\nWarning:\t" << resuSummary.warning
                 << "\nPassed: \t"  << resuSummary.passed << endl;

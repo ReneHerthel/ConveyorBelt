@@ -5,11 +5,12 @@
 #ifndef SE2_TEST_FRAMEWORK_TESTSUITE_H
 #define SE2_TEST_FRAMEWORK_TESTSUITE_H
 
-#include <list>
+#include <vector>
 #include "TestFramework.h"
 #include "TestCase.h"
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 struct tsTestCase{
     TestCase* tc; //pointer becouse abstract
