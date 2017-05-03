@@ -228,7 +228,7 @@ PATTERN_READ</panel_attributes>
       <w>126</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>SURFACE
+    <panel_attributes>TOP
 --
 
 
@@ -239,7 +239,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>525</x>
+      <x>497</x>
       <y>945</y>
       <w>77</w>
       <h>119</h>
@@ -381,18 +381,18 @@ SURFACE_HEIGHT</panel_attributes>
     <coordinates>
       <x>231</x>
       <y>1050</y>
-      <w>301</w>
+      <w>273</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [index = 0]</panel_attributes>
-    <additional_attributes>410.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>370.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
       <x>833</x>
-      <y>1022</y>
+      <y>973</y>
       <w>126</w>
       <h>77</h>
     </coordinates>
@@ -407,19 +407,19 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>539</x>
-      <y>1050</y>
-      <w>308</w>
-      <h>28</h>
+      <x>567</x>
+      <y>945</y>
+      <w>280</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [index &gt; MAX_BIT_SIZE || index &lt; MIN_BIT_SIZE]</panel_attributes>
-    <additional_attributes>10.0;20.0;420.0;20.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;380.0;100.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>525</x>
+      <x>497</x>
       <y>1071</y>
       <w>42</w>
       <h>126</h>
@@ -431,7 +431,7 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>469</x>
+      <x>441</x>
       <y>1183</y>
       <w>126</w>
       <h>77</h>
@@ -447,7 +447,7 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>518</x>
+      <x>490</x>
       <y>1050</y>
       <w>28</w>
       <h>28</h>
@@ -541,5 +541,31 @@ TIMEOUT / msgSend(timeout)</panel_attributes>
 
 WAIT / stopTimer()</panel_attributes>
     <additional_attributes>30.0;10.0;30.0;70.0;100.0;70.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>119</x>
+      <y>21</y>
+      <w>189</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+ALL OTHERS / msgSend(unexpected)</panel_attributes>
+    <additional_attributes>170.0;70.0;170.0;20.0;90.0;20.0;90.0;100.0;140.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>238</y>
+      <w>133</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+
+RESUME / resumeTimer()</panel_attributes>
+    <additional_attributes>50.0;10.0;50.0;70.0;130.0;70.0;130.0;10.0</additional_attributes>
   </element>
 </diagram>
