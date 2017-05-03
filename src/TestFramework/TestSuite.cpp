@@ -5,9 +5,8 @@
 #include "TestSuite.h"
 using namespace std;
 
-void TestSuite::run(logLvl logl, std::string log_path) {
-
-    this->logl = logl;
+void TestSuite::run(std::string log_path) {
+    logl = chooseLogLvl();
     openLog(log_path);
     printAllTestCases();
     chooseTestCase();
@@ -96,6 +95,13 @@ void TestSuite::runTests() {
         }
     }
 
+}
+
+logLvl TestSuite::chooseLogLvl(){
+	cout << "Choose wich Tests to log FAILED [-1] ALL [0] WARNING [2] PASSED [1]:" << std::endl;
+	int32_t in;
+	cin >> in;
+	return (logLvl)in;
 }
 
 void TestSuite::printSeperator() {

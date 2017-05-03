@@ -27,7 +27,7 @@ typedef int32_t  logLvl;
 
 //////////////TestSuite Defs start here//////////////
 #define REG_TESTCASE(x) registerTc(x); /*!<Use to register your Testcase to the TestSuite */
-#define START_TEST(x,y) run(x,y); /*!<  Use to start the testsuite */
+#define START_TEST(y) run(y); /*!<  Use to start the testsuite */
 
 /////////////TestCase Defs start Here//////////////
 

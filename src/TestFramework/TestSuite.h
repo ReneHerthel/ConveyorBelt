@@ -32,8 +32,9 @@ private:
     void openLog(std::string log_path);
     void runTests();
     void printSeperator();
+    logLvl chooseLogLvl();
 public:
-    void run(logLvl, std::string loh_path);
+    void run(std::string loh_path);
     void registerTc(TestCase* tc);
 };
 

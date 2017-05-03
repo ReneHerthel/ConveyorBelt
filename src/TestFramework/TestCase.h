@@ -19,7 +19,7 @@ class TestCase {
 public:
     typedef  std::function<int32_t(void)> testFct; //Define a funtionpointer type test, takes no argument, return int, maybe this needs TestCase::
 
-    struct test{
+    struct test{ //
         testFct fct;
         int32_t id;
         std::string brief;
@@ -27,6 +27,13 @@ public:
 
     TestCase(int id, std::string brief);
 
+    /**
+     * @brief run the TestCase
+     * This Method runs all the Tests in the TestCase and writes it into the log file.
+     * @param logl The Log Level (Log Failed, Passed or all Tests)
+     * @param logfile The log file that will be used to store test result
+     * @return Summary TestCase Result
+     */
     testResu run(logLvl logl, std::ostream* logfile);
     void printInfo(std::ostream* log);
 protected:

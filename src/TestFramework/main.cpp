@@ -12,6 +12,6 @@ int main() {
     ts.REG_TESTCASE(new TestExample(1, "This is an example"));
     ts.REG_TESTCASE(new TestExample(2, "This is another one"));
     ts.REG_TESTCASE(new TestExample(3, "And a third one"));
-    ts.START_TEST(ALL, "/TEST_RESULT.txt");
+    ts.START_TEST("/TEST_RESULT.txt");
     return 0;
 }
