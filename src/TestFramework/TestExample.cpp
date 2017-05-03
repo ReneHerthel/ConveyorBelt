@@ -16,7 +16,7 @@ BEFORE_TC(TestExample){
 };
 
 AFTER_TC(TestExample){
-    std::cout << "Die Testbench hat fertig" <<std::endl;
+    std::cout << "Der TestCase hat fertig" <<std::endl;
     return 1;
 };
 
