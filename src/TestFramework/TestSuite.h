@@ -19,11 +19,11 @@ struct tsTestCase{
 
 class TestSuite {
 private:
-    logLvl logl;
-    std::ostream* logstream;
-    std::fstream logfile;
-    struct testResu resuSummary = {0,0,0};
-    std::vector<struct tsTestCase> tcs;
+    logLvl logl; //!< The logLvl used in all TestCases
+    std::ostream* logstream; //!< stream to a ostream, one of theses is used
+    std::fstream logfile; //!< stream to a file
+    struct testResu resuSummary = {0,0,0}; //!<Summary of all TestCases
+    std::vector<struct tsTestCase> tcs; //!<List of all TestCases
     std::queue<int32_t> testsToRun; //!< The Tests to run as choosen by chooseTestCase();
 
     void summary();
@@ -35,6 +35,11 @@ private:
     logLvl chooseLogLvl();
 public:
     void run(std::string loh_path);
+    /**
+     * @Brief Register new TesCase, USE DEFINE IN TestFramework.h
+     * Register a new TestCase to the TestSuite
+     * @param tc the Testcase
+     */
     void registerTc(TestCase* tc);
 };
 

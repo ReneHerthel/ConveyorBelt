@@ -19,7 +19,7 @@ class TestCase {
 public:
     typedef  std::function<int32_t(void)> testFct; //Define a funtionpointer type test, takes no argument, return int, maybe this needs TestCase::
 
-    struct test{ //
+    struct test{ //This Struct is used to store a test function
         testFct fct;
         int32_t id;
         std::string brief;
@@ -42,18 +42,41 @@ protected:
     std::string brief;
 
     virtual int32_t setup() = 0;
+
+    /**
+     * @Brief Register a new test Method. USE DEFINES IN TestFramework.h
+     * Register a new Testmethod from within the setup method
+     * @param fct the testmethod
+     * @param id id of the test displayed later
+     * @param brief Tesxt displayed with the test result later
+     */
     void  registerTest(std::function<int32_t(void)> fct, int32_t id, std::string brief);
 
+    /**
+     * Method executed before TestCase
+     */
     virtual int32_t beforeTC() = 0;
+    /**
+     * Method executed after every TestCase
+     */
     virtual int32_t afterTC() = 0;
 
+    /**
+     * Executed before every Test
+     */
     virtual int32_t before() = 0;
+    /**
+     * Executed after every Test
+     */
     virtual int32_t after() = 0;
 
 private:
     testResu resu = {0,0,0}; //At the beginning, nothing passed
-    std::ostream* logstream;
+    std::ostream* logstream; //The log file
 
+    /**
+     * Log the Result of a Test
+     */
     void logTest(test tst, std::string msg);
 };
 
