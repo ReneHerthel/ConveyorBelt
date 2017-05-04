@@ -7,17 +7,18 @@
 
 #include "LightSystemService.h"
 
-LightSystemService::LightSystemService(int coid):
-    coid(coid)
+LightSystemService::LightSystemService(int chid):
+    chid(chid)
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
+	LOG_SCOPE;
     /* FIXME: Discuss Priorities */
     /* TODO: Merge messages */
     /* 80 is ID for lightSystem */
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0),LIGHT_SYSTEM,warningLevel);
-
+    LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
+    int err = MsgSendPulse_r(chid, sched_get_priority_min(0), LIGHT_SYSTEM, warningLevel);
     if(err) {
-        // TODO: Dump to log
+        LOG_ERROR << "Sending message failed" << endl;
     }
 }

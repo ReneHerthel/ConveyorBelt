@@ -10,6 +10,8 @@
 #include "enum.h"
 #include "LightSystemController.h"
 #include "ILightSystem.h"
+#include "Logger.h"
+#include "LogScope.h"
 
 struct LightMessage {
     Color color;
@@ -21,7 +23,7 @@ class LightSystemService : public ILightSystem {
 		LightSystemService(int coid);
 		void setWarningLevel(Level warningLevel);
 	private:
-		int coid;
+		int chid;
 } ;
 
 #endif

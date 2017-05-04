@@ -24,12 +24,14 @@ LightSystemController :: LightSystemController(int chid, BLightSystem* boundary)
  */
 
 int LightSystemController::task(){
+	LOG_SCOPE;
 	// trying to get right access to the I/O hardware
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-		std::cout << "Can't get Hardware access, therefore can't do anything." << std::endl;
+		LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;
 	}
 
+	LOG_DEBUG << "__FUNCTION__: Enter loop" << endl;
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
@@ -50,12 +52,17 @@ int LightSystemController::task(){
 
 int LightSystemController::control() {
 	struct _pulse pulse;
-	int msg;
+	int err;
+
+	LOG_DEBUG << "__FUNCTION__: Enter loop" << endl;
+	LOG_DEBUG << "__FUNCTION__: Channel "<< chid << endl;
 	while(isRunning)
-		msg = MsgReceive_r(chid, &pulse, sizeof(_pulse),NULL);
-		if(msg < 0) {
-			// TODO error handling
-			std::cout << "client MsgReceive_r failed" << std::endl;
+		//LOG_DEBUG << "__FUNCTION__: Wait for message on channel " << chid << endl;
+		// FIXME: Messages are never received
+		err = MsgReceivePulse_r(chid, &pulse, sizeof(_pulse), NULL);
+		LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
+		if(err < 0) {
+			LOG_ERROR << "client MsgReceive_r failed" << std::endl;
 		}
 
 		/* FIXME: Typesafe conversion */
@@ -64,7 +71,7 @@ int LightSystemController::control() {
 	    static const LightMessage LightMessageMapping[] = {
 	            { GREEN, ALWAYS_ON }, // OPERATING
 	            { GREEN, ALWAYS_OFF }, // NOT_OPERATING
-	            { YELLOW, SLOW_BLINKING }, // WARNING
+	            { YELLOW, SLOW_BLINKING }, // WARNING_OCCURED
 	            { YELLOW, ALWAYS_OFF }, // CLEAR_WARNING
 	            { RED, ALWAYS_OFF }, // CLEAR_ERROR
 	            { RED, FAST_BLINKING }, // ERROR_OCCURED
@@ -74,8 +81,10 @@ int LightSystemController::control() {
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;
+	    LOG_DEBUG << "Set color: " << color << endl;
 	    frequency = LightMessageMapping[warningLevel].frequency;
-	/* FXIME: Bogus return value */
+	    LOG_DEBUG << "Set frequency: " << frequency << endl;
+	/* FIXME: Bogus return value */
 	return 1;
 }
 

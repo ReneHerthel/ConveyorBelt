@@ -14,6 +14,8 @@
 #include "BLightSystem.h"
 #include "enum.h"
 #include "LightSystemService.h"
+#include "Logger.h"
+#include "LogScope.h"
 
 using namespace std;
 using namespace HAL;
