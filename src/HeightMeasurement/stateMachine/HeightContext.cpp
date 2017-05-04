@@ -17,12 +17,19 @@
   */
 
 #include "HeightContext.h"
-#include <iostream>
+#include "Logger.h"
+#include "LogScope.h"
+
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
 
+/*
+ * @brief Macros for the sending method.
+ * @{
+ */
 #define HEIGHT_SEND_PRIO    (0)
 #define HEIGHT_PULSE_CODE   (141)
+/** @} */
 
 HeightContext::HeightContext(int send_chid)
     :    statePtr(&state)
@@ -33,6 +40,11 @@ HeightContext::HeightContext(int send_chid)
 }
 
 void HeightContext::process(Signal signal) {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG)
+
+    LOG_DEBUG << "[HeightContext] process() Incoming signal: " << signal << "\n";
+
     // Switch between defined signals and invoke the function of the statePtr.
     switch(signal) {
 
@@ -81,7 +93,7 @@ void HeightContext::process(Signal signal) {
             break;
 
         default:
-            std::cout<<"[HeightContext.cpp] Undefined signal."<<std::endl;
+            LOG_DEBUG << "[HeightContext] process() Undefined signal\n";
             return; // Do not do anything more.
 
     } /* switch (signal) */
@@ -90,12 +102,16 @@ void HeightContext::process(Signal signal) {
     statePtr->entry();
 }
 
-void HeightContext::send(int chid, signal_t signal) {
+void HeightContext::send(int chid, signal_t signal) { // Static method.
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] send() chid: " << chid << " signal-ID: " << signal.ID << "\n";
+
     int err = MsgSendPulse_r(chid, sched_get_priority_min(HEIGHT_SEND_PRIO), HEIGHT_SEND_PRIO, signal.value);
 
     if (err < 0) {
         // TODO Error handling.
-        std::cout<<"[measuringTask] Error on sending pulse message."<<std::endl;
+        LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }
 
@@ -103,12 +119,16 @@ void HeightContext::send(int chid, signal_t signal) {
 /// STATE
 ///
 void HeightContext::State::entry() {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State entry()\n";
     new (this) Idle;
-    std::cout<<"STATE - entry"<<std::endl;
 }
 
 void HeightContext::State::invalid() {
-    std::cout<<"STATE - invalid"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State invalid()\n";
 
     signal_t signal;
     signal.ID = SignalID::INVALID;
@@ -120,7 +140,9 @@ void HeightContext::State::invalid() {
 }
 
 void HeightContext::State::timeout() {
-    std::cout<<"STATE - timeout"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State timeout()\n";
 
     signal_t signal;
     signal.ID = SignalID::TIMEOUT;
@@ -132,7 +154,9 @@ void HeightContext::State::timeout() {
 }
 
 void HeightContext::State::start() {
-    std::cout<<"STATE - start - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State start()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -144,17 +168,23 @@ void HeightContext::State::start() {
 }
 
 void HeightContext::State::wait() {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State wait()\n";
     // TODO stoptimer()
-    std::cout<<"STATE - wait"<<std::endl;
 }
 
 void HeightContext::State::resume() {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State resume()\n";
     // TODO resumeTimer()
-    std::cout<<"STATE - resume"<<std::endl;
 }
 
 void HeightContext::State::holeHeight() {
-    std::cout<<"STATE - holeHeight - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State holeHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -166,7 +196,9 @@ void HeightContext::State::holeHeight() {
 }
 
 void HeightContext::State::surfaceHeight() {
-    std::cout<<"STATE - surfaceHeight - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State surfaceHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -178,7 +210,9 @@ void HeightContext::State::surfaceHeight() {
 }
 
 void HeightContext::State::refHeight() {
-    std::cout<<"STATE - refHeight - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State refHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -190,7 +224,9 @@ void HeightContext::State::refHeight() {
 }
 
 void HeightContext::State::patternRead() {
-    std::cout<<"STATE - patternRead - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State patternRead()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -202,7 +238,9 @@ void HeightContext::State::patternRead() {
 }
 
 void HeightContext::State::lowHeight() {
-    std::cout<<"STATE - lowHeight - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State lowHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -214,7 +252,9 @@ void HeightContext::State::lowHeight() {
 }
 
 void HeightContext::State::highHeight() {
-    std::cout<<"STATE - highHeight - unexpected"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] State highHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED;
@@ -229,13 +269,17 @@ void HeightContext::State::highHeight() {
 /// IDLE : STATE
 ///
 void HeightContext::Idle::entry() {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Idle entry()\n";
     // TODO stopMeasuring()
     // TODO stopTimer()
-    std::cout<<"IDLE - entry"<<std::endl;
 }
 
 void HeightContext::Idle::start() {
-    std::cout<<"IDLE - start"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Idle startt()\n";
     new (this) Measuring;
 }
 
@@ -243,13 +287,17 @@ void HeightContext::Idle::start() {
 /// MEASURING : STATE
 ///
 void HeightContext::Measuring::entry() {
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Measuring entry()\n";
     // TODO startMeasuring()
     // TODO startTimer()
-    std::cout<<"MEASURING - entry"<<std::endl;
 }
 
 void HeightContext::Measuring::holeHeight() {
-    std::cout<<"MEASURING - holeHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Measuring holeHeight()\n";
     new (this) Normal;
 }
 
@@ -257,11 +305,15 @@ void HeightContext::Measuring::holeHeight() {
 /// NORMAL : STATE
 ///
 void HeightContext::Normal::entry() {
-    std::cout<<"NORMAL - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Normal entry()\n";
 }
 
 void HeightContext::Normal::surfaceHeight() {
-    std::cout<<"NORMAL - surfaceHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Normal surfaceHeight()\n";
     new (this) Surface;
 }
 
@@ -269,11 +321,15 @@ void HeightContext::Normal::surfaceHeight() {
 /// SURFACE : STATE
 ///
 void HeightContext::Surface::entry() {
-    std::cout<<"SURFACE - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Surface entry()\n";
 }
 
 void HeightContext::Surface::refHeight() {
-    std::cout<<"SURFACE - refHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Surface refHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::NORMAL;
@@ -288,14 +344,20 @@ void HeightContext::Surface::refHeight() {
 /// BIT OR FLIPPED : STATE
 ///
 void HeightContext::BitOrFlipped::entry() {
-    std::cout<<"BITORFLIPPED - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] BitOrFlipped entry()\n";
+
     index = 0;
     //pattern = {0, 0, 0};
     new (this) Top;
 }
 
 void HeightContext::BitOrFlipped::patternRead() {
-    std::cout<<"BITORFLIPPED - patternRead"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] BitOrFlipped patternRead()\n";
+
     new (this) Idle;
 }
 
@@ -303,7 +365,9 @@ void HeightContext::BitOrFlipped::patternRead() {
 /// TOP : BIT OR FLIPPED
 ///
 void HeightContext::Top::entry() {
-    std::cout<<"TOP - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Top entry()\n";
 
     // Check if the index is in the range of the min/max bit size.
     if (index > MAX_BIT_SIZE || index < MIN_BIT_SIZE) {
@@ -312,7 +376,9 @@ void HeightContext::Top::entry() {
 }
 
 void HeightContext::Top::refHeight() {
-    std::cout<<"TOP - refHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Top refHeight()\n";
 
     // Check the value of the index to make sure the next transition is correct.
     if (index == 0) {
@@ -324,12 +390,18 @@ void HeightContext::Top::refHeight() {
 }
 
 void HeightContext::Top::lowHeight() {
-    std::cout<<"TOP - lowHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Top lowHeight()\n";
+
     new (this) Low;
 }
 
 void HeightContext::Top::highHeight() {
-    std::cout<<"TOP - highHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Top highHeight()\n";
+
     new (this) High;
 }
 
@@ -337,13 +409,19 @@ void HeightContext::Top::highHeight() {
 /// HIGH : BIT OR FLIPPED
 ///
 void HeightContext::High::entry () {
-    std::cout<<"HIGH - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Hight entry()\n";
+
     pattern[index] = 1;
     index++;
 }
 
 void HeightContext::High::surfaceHeight() {
-    std::cout<<"HIGH - surfaceHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] High surfaceHeight()\n";
+
     new (this) Top;
 }
 
@@ -351,13 +429,19 @@ void HeightContext::High::surfaceHeight() {
 /// LOW : BIT OR FLIPPED
 ///
 void HeightContext::Low::entry() {
-    std::cout<<"LOW - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Low entry()\n";
+
     pattern[index] = 0;
     index++;
 }
 
 void HeightContext::Low::surfaceHeight() {
-    std::cout<<"LOW - surfaceHeight"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Low surfaceHeight()\n";
+
     new (this) Top;
 }
 
@@ -365,7 +449,9 @@ void HeightContext::Low::surfaceHeight() {
 /// FLIPPED : BIT OR FLIPPED
 ///
 void HeightContext::Flipped::entry() {
-    std::cout<<"FLIPPED - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Flipped entry()\n";
 
     signal_t signal;
     signal.ID = SignalID::FLIPPED;
@@ -373,6 +459,7 @@ void HeightContext::Flipped::entry() {
 
     send(chid, signal);
 
+    // Calls the super-method.
     patternRead();
 }
 
@@ -380,7 +467,9 @@ void HeightContext::Flipped::entry() {
 /// BITCODED : BIT OR FLIPPED
 ///
 void HeightContext::BitCoded::entry() {
-    std::cout<<"BITCODED - entry"<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] BitCoded entry()\n";
 
     signal_t signal;
     signal.ID = SignalID::PATTERN;
@@ -390,6 +479,7 @@ void HeightContext::BitCoded::entry() {
 
     send(chid, signal);
 
+    // Calls the super-method.
     patternRead();
 }
 

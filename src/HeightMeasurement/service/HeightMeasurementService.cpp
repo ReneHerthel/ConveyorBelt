@@ -20,6 +20,8 @@
 #include "HeightMeasurementHal.h"
 //#include "ITimer.h"
 //#include "TimerService.h"
+#include "Logger.h"
+#include "LogScope.h"
 
 // TODO delete
 #include <iostream>
@@ -42,6 +44,9 @@ HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_ch
     measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
+
+    measurementIsRunning = true;
+    statemachineIsRunning = true;
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
@@ -49,13 +54,14 @@ HeightMeasurementService::~HeightMeasurementService() {
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {
-	std::cout<<"[measuringTask] Thread task start."<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
     int16_t data = 0;                                    /*< The current measured data.*/
     HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
     HeightContext::Signal oldState = state;              /*< The old state of the statemachine.*/
     HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
     int err = 0;                                         /*< Return value of msgSend.*/
-    struct _pulse pulse;                                 /*< Structure that describes a pulse.*/
     //TimerService timerService;                         /*< A timer for timeouts */
 
     // Connect to the receive channel for sending pulse-messages on it.
@@ -64,18 +70,15 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     // Do error handling, if there is no channel available.
     if (coid < 0) {
         // TODO: Error handling.
-        std::cout<<"[measuringTask] Coid error."<<std::endl;
+        LOG_DEBUG << "[HeightMeasurementService] measuringTask() ConnectAttach_r failed\n";
     }
 
-    /* TODO: Make this thread terminating from outside.
-     *       -> volatile bool isRunning.
-     *
-     * Check if the current measured data is in a valid range of the
+    /* Check if the current measured data is in a valid range of the
      * corresponding calibrated data. If it is so, send a signal to the receive-
      * channel, where the statemachine is listening and will do the next
      * transition.
      */
-    while (1) {
+    while (measurementIsRunning) {
         hal.read(data);
 
         if (DATA_IS_IN_RANGE(data, REF_HEIGHT_VAL)) {
@@ -104,7 +107,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
             if (err < 0) {
                 // TODO Error handling.
-                std::cout<<"[measuringTask] Error on sending pulse message."<<std::endl;
+                LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
             }
         }
 
@@ -112,23 +115,19 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
         oldState = state;
     }
 
+    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
     // TODO: delete timerService;
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {
-	std::cout<<"[stateMachineTask] Thread task start."<<std::endl;
+    LOG_SCOPE;
+    LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
-    // Structure that describes a pulse.
-    struct _pulse pulse;
+    struct _pulse pulse; /*< Structure that describes a pulse.*/
 
-    /* TODO: Make this thread terminating from outside.
-     *       -> volatile bool isRunning.
-     *
-     * Wait for a new incoming pulse-message to do the next transition.
-     */
-    while (1) {
-
-        std::cout<<"[stateMachineTask] wait for msg: "<<std::endl;
+    // Wait for a new incoming pulse-message to do the next transition.
+    while (statemachineIsRunning) {
         // Returns 0 on success and a negative value on error.
         int err = MsgReceivePulse_r(receive_chid, &pulse, sizeof(_pulse), NULL);
 
@@ -136,14 +135,16 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
         if (err < 0) {
             // TODO: Error handling.
             // EFAULT, EINTR, ESRCH, ETIMEDOUT -> see qnx-manual.
-            std::cout<<"[stateMachineTask] Error on receiving pulse message."<<std::endl;
+            LOG_DEBUG << "[HeightMeasurementService] measuringTask() Error on MsgReceivePulse_r\n";
         }
 
-        std::cout<<"[stateMachineTask] received: "<<pulse.value.sival_int<<std::endl;
+        LOG_DEBUG << "[HeightMeasurementService] measuringTask() Received pulse: " << pulse.value.sival_int << "\n";
 
         // Signalize the statemachine for the next transition.
         stateMachine.process((HeightContext::Signal) pulse.value.sival_int);
     }
+
+    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
 }
 
 /** @} */

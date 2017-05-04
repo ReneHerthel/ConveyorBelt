@@ -22,7 +22,7 @@
 #include <stdint.h>
 
 /*
- * @brief
+ * @brief A specific structure for pulse messages.
  */
 typedef union {
 	struct {
@@ -40,7 +40,7 @@ typedef union {
 } signal_t;
 
 /*
- * @brief
+ * @brief The ID's of all available signals.
  */
 enum SignalID {
     INVALID,

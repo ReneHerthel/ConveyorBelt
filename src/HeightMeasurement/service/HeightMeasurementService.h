@@ -68,6 +68,16 @@ public:
      */
     virtual ~HeightMeasurementService();
 
+    /*
+     * @brief Controlls the superloop of the measuring thread from the outside.
+     */
+    volatile bool measurementIsRunning;
+
+    /*
+     * @brief Controlls the  superloop of the statemachine thread from the outside.
+     */
+    volatile bool statemachineIsRunning;
+
 private:
     /*
      * @brief The statemachine object.

@@ -19,7 +19,8 @@
 #include "HeightMeasurementHal.h"
 #include "HWaccess.h"
 #include "HWdefines.h"
-#include <unistd.h>
+
+#include <unistd.h> // usleep
 
 /*
  * @brief Describes the size of one byte in decimal.
@@ -37,7 +38,6 @@
 #define WAIT_TIME         10
 
 void HeightMeasurementHal::read(int16_t &data) {
-
     // Send an opcode to start the conversion.
     out8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE, HEIGHT_MEASUREMENT_START_CODE);
 
