@@ -29,14 +29,14 @@ class LightSystemController {
 		LightSystemController(int chid
 				, BLightSystem* boundary);
 		bool isRunning;
-
+		Frequency frequency;
+		Color color;
     private:
 		int chid;
         BLightSystem* boundary;
         int task(void);
         int control(int);
-        Frequency frequency;
-        Color color;
+
         thread controlThread;
         thread taskThread;
 };

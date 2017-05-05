@@ -9,10 +9,10 @@
 
 LightSystemController :: LightSystemController(int chid, BLightSystem* boundary)
 	: isRunning(true)
-    , chid(chid)
-	, boundary(boundary)
 	, frequency(ALWAYS_OFF)
 	, color(ALL)
+    , chid(chid)
+	, boundary(boundary)
 {
 	 taskThread = thread(&LightSystemController::task, this);
 	 controlThread = thread(&LightSystemController::control, this,chid);

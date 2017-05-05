@@ -7,15 +7,15 @@
 
 #include "LightSystemService.h"
 
-LightSystemService::LightSystemService(int chid):
+LightSystemService::LightSystemService(int chid, LightSystemController* controller):
     chid(chid)
+	, controller(controller)
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
 	LOG_SCOPE;
     /* FIXME: Discuss Priorities */
     /* 80 is ID for lightSystem */
-
 	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);
 	if(coid < 0) {
 	   	LOG_ERROR << "Channel Attach failed" << endl;
