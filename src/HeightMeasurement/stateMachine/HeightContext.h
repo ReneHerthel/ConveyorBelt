@@ -20,6 +20,7 @@
 #define HEIGHTCONTEXT_H_
 
 #include "HeightSignal.h"
+#include "HeightMeasurementService.h"
 
 #include <functional>
 #include <vector>
@@ -31,6 +32,8 @@
 #define MAX_BIT_SIZE 3
 #define MIN_BIT_SIZE 3
 /** @} */
+
+class HeightMeasurementService;
 
 class HeightContext {
 private:
@@ -52,6 +55,7 @@ private:
         virtual void highHeight();
         virtual void entry();
         int chid;
+        HeightMeasurementService *service;
     } *statePtr;
 
     /*
@@ -206,6 +210,11 @@ private:
      */
     static void send(int chid, signal_t signal);
 
+    /*
+     * @brief
+     */
+    HeightMeasurementService *service;
+
 public:
     /*
      * @brief This enum describes the signals to be processed.
@@ -227,7 +236,7 @@ public:
     /*
      * @brief The constructor with the ID of the send channel.
      */
-    HeightContext(int send_chid);
+    HeightContext(int send_chid, HeightMeasurementService *service);
 
     /*
      * @brief Inteprets the given signal and invoke the corresponding function.

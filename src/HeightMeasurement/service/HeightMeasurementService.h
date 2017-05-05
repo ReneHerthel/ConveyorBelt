@@ -40,6 +40,8 @@
 #include <thread>
 #include <sys/netmgr.h>
 
+class HeightContext;
+
 class HeightMeasurementService {
 public:
     /*
@@ -69,6 +71,30 @@ public:
     virtual ~HeightMeasurementService();
 
     /*
+     * @brief
+     */
+    void startMeasuring();
+
+    /*
+     * @brief
+     */
+    void stopMeasuring();
+
+private:
+    /*
+     * @brief The statemachine object.
+     */
+    HeightContext *stateMachine;
+
+
+    /*
+     * @brief A pointer to the calibrated data.
+     */
+    CalibrationData *calibrationDataPtr;
+
+    int receive_chid;
+
+    /*
      * @brief Controlls the superloop of the measuring thread from the outside.
      */
     volatile bool measurementIsRunning;
@@ -77,17 +103,6 @@ public:
      * @brief Controlls the  superloop of the statemachine thread from the outside.
      */
     volatile bool statemachineIsRunning;
-
-private:
-    /*
-     * @brief The statemachine object.
-     */
-    HeightContext stateMachine;
-
-    /*
-     * @brief A pointer to the calibrated data.
-     */
-    CalibrationData *calibrationDataPtr;
 
     /*
      * @brief The superloop task of the measurement-thread.

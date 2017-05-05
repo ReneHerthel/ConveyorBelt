@@ -32,7 +32,7 @@
 
 #define TEST_HEIGHT_HAL             (0)
 #define TEST_HEIGHT_STATEMACHINE    (0)
-#define TEST_HEIGHT_SERVICE         (0)
+#define TEST_HEIGHT_SERVICE         (1)
 #define SLEEP_TIME                  (1000)
 
 void TestHeightMeasurement::startTest() {
@@ -85,9 +85,9 @@ void TestHeightMeasurement::startTest() {
     HeightMeasurementService::CalibrationData cal;
     // Calibrated by hand!
     cal.delta = 30;
-    cal.holeHeight = 3583;
-    cal.refHeight = 4070;
-    cal.surfaceHeight = 2545;
+    cal.holeHeight = 3566;
+    cal.refHeight = 4076;
+    cal.surfaceHeight = 2567;
 
     HeightMeasurementService service(receive_chid, send_chid, &cal);
 
@@ -104,7 +104,7 @@ void TestHeightMeasurement::startTest() {
     // Wait for pulseMessages to simulate components, which wants to receive signals from the HeightMeasurment.
     while(1) {
         // Returns 0 on success and a negative value on error.
-        int err = MsgReceivePulse_r(receive_chid, &pulse, sizeof(_pulse), NULL);
+        int err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
 
         // Do error handling, if there occurs an error.
         if (err < 0) {

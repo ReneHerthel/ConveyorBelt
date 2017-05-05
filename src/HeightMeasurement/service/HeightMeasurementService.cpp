@@ -37,26 +37,34 @@
 /** @} */
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
-    :    stateMachine(send_chid)
+    :    stateMachine(new HeightContext(send_chid, this))
     ,    calibrationDataPtr(calibrationDataPtr)
+	,	 receive_chid(receive_chid)
 {
-    // Creates the thread for the measurement with the receive channel to send on it.
-    measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+	statemachineIsRunning = true;
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
-
-    measurementIsRunning = true;
-    statemachineIsRunning = true;
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
     // TODO Kill the threads.
 }
 
+void HeightMeasurementService::startMeasuring() {
+	measurementIsRunning = true;
+    // Creates the thread for the measurement with the receive channel to send on it.
+    measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+}
+
+void HeightMeasurementService::stopMeasuring() {
+	measurementIsRunning = false;
+}
+
 void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
+
     int16_t data = 0;                                    /*< The current measured data.*/
     HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
     HeightContext::Signal oldState = state;              /*< The old state of the statemachine.*/
@@ -95,9 +103,9 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
         }
         else if (DATA_IS_IN_RANGE(data, HIGH_HEIGHT_VAL)) {
             state = HeightContext::HIGH_HEIGHT;
-        } else {
+        }/* else {
         	state = HeightContext::INVALID;
-        }
+        }*/
 
         // TODO: Check for timeouts.
 
@@ -122,7 +130,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 void HeightMeasurementService::stateMachineTask(int receive_chid) {
     LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
+    LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Thread started\n";
 
     struct _pulse pulse; /*< Structure that describes a pulse.*/
 
@@ -135,16 +143,16 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
         if (err < 0) {
             // TODO: Error handling.
             // EFAULT, EINTR, ESRCH, ETIMEDOUT -> see qnx-manual.
-            LOG_DEBUG << "[HeightMeasurementService] measuringTask() Error on MsgReceivePulse_r\n";
+            LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Error on MsgReceivePulse_r\n";
         }
 
-        LOG_DEBUG << "[HeightMeasurementService] measuringTask() Received pulse: " << pulse.value.sival_int << "\n";
+        LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Received pulse: " << pulse.value.sival_int << "\n";
 
         // Signalize the statemachine for the next transition.
-        stateMachine.process((HeightContext::Signal) pulse.value.sival_int);
+        stateMachine->process((HeightContext::Signal) pulse.value.sival_int);
     }
 
-    LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
+    LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Leaves superloop\n";
 }
 
 /** @} */
