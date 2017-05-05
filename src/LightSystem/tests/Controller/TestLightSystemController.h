@@ -13,5 +13,5 @@
 #include "LightSystemHal.h"
 #include "LightSystemService.h"
 
-#define PAUSE_TIME 5
+#define PAUSE_TIME 10
 #define LS_MODULE_ID 5

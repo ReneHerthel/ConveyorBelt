@@ -7,23 +7,29 @@
 
 #include "LightSystemService.h"
 
-LightSystemService::LightSystemService(int chid):
+LightSystemService::LightSystemService(int chid, LightSystemController* controller):
     chid(chid)
+	, controller(controller)
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
 	LOG_SCOPE;
     /* FIXME: Discuss Priorities */
     /* 80 is ID for lightSystem */
+	 static const LightMessage LightMessageMapping[] = {
+		            { GREEN, ALWAYS_ON }, // OPERATING
+		            { GREEN, ALWAYS_OFF }, // NOT_OPERATING
+		            { YELLOW, SLOW_BLINKING }, // WARNING_OCCURED
+		            { YELLOW, ALWAYS_OFF }, // CLEAR_WARNING
+		            { RED, ALWAYS_OFF }, // CLEAR_ERROR
+		            { RED, FAST_BLINKING }, // ERROR_OCCURED
+		            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
+		            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
+		            { ALL, ALWAYS_OFF } // CLEAR_ALL
+		    };
 
-	int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
-	    if(coid < 0) {
-	    	LOG_ERROR << "Channel Attach failed" << endl;
-	    }
-
-	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
-    int err = MsgSendPulse_r(chid, sched_get_priority_min(0), LIGHT_SYSTEM, warningLevel);
-    if(err) {
-        LOG_ERROR << "Sending message failed" << endl;
-    }
+		    controller->color = LightMessageMapping[warningLevel].color;
+		    LOG_DEBUG << "Set color: " << controller->color << endl;
+		    controller->frequency = LightMessageMapping[warningLevel].frequency;
+		    LOG_DEBUG << "Set frequency: " << controller->frequency << endl;
 }

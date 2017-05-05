@@ -22,10 +22,11 @@ struct LightMessage {
 
 class LightSystemService : public ILightSystem {
 	public:
-		LightSystemService(int coid);
+		LightSystemService(int coid, LightSystemController* controller);
 		void setWarningLevel(Level warningLevel);
 	private:
 		int chid;
+		LightSystemController* controller;
 } ;
 
 #endif

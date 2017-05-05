@@ -13,7 +13,6 @@
 #include <sys/neutrino.h>
 #include "BLightSystem.h"
 #include "enum.h"
-#include "LightSystemService.h"
 #include "Logger.h"
 #include "LogScope.h"
 
@@ -25,14 +24,14 @@ class LightSystemController {
 		LightSystemController(int chid
 				, BLightSystem* boundary);
 		bool isRunning;
-
+		Frequency frequency;
+		Color color;
     private:
 		int chid;
         BLightSystem* boundary;
         int task(void);
         int control(int);
-        Frequency frequency;
-        Color color;
+
         thread controlThread;
         thread taskThread;
 };

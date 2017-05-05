@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, &boundary);
-    LightSystemService lightSystem = LightSystemService(chid);
+    LightSystemService lightSystem = LightSystemService(chid, &controller);
      
 
     // Set different warning levels
