@@ -14,9 +14,14 @@ LightSystemService::LightSystemService(int chid):
 void LightSystemService::setWarningLevel(Level warningLevel) {
 	LOG_SCOPE;
     /* FIXME: Discuss Priorities */
-    /* TODO: Merge messages */
     /* 80 is ID for lightSystem */
-    LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
+
+	int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
+	    if(coid < 0) {
+	    	LOG_ERROR << "Channel Attach failed" << endl;
+	    }
+
+	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
     int err = MsgSendPulse_r(chid, sched_get_priority_min(0), LIGHT_SYSTEM, warningLevel);
     if(err) {
         LOG_ERROR << "Sending message failed" << endl;

@@ -7,6 +7,8 @@
 #ifndef LIGHTSYSTEMSERVICE_H
 #define LIGHTSYSTEMSERVICE_H
 
+#include <sys/neutrino.h>
+#include <sys/netmgr.h>
 #include "enum.h"
 #include "LightSystemController.h"
 #include "ILightSystem.h"

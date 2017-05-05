@@ -15,7 +15,7 @@ LightSystemController :: LightSystemController(int chid, BLightSystem* boundary)
 	, color(ALL)
 {
 	 taskThread = thread(&LightSystemController::task, this);
-	 controlThread = thread(&LightSystemController::control, this);
+	 controlThread = thread(&LightSystemController::control, this,chid);
 }
 
 
@@ -31,7 +31,7 @@ int LightSystemController::task(){
 		return EXIT_FAILURE;
 	}
 
-	LOG_DEBUG << "__FUNCTION__: Enter loop" << endl;
+	LOG_DEBUG << "__LINE__: Enter loop" << endl;
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
@@ -50,14 +50,14 @@ int LightSystemController::task(){
 	return 1;
 }
 
-int LightSystemController::control() {
+int LightSystemController::control(int chid) {
 	struct _pulse pulse;
 	int err;
 
-	LOG_DEBUG << "__FUNCTION__: Enter loop" << endl;
+	LOG_DEBUG << "__LINE__: Enter loop" << endl;
 	LOG_DEBUG << "__FUNCTION__: Channel "<< chid << endl;
-	while(isRunning)
-		//LOG_DEBUG << "__FUNCTION__: Wait for message on channel " << chid << endl;
+	while(isRunning) {
+		LOG_DEBUG << "__FUNCTION__: Wait for message on channel " << chid << endl;
 		// FIXME: Messages are never received
 		err = MsgReceivePulse_r(chid, &pulse, sizeof(_pulse), NULL);
 		LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
@@ -85,6 +85,7 @@ int LightSystemController::control() {
 	    frequency = LightMessageMapping[warningLevel].frequency;
 	    LOG_DEBUG << "Set frequency: " << frequency << endl;
 	/* FIXME: Bogus return value */
+	}
 	return 1;
 }
 

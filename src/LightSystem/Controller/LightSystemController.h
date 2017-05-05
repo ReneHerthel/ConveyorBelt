@@ -30,7 +30,7 @@ class LightSystemController {
 		int chid;
         BLightSystem* boundary;
         int task(void);
-        int control(void);
+        int control(int);
         Frequency frequency;
         Color color;
         thread controlThread;

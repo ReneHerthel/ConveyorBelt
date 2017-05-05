@@ -18,10 +18,6 @@ int main(int argc, char *argv[]) {
 		LOG_ERROR << "Channel Create failed" << endl;
 	}
 
-    int coid = ConnectAttach_r(ND_LOCAL_NODE,0,chid,0,0);
-    if(coid < 0) {
-    	LOG_ERROR << "Channel Attach failed" << endl;
-    }
 
     LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, &boundary);
