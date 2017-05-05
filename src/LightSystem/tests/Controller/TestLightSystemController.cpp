@@ -18,12 +18,10 @@ int main(int argc, char *argv[]) {
 		LOG_ERROR << "Channel Create failed" << endl;
 	}
 
-
     LightSystemHal boundary = LightSystemHal();
     LightSystemController controller = LightSystemController(chid, &boundary);
-    LightSystemService lightSystem = LightSystemService(chid, &controller);
+    LightSystemService lightSystem = LightSystemService(chid);
      
-
     // Set different warning levels
     /* FIXME: Cardinality of enum instead of last definition plus 1 */
     for ( int warning = OPERATING; warning < CLEAR_ALL+1; warning++ )

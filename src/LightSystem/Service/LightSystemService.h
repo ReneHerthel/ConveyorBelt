@@ -17,7 +17,7 @@
 
 class LightSystemService : public ILightSystem {
 	public:
-		LightSystemService(int coid, LightSystemController* controller);
+		LightSystemService(int coid);
 		void setWarningLevel(Level warningLevel);
 	private:
 		int chid;

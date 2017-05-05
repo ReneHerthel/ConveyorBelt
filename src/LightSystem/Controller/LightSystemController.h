@@ -29,9 +29,9 @@ class LightSystemController {
 		LightSystemController(int chid
 				, BLightSystem* boundary);
 		bool isRunning;
+    private:
 		Frequency frequency;
 		Color color;
-    private:
 		int chid;
         BLightSystem* boundary;
         int task(void);

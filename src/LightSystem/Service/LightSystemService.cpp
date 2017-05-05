@@ -7,9 +7,8 @@
 
 #include "LightSystemService.h"
 
-LightSystemService::LightSystemService(int chid, LightSystemController* controller):
+LightSystemService::LightSystemService(int chid):
     chid(chid)
-	, controller(controller)
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
