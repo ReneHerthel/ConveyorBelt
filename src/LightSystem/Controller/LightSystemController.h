@@ -13,12 +13,16 @@
 #include <sys/neutrino.h>
 #include "BLightSystem.h"
 #include "enum.h"
-#include "LightSystemService.h"
 #include "Logger.h"
 #include "LogScope.h"
 
 using namespace std;
 using namespace HAL;
+
+struct LightMessage {
+    Color color;
+    Frequency frequency;
+};
 
 class LightSystemController {
     public:

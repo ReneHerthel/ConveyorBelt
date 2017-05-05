@@ -25,13 +25,14 @@ LightSystemController :: LightSystemController(int chid, BLightSystem* boundary)
 
 int LightSystemController::task(){
 	LOG_SCOPE;
+	thread::id thread_id = this_thread::get_id();
 	// trying to get right access to the I/O hardware
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 		LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	LOG_DEBUG << "__LINE__: Enter loop" << endl;
+	LOG_DEBUG << thread_id << ": Enter loop" << endl;
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
@@ -51,18 +52,20 @@ int LightSystemController::task(){
 }
 
 int LightSystemController::control(int chid) {
+	LOG_SCOPE;
 	struct _pulse pulse;
 	int err;
+	thread::id thread_id = this_thread::get_id();
 
-	LOG_DEBUG << "__LINE__: Enter loop" << endl;
-	LOG_DEBUG << "__FUNCTION__: Channel "<< chid << endl;
+	LOG_DEBUG << thread_id << ": Enter loop" << endl;
+	LOG_DEBUG << thread_id << ": Channel "<< chid << endl;
 	while(isRunning) {
-		LOG_DEBUG << "__FUNCTION__: Wait for message on channel " << chid << endl;
+		LOG_DEBUG << thread_id << ": Wait for message on channel " << chid << endl;
 		// FIXME: Messages are never received
 		err = MsgReceivePulse_r(chid, &pulse, sizeof(_pulse), NULL);
 		LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
 		if(err < 0) {
-			LOG_ERROR << "client MsgReceive_r failed" << std::endl;
+			LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
 		}
 
 		/* FIXME: Typesafe conversion */
@@ -81,11 +84,11 @@ int LightSystemController::control(int chid) {
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;
-	    LOG_DEBUG << "Set color: " << color << endl;
+	    LOG_DEBUG << thread_id << ": Set color " << color << endl;
 	    frequency = LightMessageMapping[warningLevel].frequency;
-	    LOG_DEBUG << "Set frequency: " << frequency << endl;
-	/* FIXME: Bogus return value */
+	    LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
 	}
+	/* FIXME: Bogus return value */
 	return 1;
 }
 

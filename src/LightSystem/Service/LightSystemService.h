@@ -15,11 +15,6 @@
 #include "Logger.h"
 #include "LogScope.h"
 
-struct LightMessage {
-    Color color;
-    Frequency frequency;
-};
-
 class LightSystemService : public ILightSystem {
 	public:
 		LightSystemService(int coid);
