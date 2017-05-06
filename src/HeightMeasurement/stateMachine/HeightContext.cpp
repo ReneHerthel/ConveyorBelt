@@ -51,57 +51,57 @@ void HeightContext::process(Signal signal) {
     switch(signal) {
 
         case INVALID:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: INVALID\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: INVALID\n";
             statePtr->invalid();
             break;
 
         case TIMEOUT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: TIMEOUT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: TIMEOUT\n";
             statePtr->timeout();
             break;
 
         case START:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: START\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: START\n";
             statePtr->start();
             break;
 
         case WAIT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: WAIT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: WAIT\n";
             statePtr->wait();
             return; // Skip entry action.
 
         case RESUME:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: RESUME\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: RESUME\n";
             statePtr->resume();
             return;	// Skip entry action.
 
         case HOLE_HEIGHT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: HOLE_HEIGHT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: HOLE_HEIGHT\n";
             statePtr->holeHeight();
             break;
 
         case SURFACE_HEIGHT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: SURFACE_HEIGHT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: SURFACE_HEIGHT\n";
             statePtr->surfaceHeight();
             break;
 
         case REF_HEIGHT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: REF_HEIGHT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: REF_HEIGHT\n";
             statePtr->refHeight();
             break;
 
         case PATTERN_READ:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: PATTERN_READ\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: PATTERN_READ\n";
             statePtr->patternRead();
             break;
 
         case LOW_HEIGHT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: LOW_HEIGHT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: LOW_HEIGHT\n";
             statePtr->lowHeight();
             break;
 
         case HIGH_HEIGHT:
-        	  LOG_DEBUG << "[HeightContext] process() Incoming signal: HIGH_HEIGHT\n";
+            LOG_DEBUG << "[HeightContext] process() Incoming signal: HIGH_HEIGHT\n";
             statePtr->highHeight();
             break;
 
