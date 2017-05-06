@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      Function declaration of the LED component
+ * @brief      Interface declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -21,11 +21,6 @@
 
 class ILed {
 public:
-
-	/*
-	 * @brief The virtual deconstructor.
-	 */
-	virtual ~ILed();
 
 	/*
 	 * @brief Turns the led on

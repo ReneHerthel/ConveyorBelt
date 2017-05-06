@@ -9,7 +9,7 @@
  * @ingroup    conveyor_belt
  * @{
  *
- * @brief      Function declaration of the ConveyorBelt component
+ * @brief      Service Function declaration of the ConveyorBelt component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -17,12 +17,8 @@
 #include "ConveyorBeltService.h"
 #include "HWdefines.h"
 
-IConveyorBelt::~IConveyorBelt() {
-	// Nothing todo so far.
-}
-
 ConveyorBeltService::ConveyorBeltService()
-	:	hal_(new ConveyorBeltHal(PORT_ADDR_A))
+	:	hal_(new ConveyorBeltHal())
 {
 	// Nothing todo so far.
 }
@@ -32,8 +28,13 @@ ConveyorBeltService::~ConveyorBeltService() {
 }
 
 void ConveyorBeltService::ConveyorBeltChangeState(const ConveyorBeltState state) {
+
+	// Initialize a new mask with zero.
 	int mask = 0;
 
+	/* Switch between the different states of the conveyor belt.
+	 * Then set the mask with the corresponding pin information.
+	 */
 	switch (state) {
 		case RIGHTFAST:
 			mask = (1 << PIN_0);
@@ -56,6 +57,7 @@ void ConveyorBeltService::ConveyorBeltChangeState(const ConveyorBeltState state)
 			break;
 	}
 
+	// Set the bit mask in the hal.
 	hal_->setMask(mask);
 }
 

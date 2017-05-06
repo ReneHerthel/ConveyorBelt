@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      Function declaration of the LED component
+ * @brief      Hal function declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -24,10 +24,6 @@ LedHal::LedHal(const int port, const int pin)
 	, pin_(pin)
 {
 	// Nothing to do so far.
-}
-
-BLed::~BLed() {
-	// Nothing todo so far.
 }
 
 void LedHal::set() {
