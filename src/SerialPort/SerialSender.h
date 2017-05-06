@@ -24,9 +24,9 @@
 
 using namespace std;
 
-union frame_buff{
+union __attribute__((__packed__)) frame_buff{
     struct{
-        char start;
+        char* start;
         uint16_t msgSize;
     };
     char* buff;

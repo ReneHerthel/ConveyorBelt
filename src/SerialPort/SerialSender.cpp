@@ -32,18 +32,18 @@ int32_t SerialSender::send(char *msg, uint16_t size) {
 }
 
 int32_t SerialSender::frame(char *msg, uint16_t size) {
-    memcpy(msg, buff.buff+FRAME_HEAD_BYTES, size);
-    buff.start = START;
+    memcpy(buff.buff+FRAME_HEAD_BYTES, msg, size);
+    *buff.start = START;
     buff.msgSize = size;
     buff.buff[FRAME_HEAD_BYTES+size-1] = END;
 }
 
 void SerialSender::checksum(){
     char checksum = 0;
-    for(int i = 0+FRAME_HEAD_BYTES; i<buff.msgSize+FRAME_HEAD_BYTES; i++){
+    for(int i = 0+FRAME_HEAD_BYTES; i<(buff.msgSize)+FRAME_HEAD_BYTES; i++){
         checksum |= buff.buff[i];
     }
-    buff.buff[FRAME_HEAD_BYTES+buff.msgSize] = END;
+    buff.buff[FRAME_HEAD_BYTES+(buff.msgSize)] = END;
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {

@@ -5,17 +5,19 @@
 #ifndef CONVEYORBELT_TESTSERIAL_H
 #define CONVEYORBELT_TESTSERIAL_H
 
-
 #include "../../TestFramework/TestCase.h"
+#include "../../TestFramework/TestFramework.h"
 #include "../../SerialPort/SerialSender.h"
 
-class TestSerial : public TestCase {
+#include <iostream>
+
+class TestSerial : public TestCase{
 public:
     TestSerial(int id, std::string brief): TestCase(id, brief){};
 protected:
+    int32_t testint = 12345;
     TEST(SerialWriterTest);
-    TEST_CASE_METHODS;
+    TEST_CASE_METHODS
 };
-
 
 #endif //CONVEYORBELT_TESTSERIAL_H
