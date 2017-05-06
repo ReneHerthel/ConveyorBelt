@@ -6,7 +6,9 @@
 #define SE2_TEST_FRAMEWORK_TESTEXAMPLE_H
 
 
-#include "TestCase.h"
+#include "../TestFramework/TestCase.h"
+#include "../TestFramework/TestFramework.h"
+
 #include <iostream>
 
 class TestExample : public TestCase{

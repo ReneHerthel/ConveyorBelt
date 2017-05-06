@@ -1,7 +1,7 @@
 #include <iostream>
 #include "TestFramework/TestFramework.h"
-#include "TestExample.h"
-#include "TestSuite.h"
+#include "Tests/TestExample.h"
+#include "TestFramework/TestSuite.h"
 
 using namespace std;
 
