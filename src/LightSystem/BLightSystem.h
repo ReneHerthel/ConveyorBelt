@@ -1,8 +1,14 @@
-/*
- * BLightSystem.h
+/**
+ *       @file  BLightSystem.h
+ *      @brief  Hardware abstraction for lights
  *
- *  Created on: 05.04.2017
- *      Author: Matthis Keppner
+ *     @author  Matthis Keppner
+ *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *   @internal
+ *     Created  04/05/2017
+ *   Copyright  Copyright (c) 2017 Matthis Keppner
+ *   Copyright  Copyright (c) 2017 Stephan Jänecke
  */
 
 #ifndef BLIGHTSYSTEM_H_
@@ -13,8 +19,15 @@
 namespace HAL {
     class BLightSystem {
         public:
-    		// This virtual function is virtual, really.
+            /**
+             * @brief   Turn light on
+             * @param   [in] color Specify by color which light to manipulate
+             */
             virtual void lightOn(Color color) = 0;
+            /**
+             * @brief   Turn light off
+             * @param   [in] color Specify by color which light to manipulate
+             */
             virtual void lightOff(Color color) = 0;
     };
 }

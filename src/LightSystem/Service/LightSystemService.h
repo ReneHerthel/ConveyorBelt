@@ -1,8 +1,13 @@
-// =====================================================================================
-// LightSystemService.h : 
-// 
-//    Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
-// =====================================================================================
+/**
+ *       @file  LightSystemService.h
+ *      @brief  Implement Interface ILightSystem
+ *
+ *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *   @internal
+ *     Created  05/06/2017
+ *   Copyright  Copyright (c) 2017 Stephan Jänecke
+ */
 
 #ifndef LIGHTSYSTEMSERVICE_H
 #define LIGHTSYSTEMSERVICE_H
@@ -17,11 +22,14 @@
 
 class LightSystemService : public ILightSystem {
 	public:
-		LightSystemService(int coid);
+		LightSystemService(int chid);
+        /**
+         * @brief  Pass a warning to make the light system blink accordingly 
+         * @param  [in] warningLevel Warning level to set
+         */
 		void setWarningLevel(Level warningLevel);
 	private:
-		int chid;
-		LightSystemController* controller;
+		int chid; /**< @brief ID for channel LightSystemController object listens on */
 } ;
 
 #endif

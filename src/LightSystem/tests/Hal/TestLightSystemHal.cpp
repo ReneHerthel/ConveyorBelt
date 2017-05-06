@@ -1,5 +1,5 @@
 /*
- * TestLightSystemStubHal.cpp : 
+ * TestLightSystemHal.cpp : 
  * 
  * Copyright (c) 2017 Matthis Keppner <matthis.keppner@haw-hamburg.de>
  * Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>

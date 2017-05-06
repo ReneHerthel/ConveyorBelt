@@ -34,6 +34,7 @@ class LightSystemController {
 		Color color;
 		int chid;
         BLightSystem* boundary;
+        /* TODO: Ask @pareigis if lights have to blink independently */
         int task(void);
         int control(int);
 
