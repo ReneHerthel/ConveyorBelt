@@ -35,7 +35,8 @@ int32_t SerialSender::frame(char *msg, uint16_t size) {
     memcpy(buff.buff+FRAME_HEAD_BYTES, msg, size);
     *buff.start = START;
     buff.msgSize = size;
-    buff.buff[FRAME_HEAD_BYTES+size-1] = END;
+    buff.buff[FRAME_HEAD_BYTES+size] = END;
+    return (FRAME_HEAD_BYTES+size+1);
 }
 
 void SerialSender::checksum(){
