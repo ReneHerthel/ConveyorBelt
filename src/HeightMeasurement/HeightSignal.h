@@ -25,18 +25,18 @@
  * @brief A specific structure for pulse messages.
  */
 typedef union {
-	struct {
-		uint8_t ID : 5;
-		union {
-			struct {
-				uint8_t BIT0 : 1;
-				uint8_t BIT1 : 1;
-				uint8_t BIT2 : 1;
-			};
-			uint8_t pattern;
-		};
-	};
-	uint8_t value;
+    struct {
+        uint8_t ID : 5;  // The SignalID.
+        union {
+            struct {
+                uint8_t BIT0 : 1;
+                uint8_t BIT1 : 1;
+                uint8_t BIT2 : 1;
+            };
+            uint8_t pattern;  // The whole bit-pattern.
+        };
+    };
+    uint8_t value;  // The whole structure as a value.
 } signal_t;
 
 /*

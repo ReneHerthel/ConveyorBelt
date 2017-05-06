@@ -34,7 +34,6 @@
 #include "HeightContext.h"
 
 #include <stdint.h>
-#include <iostream>
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
 #include <thread>

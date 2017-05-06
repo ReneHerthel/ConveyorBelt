@@ -23,9 +23,6 @@
 #include "Logger.h"
 #include "LogScope.h"
 
-// TODO delete
-#include <iostream>
-
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
  *
@@ -39,9 +36,10 @@
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(new HeightContext(send_chid, this))
     ,    calibrationDataPtr(calibrationDataPtr)
-	,	 receive_chid(receive_chid)
+    ,    receive_chid(receive_chid)
 {
-	statemachineIsRunning = true;
+    // Set this to true, so the statemachine thread will run his superloop.
+    statemachineIsRunning = true;
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
 }
@@ -51,13 +49,14 @@ HeightMeasurementService::~HeightMeasurementService() {
 }
 
 void HeightMeasurementService::startMeasuring() {
-	measurementIsRunning = true;
+    // Set this true, so the measurement thread will run his suoperloop.
+    measurementIsRunning = true;
     // Creates the thread for the measurement with the receive channel to send on it.
     measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
 }
 
 void HeightMeasurementService::stopMeasuring() {
-	measurementIsRunning = false;
+    measurementIsRunning = false;
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {

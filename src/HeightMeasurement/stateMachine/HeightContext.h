@@ -41,7 +41,7 @@ private:
      * @brief The super state from where all states will be inherit.
      */
     struct State {
-    	//State();
+    	  //State();
         virtual void invalid();
         virtual void timeout();
         virtual void start();
@@ -54,8 +54,8 @@ private:
         virtual void lowHeight();
         virtual void highHeight();
         virtual void entry();
-        int chid;
-        HeightMeasurementService *service;
+        int chid;  // The channel, where the statemachine will send to.
+        HeightMeasurementService *service;  // A pointer to the service class.
     } *statePtr;
 
     /*
