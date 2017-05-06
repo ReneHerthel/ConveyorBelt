@@ -2,6 +2,7 @@
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
 #include "TestFramework/TestSuite.h"
+#include "Tests/Serial/TestSerial.h"
 
 using namespace std;
 
@@ -22,6 +23,8 @@ int main() {
     ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
+    //TEST FOR: Serial
+    ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

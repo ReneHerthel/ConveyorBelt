@@ -7,12 +7,14 @@
 
 
 #include "../../TestFramework/TestCase.h"
+#include "../../SerialPort/SerialSender.h"
 
 class TestSerial : public TestCase {
 public:
     TestSerial(int id, std::string brief): TestCase(id, brief){};
 protected:
-    TEST(basic);
+    TEST(SerialWriterTest);
+    TEST_CASE_METHODS;
 };
 
 
