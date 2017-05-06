@@ -44,7 +44,7 @@ void SerialSender::checksum(){
     for(int i = 0+FRAME_HEAD_BYTES; i<(buff.msgSize)+FRAME_HEAD_BYTES; i++){
         checksum |= buff.buff[i];
     }
-    buff.buff[FRAME_HEAD_BYTES+(buff.msgSize)] = END;
+    buff.buff[FRAME_HEAD_BYTES+(buff.msgSize)] = END; //TODO Fix Index, needs to be checksum not end
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {
