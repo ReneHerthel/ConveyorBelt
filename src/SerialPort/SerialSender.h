@@ -14,23 +14,20 @@
 #include <fstream>
 #include <limits.h>
 
-#define START  ((char)(1|(1<<7)))
-#define END ((char)(4|(1<<7)))
+#define START  ((char)(1|(1<<7))) //129 -127
+#define END ((char)(4|(1<<7))) //132  -124
 #define CHAR_BITS 8
 #define CNTRL_CHAR_BYTES (1)
 #define SIZE_BYTES (2)
 #define FRAME_HEAD_BYTES (1+SIZE_BYTES)
 #define FRAME_BYTES (SIZE_BYTES+CNTRL_CHAR_BYTES*3) //Checksum, END, START
+#define SET_START(buff) (*buff)
+#define SET_MSG_SIZE(buff) uint16_t* tmp = ((uint16_t*)(buff+1)); (*tmp)
+#define GET_MSG_SIZE(buff) ((uint16_t)(*(buff+1)))
+
+//FRAME DEFINITION [START][SIZE][SIZE][MSG]...[MSG][END][CHECKSUM]
 
 using namespace std;
-
-union __attribute__((__packed__)) frame_buff{
-    struct{
-        char* start;
-        uint16_t msgSize;
-    };
-    char* buff;
-};
 
 class SerialSender {
 public:
@@ -48,6 +45,13 @@ public:
 	 *@return Error Number defined in BSerailSender.h
 	 */
 	int32_t send(char msg[], uint16_t size);
+
+    /**
+     * Check if the construction failed
+     * @return success
+     */
+    bool fail();
+
 protected:
 	/*@brief Put the Message into a Frame for the Serial Port
 	 *
@@ -57,7 +61,7 @@ protected:
 	 *@param[in] msg The Message that will be put into the frame
 	 *@return Size of the frame, including the empty checksum byte
 	 */
-	int32_t frame(char msg[], uint16_t size);
+	uint16_t frame(char msg[], uint16_t size);
 
 	/*@brief Calculate Checksum
 	 *
@@ -65,7 +69,7 @@ protected:
 	 *
 	 *@param[in] size Size of the frame in the buffer, last byte of the frame (index = size-1) will be used to store the checksum
 	 */
-	void checksum();
+	void checksum(uint16_t size);
 
 	/*@brief Write the frame to the Serial
 	 *
@@ -76,9 +80,9 @@ protected:
 	int32_t sendSerial(uint16_t size);
 
 private:
-    fstream outstream; /*!<Filestream to the Charakter Device to send to*/
+    ofstream outstream; /*!<Filestream to the Charakter Device to send to*/
     uint32_t buffSize;
-    frame_buff buff;
+    char* buff;
 };
 
 #endif /* BSERIALSENDER_H_ */

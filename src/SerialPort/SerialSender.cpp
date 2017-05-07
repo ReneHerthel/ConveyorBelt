@@ -9,46 +9,49 @@
 #include "SerialSender.h"
 
 SerialSender::SerialSender(string path) {
-    outstream = fstream(path, fstream::out);
+    outstream.open(path, ofstream::out | ofstream::binary); //Msg is char based, the Frame is binary, so write binary
     buffSize = sizeof(char)*UCHAR_MAX;
-    buff.buff = new char[buffSize];
+    buff = new char[buffSize];
 }
 
 SerialSender::~SerialSender() {
-    delete[] buff.buff;
+    delete[] buff;
     outstream.close();
 }
 
 int32_t SerialSender::send(char *msg, uint16_t size) {
     if((size + FRAME_BYTES) > buffSize){
-        delete[] buff.buff;
-        buff.buff = new char[size];
+        delete[] buff;
+        buff = new char[size];
     }
 
-    int32_t framesize = frame(msg, size);
-    checksum();
-
+    uint16_t framesize = frame(msg, size);
+    checksum(framesize);
     sendSerial(framesize);
 }
 
-int32_t SerialSender::frame(char *msg, uint16_t size) {
-    memcpy(buff.buff+FRAME_HEAD_BYTES, msg, size);
-    *buff.start = START;
-    buff.msgSize = size;
-    buff.buff[FRAME_HEAD_BYTES+size] = END;
-    return (FRAME_HEAD_BYTES+size+1);
+uint16_t SerialSender::frame(char *msg, uint16_t size) {
+    memcpy(buff+FRAME_HEAD_BYTES, msg, size);
+    SET_START(buff) = START;
+    SET_MSG_SIZE(buff) = size;
+    buff [FRAME_HEAD_BYTES+size] = END;
+    return (uint16_t)(FRAME_HEAD_BYTES+size+1);
 }
 
-void SerialSender::checksum(){
+void SerialSender::checksum(uint16_t size){
     char checksum = 0;
-    for(int i = 0+FRAME_HEAD_BYTES; i<(buff.msgSize)+FRAME_HEAD_BYTES; i++){
-        checksum |= buff.buff[i];
+    for(int i = 0+FRAME_HEAD_BYTES; i<(GET_MSG_SIZE(buff))+FRAME_HEAD_BYTES; i++){
+        checksum |= buff[i];
     }
-    buff.buff[FRAME_HEAD_BYTES+(buff.msgSize)] = END; //TODO Fix Index, needs to be checksum not end
+    buff[size] = checksum;
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {
-    outstream.write(buff.buff, size);
+    outstream.write(buff, size+1);
+}
+
+bool SerialSender::fail() {
+    return outstream.fail();
 }
 
 

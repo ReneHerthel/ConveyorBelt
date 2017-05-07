@@ -17,6 +17,7 @@ public:
 protected:
     int32_t testint = 12345;
     TEST(SerialWriterTest);
+    TEST(OpenSernderReceiver);
     TEST_CASE_METHODS
 };
 
