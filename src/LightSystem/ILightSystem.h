@@ -1,8 +1,13 @@
-// =====================================================================================
-// ILightSystem.h : Abstract class to pass commands to LightSystemController
-// 
-//    Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
-// =====================================================================================
+/**
+ *       @file  ILightSystem.h
+ *      @brief  Abstract class to pass commands to LightSystemController
+ *
+ *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *   @internal
+ *     Created  05/07/2017
+ *   Copyright  Copyright (c) 2017 Stephan Jänecke
+ */
 
 #ifndef ILIGHTSYSTEM_H
 #define ILIGHTSYSTEM_H

@@ -12,10 +12,10 @@
 
 #include "LightSystemHal.h"
 
-/* TODO: Add logging */
 namespace HAL {
     /* TODO: Merge methods lightOn and lightOff to reduce code duplication */
     void LightSystemHal::lightOn(Color color) {
+        LOG_SCOPE;
         unsigned char bitMask = 0;
         
         /* Prepare bitmask according to color */
@@ -41,10 +41,12 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Set requested bit */
+        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask;
     	out8(PORTA_ADDR, (port_value | (1 << bitMask)));
     }
 
     void LightSystemHal::lightOff(Color color) {
+        LOG_SCOPE;
     	unsigned char bitMask = 0;
 
         /* Prepare bitmask according to color */
@@ -70,6 +72,7 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Clear requested bit */
+        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask;
     	out8(PORTA_ADDR, (port_value & ~(1 << bitMask)));
     }
 

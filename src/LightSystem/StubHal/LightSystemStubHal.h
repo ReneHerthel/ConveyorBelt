@@ -1,14 +1,20 @@
-// =====================================================================================
-// LightSystemStubHal.h : 
-// 
-//    Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
-// =====================================================================================
+/**
+ *       @file  LightSystemStubHal.h
+ *      @brief  Provide stub class for hardware abstraction layer
+ *
+ *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *   @internal
+ *     Created  05/07/2017
+ *   Copyright  Copyright (c) 2017 Stephan Jänecke
+ */
 
 #ifndef LIGHTSYSTEMSTUBHAL_H_
 #define LIGHTSYSTEMSTUBHAL_H_
 
 #include "BLightSystem.h"
 #include "enum.h"
+#include "Logger.h"
 #include <iostream>
 
 namespace HAL {

@@ -1,8 +1,13 @@
-// =====================================================================================
-// LightSystemController.h : 
-// 
-//    Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
-// =====================================================================================
+/**
+ *       @file  LightSystemController.h
+ *      @brief  Processes messages and delegate to hardware abstraction accordingly
+ *
+ *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *   @internal
+ *     Created  05/07/2017
+ *   Copyright  Copyright (c) 2017 Stephan Jänecke
+ */
 
 #ifndef LIGHTSYSTEMCONTROLLER_H
 #define LIGHTSYSTEMCONTROLLER_H
@@ -19,6 +24,9 @@
 using namespace std;
 using namespace HAL;
 
+/**
+ * Pair up a color and a frequency
+ */
 struct LightMessage {
     Color color;
     Frequency frequency;
@@ -26,22 +34,38 @@ struct LightMessage {
 
 class LightSystemController {
     public:
+
+        /**
+         * @brief   Constructor
+         * @param   [in] chid ID of channel to receive messages on
+         * @param   [in] boundary Hardware abstraction object to manipulate lights with
+         */
 		LightSystemController(int chid
 				, BLightSystem* boundary);
-		bool isRunning;
+		bool isRunning; /**< @brief Control variable to start or stop both threads */
     private:
-		Frequency frequency;
-		Color color;
-		int chid;
-        BLightSystem* boundary;
+		Frequency frequency; /** Control variable to pass blinking frequency to taskThread */
+		Color color; /** Control variable to pass light color to taskThread */
+		int chid; /** Channel ID */
+        BLightSystem* boundary; /** Hardware abstraction object */
         /* TODO: Ask @pareigis if lights have to blink independently */
-        int task(void);
+        /**
+         * @brief  Thread function to set color and frequency with boundary according to color and frequency
+         * @return Always returns 1 on stop
+         *
+         * Reaction time to updates on control variables is one period
+         * of frequency
+         */
+        int task(void); 
+        /**
+         * @brief  Thread function to set color and frequency with boundary according to color and frequency
+         * @param  [in] chid Set channel ID to receive messages on
+         * @return Always returns 1 on stop
+         */
         int control(int);
 
         thread controlThread;
         thread taskThread;
 };
-
-
 
 #endif
