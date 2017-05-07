@@ -16,9 +16,12 @@ public:
     SerialReceiver(string path);
     ~SerialReceiver();
 
+    char* receive();
+    char checksum(char* buff, uint16_t size);
+
     bool fail();
 private:
-    ofstream instream;
+    ifstream instream;
 };
 
 

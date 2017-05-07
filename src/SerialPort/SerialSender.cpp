@@ -6,7 +6,7 @@
  */
 
 #include <cstring>
-#include "SerialSender.h"
+#include "Serial.h"
 
 SerialSender::SerialSender(string path) {
     outstream.open(path, ofstream::out | ofstream::binary); //Msg is char based, the Frame is binary, so write binary

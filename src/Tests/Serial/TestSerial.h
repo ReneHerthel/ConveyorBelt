@@ -8,6 +8,7 @@
 #include "../../TestFramework/TestCase.h"
 #include "../../TestFramework/TestFramework.h"
 #include "../../SerialPort/SerialSender.h"
+#include "../../SerialPort/SerialReceiver.h"
 
 #include <iostream>
 
@@ -18,6 +19,7 @@ protected:
     int32_t testint = 12345;
     TEST(SerialWriterTest);
     TEST(OpenSernderReceiver);
+    TEST(ReadWrite);
     TEST_CASE_METHODS
 };
 

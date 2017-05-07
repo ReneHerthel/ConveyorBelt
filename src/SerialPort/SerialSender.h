@@ -14,19 +14,6 @@
 #include <fstream>
 #include <limits.h>
 
-#define START  ((char)(1|(1<<7))) //129 -127
-#define END ((char)(4|(1<<7))) //132  -124
-#define CHAR_BITS 8
-#define CNTRL_CHAR_BYTES (1)
-#define SIZE_BYTES (2)
-#define FRAME_HEAD_BYTES (1+SIZE_BYTES)
-#define FRAME_BYTES (SIZE_BYTES+CNTRL_CHAR_BYTES*3) //Checksum, END, START
-#define SET_START(buff) (*buff)
-#define SET_MSG_SIZE(buff) uint16_t* tmp = ((uint16_t*)(buff+1)); (*tmp)
-#define GET_MSG_SIZE(buff) ((uint16_t)(*(buff+1)))
-
-//FRAME DEFINITION [START][SIZE][SIZE][MSG]...[MSG][END][CHECKSUM]
-
 using namespace std;
 
 class SerialSender {

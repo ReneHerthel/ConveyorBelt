@@ -3,11 +3,11 @@
 //
 
 #include "TestSerial.h"
-#include "../../SerialPort/SerialReceiver.h"
 
 SETUP(TestSerial){
     REG_TEST(SerialWriterTest, 1, "[SerialWriter] Test Basic output functions");
     REG_TEST(OpenSernderReceiver, 2, "[SerialWriter] Test to open Receiver and Sender at the same time");
+    REG_TEST(ReadWrite,3, "[SerialWriter][SerialSender] Basic Input Output Test");
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){
@@ -25,6 +25,16 @@ TEST_IMPL(TestSerial, OpenSernderReceiver){
     } else {
         return PASSED;
     }
+}
+
+TEST_IMPL(TestSerial, ReadWrite){
+    SerialSender sender("Serial_readwrite.bin");
+    SerialReceiver receiver ("Serial_readwrite.bin");
+    char testString[] = "Hello 123_Darkness.1!";
+    sender.send(testString, sizeof(testString));
+    //delete &sender;
+    char* resu = receiver.receive();
+    cout.write(resu, sizeof(testString));
 }
 
 //v UNUSED v//
