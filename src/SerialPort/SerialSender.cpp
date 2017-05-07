@@ -8,15 +8,15 @@
 #include <cstring>
 #include "Serial.h"
 
-SerialSender::SerialSender(string path) {
-    outstream.open(path, ofstream::in | ofstream::out | ofstream::binary); //Msg is char based, the Frame is binary, so write binary
+SerialSender::SerialSender(char *path) {
+    out = open(path, O_RDWR | O_CREAT | O_BINARY); //Msg is char based, the Frame is binary, so write binary
     buffSize = sizeof(char)*UCHAR_MAX;
     buff = new char[buffSize];
 }
 
 SerialSender::~SerialSender() {
     delete[] buff;
-    outstream.close();
+    close(out);
 }
 
 int32_t SerialSender::send(char *msg, uint16_t size) {
@@ -47,11 +47,14 @@ void SerialSender::checksum(uint16_t size){
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {
-    outstream.write(buff, size+1);
+    int tmp = write(out, buff, size+1);
+    if(tmp<size+1){
+        err = tmp;
+    }
 }
 
-bool SerialSender::fail() {
-    return outstream.fail();
+int SerialSender::fail() {
+    return err;
 }
 
 

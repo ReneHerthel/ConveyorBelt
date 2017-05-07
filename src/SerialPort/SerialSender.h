@@ -13,6 +13,7 @@
 #include <string>
 #include <fstream>
 #include <limits.h>
+#include <fcntl.h>
 
 using namespace std;
 
@@ -22,10 +23,11 @@ public:
      * Writes to a Serial Device and wraps in Serial Frame
      * @param path The path to the char device to write to
      */
-	SerialSender(string path);
+    SerialSender(char *path);
 	~SerialSender();
 
-	/*@brief Send a message over the Serial port
+	/**
+	 * @brief Send a message over the Serial port
 	 *
 	 *This function takes a massage and send it over the Serial Port
 	 *@param[in] msg The Message that will be send over the Serial Port
@@ -37,7 +39,7 @@ public:
      * Check if the construction failed
      * @return success
      */
-    bool fail();
+    int fail();
 
 protected:
 	/*@brief Put the Message into a Frame for the Serial Port
@@ -67,9 +69,10 @@ protected:
 	int32_t sendSerial(uint16_t size);
 
 private:
-    ofstream outstream; /*!<Filestream to the Charakter Device to send to*/
+    int out; /*!<Filestream to the Charakter Device to send to*/
     uint32_t buffSize;
     char* buff;
+    int err; /*!<Err from IO */
 };
 
 #endif /* BSERIALSENDER_H_ */

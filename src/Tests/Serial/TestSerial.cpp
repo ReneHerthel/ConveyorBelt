@@ -11,14 +11,16 @@ SETUP(TestSerial){
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){
-    char testString[] = "Hallo Welt";
-    SerialSender sender("Serial_output.bin");
+    char testString[] = "Hallo Welt 2017";
+    char filepath[] = "Serial_output.bin";
+    SerialSender sender(filepath);
     sender.send(testString, 10);
     return FAILED;
 }
 
 TEST_IMPL(TestSerial, OpenSernderReceiver){
-    SerialSender sender("Serial_inout.bin");
+    char filepath[] = "Serial_inout.bin";
+    SerialSender sender(filepath);
     SerialReceiver receiver ("Serial_inout.bin");
     if(sender.fail() || receiver.fail()){
         return FAILED;
@@ -28,9 +30,10 @@ TEST_IMPL(TestSerial, OpenSernderReceiver){
 }
 
 TEST_IMPL(TestSerial, ReadWrite){
-    SerialSender sender("Serial_readwrite.bin");
+    char filepath[] = "Serial_readwrite.bin";
+    SerialSender sender(filepath);
     SerialReceiver receiver ("Serial_readwrite.bin");
-    char testString[] = "Whatwhathwhat!";
+    char testString[] = "Flitzndaför_123456 123123";
     sender.send(testString, sizeof(testString));
     //delete &sender;
     char* resu = receiver.receive();
