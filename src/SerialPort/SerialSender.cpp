@@ -47,10 +47,7 @@ void SerialSender::checksum(uint16_t size){
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {
-    int tmp = write(out, buff, size+1);
-    if(tmp<size+1){
-        err = tmp;
-    }
+    err = write(out, buff, size+1);
 }
 
 int SerialSender::fail() {

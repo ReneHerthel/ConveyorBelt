@@ -6,22 +6,22 @@
 #define CONVEYORBELT_SERIALRECEIVER_H
 
 #include <string>
-#include <fstream>
-#include <iostream>
+#include <fcntl.h>
 
 using namespace std;
 
 class SerialReceiver {
 public:
-    SerialReceiver(string path);
+    SerialReceiver(char* path);
     ~SerialReceiver();
 
     char* receive();
     char checksum(char* buff, uint16_t size);
 
-    bool fail();
+    int fail();
 private:
-    ifstream instream;
+    int in;
+    int err; /*!<Err from IO */
 };
 
 

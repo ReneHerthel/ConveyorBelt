@@ -11,33 +11,41 @@ SETUP(TestSerial){
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){
-    char testString[] = "Hallo Welt 2017";
+    char testString[] = "Hallo Welt nextrun";
     char filepath[] = "Serial_output.bin";
     SerialSender sender(filepath);
-    sender.send(testString, 10);
-    return FAILED;
+    sender.send(testString, sizeof(testString));
+    if(sender.fail()){
+        return PASSED;
+    } else {
+        return FAILED;
+    }
 }
 
 TEST_IMPL(TestSerial, OpenSernderReceiver){
     char filepath[] = "Serial_inout.bin";
     SerialSender sender(filepath);
-    SerialReceiver receiver ("Serial_inout.bin");
+    SerialReceiver receiver (filepath);
     if(sender.fail() || receiver.fail()){
-        return FAILED;
-    } else {
         return PASSED;
+    } else {
+        return FAILED;
     }
 }
 
 TEST_IMPL(TestSerial, ReadWrite){
     char filepath[] = "Serial_readwrite.bin";
     SerialSender sender(filepath);
-    SerialReceiver receiver ("Serial_readwrite.bin");
-    char testString[] = "Flitzndaför_123456 123123";
+    SerialReceiver receiver (filepath);
+    char testString[] = "Flitzndafoer_123456 123123";
     sender.send(testString, sizeof(testString));
-    //delete &sender;
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
+    if(equal(testString, testString+sizeof(testString), resu)){
+        return PASSED;
+    } else {
+        return FAILED;
+    }
 }
 
 //v UNUSED v//

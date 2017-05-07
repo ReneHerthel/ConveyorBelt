@@ -9,9 +9,8 @@
 #define BSERIALSENDER_H_
 
 #include <stdlib.h>
+#include <iostream>
 #include <stdint.h>
-#include <string>
-#include <fstream>
 #include <limits.h>
 #include <fcntl.h>
 

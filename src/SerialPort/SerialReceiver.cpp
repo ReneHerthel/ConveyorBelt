@@ -4,16 +4,16 @@
 
 #include "Serial.h"
 
-SerialReceiver::SerialReceiver(string path) {
-    instream.open(path, ofstream::in | ofstream::out | ofstream::binary);
+SerialReceiver::SerialReceiver(char *path) {
+    in = open(path, O_RDWR | O_CREAT | O_BINARY);
 }
 
 SerialReceiver::~SerialReceiver() {
-    instream.close();
+    close(in);
 }
 
-bool SerialReceiver::fail() {
-    return instream.fail();
+int SerialReceiver::fail() {
+    return err;
 }
 
 char* SerialReceiver::receive() {
@@ -23,16 +23,25 @@ char* SerialReceiver::receive() {
     uint16_t msgSize;
     char csum;
 
-    instream.read(headerBuff, FRAME_HEAD_BYTES);
-    if(headerBuff[0] != START || instream.fail()){
+
+    //Read Header
+    err = read(in, headerBuff, FRAME_HEAD_BYTES); //TODO make qnx readcond
+    if(headerBuff[0] != START || err < FRAME_HEAD_BYTES){
         //TODO Serial Error Handling
         cout<< "Failure in Receiver"<<endl;
     }
     msgSize = GET_MSG_SIZE(headerBuff);
 
+    //Read Msg
     msgBuff = new char[msgSize];
-    instream.read(msgBuff, msgSize);
-    instream.read(tailBuff, FRAME_TAIL_BYTES);
+    err = read(in, msgBuff, msgSize);
+    if(err < msgSize){
+        //TODO Serial Error Handling
+        cout<< "Failure in Receiver"<<endl;
+    }
+
+    //Read Tail
+    err = read(in, tailBuff, FRAME_TAIL_BYTES);
 
     csum = checksum(msgBuff, msgSize);
 
