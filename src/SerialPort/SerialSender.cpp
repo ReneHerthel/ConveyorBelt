@@ -9,7 +9,7 @@
 #include "Serial.h"
 
 SerialSender::SerialSender(string path) {
-    outstream.open(path, ofstream::out | ofstream::binary); //Msg is char based, the Frame is binary, so write binary
+    outstream.open(path, ofstream::in | ofstream::out | ofstream::binary); //Msg is char based, the Frame is binary, so write binary
     buffSize = sizeof(char)*UCHAR_MAX;
     buff = new char[buffSize];
 }

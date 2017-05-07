@@ -5,7 +5,7 @@
 #include "Serial.h"
 
 SerialReceiver::SerialReceiver(string path) {
-    instream.open(path, ofstream::in);
+    instream.open(path, ofstream::in | ofstream::out | ofstream::binary);
 }
 
 SerialReceiver::~SerialReceiver() {

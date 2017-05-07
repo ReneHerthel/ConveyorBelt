@@ -30,7 +30,7 @@ TEST_IMPL(TestSerial, OpenSernderReceiver){
 TEST_IMPL(TestSerial, ReadWrite){
     SerialSender sender("Serial_readwrite.bin");
     SerialReceiver receiver ("Serial_readwrite.bin");
-    char testString[] = "Hello 123_Darkness.1!";
+    char testString[] = "Whatwhathwhat!";
     sender.send(testString, sizeof(testString));
     //delete &sender;
     char* resu = receiver.receive();
