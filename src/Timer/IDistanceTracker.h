@@ -9,8 +9,6 @@
 #define SRC_TIMER_IDISTANCETRACKER_H_
 
 #include "DistanceAdapter.h"
-typedef unsigned int centimeters;
-typedef unsigned int millimeters;
 
 class IDistanceTracker {
 public:
