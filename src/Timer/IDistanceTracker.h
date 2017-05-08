@@ -15,6 +15,8 @@ typedef unsigned int millimeters;
 class IDistanceTracker {
 public:
 	virtual void setAlarm(DistanceAdapter distance) = 0;
+	virtual void stopAlarm() = 0;
+	virtual void resumeAlarm() = 0;
 };
 
 

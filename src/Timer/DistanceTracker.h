@@ -15,9 +15,11 @@ class DistanceTracker : public IDistanceTracker {
 private:
 	ITimer *timer;
 public:
-	DistanceTracker(int chid, char code, int value);
+	DistanceTracker(int chid, char code);
 	~DistanceTracker();
-	void setAlarm(DistanceAdapter distance);
+	void setAlarm(DistanceAdapter distance, int value);
+	void stopAlarm();
+	void resumeAlarm();
 };
 
 #endif /* SRC_TIMER_DISTANCETRACKER_H_ */
