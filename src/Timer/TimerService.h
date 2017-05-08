@@ -24,7 +24,10 @@ private:
 	struct itimerspec timer;
 public:
 	TimerService(int chid, char code);
+	~TimerService();
 	void setAlarm(milliseconds time, int value);
+	void stopAlarm();
+	void resumeAlarm();
 };
 
 #endif /* SRC_TIMER_TIMERSERVICE_H_ */

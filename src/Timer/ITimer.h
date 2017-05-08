@@ -13,6 +13,8 @@ typedef unsigned int milliseconds;
 class ITimer {
 public:
 	virtual void setAlarm(milliseconds time, int value) = 0;
+	virtual void stopAlarm() = 0;
+	virtual void resumeAlarm() = 0;
 };
 
 #endif /* TIMER_BTIMER_H_ */
