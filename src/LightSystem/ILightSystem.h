@@ -12,7 +12,7 @@
 #ifndef ILIGHTSYSTEM_H
 #define ILIGHTSYSTEM_H
 
-#include "enum.h"
+#include "LightSystemEnum.h"
 
 class ILightSystem {
 	public:

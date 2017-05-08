@@ -20,20 +20,21 @@ namespace HAL {
         
         /* Prepare bitmask according to color */
     	switch (color) {
-        case GREEN:
-        	bitMask = GREEN_SHIFT;
-        	break;
-        case YELLOW:
-        	bitMask = YELLOW_SHIFT;
-        	break;
-        case RED:
-        	bitMask = RED_SHIFT;
-        	break;
-        case ALL:
-        	bitMask = ALL_SHIFT;
-        	break;
-        default:
-           /* Invalid value, do nothing */
+			case GREEN:
+				bitMask = GREEN_SHIFT;
+				break;
+			case YELLOW:
+				bitMask = YELLOW_SHIFT;
+				break;
+			case RED:
+				bitMask = RED_SHIFT;
+				break;
+			case ALL:
+				bitMask = ALL_SHIFT;
+				break;
+			default:
+				/* Invalid value, do nothing */
+				;
         }
         /* TODO: What is this for? */
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
@@ -41,7 +42,7 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Set requested bit */
-        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask;
+        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask << endl;
     	out8(PORTA_ADDR, (port_value | (1 << bitMask)));
     }
 
@@ -51,20 +52,21 @@ namespace HAL {
 
         /* Prepare bitmask according to color */
     	switch (color) {
-        case GREEN:
-        	bitMask = GREEN_SHIFT;
-			break;
-		case YELLOW:
-			bitMask = YELLOW_SHIFT;
-			break;
-		case RED:
-			bitMask = RED_SHIFT;
-			break;
-		case ALL:
-			bitMask = ALL_SHIFT;
-			break;
-		default:
-           /* Invalid value, do nothing */
+			case GREEN:
+				bitMask = GREEN_SHIFT;
+				break;
+			case YELLOW:
+				bitMask = YELLOW_SHIFT;
+				break;
+			case RED:
+				bitMask = RED_SHIFT;
+				break;
+			case ALL:
+				bitMask = ALL_SHIFT;
+				break;
+			default:
+				/* Invalid value, do nothing */
+				;
 		}
         /* TODO: What is this for? */
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
@@ -72,7 +74,7 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Clear requested bit */
-        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask;
+        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask << endl;
     	out8(PORTA_ADDR, (port_value & ~(1 << bitMask)));
     }
 

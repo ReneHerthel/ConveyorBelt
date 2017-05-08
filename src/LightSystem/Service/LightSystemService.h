@@ -14,7 +14,7 @@
 
 #include <sys/neutrino.h>
 #include <sys/netmgr.h>
-#include "enum.h"
+#include "LightSystemEnum.h"
 #include "LightSystemController.h"
 #include "ILightSystem.h"
 #include "Logger.h"

@@ -14,7 +14,7 @@
 #ifndef BLIGHTSYSTEM_H_
 #define BLIGHTSYSTEM_H_
 
-#include "enum.h"
+#include "LightSystemEnum.h"
 
 namespace HAL {
     class BLightSystem {

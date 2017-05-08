@@ -13,7 +13,7 @@
 #define LIGHTSYSTEMSTUBHAL_H_
 
 #include "BLightSystem.h"
-#include "enum.h"
+#include "LightSystemEnum.h"
 #include "Logger.h"
 #include <iostream>
 

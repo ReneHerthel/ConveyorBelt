@@ -11,8 +11,8 @@
  *   Copyright  Copyright (c) 2017 Stephan Jänecke
  */
 
-#ifndef ENUM_H
-#define ENUM_H
+#ifndef LIGHTSYSTEMENUM_H
+#define LIGHTSYSTEMENUM_H
 
 
 /**

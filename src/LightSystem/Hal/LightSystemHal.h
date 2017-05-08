@@ -13,7 +13,9 @@
 #define LIGHTSYSTEMHAL_H
 
 #include "BLightSystem.h"
-#include "enum.h"
+#include "Logger.h"
+#include "LogScope.h"
+#include "LightSystemEnum.h"
 #include <iostream>
 #include <hw/inout.h>
 #include <sys/neutrino.h>

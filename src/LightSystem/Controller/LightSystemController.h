@@ -17,7 +17,7 @@
 #include <vector>
 #include <sys/neutrino.h>
 #include "BLightSystem.h"
-#include "enum.h"
+#include "LightSystemEnum.h"
 #include "Logger.h"
 #include "LogScope.h"
 

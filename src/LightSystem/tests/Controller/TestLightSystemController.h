@@ -6,7 +6,7 @@
 
 #include <sys/neutrino.h>
 #include <sys/netmgr.h>
-#include "enum.h"
+#include "LightSystemEnum.h"
 #include "Logger.h"
 #include "LogScope.h"
 #include "LightSystemController.h"
