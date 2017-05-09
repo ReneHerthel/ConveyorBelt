@@ -70,12 +70,12 @@ public:
     virtual ~HeightMeasurementService();
 
     /*
-     * @brief
+     * @brief Starts the measuring thread.
      */
     void startMeasuring();
 
     /*
-     * @brief
+     * @brief Stops the measuring thread.
      */
     void stopMeasuring();
 
@@ -107,6 +107,11 @@ private:
      * @brief The superloop task of the measurement-thread.
      */
     void measuringTask(int measuring_chid);
+
+    /*
+     * @brief
+     */
+    void dataInRange(Signal *state, int16_t data);
 
     /*
      * @brief The superloop task of the statemachine-thread.

@@ -21,6 +21,7 @@
 
 #include "HeightSignal.h"
 #include "HeightMeasurementService.h"
+#include "HeightSignal.h"
 
 #include <functional>
 #include <vector>
@@ -54,7 +55,8 @@ private:
         virtual void lowHeight();
         virtual void highHeight();
         virtual void entry();
-        int chid;  // The channel, where the statemachine will send to.
+        unsigned int index;
+        int coid;  // The channel, where the statemachine will send to.
         HeightMeasurementService *service;  // A pointer to the service class.
     } *statePtr;
 
@@ -79,7 +81,10 @@ private:
      */
     struct Measuring : public State {
         void entry();
+        void surfaceHeight();
         void holeHeight();
+        void lowHeight();
+        void highHeight();
     };
 
     /*
@@ -116,7 +121,6 @@ private:
      *              The next state is the TOP state of the hierachical state machine.
      */
     struct BitOrFlipped : public State {
-        unsigned int index;
         bool pattern[MAX_BIT_SIZE];
 
         void entry();
@@ -208,31 +212,21 @@ private:
      * @brief
      * @param[signal]
      */
-    static void send(int chid, signal_t signal);
+    static void send(int coid, signal_t signal);
 
     /*
      * @brief
      */
     HeightMeasurementService *service;
 
-public:
     /*
-     * @brief This enum describes the signals to be processed.
-     */
-    enum Signal {
-        INVALID,
-        TIMEOUT,
-        START,
-        WAIT,
-        RESUME,
-        HOLE_HEIGHT,
-        SURFACE_HEIGHT,
-        REF_HEIGHT,
-        PATTERN_READ,
-        LOW_HEIGHT,
-        HIGH_HEIGHT
-    };
+	 * @brief The ID of the send channel.
+	 */
+	int send_chid;
 
+    int coid;
+
+public:
     /*
      * @brief The constructor with the ID of the send channel.
      */
@@ -243,11 +237,6 @@ public:
      * @param [signal] The signal for the next transition.
      */
     void process(Signal signal);
-
-    /*
-     * @brief The ID of the send channel.
-     */
-    int send_chid;
 };
 
 #endif /* HEIGHTCONTEXT_H_ */

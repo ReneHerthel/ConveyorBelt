@@ -40,15 +40,32 @@ typedef union {
 } signal_t;
 
 /*
- * @brief The ID's of all available signals.
+ * @brief The ID's of all available signals send from the statemachine to the con.
  */
 enum SignalID {
+    INVALID_ID,
+    TIMEOUT_ID,
+    NORMAL_ID,
+    FLIPPED_ID,
+    PATTERN_ID,
+    UNEXPECTED_ID,
+};
+
+/*
+ * @brief This enum describes the signals to be processed.
+ */
+enum Signal {
     INVALID,
     TIMEOUT,
-    NORMAL,
-    FLIPPED,
-    PATTERN,
-    UNEXPECTED,
+    START,
+    WAIT,
+    RESUME,
+    HOLE_HEIGHT,
+    SURFACE_HEIGHT,
+    REF_HEIGHT,
+    PATTERN_READ,
+    LOW_HEIGHT,
+    HIGH_HEIGHT
 };
 
 #endif /* HEIGHTSIGNAL_H_ */

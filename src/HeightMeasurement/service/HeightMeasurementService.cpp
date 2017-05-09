@@ -18,20 +18,23 @@
 
 #include "HeightMeasurementService.h"
 #include "HeightMeasurementHal.h"
-//#include "ITimer.h"
-//#include "TimerService.h"
 #include "Logger.h"
 #include "LogScope.h"
+
+#include <chrono>
 
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
  *
  * @param [DATA] The measured data.
  * @param [CAL]  The reference value of the calibrated data.
- * @{
  */
-#define DATA_IS_IN_RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
-/** @} */
+#define RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
+
+/*
+ * @brief The Wait time for waiting between two samples in milliseconds.
+ */
+#define SAMPLE_WAIT_TIME               (50)
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(new HeightContext(send_chid, this))
@@ -64,12 +67,13 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
-    int16_t data = 0;                                    /*< The current measured data.*/
-    HeightContext::Signal state = HeightContext::START;  /*< The current state of the statemachine.*/
-    HeightContext::Signal oldState = state;              /*< The old state of the statemachine.*/
-    HeightMeasurementHal hal;                            /*< The hal object to access the HW.*/
-    int err = 0;                                         /*< Return value of msgSend.*/
-    //TimerService timerService;                         /*< A timer for timeouts */
+    int16_t data = 0;             /*< The current measured data.*/
+    Signal state = START;         /*< The current state of the statemachine.*/
+    Signal oldState = state;      /*< The old state of the statemachine.*/
+    Signal sample1 = state;
+    Signal sample2 = state;
+    HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
+    int err = 0;                  /*< Return value of msgSend.*/
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -86,27 +90,20 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * transition.
      */
     while (measurementIsRunning) {
+
         hal.read(data);
 
-        if (DATA_IS_IN_RANGE(data, REF_HEIGHT_VAL)) {
-            state = HeightContext::REF_HEIGHT;
-        }
-        else if (DATA_IS_IN_RANGE(data, HOLE_HEIGHT_VAL)) {
-            state = HeightContext::HOLE_HEIGHT;
-        }
-        else if (DATA_IS_IN_RANGE(data, SURFACE_HEIGHT_VAL)) {
-            state = HeightContext::SURFACE_HEIGHT;
-        }
-        else if (DATA_IS_IN_RANGE(data, LOW_HEIGHT_VAL)) {
-            state = HeightContext::LOW_HEIGHT;
-        }
-        else if (DATA_IS_IN_RANGE(data, HIGH_HEIGHT_VAL)) {
-            state = HeightContext::HIGH_HEIGHT;
-        }/* else {
-        	state = HeightContext::INVALID;
-        }*/
+        dataInRange(&sample1, data);
 
-        // TODO: Check for timeouts.
+        // Wait a few milliseconds before sample the next data.
+        std::this_thread::sleep_for(std::chrono::milliseconds(SAMPLE_WAIT_TIME));
+
+        dataInRange(&sample2, data);
+
+        // Check if the samples are equals.
+        if(sample1 == sample2) {
+        	state = sample1;
+        }
 
         // Only send a message, when there was a new state.
         if (state != oldState) {
@@ -116,6 +113,8 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
                 // TODO Error handling.
                 LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
             }
+
+            LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
         }
 
         // Remember the current state as old state for the next loop.
@@ -123,7 +122,26 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     }
 
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
-    // TODO: delete timerService;
+}
+
+void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
+	if (RANGE(data, REF_HEIGHT_VAL)) {
+        *state = REF_HEIGHT;
+    }
+    else if (RANGE(data, HOLE_HEIGHT_VAL)) {
+    	*state = HOLE_HEIGHT;
+    }
+    else if (RANGE(data, SURFACE_HEIGHT_VAL)) {
+    	*state = SURFACE_HEIGHT;
+    }
+    else if (RANGE(data, LOW_HEIGHT_VAL)) {
+    	*state = LOW_HEIGHT;
+    }
+    else if (RANGE(data, HIGH_HEIGHT_VAL)) {
+    	*state = HIGH_HEIGHT;
+    }
+
+	// *state = invalid...
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {
@@ -148,7 +166,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
         LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Received pulse: " << pulse.value.sival_int << "\n";
 
         // Signalize the statemachine for the next transition.
-        stateMachine->process((HeightContext::Signal) pulse.value.sival_int);
+        stateMachine->process((Signal) pulse.value.sival_int);
     }
 
     LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Leaves superloop\n";

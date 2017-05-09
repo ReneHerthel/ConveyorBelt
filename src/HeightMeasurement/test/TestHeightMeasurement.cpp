@@ -22,6 +22,7 @@
 #include "HeightContext.h"
 #include "HeightMeasurementService.h"
 #include "HWdefines.h"
+#include "HeightSignal.h"
 
 #include "Logger.h"
 #include "LogScope.h"
@@ -50,14 +51,14 @@ void TestHeightMeasurement::startTest() {
 
 #if TEST_HEIGHT_STATEMACHINE
     LOG_DEBUG << "[TestHeightMeasurement] startTest() Testing context start\n";
-    HeightContext context(9); // Non available chid!
-    context.process(HeightContext::START);
+    HeightContext context(42, nullptr); // Non available chid!
+    context.process(START);
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
-    context.process(HeightContext::HOLE_HEIGHT);
+    context.process(HOLE_HEIGHT);
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
-    context.process(HeightContext::SURFACE_HEIGHT);
+    context.process(SURFACE_HEIGHT);
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
-    context.process(HeightContext::REF_HEIGHT);
+    context.process(REF_HEIGHT);
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing context done\n";
 #endif /* TEST_HEIGHT_STATEMACHINE */
@@ -85,14 +86,16 @@ void TestHeightMeasurement::startTest() {
     HeightMeasurementService::CalibrationData cal;
     // Calibrated by hand!
     cal.delta = 30;
-    cal.holeHeight = 3566;
-    cal.refHeight = 4076;
-    cal.surfaceHeight = 2567;
+    cal.holeHeight = 3585;
+    cal.refHeight = 4071;
+    cal.surfaceHeight = 2557;
+    cal.highHeight =  2945; // 1
+    cal.lowHeight = 2755; // 0
 
     HeightMeasurementService service(receive_chid, send_chid, &cal);
 
     // We need to send a start signal first, so the measuring will begin.
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, HeightContext::START);
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, START);
 
     if (err < 0) {
     	  LOG_DEBUG << "[TestHeightMeasurement] startTest() Sending START signal failed with: " << err << "\n";
@@ -111,7 +114,9 @@ void TestHeightMeasurement::startTest() {
             LOG_DEBUG << "[TestHeightMeasurement] startTest() Receiving pulse messages failed with: " << err << "\n";
         }
 
-        LOG_DEBUG << "[TestHeightMeasurement] startTest() Rceived pulse message: " << pulse.value.sival_int << "\n";
+        signal_t signal = {.value = pulse.value.sival_int};
+
+        LOG_DEBUG << "[TestHeightMeasurement] startTest() Received pulse message: SignalID - " << signal.ID << ", Pattern - " << signal.BIT0 << signal.BIT1 << signal.BIT2 << "\n";
     }
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
 
