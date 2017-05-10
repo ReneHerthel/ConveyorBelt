@@ -106,7 +106,7 @@ void TestHeightMeasurement::startTest() {
     struct _pulse pulse;
 
     // Wait for pulseMessages to simulate components, which wants to receive signals from the HeightMeasurment.
-    while(1) {
+    while (1) {
         LOG_DEBUG << "[TestHeightMeasurement] startTest() Blocked on MsgReceivePulse_r()\n";
         // Returns 0 on success and a negative value on error.
         int err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);

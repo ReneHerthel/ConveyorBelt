@@ -26,7 +26,6 @@
 HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
-    ,    send_chid(send_chid)
 {
     // All states needs to know the service class.
     state.service = service;
@@ -36,6 +35,8 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
 
     // The statemachine needs to know, where to send the signals.
     state.coid = coid;
+
+    LOG_DEBUG << "[HeightContext] HeightContext() coid is: " << state.coid << "\n";
 
     if (coid < 0) {
         // TODO: Error handling.
@@ -120,9 +121,10 @@ void HeightContext::process(Signal signal) {
 void HeightContext::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << "\n";
 
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value); // TODO: Fix the magic-numbers.
+
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << "\n";
 
     if (err < 0) {
         // TODO Error handling.

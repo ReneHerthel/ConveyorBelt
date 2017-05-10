@@ -48,7 +48,7 @@ HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_ch
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
-    // Nothing todo so far.
+    delete stateMachine;
 }
 
 void HeightMeasurementService::startMeasuring() {

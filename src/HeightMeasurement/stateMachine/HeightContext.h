@@ -216,14 +216,9 @@ private:
     static void send(int coid, signal_t signal);
 
     /*
-     * @brief A pointer to the reference class to start & stop the measuring. 
+     * @brief A pointer to the reference class to start & stop the measuring.
      */
     HeightMeasurementService *service;
-
-    /*
-     * @brief The ID of the send channel.
-     */
-    int send_chid;
 
     /*
      * @brief The connection ID of the send channel ID.
