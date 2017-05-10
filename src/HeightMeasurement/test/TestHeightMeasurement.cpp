@@ -83,6 +83,8 @@ void TestHeightMeasurement::startTest() {
     	  LOG_DEBUG << "[TestHeightMeasurement] startTest() Connect to coid failed with: " << coid << "\n";
     }
 
+    LOG_DEBUG << "[TestHeightMeasurement] startTest() send_chid: " << send_chid << " receive_chid: " << receive_chid << " coid: " << coid << "\n";
+
     HeightMeasurementService::CalibrationData cal;
 
     // THIS IS CALIBRATED BY HAND!

@@ -36,7 +36,7 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     // The statemachine needs to know, where to send the signals.
     state.coid = coid;
 
-    LOG_DEBUG << "[HeightContext] HeightContext() coid is: " << state.coid << "\n";
+    LOG_DEBUG << "[HeightContext] HeightContext() send_chid: " << send_chid << " coid is: " << state.coid << "\n";
 
     if (coid < 0) {
         // TODO: Error handling.
