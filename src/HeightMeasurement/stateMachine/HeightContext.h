@@ -208,13 +208,15 @@ private:
     State state;
 
     /*
-     * @brief
-     * @param[signal]
+     * @brief Sends a pulse message over the connection ID.
+     *
+     * @param[coid] The connection ID.
+     * @param[signal] The signal, which should be sent.
      */
     static void send(int coid, signal_t signal);
 
     /*
-     * @brief
+     * @brief A pointer to the reference class to start & stop the measuring. 
      */
     HeightMeasurementService *service;
 
