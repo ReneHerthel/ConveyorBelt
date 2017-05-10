@@ -39,6 +39,9 @@
 #include <thread>
 #include <sys/netmgr.h>
 
+/*
+ * @brief Fast forwarding the HeightContext class.
+ */
 class HeightContext;
 
 class HeightMeasurementService {
@@ -70,7 +73,7 @@ public:
     virtual ~HeightMeasurementService();
 
     /*
-     * @brief Starts the measuring thread.
+     * @brief Starts the measuring thread, by creating a new thread.
      */
     void startMeasuring();
 
@@ -81,16 +84,18 @@ public:
 
 private:
     /*
-     * @brief The statemachine object.
+     * @brief A pointer to the statemachine object.
      */
     HeightContext *stateMachine;
-
 
     /*
      * @brief A pointer to the calibrated data.
      */
     CalibrationData *calibrationDataPtr;
 
+    /*
+     * @brief The "receive-channel-id", where the state machine listen on it.
+     */
     int receive_chid;
 
     /*
@@ -109,7 +114,10 @@ private:
     void measuringTask(int measuring_chid);
 
     /*
-     * @brief
+     * @brief Check in which range the current measured data is.
+     *
+     * @param[*state] A pointer to the current state of the measuring.
+     * @param[data] The current measured data from the hal.
      */
     void dataInRange(Signal *state, int16_t data);
 

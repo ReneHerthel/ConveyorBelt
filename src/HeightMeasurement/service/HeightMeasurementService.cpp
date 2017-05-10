@@ -48,7 +48,7 @@ HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_ch
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
-    // TODO Kill the threads.
+    // Nothing todo so far.
 }
 
 void HeightMeasurementService::startMeasuring() {
@@ -70,8 +70,8 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     int16_t data = 0;             /*< The current measured data.*/
     Signal state = START;         /*< The current state of the statemachine.*/
     Signal oldState = state;      /*< The old state of the statemachine.*/
-    Signal sample1 = state;
-    Signal sample2 = state;
+    Signal sample1 = state;       /*< The first sample of the measuring.*/
+    Signal sample2 = state;       /*< The second sample of the measuring.*/
     HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
     int err = 0;                  /*< Return value of msgSend.*/
 
@@ -91,21 +91,22 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      */
     while (measurementIsRunning) {
 
+        /* First read the current data from the hal. Then check in which range
+         * the data is and remember the result as sample1.
+         * The next step is to wait a few milliseconds, so the next sample will
+         * be a small time later, which is remembered as sample2.
+         */
         hal.read(data);
-
         dataInRange(&sample1, data);
-
-        // Wait a few milliseconds before sample the next data.
         std::this_thread::sleep_for(std::chrono::milliseconds(SAMPLE_WAIT_TIME));
-
         dataInRange(&sample2, data);
 
-        // Check if the samples are equals.
-        if(sample1 == sample2) {
-        	state = sample1;
+        // There is a valid new state, when the previous samples are equals.
+        if (sample1 == sample2) {
+        	  state = sample1;
         }
 
-        // Only send a message, when there was a new state.
+        // But send only a message if there is a new state.
         if (state != oldState) {
             err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
 
@@ -125,23 +126,26 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 }
 
 void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
-	if (RANGE(data, REF_HEIGHT_VAL)) {
+    if (RANGE(data, REF_HEIGHT_VAL)) {
         *state = REF_HEIGHT;
     }
     else if (RANGE(data, HOLE_HEIGHT_VAL)) {
-    	*state = HOLE_HEIGHT;
+    	  *state = HOLE_HEIGHT;
     }
     else if (RANGE(data, SURFACE_HEIGHT_VAL)) {
-    	*state = SURFACE_HEIGHT;
+    	  *state = SURFACE_HEIGHT;
     }
     else if (RANGE(data, LOW_HEIGHT_VAL)) {
-    	*state = LOW_HEIGHT;
+    	  *state = LOW_HEIGHT;
     }
     else if (RANGE(data, HIGH_HEIGHT_VAL)) {
-    	*state = HIGH_HEIGHT;
+    	  *state = HIGH_HEIGHT;
     }
-
-	// *state = invalid...
+    /*
+    else {
+        *state = INVALID;
+    }
+    */
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {

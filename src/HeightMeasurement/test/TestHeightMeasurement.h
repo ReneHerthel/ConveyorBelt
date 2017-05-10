@@ -15,7 +15,7 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>
  */
- 
+
 #ifndef TESTHEIGHTMEASUREMENT_H_
 #define TESTHEIGHTMEASUREMENT_H_
 

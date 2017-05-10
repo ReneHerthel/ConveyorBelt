@@ -10,7 +10,7 @@
  * @ingroup    height_measurement
  * @{
  *
- * @brief      Hal Function declaration of the HeightMeasurement component
+ * @brief      Hal Function declaration of the HeightMeasurement component.
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>

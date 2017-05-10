@@ -23,14 +23,6 @@
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
 
-/*
- * @brief Macros for the sending method.
- * @{
- */
-#define HEIGHT_SEND_PRIO    (0)
-#define HEIGHT_PULSE_CODE   (141)
-/** @} */
-
 HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
@@ -39,15 +31,16 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     // All states needs to know the service class.
     state.service = service;
 
+    // Connect, so the state machine can send signals to the send_chid.
     coid = ConnectAttach_r(ND_LOCAL_NODE, 0, send_chid, 0, 0);
 
     // The statemachine needs to know, where to send the signals.
     state.coid = coid;
 
     if (coid < 0) {
-		// TODO: Error handling.
-		LOG_DEBUG << "[HeightContext] HeightContext() ConnectAttach_r failed\n";
-	}
+        // TODO: Error handling.
+        LOG_DEBUG << "[HeightContext] HeightContext() ConnectAttach_r failed\n";
+    }
 
     statePtr->entry();
 }
@@ -129,11 +122,11 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << "\n";
 
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(HEIGHT_SEND_PRIO), HEIGHT_SEND_PRIO, signal.value);
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value); // TODO: Fix the magic-numbers.
 
     if (err < 0) {
         // TODO Error handling.
-    	LOG_SET_LEVEL(DEBUG);
+    	  LOG_SET_LEVEL(DEBUG);
         LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }
@@ -321,24 +314,24 @@ void HeightContext::Measuring::entry() {
 }
 
 void HeightContext::Measuring::surfaceHeight() {
-	//LOG_SCOPE;
+  //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring surfaceHeight()\n";
     new (this) BitOrFlipped;
 }
 
 void HeightContext::Measuring::highHeight() {
-	//LOG_SCOPE;
-	LOG_SET_LEVEL(DEBUG);
-	LOG_DEBUG << "[HeightContext] Measuring highHeight()\n";
-	new (this) High;
+  //LOG_SCOPE;
+  LOG_SET_LEVEL(DEBUG);
+  LOG_DEBUG << "[HeightContext] Measuring highHeight()\n";
+  new (this) High;
 }
 
 void HeightContext::Measuring::lowHeight() {
-	//LOG_SCOPE;
-	LOG_SET_LEVEL(DEBUG);
-	LOG_DEBUG << "[HeightContext] Measuring lowHeight()\n";
-	new (this) Low;
+  //LOG_SCOPE;
+  LOG_SET_LEVEL(DEBUG);
+  LOG_DEBUG << "[HeightContext] Measuring lowHeight()\n";
+  new (this) Low;
 }
 
 void HeightContext::Measuring::holeHeight() {
@@ -431,7 +424,7 @@ void HeightContext::Top::refHeight() {
     if (index == 0) {
         new (this) Flipped;
     } else if(index < MIN_BIT_SIZE) {
-    	invalid();
+    	  invalid();
     } else {
         new (this) BitCoded;
     }
@@ -507,8 +500,7 @@ void HeightContext::Flipped::entry() {
 
     send(coid, signal);
 
-    // Calls the super-method.
-    patternRead();
+    patternRead();  // Calls the super-method.
 }
 
 ///
@@ -527,8 +519,7 @@ void HeightContext::BitCoded::entry() {
 
     send(coid, signal);
 
-    // Calls the super-method.
-    patternRead();
+    patternRead();  // Calls the super-method.
 }
 
 /** @} */

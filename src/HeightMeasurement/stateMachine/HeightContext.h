@@ -42,7 +42,6 @@ private:
      * @brief The super state from where all states will be inherit.
      */
     struct State {
-    	  //State();
         virtual void invalid();
         virtual void timeout();
         virtual void start();
@@ -220,10 +219,13 @@ private:
     HeightMeasurementService *service;
 
     /*
-	 * @brief The ID of the send channel.
-	 */
-	int send_chid;
+     * @brief The ID of the send channel.
+     */
+    int send_chid;
 
+    /*
+     * @brief The connection ID of the send channel ID.
+     */
     int coid;
 
 public:
