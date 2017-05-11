@@ -5,7 +5,7 @@
  * Hides pulse messaging for communication with the controller.
  *
  *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
- *
+ *	   @author	Matthis Keppner	<matthis.keppner@haw-hamburg.de>
  *   @internal
  *     Created  05/06/2017
  *   Copyright  Copyright (c) 2017 Stephan Jänecke
