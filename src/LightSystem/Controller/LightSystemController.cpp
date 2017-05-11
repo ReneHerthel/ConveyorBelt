@@ -16,32 +16,32 @@
 LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
 	: isRunning(true)
 	, frequency(ALWAYS_OFF)
-	, color(ALL)
+	, color(ALL_COLORS)
     , chid(chid)
 	, boundary(boundary)
 {
-	LOG_SCOPE;
-	LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
+	//LOG_SCOPE;
+	//LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
 	taskThread = thread(&LightSystemController::task, this);
 	controlThread = thread(&LightSystemController::control, this,chid);
 }
 
 int LightSystemController::task(){
-	LOG_SCOPE;
+	//LOG_SCOPE;
 	thread::id thread_id = this_thread::get_id();
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-		LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+		//LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	LOG_DEBUG << thread_id << ": Enter loop" << endl;
+	//LOG_DEBUG << thread_id << ": Enter loop" << endl;
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
             /* Switch off all lights in case color changes after
              * entering this condition block */
-			boundary->lightOff(ALL);
+			boundary->lightOff(ALL_COLORS);
 		} else {
 			boundary->lightOn(color);
 		}
@@ -52,7 +52,7 @@ int LightSystemController::task(){
 		{
             /* Switch off all lights in case color changes after
              * entering this condition block */
-			boundary->lightOff(ALL);
+			boundary->lightOff(ALL_COLORS);
 		}
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
 	}
@@ -61,20 +61,20 @@ int LightSystemController::task(){
 }
 
 int LightSystemController::control(int chid) {
-	LOG_SCOPE;
+//	LOG_SCOPE;
     /** Last received message will be stored here */
 	struct _pulse pulse;
 	int err;
 	thread::id thread_id = this_thread::get_id();
 
-	LOG_DEBUG << thread_id << ": Enter loop" << endl;
-	LOG_DEBUG << thread_id << ": Channel "<< chid << endl;
+	//LOG_DEBUG << thread_id << ": Enter loop" << endl;
+	//LOG_DEBUG << thread_id << ": Channel "<< chid << endl;
 	while(isRunning) {
-		LOG_DEBUG << thread_id << ": Wait for message on channel " << chid << endl;
+		//LOG_DEBUG << thread_id << ": Wait for message on channel " << chid << endl;
 		err = MsgReceivePulse_r(chid, &pulse, sizeof(_pulse), NULL);
-		LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
+		//LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
 		if(err < 0) {
-			LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
+			//LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
 		}
 
 		/* FIXME: Typesafe conversion */
@@ -90,13 +90,13 @@ int LightSystemController::control(int chid) {
 	            { RED, FAST_BLINKING }, // ERROR_OCCURED
 	            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
 	            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
-	            { ALL, ALWAYS_OFF } // CLEAR_ALL
+	            { ALL_COLORS, ALWAYS_OFF } // CLEAR_ALL
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;
-	    LOG_DEBUG << thread_id << ": Set color " << color << endl;
+	   // LOG_DEBUG << thread_id << ": Set color " << color << endl;
 	    frequency = LightMessageMapping[warningLevel].frequency;
-	    LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
+	   // LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
 	}
 	/* FIXME: Bogus return value */
 	return 1;

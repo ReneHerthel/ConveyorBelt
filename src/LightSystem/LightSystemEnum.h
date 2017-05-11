@@ -36,7 +36,7 @@ enum Color {
     GREEN,
     YELLOW,
     RED,
-    ALL /**< @brief Manipulate all lights at once */
+    ALL_COLORS /**< @brief Manipulate all lights at once */
 };
 /**
  * Define frequencies in Milliseconds

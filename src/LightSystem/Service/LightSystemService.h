@@ -17,8 +17,8 @@
 #include "LightSystemEnum.h"
 #include "LightSystemController.h"
 #include "ILightSystem.h"
-#include "Logger.h"
-#include "LogScope.h"
+//#include "Logger.h"
+//#include "LogScope.h"
 
 class LightSystemService : public ILightSystem {
 	public:

@@ -18,9 +18,9 @@ using namespace std;
 namespace HAL {
     /* TODO: Define log level message */
     void LightSystemStubHal::lightOn(Color color) {
-        LOG_DEBUG << __FUNCTION__ << ": " << color << endl;
+     //   LOG_DEBUG << __FUNCTION__ << ": " << color << endl;
     }
     void LightSystemStubHal::lightOff(Color color) {
-        LOG_DEBUG << __FUNCTION__ << ": " << color << endl;
+       // LOG_DEBUG << __FUNCTION__ << ": " << color << endl;
     }
 }
