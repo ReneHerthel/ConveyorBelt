@@ -29,6 +29,7 @@
 #define SURFACE_HEIGHT_VAL (calibrationDataPtr->surfaceHeight)
 #define LOW_HEIGHT_VAL (calibrationDataPtr->lowHeight)
 #define HIGH_HEIGHT_VAL (calibrationDataPtr->highHeight)
+#define INVALID_HEIGHT_VAL (calibrationDataPtr->invalidHeight)
 /** @} */
 
 #include "HeightContext.h"
@@ -56,6 +57,7 @@ public:
         int16_t surfaceHeight; /*< The height of the puck's top.*/
         int16_t highHeight;    /*< The height of the Bit-coded puck's 1.*/
         int16_t lowHeight;     /*< The height of the Bit-coded puck's 0.*/
+        int16_t invalidHeight; /*< The height of the Invalid puck.*/
     };
 
     /*

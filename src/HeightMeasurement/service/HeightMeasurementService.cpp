@@ -22,6 +22,7 @@
 #include "LogScope.h"
 
 #include <chrono>
+#include <algorithm>
 
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
@@ -32,9 +33,14 @@
 #define RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
 
 /*
- * @brief The Wait time for waiting between two samples in milliseconds.
+ * @brief
  */
-#define SAMPLE_WAIT_TIME               (50)
+#define AMOUNT_OF_SIGNALS (6)
+
+/*
+ * @brief
+ */
+#define AMOUNT_OF_SAMPLES (50)
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(new HeightContext(send_chid, this))
@@ -70,10 +76,10 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     int16_t data = 0;             /*< The current measured data.*/
     Signal state = START;         /*< The current state of the statemachine.*/
     Signal oldState = state;      /*< The old state of the statemachine.*/
-    Signal sample1 = state;       /*< The first sample of the measuring.*/
-    Signal sample2 = state;       /*< The second sample of the measuring.*/
     HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
     int err = 0;                  /*< Return value of msgSend.*/
+
+
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -89,22 +95,64 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * channel, where the statemachine is listening and will do the next
      * transition.
      */
+    int counters[AMOUNT_OF_SIGNALS] = {0};
     while (measurementIsRunning) {
 
-        /* First read the current data from the hal. Then check in which range
-         * the data is and remember the result as sample1.
-         * The next step is to wait a few milliseconds, so the next sample will
-         * be a small time later, which is remembered as sample2.
-         */
-        hal.read(data);
-        dataInRange(&sample1, data);
-        std::this_thread::sleep_for(std::chrono::milliseconds(SAMPLE_WAIT_TIME));
-        dataInRange(&sample2, data);
+        int inRow = 0;
+        int heighestCount = 0;
+        int heighestCountIndex = 0;
+        Signal newSample = state;
+        Signal oldSample = START;
 
-        // There is a valid new state, when the previous samples are equals.
-        if (sample1 == sample2) {
-        	  state = sample1;
+        for (int i = 0; i < 64; i++) {
+            hal.read(data);
+            dataInRange(&newSample, data);
+
+            if (oldSample != START && newSample == oldSample) {
+                inRow++;
+
+                if (inRow >= 8) {
+                    counters[newSample]++;
+
+                    if (counters[newSample] > heighestCount) {
+                    	heighestCount = counters[newSample];
+                    	heighestCountIndex = newSample;
+                    }
+
+                    inRow = 0;
+                }
+            }
+            else {
+            	inRow = 0;
+            }
+
+            oldSample = newSample;
         }
+
+        state = Signal(heighestCountIndex);
+
+
+    	/*
+    	int currentCount = 0;
+    	Signal tmpState = state;
+
+    	for (int i = 0; i < AMOUNT_OF_SAMPLES; i++) {
+
+			hal.read(data);
+			dataInRange(&tmpState, data);
+
+			if(tmpState != oldState) {
+
+                if (++counters[tmpState] > currentCount) {
+
+                    currentCount = counters[tmpState];
+                    state = tmpState;
+                }
+			}
+
+			//std::this_thread::sleep_for(std::chrono::microseconds(50));
+    	}
+    	*/
 
         // But send only a message if there is a new state.
         if (state != oldState) {
@@ -120,6 +168,9 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
         // Remember the current state as old state for the next loop.
         oldState = state;
+
+        // Reset the counters
+        std::fill(counters, counters + AMOUNT_OF_SIGNALS, 0);
     }
 
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
@@ -141,11 +192,9 @@ void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
     else if (RANGE(data, HIGH_HEIGHT_VAL)) {
     	  *state = HIGH_HEIGHT;
     }
-    /*
-    else {
+    else if (RANGE(data, INVALID_HEIGHT_VAL)){
         *state = INVALID;
     }
-    */
 }
 
 void HeightMeasurementService::stateMachineTask(int receive_chid) {

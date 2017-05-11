@@ -33,11 +33,12 @@ typedef union {
                 uint8_t BIT1 : 1;
                 uint8_t BIT2 : 1;
             };
-            uint8_t pattern;  // The whole bit-pattern.
+            uint8_t pattern : 3;  // The whole bit-pattern
         };
     };
     uint8_t value;  // The whole structure as a value.
-} signal_t;
+
+}signal_t;
 
 /*
  * @brief The ID's of all available signals send from the statemachine to the con.
@@ -55,17 +56,18 @@ enum SignalID {
  * @brief This enum describes the signals to be processed.
  */
 enum Signal {
-    INVALID,
+	REF_HEIGHT = 0,
+    HOLE_HEIGHT = 1,
+    SURFACE_HEIGHT = 2,
+    LOW_HEIGHT = 3,
+    HIGH_HEIGHT = 4,
+    INVALID = 5,
+
+    PATTERN_READ,
     TIMEOUT,
     START,
     WAIT,
     RESUME,
-    HOLE_HEIGHT,
-    SURFACE_HEIGHT,
-    REF_HEIGHT,
-    PATTERN_READ,
-    LOW_HEIGHT,
-    HIGH_HEIGHT
 };
 
 #endif /* HEIGHTSIGNAL_H_ */

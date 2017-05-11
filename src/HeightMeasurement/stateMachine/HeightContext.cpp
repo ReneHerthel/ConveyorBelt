@@ -27,6 +27,8 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
 {
+	LOG_SCOPE;
+	LOG_SET_LEVEL(DEBUG)
     // All states needs to know the service class.
     state.service = service;
 
@@ -48,7 +50,7 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
 
 void HeightContext::process(Signal signal) {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG)
+    //LOG_SET_LEVEL(DEBUG)
 
     // Switch between defined signals and invoke the function of the statePtr.
     switch(signal) {
@@ -122,13 +124,15 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
 
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value); // TODO: Fix the magic-numbers.
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value); // TODO: Fix the magic-numbers.
 
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << "\n";
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << "\n";
+
+    std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
 
     if (err < 0) {
         // TODO Error handling.
-    	  LOG_SET_LEVEL(DEBUG);
+    	LOG_SET_LEVEL(DEBUG);
         LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }
@@ -154,7 +158,7 @@ void HeightContext::State::invalid() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::timeout() {
@@ -168,7 +172,7 @@ void HeightContext::State::timeout() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::start() {
@@ -182,7 +186,7 @@ void HeightContext::State::start() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::wait() {
@@ -210,7 +214,7 @@ void HeightContext::State::holeHeight() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::surfaceHeight() {
@@ -224,7 +228,7 @@ void HeightContext::State::surfaceHeight() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::refHeight() {
@@ -238,7 +242,7 @@ void HeightContext::State::refHeight() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::patternRead() {
@@ -252,7 +256,7 @@ void HeightContext::State::patternRead() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::lowHeight() {
@@ -266,7 +270,7 @@ void HeightContext::State::lowHeight() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 void HeightContext::State::highHeight() {
@@ -280,19 +284,22 @@ void HeightContext::State::highHeight() {
 
     send(coid, signal);
 
-    new (this) State;
+    new (this) Idle;
 }
 
 ///
 /// IDLE : STATE
 ///
+HeightContext::Idle::Idle() {
+    service->stopMeasuring();
+    index = 0;
+}
+
 void HeightContext::Idle::entry() {
     //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle entry()\n";
 
-    service->stopMeasuring();
-    index = 0;
     // TODO stopTimer()
 }
 

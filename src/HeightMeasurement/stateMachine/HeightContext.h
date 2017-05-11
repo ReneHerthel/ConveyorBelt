@@ -67,6 +67,7 @@ private:
      *              The next transition (START) goes to the Measuring state.
      */
     struct Idle : public State {
+    	Idle();
         void entry();
         void start();
     };
