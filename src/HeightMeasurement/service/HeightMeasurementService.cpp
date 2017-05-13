@@ -40,7 +40,29 @@
 /*
  * @brief
  */
-#define AMOUNT_OF_SAMPLES (50)
+#define SAMPLES_AMOUNT (30)
+
+/*
+ * @brief
+ */
+#define SAMPLES_WINDOW_SIZE (3)
+#define SAMPLES_WINDOW_END  (SAMPLES_WINDOW_SIZE - 1)
+#define SAMPLES_WINDOW_MID  (SAMPLES_WINDOW_SIZE / 2) // 1 in array on size of 3
+
+/*
+ * @brief Returns the maximum of two arguments.
+ */
+#define MAX(x, y)            ((x > y) ? (x) : (y))
+
+/*
+ * @brief Returns the minimum of two arguments.
+ */
+#define MIN(x, y)            ((x < y) ? (x) : (y))
+
+/*
+ * @brief
+ */
+#define MEDIAN_OF_THREE(x, y, z)     ( MAX( MIN( MAX( x, y), z), MIN(x, y)) )
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(new HeightContext(send_chid, this))
@@ -79,8 +101,6 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
     int err = 0;                  /*< Return value of msgSend.*/
 
-
-
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
 
@@ -96,8 +116,41 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * transition.
      */
     int counters[AMOUNT_OF_SIGNALS] = {0};
+    int window[SAMPLES_WINDOW_SIZE]
     while (measurementIsRunning) {
 
+        for (int i = 0; i < AMOUNT_OF_SAMPLES; i++) {
+
+            hal.read(data);
+
+            // Shift the data to the left by one.
+            memmove(window, window + 1, sizeof(window) - sizeof(*window));
+
+            /* Put the new data at the end of the window.
+             *
+             *        +----+----+----+ ... +----+
+             * OUT << | 0  | 1  |  2 | ... | N  | << IN
+             *        +----+----+----+ ... +----+
+             */
+            window[SAMPLES_WINDOW_END] = data;
+
+            /* Calculate the median of three from the window.
+             * example:
+             * MAX( MIN ( MAX (3, 5), 4), MIN(3, 5))
+             * MAX( MIN (5 , 4), 3)
+             * MAX( 4, 3)
+             * 4 <- median
+             */
+            int median = MEDIAN_OF_THREE(window[0], window[1], window[2]);
+
+            dataInRange(&state, median);
+
+            counters[state]++;
+        }
+
+        // TODO: get highest state?
+
+        /*
         int inRow = 0;
         int heighestCount = 0;
         int heighestCountIndex = 0;
@@ -130,6 +183,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
         }
 
         state = Signal(heighestCountIndex);
+        */
 
 
     	/*
@@ -137,20 +191,16 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     	Signal tmpState = state;
 
     	for (int i = 0; i < AMOUNT_OF_SAMPLES; i++) {
-
-			hal.read(data);
-			dataInRange(&tmpState, data);
-
-			if(tmpState != oldState) {
-
+          hal.read(data);
+          dataInRange(&tmpState, data);
+          if(tmpState != oldState) {
                 if (++counters[tmpState] > currentCount) {
-
                     currentCount = counters[tmpState];
                     state = tmpState;
                 }
-			}
+          }
 
-			//std::this_thread::sleep_for(std::chrono::microseconds(50));
+          //std::this_thread::sleep_for(std::chrono::microseconds(50));
     	}
     	*/
 
@@ -171,6 +221,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
         // Reset the counters
         std::fill(counters, counters + AMOUNT_OF_SIGNALS, 0);
+        std::fill(samples, samples + SAMPLES_AMOUNT, 0);
     }
 
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
