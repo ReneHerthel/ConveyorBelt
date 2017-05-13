@@ -32,15 +32,15 @@ AFTER(TestExample){
 
 TEST_IMPL(TestExample, test1){
     std::cout << "Hier ist Test1, guckmal wurde gaendert: " << testint<<std::endl;
-    return PASSED;
+    return TEST_PASSED;
 }
 
 TEST_IMPL(TestExample, test2){
     std::cout << "Hier ist Test2 " << std::endl;
-    return WARNING;
+    return TEST_WARNING;
 }
 
 TEST_IMPL(TestExample, test3){
     std::cout << "Hier ist Test3 " << std::endl;
-    return FAILED;
+    return TEST_FAILED;
 }
