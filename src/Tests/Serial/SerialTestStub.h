@@ -1,0 +1,14 @@
+//
+// Created by Silt on 14.05.2017.
+//
+
+#ifndef CONVEYORBELT_SERIALTESTSTUB_H
+#define CONVEYORBELT_SERIALTESTSTUB_H
+
+
+class SerialTestStub {
+
+};
+
+
+#endif //CONVEYORBELT_SERIALTESTSTUB_H

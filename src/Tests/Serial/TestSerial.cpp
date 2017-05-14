@@ -8,6 +8,7 @@ SETUP(TestSerial){
     REG_TEST(SerialWriterTest, 1, "[SerialWriter] Test Basic output functions");
     REG_TEST(OpenSernderReceiver, 2, "[SerialWriter] Test to open Receiver and Sender at the same time");
     REG_TEST(ReadWrite,3, "[SerialWriter][SerialSender] Basic Input Output Test");
+    REG_TEST(Serilizeable, 4, "[ISerializable][SerialTestStub] Basic Test for the SerialTestObject");
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){
@@ -48,9 +49,15 @@ TEST_IMPL(TestSerial, ReadWrite){
     }
 }
 
+TEST_IMPL(TestSerial, Serilizeable) {
+
+}
+
 //v UNUSED v//
 BEFORE(TestSerial){return 0;}
 AFTER(TestSerial){return 0;}
 BEFORE_TC(TestSerial){return 0;}
 AFTER_TC(TestSerial){return 0;}
+
+
 

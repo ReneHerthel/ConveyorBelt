@@ -20,6 +20,7 @@ protected:
     TEST(SerialWriterTest);
     TEST(OpenSernderReceiver);
     TEST(ReadWrite);
+    TEST(Serilizeable);
     TEST_CASE_METHODS
 };
 
