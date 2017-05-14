@@ -10,7 +10,7 @@
 
 typedef struct serialized{
     uint32_t size; /*!< Size of the object in bytes*/
-    char* obj; /*!<The serialized object */
+    void* obj; /*!<The serialized object */
 };
 
 class ISerializable {
@@ -27,7 +27,7 @@ public:
      *          shall be equal to the class calling
      * @return The object created
      */
-    template<class T> virtual static T deserialize(serialized ser) = 0;
+    template<class T> virtual T deserialize(serialized ser) = 0;
 };
 
 
