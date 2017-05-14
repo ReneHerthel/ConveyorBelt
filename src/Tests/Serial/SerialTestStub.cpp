@@ -13,14 +13,14 @@ serialized SerialTestStub::serialize() {
     return ser;
 }
 
-template<class T>
-T SerialTestStub::deserialize(serialized ser) {
+bool SerialTestStub::deserialize(serialized ser) {
     obj* tmp = (obj*)ser.obj;
     this->value1 = tmp->value1;
     this->value2 = tmp->value2;
     this->zero = tmp->zero;
     this->value3 = tmp->value3;
 
+    return true;
 }
 
 SerialTestStub::SerialTestStub(uint8_t value1, uint16_t value2, uint32_t zero, uint64_t value3) : value1(value1),
@@ -34,3 +34,5 @@ bool SerialTestStub::operator==(SerialTestStub const &rhs) {
              zero   == rhs.zero     &&
              value3 == rhs.value3);
 }
+
+SerialTestStub::SerialTestStub() {}

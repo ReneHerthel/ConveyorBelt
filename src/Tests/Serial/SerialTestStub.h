@@ -10,11 +10,13 @@
 
 class SerialTestStub : public ISerializable{
 public:
+    SerialTestStub();
+
     SerialTestStub(uint8_t value1, uint16_t value2, uint32_t zero, uint64_t value3);
 
     serialized serialize() override;
 
-    template<class T> T deserialize(serialized ser) override;
+    bool deserialize(serialized ser) override;
 
     bool operator==(SerialTestStub const& rhs);
 

@@ -50,7 +50,17 @@ TEST_IMPL(TestSerial, ReadWrite){
 }
 
 TEST_IMPL(TestSerial, Serilizeable) {
+    SerialTestStub original(rand(),rand(), 0, rand());
+    SerialTestStub copy;
 
+    serialized obj_ser = original.serialize();
+    copy.deserialize(obj_ser);
+
+    if(copy==original){
+        return PASSED;
+    } else {
+        return FAILED;
+    }
 }
 
 //v UNUSED v//

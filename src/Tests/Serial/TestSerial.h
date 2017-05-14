@@ -9,6 +9,7 @@
 #include "../../TestFramework/TestFramework.h"
 #include "../../SerialPort/SerialSender.h"
 #include "../../SerialPort/SerialReceiver.h"
+#include "SerialTestStub.h"
 
 #include <iostream>
 
