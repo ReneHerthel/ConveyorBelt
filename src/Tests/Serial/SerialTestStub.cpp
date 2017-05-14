@@ -27,3 +27,10 @@ SerialTestStub::SerialTestStub(uint8_t value1, uint16_t value2, uint32_t zero, u
                                                                                                   value2(value2),
                                                                                                   zero(zero),
                                                                                                   value3(value3) {}
+
+bool SerialTestStub::operator==(SerialTestStub const &rhs) {
+    return ( value1 == rhs.value1   &&
+             value2 == rhs.value2   &&
+             zero   == rhs.zero     &&
+             value3 == rhs.value3);
+}

@@ -16,6 +16,8 @@ public:
 
     template<class T> T deserialize(serialized ser) override;
 
+    bool operator==(SerialTestStub const& rhs);
+
 private:
     typedef struct __attribute__ ((packed)) obj_members{
         uint8_t value1;
