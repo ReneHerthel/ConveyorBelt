@@ -81,6 +81,7 @@ private:
      */
     struct Measuring : public State {
         void entry();
+        void invalid();
         void surfaceHeight();
         void holeHeight();
         void lowHeight();

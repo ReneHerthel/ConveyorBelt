@@ -152,13 +152,7 @@ void HeightContext::State::invalid() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State invalid()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::INVALID_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 void HeightContext::State::timeout() {
@@ -292,6 +286,20 @@ void HeightContext::Measuring::entry() {
     // TODO startTimer()
 }
 
+void HeightContext::Measuring::invalid() {
+	//LOG_SCOPE;
+	LOG_SET_LEVEL(DEBUG);
+	LOG_DEBUG << "[HeightContext] Measuring invalid()\n";
+
+	signal_t signal;
+	signal.ID = SignalID::INVALID_ID;
+	signal.pattern = 0;
+
+	send(coid, signal);
+
+	new (this) Idle;
+}
+
 void HeightContext::Measuring::surfaceHeight() {
   //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
@@ -390,7 +398,13 @@ void HeightContext::Top::entry() {
     // Check if the index is in the range of the min/max bit size.
     if (index > MAX_BIT_SIZE) {
     	LOG_DEBUG << "[HeightContext] Top going invalid() with index: " << index << "\n";
-        invalid();
+    	signal_t signal;
+		signal.ID = SignalID::INVALID_ID;
+		signal.pattern = 0;
+
+		send(coid, signal);
+
+		new (this) Idle;
     }
 }
 
@@ -403,7 +417,13 @@ void HeightContext::Top::refHeight() {
     if (index == 0) {
         new (this) Flipped;
     } else if(index < MIN_BIT_SIZE) {
-    	  invalid();
+    	signal_t signal;
+    	signal.ID = SignalID::INVALID_ID;
+    	signal.pattern = 0;
+
+   		send(coid, signal);
+
+   		new (this) Idle;
     } else {
         new (this) BitCoded;
     }
@@ -431,7 +451,7 @@ void HeightContext::Top::highHeight() {
 void HeightContext::High::entry () {
     //LOG_SCOPE;
     LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Hight entry()\n";
+    LOG_DEBUG << "[HeightContext] Height entry()\n";
 
     pattern[index] = 1;
     index++;
