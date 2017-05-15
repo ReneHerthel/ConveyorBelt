@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>11</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>187</x>
-      <y>605</y>
-      <w>22</w>
-      <h>22</h>
+      <x>360</x>
+      <y>495</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>572</x>
-      <y>616</y>
-      <w>220</w>
-      <h>44</h>
+      <x>675</x>
+      <y>504</y>
+      <w>180</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 START</panel_attributes>
@@ -27,10 +27,10 @@ START</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>385</x>
-      <y>572</y>
-      <w>198</w>
-      <h>121</h>
+      <x>522</x>
+      <y>468</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>IDLE
 --
@@ -48,10 +48,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>605</y>
-      <w>209</w>
-      <h>33</h>
+      <x>369</x>
+      <y>495</y>
+      <w>171</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=-&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
@@ -59,10 +59,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>770</x>
-      <y>572</y>
-      <w>220</w>
-      <h>121</h>
+      <x>837</x>
+      <y>468</y>
+      <w>180</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>MEASURING
 --
@@ -76,10 +76,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>572</x>
-      <y>682</y>
-      <w>330</w>
-      <h>275</h>
+      <x>675</x>
+      <y>558</y>
+      <w>270</w>
+      <h>225</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 SURFACE_HEIGHT,
@@ -90,10 +90,10 @@ HIGH_HEIGHT / HIGH_HEIGHT</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>385</x>
-      <y>847</y>
-      <w>198</w>
-      <h>121</h>
+      <x>522</x>
+      <y>693</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>BIT_OR_FLIPPED
 -
@@ -106,10 +106,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1221</x>
-      <y>847</y>
-      <w>198</w>
-      <h>121</h>
+      <x>1206</x>
+      <y>693</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>NORMAL
 --
@@ -122,10 +122,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>979</x>
-      <y>616</y>
-      <w>363</w>
-      <h>253</h>
+      <x>1008</x>
+      <y>504</y>
+      <w>297</w>
+      <h>207</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 HOLE_HEIGHT
@@ -135,10 +135,10 @@ HOLE_HEIGHT
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
-      <y>627</y>
-      <w>539</w>
-      <h>462</h>
+      <x>423</x>
+      <y>513</y>
+      <w>441</w>
+      <h>378</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -169,10 +169,10 @@ REF_HEIGHT / msgSend(normal)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>121</x>
-      <y>385</y>
-      <w>1320</w>
-      <h>770</h>
+      <x>306</x>
+      <y>315</y>
+      <w>1080</w>
+      <h>630</h>
     </coordinates>
     <panel_attributes>HEIGHT_MEASUREMENT</panel_attributes>
     <additional_attributes/>
@@ -180,10 +180,10 @@ REF_HEIGHT / msgSend(normal)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>473</x>
-      <y>682</y>
-      <w>154</w>
-      <h>187</h>
+      <x>594</x>
+      <y>558</y>
+      <w>126</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 PATTERN_READ</panel_attributes>
@@ -192,10 +192,10 @@ PATTERN_READ</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>121</x>
-      <y>1199</y>
-      <w>1441</w>
-      <h>858</h>
+      <x>306</x>
+      <y>981</y>
+      <w>1179</w>
+      <h>702</h>
     </coordinates>
     <panel_attributes>BIT_OR_FLIPPED</panel_attributes>
     <additional_attributes/>
@@ -203,10 +203,10 @@ PATTERN_READ</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>825</x>
-      <y>1232</y>
-      <w>22</w>
-      <h>22</h>
+      <x>882</x>
+      <y>1008</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -214,10 +214,10 @@ PATTERN_READ</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>825</x>
-      <y>1243</y>
-      <w>33</w>
-      <h>154</h>
+      <x>882</x>
+      <y>1017</y>
+      <w>27</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -226,10 +226,10 @@ PATTERN_READ</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>737</x>
-      <y>1375</y>
-      <w>198</w>
-      <h>121</h>
+      <x>810</x>
+      <y>1125</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>TOP
 --
@@ -242,10 +242,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>781</x>
-      <y>1485</y>
-      <w>132</w>
-      <h>187</h>
+      <x>846</x>
+      <y>1215</y>
+      <w>108</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 REF_HEIGHT</panel_attributes>
@@ -254,10 +254,10 @@ REF_HEIGHT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>968</x>
-      <y>957</y>
-      <w>374</w>
-      <h>132</h>
+      <x>999</x>
+      <y>783</y>
+      <w>306</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 SURFACE_HEIGHT</panel_attributes>
@@ -266,10 +266,10 @@ SURFACE_HEIGHT</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>781</x>
-      <y>1001</y>
-      <w>198</w>
-      <h>121</h>
+      <x>846</x>
+      <y>819</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>SURFACE
 --
@@ -282,10 +282,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>176</x>
-      <y>1606</y>
-      <w>198</w>
-      <h>121</h>
+      <x>351</x>
+      <y>1314</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>FLIPPED
 --
@@ -300,10 +300,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>924</x>
-      <y>1386</y>
-      <w>407</w>
-      <h>44</h>
+      <x>963</x>
+      <y>1134</y>
+      <w>333</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 HIGH_HEIGHT</panel_attributes>
@@ -312,10 +312,10 @@ HIGH_HEIGHT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>363</x>
-      <y>1386</y>
-      <w>396</w>
-      <h>44</h>
+      <x>504</x>
+      <y>1134</y>
+      <w>324</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LOW_HEIGHT</panel_attributes>
@@ -324,10 +324,10 @@ LOW_HEIGHT</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1309</x>
-      <y>1375</y>
-      <w>220</w>
-      <h>121</h>
+      <x>1278</x>
+      <y>1125</y>
+      <w>180</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>HIGH
 --
@@ -342,10 +342,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>154</x>
-      <y>1375</y>
-      <w>220</w>
-      <h>121</h>
+      <x>333</x>
+      <y>1125</y>
+      <w>180</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>LOW
 --
@@ -358,10 +358,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>924</x>
-      <y>1441</y>
-      <w>407</w>
-      <h>44</h>
+      <x>963</x>
+      <y>1179</y>
+      <w>333</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 SURFACE_HEIGHT</panel_attributes>
@@ -370,10 +370,10 @@ SURFACE_HEIGHT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>363</x>
-      <y>1441</y>
-      <w>396</w>
-      <h>44</h>
+      <x>504</x>
+      <y>1179</y>
+      <w>324</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 SURFACE_HEIGHT</panel_attributes>
@@ -382,10 +382,10 @@ SURFACE_HEIGHT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>363</x>
-      <y>1650</y>
-      <w>429</w>
-      <h>44</h>
+      <x>504</x>
+      <y>1350</y>
+      <w>351</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [index = 0]</panel_attributes>
@@ -394,10 +394,10 @@ SURFACE_HEIGHT</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1342</x>
-      <y>1606</y>
-      <w>198</w>
-      <h>121</h>
+      <x>1305</x>
+      <y>1314</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>INVALID
 --
@@ -410,10 +410,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>803</x>
-      <y>1650</y>
-      <w>561</w>
-      <h>44</h>
+      <x>864</x>
+      <y>1350</y>
+      <w>459</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [index &lt; MIN_BIT_SIZE]</panel_attributes>
@@ -422,10 +422,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>781</x>
-      <y>1683</y>
-      <w>66</w>
-      <h>198</h>
+      <x>846</x>
+      <y>1377</y>
+      <w>54</w>
+      <h>162</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [else]</panel_attributes>
@@ -434,10 +434,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>693</x>
-      <y>1859</y>
-      <w>198</w>
-      <h>121</h>
+      <x>774</x>
+      <y>1521</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>BIT_CODED
 --
@@ -450,10 +450,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>770</x>
-      <y>1650</y>
-      <w>44</w>
-      <h>44</h>
+      <x>837</x>
+      <y>1350</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -461,10 +461,10 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>121</x>
+      <x>306</x>
       <y>0</y>
-      <w>737</w>
-      <h>352</h>
+      <w>603</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>ERROR_TRANSMITTER</panel_attributes>
     <additional_attributes/>
@@ -472,10 +472,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>341</x>
-      <y>110</y>
-      <w>198</w>
-      <h>121</h>
+      <x>486</x>
+      <y>90</y>
+      <w>162</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>HEIGHT_MEASUREMENT
 --
@@ -488,10 +488,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>209</x>
-      <y>165</y>
-      <w>22</w>
-      <h>22</h>
+      <x>378</x>
+      <y>135</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -499,10 +499,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>220</x>
-      <y>165</y>
-      <w>143</w>
-      <h>33</h>
+      <x>387</x>
+      <y>135</y>
+      <w>117</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=-&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
@@ -510,10 +510,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>44</y>
-      <w>308</w>
-      <h>121</h>
+      <x>612</x>
+      <y>36</y>
+      <w>252</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 INVALID / msgSend(invalid)</panel_attributes>
@@ -522,10 +522,10 @@ INVALID / msgSend(invalid)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>187</y>
-      <w>330</w>
-      <h>121</h>
+      <x>612</x>
+      <y>153</y>
+      <w>270</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 TIMEOUT / msgSend(timeout)</panel_attributes>
@@ -534,10 +534,10 @@ TIMEOUT / msgSend(timeout)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1034</x>
-      <y>374</y>
-      <w>154</w>
-      <h>121</h>
+      <x>1053</x>
+      <y>306</y>
+      <w>126</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -548,22 +548,24 @@ WAIT / stopTimer()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>33</y>
-      <w>275</w>
-      <h>132</h>
+      <x>639</x>
+      <y>306</y>
+      <w>144</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-ALL OTHERS / msgSend(unexpected)</panel_attributes>
-    <additional_attributes>160.0;70.0;160.0;20.0;80.0;20.0;80.0;100.0;130.0;100.0</additional_attributes>
+
+
+"UNEXPECTED"</panel_attributes>
+    <additional_attributes>140.0;10.0;140.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>770</x>
-      <y>374</y>
-      <w>209</w>
-      <h>121</h>
+      <x>837</x>
+      <y>306</y>
+      <w>171</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -574,10 +576,10 @@ RESUME / resumeTimer()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>891</x>
-      <y>1485</y>
-      <w>473</w>
-      <h>176</h>
+      <x>936</x>
+      <y>1215</y>
+      <w>387</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [index &gt; MAX_BIT_SIZE]</panel_attributes>
