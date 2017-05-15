@@ -7,6 +7,8 @@
 
 #include "TimerService.h"
 
+#include "Logger.h"
+
 #include <sys/neutrino.h>
 #include <time.h>
 #include <signal.h>
@@ -14,22 +16,28 @@
 TimerService::TimerService(int chid, char code)
 	: timerid()
 	, code(code) {
+	LOG_SCOPE;
+
 	coid = ConnectAttach_r(0, 0, chid, 0, 0);
 	if(coid < 0) {
-		// TODO error handling
+		LOG_ERROR << "Error in ConnectAttach_r\n";
+		throw(-coid);
 	}
 }
 
 TimerService::~TimerService() {
 	if(timer_delete(timerid) == -1) { // delete the timer
-		// TODO error handling
+		LOG_ERROR << "Error in timer_delete\n";
+		throw(EXIT_FAILURE);
 	}
 }
 
 void TimerService::setAlarm(milliseconds time, int value) {
+	// initialize the sigevent
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
-		// TODO error handling
+		LOG_ERROR << "Error in timer_create\n";
+		throw(EXIT_FAILURE);
 	}
 
 	unsigned int milliseconds = time;
@@ -45,28 +53,32 @@ void TimerService::setAlarm(milliseconds time, int value) {
 	timer.it_interval = { 0, 0 }; // Make it a one shot timer
 
 	if(timer_settime(timerid, 0, &timer, NULL) == -1) {
-		// TODO error handling
+		LOG_ERROR << "Error in timer_settime\n";
+		throw(EXIT_FAILURE);
 	}
 }
 
 void TimerService::stopAlarm() {
 	if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
-		// TODO error handling
+		LOG_ERROR << "Error in timer_gettime\n";
+		throw(EXIT_FAILURE);
 	}
 
 	if(timer_delete(timerid) == -1) { // delete the timer
-		// TODO error handling
+		LOG_ERROR << "Error in timer_delete\n";
+		throw(EXIT_FAILURE);
 	}
 }
 
 void TimerService::resumeAlarm() {
-	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
-	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
-		// TODO error handling
+	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) { // create new timer with last values
+		LOG_ERROR << "Error in timer_create\n";
+		throw(EXIT_FAILURE);
 	}
 
-	if(timer_settime(timerid, 0, &timer, NULL) == -1) {
-		// TODO error handling
+	if(timer_settime(timerid, 0, &timer, NULL) == -1) { // set new timer to resume
+		LOG_ERROR << "Error in timer_settime\n";
+		throw(EXIT_FAILURE);
 	}
 }
 
