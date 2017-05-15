@@ -208,13 +208,7 @@ void HeightContext::State::holeHeight() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State holeHeight()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 void HeightContext::State::surfaceHeight() {
@@ -222,13 +216,7 @@ void HeightContext::State::surfaceHeight() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State surfaceHeight()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 void HeightContext::State::refHeight() {
@@ -236,13 +224,7 @@ void HeightContext::State::refHeight() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State refHeight()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 void HeightContext::State::patternRead() {
@@ -264,13 +246,7 @@ void HeightContext::State::lowHeight() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State lowHeight()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 void HeightContext::State::highHeight() {
@@ -278,13 +254,7 @@ void HeightContext::State::highHeight() {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State highHeight()\n";
 
-    signal_t signal;
-    signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
-
-    send(coid, signal);
-
-    new (this) Idle;
+    // do nothing
 }
 
 ///

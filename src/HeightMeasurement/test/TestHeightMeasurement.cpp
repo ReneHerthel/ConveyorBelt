@@ -89,12 +89,12 @@ void TestHeightMeasurement::startTest() {
 
     // THIS IS CALIBRATED BY HAND!
     cal.delta = 30;
-    cal.holeHeight = 3607;
-    cal.refHeight = 4072;
-    cal.surfaceHeight = 2555;
-    cal.highHeight =  2947;  // 1
-    cal.lowHeight = 2760;  // 0
-    cal.invalidHeight = 2820;
+    cal.holeHeight = 3518;
+    cal.refHeight = 4058;
+    cal.surfaceHeight = 2459;
+    cal.highHeight =  2826;  // 1
+    cal.lowHeight = 2667;  // 0
+    cal.invalidHeight = 2743;
 
     HeightMeasurementService service(receive_chid, send_chid, &cal);
 

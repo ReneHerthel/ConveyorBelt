@@ -32,38 +32,6 @@
  */
 #define RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
 
-/*
- * @brief
- */
-#define AMOUNT_OF_SIGNALS (6)
-
-/*
- * @brief
- */
-#define SAMPLES_AMOUNT (30)
-
-/*
- * @brief
- */
-#define SAMPLES_WINDOW_SIZE (3)
-#define SAMPLES_WINDOW_END  (SAMPLES_WINDOW_SIZE - 1)
-#define SAMPLES_WINDOW_MID  (SAMPLES_WINDOW_SIZE / 2) // 1 in array on size of 3
-
-/*
- * @brief Returns the maximum of two arguments.
- */
-#define MAX(x, y)            ((x > y) ? (x) : (y))
-
-/*
- * @brief Returns the minimum of two arguments.
- */
-#define MIN(x, y)            ((x < y) ? (x) : (y))
-
-/*
- * @brief
- */
-#define MEDIAN_OF_THREE(x, y, z)     ( MAX( MIN( MAX( x, y), z), MIN(x, y)) )
-
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
     :    stateMachine(new HeightContext(send_chid, this))
     ,    calibrationDataPtr(calibrationDataPtr)
@@ -115,94 +83,11 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * channel, where the statemachine is listening and will do the next
      * transition.
      */
-    int counters[AMOUNT_OF_SIGNALS] = {0};
-    int window[SAMPLES_WINDOW_SIZE]
     while (measurementIsRunning) {
 
-        for (int i = 0; i < AMOUNT_OF_SAMPLES; i++) {
+    	hal.read(data);
 
-            hal.read(data);
-
-            // Shift the data to the left by one.
-            memmove(window, window + 1, sizeof(window) - sizeof(*window));
-
-            /* Put the new data at the end of the window.
-             *
-             *        +----+----+----+ ... +----+
-             * OUT << | 0  | 1  |  2 | ... | N  | << IN
-             *        +----+----+----+ ... +----+
-             */
-            window[SAMPLES_WINDOW_END] = data;
-
-            /* Calculate the median of three from the window.
-             * example:
-             * MAX( MIN ( MAX (3, 5), 4), MIN(3, 5))
-             * MAX( MIN (5 , 4), 3)
-             * MAX( 4, 3)
-             * 4 <- median
-             */
-            int median = MEDIAN_OF_THREE(window[0], window[1], window[2]);
-
-            dataInRange(&state, median);
-
-            counters[state]++;
-        }
-
-        // TODO: get highest state?
-
-        /*
-        int inRow = 0;
-        int heighestCount = 0;
-        int heighestCountIndex = 0;
-        Signal newSample = state;
-        Signal oldSample = START;
-
-        for (int i = 0; i < 64; i++) {
-            hal.read(data);
-            dataInRange(&newSample, data);
-
-            if (oldSample != START && newSample == oldSample) {
-                inRow++;
-
-                if (inRow >= 8) {
-                    counters[newSample]++;
-
-                    if (counters[newSample] > heighestCount) {
-                    	heighestCount = counters[newSample];
-                    	heighestCountIndex = newSample;
-                    }
-
-                    inRow = 0;
-                }
-            }
-            else {
-            	inRow = 0;
-            }
-
-            oldSample = newSample;
-        }
-
-        state = Signal(heighestCountIndex);
-        */
-
-
-    	/*
-    	int currentCount = 0;
-    	Signal tmpState = state;
-
-    	for (int i = 0; i < AMOUNT_OF_SAMPLES; i++) {
-          hal.read(data);
-          dataInRange(&tmpState, data);
-          if(tmpState != oldState) {
-                if (++counters[tmpState] > currentCount) {
-                    currentCount = counters[tmpState];
-                    state = tmpState;
-                }
-          }
-
-          //std::this_thread::sleep_for(std::chrono::microseconds(50));
-    	}
-    	*/
+    	dataInRange(&state, data);
 
         // But send only a message if there is a new state.
         if (state != oldState) {
@@ -218,10 +103,6 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
         // Remember the current state as old state for the next loop.
         oldState = state;
-
-        // Reset the counters
-        std::fill(counters, counters + AMOUNT_OF_SIGNALS, 0);
-        std::fill(samples, samples + SAMPLES_AMOUNT, 0);
     }
 
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
