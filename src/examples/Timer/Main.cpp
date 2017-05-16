@@ -25,11 +25,19 @@ int main(void){
 
 	struct _pulse pulse;
 
-	ITimer* timer  = new TimerService(chid, PM_CODE, PM_VALUE);
+	ITimer* timer  = new TimerService(chid, PM_CODE);
 
 	start = std::chrono::system_clock::now();
 
-	timer->setAlarm(500);
+	timer->setAlarm(500, PM_VALUE);
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+	timer->stopAlarm();
+
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	timer->resumeAlarm();
 
 	int err = MsgReceive_r(chid, &pulse, sizeof(_pulse),NULL);
 		if(err) {
@@ -39,6 +47,23 @@ int main(void){
 	end = std::chrono::system_clock::now();
 
 	int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds> (end-start).count();
+
+	std::cout << "Message received: " << pulse.value.sival_int << " after: " << elapsed_seconds << std::endl;
+
+	std::cout << "Zuende hier" << std::endl;
+
+	start = std::chrono::system_clock::now();
+
+	timer->setAlarm(500, PM_VALUE);
+
+	err = MsgReceive_r(chid, &pulse, sizeof(_pulse),NULL);
+		if(err) {
+				// TODO error handling
+				std::cout << "client MsgReceive_r failed" << std::endl;
+		}
+	end = std::chrono::system_clock::now();
+
+	elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds> (end-start).count();
 
 	std::cout << "Message received: " << pulse.value.sival_int << " after: " << elapsed_seconds << std::endl;
 
