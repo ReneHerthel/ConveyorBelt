@@ -8,12 +8,13 @@
 #include "TimerService.h"
 
 #include "Logger.h"
+#include "LogScope.h"
 
 #include <sys/neutrino.h>
 #include <time.h>
 #include <signal.h>
 
-TimerService::TimerService(int chid, char code)
+TimerService::TimerService(int chid, char code) throw(int)
 	: timerid()
 	, code(code) {
 	LOG_SCOPE;
@@ -25,14 +26,14 @@ TimerService::TimerService(int chid, char code)
 	}
 }
 
-TimerService::~TimerService() {
+TimerService::~TimerService() throw(int) {
 	if(timer_delete(timerid) == -1) { // delete the timer
 		LOG_ERROR << "Error in timer_delete\n";
 		throw(EXIT_FAILURE);
 	}
 }
 
-void TimerService::setAlarm(milliseconds time, int value) {
+void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 	// initialize the sigevent
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
@@ -58,7 +59,7 @@ void TimerService::setAlarm(milliseconds time, int value) {
 	}
 }
 
-void TimerService::stopAlarm() {
+void TimerService::stopAlarm() throw(int) {
 	if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
 		LOG_ERROR << "Error in timer_gettime\n";
 		throw(EXIT_FAILURE);
@@ -70,7 +71,7 @@ void TimerService::stopAlarm() {
 	}
 }
 
-void TimerService::resumeAlarm() {
+void TimerService::resumeAlarm() throw(int) {
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) { // create new timer with last values
 		LOG_ERROR << "Error in timer_create\n";
 		throw(EXIT_FAILURE);
