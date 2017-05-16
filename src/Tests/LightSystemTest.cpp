@@ -47,10 +47,12 @@ TEST_IMPL(LightSystemTest, test1){
 	}
 	std::cout << "Objects"<< std::endl;
 
-	LightSystemHal boundary = LightSystemHal();
+	LightSystemHal *boundary = new LightSystemHal();
 	LightSystemController *controller = new LightSystemController(chid, &boundary);
-	LightSystemService lightSystem = LightSystemService(chid);
+	LightSystemService *lightSystem = new LightSystemService(chid);
 	std::cout << "Objects created"<< std::endl;
+
+	//TODO CLEANUP OF CREATED OBJECTS
 
 	unsigned char port_value = 0;
 	Level warning = OPERATING;
@@ -58,7 +60,7 @@ TEST_IMPL(LightSystemTest, test1){
 
 	std::cout << "The real test"<< std::endl;
 	lightSystem.setWarningLevel(warning);
-	this_thread::sleep_for(chrono::seconds(PAUSE_TIME));
+	this_thread::sleep_for(chrono::seconds(1));
 	port_value = in8(PORTA_ADDR);
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.
 		std::cout << "Passed" << std::endl;
