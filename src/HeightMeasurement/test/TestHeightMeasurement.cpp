@@ -88,13 +88,14 @@ void TestHeightMeasurement::startTest() {
     HeightMeasurementService::CalibrationData cal;
 
     // THIS IS CALIBRATED BY HAND!
-    cal.delta = 30;
-    cal.holeHeight = 3518;
-    cal.refHeight = 4058;
-    cal.surfaceHeight = 2459;
-    cal.highHeight =  2826;  // 1
-    cal.lowHeight = 2667;  // 0
-    cal.invalidHeight = 2743;
+    cal.delta         = 50;
+
+    cal.refHeight     = 4080;
+    cal.holeHeight    = 3630;
+    cal.highHeight    = 2945;  // 1 "tief""
+    cal.invalidHeight = 2830;
+    cal.lowHeight     = 2725;  // 0 "mitteltief
+    cal.surfaceHeight = 2590;
 
     HeightMeasurementService service(receive_chid, send_chid, &cal);
 
@@ -115,8 +116,6 @@ void TestHeightMeasurement::startTest() {
 
         int err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
 
-        LOG_DEBUG << "[TestHeightMeasurement] startTest() Unblocked\n";
-
         // Do error handling, if there occurs an error.
         if (err < 0) {
             LOG_DEBUG << "[TestHeightMeasurement] startTest() Receiving pulse messages failed with: " << err << "\n";
@@ -128,7 +127,7 @@ void TestHeightMeasurement::startTest() {
 
         std::cout<<"[TEST] COUT: "<< " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 <<std::endl;
 
-        LOG_DEBUG << "[TestHeightMeasurement] startTest() Received pulse message: SignalID - " << signal.ID << ", Pattern - " << signal.BIT0 << signal.BIT1 << signal.BIT2 << "\n";
+        LOG_DEBUG << "[TestHeightMeasurement] startTest() Received pulse message: SignalID - " << (int)signal.ID << ", Pattern - " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << "\n";
     }
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
 

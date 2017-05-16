@@ -89,6 +89,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
 
     	dataInRange(&state, data);
 
+
         // But send only a message if there is a new state.
         if (state != oldState) {
             err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
@@ -98,7 +99,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
                 LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
             }
 
-            LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+            //LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
         }
 
         // Remember the current state as old state for the next loop.
@@ -113,16 +114,16 @@ void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
         *state = REF_HEIGHT;
     }
     else if (RANGE(data, HOLE_HEIGHT_VAL)) {
-    	  *state = HOLE_HEIGHT;
+    	*state = HOLE_HEIGHT;
     }
     else if (RANGE(data, SURFACE_HEIGHT_VAL)) {
-    	  *state = SURFACE_HEIGHT;
+    	*state = SURFACE_HEIGHT;
     }
     else if (RANGE(data, LOW_HEIGHT_VAL)) {
-    	  *state = LOW_HEIGHT;
+    	*state = LOW_HEIGHT;
     }
     else if (RANGE(data, HIGH_HEIGHT_VAL)) {
-    	  *state = HIGH_HEIGHT;
+    	*state = HIGH_HEIGHT;
     }
     else if (RANGE(data, INVALID_HEIGHT_VAL)){
         *state = INVALID;
@@ -148,7 +149,7 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
             LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Error on MsgReceivePulse_r\n";
         }
 
-        LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Received pulse: " << pulse.value.sival_int << "\n";
+        //LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Received pulse: " << pulse.value.sival_int << "\n";
 
         // Signalize the statemachine for the next transition.
         stateMachine->process((Signal) pulse.value.sival_int);

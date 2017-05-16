@@ -159,7 +159,8 @@ private:
      *              The next transition (SURFACE_HEIGHT) goes to the TOP state.
      */
     struct High : public BitOrFlipped {
-        void entry();
+    	High();
+    	void entry();
         void surfaceHeight();
     };
 
@@ -172,7 +173,8 @@ private:
      *              The next transition (SURFACE_HEIGHT) goes to the TOP state.
      */
     struct Low : public BitOrFlipped {
-        void entry();
+    	Low();
+    	void entry();
         void surfaceHeight();
     };
 

@@ -24,21 +24,15 @@
 /*
  * @brief A specific structure for pulse messages.
  */
-typedef union {
+typedef union SIGNAL_t {
     struct {
         uint8_t ID : 5;  // The SignalID.
-        union {
-            struct {
-                uint8_t BIT0 : 1;
-                uint8_t BIT1 : 1;
-                uint8_t BIT2 : 1;
-            };
-            uint8_t pattern : 3;  // The whole bit-pattern
-        };
-    };
+        uint8_t BIT0 : 1;
+		uint8_t BIT1 : 1;
+		uint8_t BIT2 : 1;
+    } __attribute__((packed));
     uint8_t value;  // The whole structure as a value.
-
-}signal_t;
+} signal_t;
 
 /*
  * @brief The ID's of all available signals send from the statemachine to the con.

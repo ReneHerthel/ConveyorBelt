@@ -28,7 +28,7 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     ,    service(service)
 {
 	LOG_SCOPE;
-	LOG_SET_LEVEL(DEBUG)
+	//LOG_SET_LEVEL(DEBUG)
     // All states needs to know the service class.
     state.service = service;
 
@@ -122,7 +122,7 @@ void HeightContext::process(Signal signal) {
 
 void HeightContext::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
 
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value); // TODO: Fix the magic-numbers.
 
@@ -130,9 +130,28 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
 
     std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
 
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+
+    LOG_DEBUG << "DUMMY MESSAGE\n";
+
     if (err < 0) {
         // TODO Error handling.
-    	LOG_SET_LEVEL(DEBUG);
+    	//LOG_SET_LEVEL(DEBUG);
         LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }
@@ -142,14 +161,14 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
 ///
 void HeightContext::State::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State entry()\n";
     new (this) Idle;
 }
 
 void HeightContext::State::invalid() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State invalid()\n";
 
     // do nothing
@@ -157,12 +176,14 @@ void HeightContext::State::invalid() {
 
 void HeightContext::State::timeout() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State timeout()\n";
 
     signal_t signal;
     signal.ID = SignalID::TIMEOUT_ID;
-    signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
     send(coid, signal);
 
@@ -171,12 +192,14 @@ void HeightContext::State::timeout() {
 
 void HeightContext::State::start() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State start()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
     send(coid, signal);
 
@@ -185,21 +208,21 @@ void HeightContext::State::start() {
 
 void HeightContext::State::wait() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State wait()\n";
     // TODO stoptimer()
 }
 
 void HeightContext::State::resume() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State resume()\n";
     // TODO resumeTimer()
 }
 
 void HeightContext::State::holeHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State holeHeight()\n";
 
     // do nothing
@@ -207,7 +230,7 @@ void HeightContext::State::holeHeight() {
 
 void HeightContext::State::surfaceHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State surfaceHeight()\n";
 
     // do nothing
@@ -215,7 +238,7 @@ void HeightContext::State::surfaceHeight() {
 
 void HeightContext::State::refHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State refHeight()\n";
 
     // do nothing
@@ -223,12 +246,14 @@ void HeightContext::State::refHeight() {
 
 void HeightContext::State::patternRead() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State patternRead()\n";
 
     signal_t signal;
     signal.ID = SignalID::UNEXPECTED_ID;
-    signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
     send(coid, signal);
 
@@ -237,7 +262,7 @@ void HeightContext::State::patternRead() {
 
 void HeightContext::State::lowHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State lowHeight()\n";
 
     // do nothing
@@ -245,7 +270,7 @@ void HeightContext::State::lowHeight() {
 
 void HeightContext::State::highHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State highHeight()\n";
 
     // do nothing
@@ -261,7 +286,7 @@ HeightContext::Idle::Idle() {
 
 void HeightContext::Idle::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle entry()\n";
 
     // TODO stopTimer()
@@ -269,7 +294,7 @@ void HeightContext::Idle::entry() {
 
 void HeightContext::Idle::start() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle start()\n";
     new (this) Measuring;
 }
@@ -279,7 +304,7 @@ void HeightContext::Idle::start() {
 ///
 void HeightContext::Measuring::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
 
     service->startMeasuring();
@@ -288,12 +313,14 @@ void HeightContext::Measuring::entry() {
 
 void HeightContext::Measuring::invalid() {
 	//LOG_SCOPE;
-	LOG_SET_LEVEL(DEBUG);
+	//LOG_SET_LEVEL(DEBUG);
 	LOG_DEBUG << "[HeightContext] Measuring invalid()\n";
 
 	signal_t signal;
 	signal.ID = SignalID::INVALID_ID;
-	signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
 	send(coid, signal);
 
@@ -301,29 +328,29 @@ void HeightContext::Measuring::invalid() {
 }
 
 void HeightContext::Measuring::surfaceHeight() {
-  //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SCOPE;
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring surfaceHeight()\n";
     new (this) BitOrFlipped;
 }
 
 void HeightContext::Measuring::highHeight() {
-  //LOG_SCOPE;
-  LOG_SET_LEVEL(DEBUG);
-  LOG_DEBUG << "[HeightContext] Measuring highHeight()\n";
-  new (this) High;
+    //LOG_SCOPE;
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Measuring highHeight()\n";
+    new (this) High;
 }
 
 void HeightContext::Measuring::lowHeight() {
-  //LOG_SCOPE;
-  LOG_SET_LEVEL(DEBUG);
-  LOG_DEBUG << "[HeightContext] Measuring lowHeight()\n";
-  new (this) Low;
+    //LOG_SCOPE;
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] Measuring lowHeight()\n";
+    new (this) Low;
 }
 
 void HeightContext::Measuring::holeHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring holeHeight()\n";
     new (this) Normal;
 }
@@ -333,13 +360,13 @@ void HeightContext::Measuring::holeHeight() {
 ///
 void HeightContext::Normal::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Normal entry()\n";
 }
 
 void HeightContext::Normal::surfaceHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Normal surfaceHeight()\n";
     new (this) Surface;
 }
@@ -349,18 +376,20 @@ void HeightContext::Normal::surfaceHeight() {
 ///
 void HeightContext::Surface::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Surface entry()\n";
 }
 
 void HeightContext::Surface::refHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Surface refHeight()\n";
 
     signal_t signal;
     signal.ID = SignalID::NORMAL_ID;
-    signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
     send(coid, signal);
 
@@ -372,7 +401,7 @@ void HeightContext::Surface::refHeight() {
 ///
 void HeightContext::BitOrFlipped::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] BitOrFlipped entry()\n";
 
     //pattern = {0, 0, 0};
@@ -381,7 +410,7 @@ void HeightContext::BitOrFlipped::entry() {
 
 void HeightContext::BitOrFlipped::patternRead() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] BitOrFlipped patternRead()\n";
 
     new (this) Idle;
@@ -392,15 +421,18 @@ void HeightContext::BitOrFlipped::patternRead() {
 ///
 void HeightContext::Top::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Top entry()\n";
 
     // Check if the index is in the range of the min/max bit size.
     if (index > MAX_BIT_SIZE) {
-    	LOG_DEBUG << "[HeightContext] Top going invalid() with index: " << index << "\n";
+    	LOG_DEBUG << "[HeightContext] Top entry() index{" << index << "} > MAX_BIT_SIZE\n";
+
     	signal_t signal;
 		signal.ID = SignalID::INVALID_ID;
-		signal.pattern = 0;
+	    signal.BIT0 = 0;
+	    signal.BIT1 = 0;
+	    signal.BIT2 = 0;
 
 		send(coid, signal);
 
@@ -410,20 +442,26 @@ void HeightContext::Top::entry() {
 
 void HeightContext::Top::refHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Top refHeight()\n";
 
     // Check the value of the index to make sure the next transition is correct.
     if (index == 0) {
         new (this) Flipped;
-    } else if(index < MIN_BIT_SIZE) {
+
+    } else if (index < MIN_BIT_SIZE) {
+
+    	LOG_DEBUG << "[HeightContext] Top refHeight() index{" << index << "} < MIN_BIT_SIZE\n";
     	signal_t signal;
     	signal.ID = SignalID::INVALID_ID;
-    	signal.pattern = 0;
+        signal.BIT0 = 0;
+        signal.BIT1 = 0;
+        signal.BIT2 = 0;
 
    		send(coid, signal);
 
    		new (this) Idle;
+
     } else {
         new (this) BitCoded;
     }
@@ -431,16 +469,16 @@ void HeightContext::Top::refHeight() {
 
 void HeightContext::Top::lowHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Top lowHeight()\n";
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] TOP ---> LOW\n";
 
     new (this) Low;
 }
 
 void HeightContext::Top::highHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Top highHeight()\n";
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] TOP ---> HIGH\n";
 
     new (this) High;
 }
@@ -448,19 +486,22 @@ void HeightContext::Top::highHeight() {
 ///
 /// HIGH : BIT OR FLIPPED
 ///
-void HeightContext::High::entry () {
-    //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Height entry()\n";
+HeightContext::High::High() {
 
     pattern[index] = 1;
     index++;
+
+    LOG_DEBUG << "[HeightContext] High High() index{" << index << "}\n";
+}
+
+void HeightContext::High::entry() {
+	// We need this function, so the super function will not be called.
 }
 
 void HeightContext::High::surfaceHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] High surfaceHeight()\n";
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] HIGH ---> TOP\n";
 
     new (this) Top;
 }
@@ -468,19 +509,21 @@ void HeightContext::High::surfaceHeight() {
 ///
 /// LOW : BIT OR FLIPPED
 ///
-void HeightContext::Low::entry() {
-    //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Low entry()\n";
-
+HeightContext::Low::Low() {
     pattern[index] = 0;
     index++;
+
+    LOG_DEBUG << "[HeightContext] Low Low() index{" << index << "}\n";
+}
+
+void HeightContext::Low::entry() {
+	// We need this function, so the super function will not be called.
 }
 
 void HeightContext::Low::surfaceHeight() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] Low surfaceHeight()\n";
+    //LOG_SET_LEVEL(DEBUG);
+    LOG_DEBUG << "[HeightContext] LOW  ---> TOP\n";
 
     new (this) Top;
 }
@@ -490,12 +533,14 @@ void HeightContext::Low::surfaceHeight() {
 ///
 void HeightContext::Flipped::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Flipped entry()\n";
 
     signal_t signal;
     signal.ID = SignalID::FLIPPED_ID;
-    signal.pattern = 0;
+    signal.BIT0 = 0;
+    signal.BIT1 = 0;
+    signal.BIT2 = 0;
 
     send(coid, signal);
 
@@ -507,7 +552,7 @@ void HeightContext::Flipped::entry() {
 ///
 void HeightContext::BitCoded::entry() {
     //LOG_SCOPE;
-    LOG_SET_LEVEL(DEBUG);
+    //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] BitCoded entry()\n";
 
     signal_t signal;
