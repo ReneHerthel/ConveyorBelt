@@ -22,6 +22,7 @@ protected:
     TEST(OpenSernderReceiver);
     TEST(ReadWrite);
     TEST(Serilizeable);
+    TEST(RWOverSerial);
     TEST_CASE_METHODS
 };
 

@@ -63,6 +63,20 @@ TEST_IMPL(TestSerial, Serilizeable) {
     }
 }
 
+TEST_IMPL(TestSerial, RWOverSerial) {
+    SerialSender sender("/dev/ser1");
+    SerialReceiver receiver ("/dev/ser2");
+    char testString[] = "Flitzndafoer_123456 123123";
+    sender.send(testString, sizeof(testString));
+    char* resu = receiver.receive();
+    cout.write(resu, sizeof(testString));
+    if(equal(testString, testString+sizeof(testString), resu)){
+        return PASSED;
+    } else {
+        return FAILED;
+    }
+}
+
 //v UNUSED v//
 BEFORE(TestSerial){return 0;}
 AFTER(TestSerial){return 0;}
