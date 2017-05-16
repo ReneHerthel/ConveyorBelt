@@ -9,6 +9,7 @@ SETUP(TestSerial){
     REG_TEST(OpenSernderReceiver, 2, "[SerialWriter] Test to open Receiver and Sender at the same time");
     REG_TEST(ReadWrite,3, "[SerialWriter][SerialSender] Basic Input Output Test");
     REG_TEST(Serilizeable, 4, "[ISerializable][SerialTestStub] Basic Test for the SerialTestObject");
+    REG_TEST(RWOverSerial, 5, "[SerialWriter][SerialReader] Try basic writing from ser1 to ser 2");
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){

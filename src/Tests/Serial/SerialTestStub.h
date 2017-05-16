@@ -7,6 +7,7 @@
 
 
 #include "../../SerialPort/ISerializable.h"
+#include <stdint.h>
 
 class SerialTestStub : public ISerializable{
 public:

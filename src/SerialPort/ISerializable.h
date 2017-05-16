@@ -7,6 +7,7 @@
 
 
 #include <cstdint>
+#include <stdint.h>
 
 struct serialized{
     uint32_t size; /*!< Size of the object in bytes*/
