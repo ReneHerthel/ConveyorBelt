@@ -30,6 +30,7 @@ AFTER(LightSystemTest){
 };
 
 TEST_IMPL(LightSystemTest, test1){
+	std::cout << "Start Lightsystem Test"<< std::endl;
 	// Request priviledges for the current thread to access hardware
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
 		std::cout << "Can't get Hardware access, therefore can't do anything."
@@ -39,24 +40,33 @@ TEST_IMPL(LightSystemTest, test1){
 	//LOG_SCOPE;
 	//LOG_SET_LEVEL(DEBUG);
 
+	std::cout << "Create Channels"<< std::endl;
 	int chid = ChannelCreate_r(0);
 	if(chid < 0){
 		//LOG_ERROR << "Channel Create failed" << endl;
 	}
-		LightSystemHal boundary = LightSystemHal();
-		LightSystemController controller = LightSystemController(chid, &boundary);
-		LightSystemService lightSystem = LightSystemService(chid);
+	std::cout << "Objects"<< std::endl;
+
+	LightSystemHal boundary = LightSystemHal();
+	LightSystemController *controller = new LightSystemController(chid, &boundary);
+	LightSystemService lightSystem = LightSystemService(chid);
+	std::cout << "Objects created"<< std::endl;
 
 	unsigned char port_value = 0;
 	Level warning = OPERATING;
 	//LOG_DEBUG << "Set Warning Level: " << warning << endl;
-	lightSystem.setWarningLevel( warning);
+
+	std::cout << "The real test"<< std::endl;
+	lightSystem.setWarningLevel(warning);
 	this_thread::sleep_for(chrono::seconds(PAUSE_TIME));
 	port_value = in8(PORTA_ADDR);
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.
+		std::cout << "Passed" << std::endl;
 		return PASSED;
-	}
+	} else {
+		std::cout << "Failed"<< std::endl;
 		return FAILED;
+	}
 }
 
 

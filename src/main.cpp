@@ -17,10 +17,11 @@ int main() {
     //######################################################//
 
     //TEST FOR: Example Tests
-    //ts.REG_TESTCASE(new TestExample(1, "This is an example"));
-    //ts.REG_TESTCASE(new TestExample(2, "This is another one"));
-    //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
-    ts.REG_TESTCASE(new LightSystemTest(1, "LightSystem: Level: Operating"));
+    ts.REG_TESTCASE(new TestExample(1, "This is an example"));
+    ts.REG_TESTCASE(new TestExample(2, "This is another one"));
+    ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
+    ts.REG_TESTCASE(new TestExample(4, "And a third one"));
+
 
     // END Example Tests
 
