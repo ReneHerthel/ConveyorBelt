@@ -2,6 +2,7 @@
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
+#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 
 using namespace std;
@@ -18,13 +19,16 @@ int main() {
     //######################################################//
 
     //TEST FOR: Example Tests
-    ts.REG_TESTCASE(new TestExample(1, "This is an example"));
-    ts.REG_TESTCASE(new TestExample(2, "This is another one"));
-    ts.REG_TESTCASE(new TestExample(3, "And a third one"));
+    //ts.REG_TESTCASE(new TestExample(1, "This is an example"));
+    //ts.REG_TESTCASE(new TestExample(2, "This is another one"));
+    //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
     // PulseMessageWrapper tests
-    ts.REG_TESTCASE(new TestPulseMessageWrapper(4, "Send and Receive pulse messages"));
+    ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
+
+    // HeightMeasurement tests
+    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
 
 
     //########################################//
