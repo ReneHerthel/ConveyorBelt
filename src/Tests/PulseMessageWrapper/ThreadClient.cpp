@@ -19,6 +19,8 @@
 #include "IPulseMessageSender.h"
 #include "PulseMessageSenderService.h"
 
+#include <iostream>
+
 ThreadClient::ThreadClient(const int chid)
     :    chid_(chid)
 {
@@ -28,13 +30,15 @@ ThreadClient::ThreadClient(const int chid)
 
 ThreadClient::~ThreadClient()
 {
-    // TODO: Kill / delete the thread if it is on the heap.
+    //
 }
 
 void ThreadClient::sendSinglePulseMessage()
 {
     // Creates a new Sender.
     IPulseMessageSender* sender = new PulseMessageSenderService(chid_);
+
+    std::cout << "[ThreadClient] sendSinglePulseMessage() sending now value 42" << std::endl;
 
     // Transmit a pulse message to the channel ID.
     sender->sendPulseMessage(42);
