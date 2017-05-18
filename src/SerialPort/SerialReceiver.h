@@ -7,6 +7,7 @@
 
 #include <string>
 #include <fcntl.h>
+#include <termios.h>
 
 using namespace std;
 
@@ -17,6 +18,9 @@ public:
 
     char* receive();
     char checksum(char* buff, uint16_t size);
+    int readFromSerial(char* buff, uint32_t size);
+
+    void reset();
 
     int fail();
 private:

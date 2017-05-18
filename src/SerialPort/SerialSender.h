@@ -40,6 +40,11 @@ public:
      */
     int fail();
 
+    /**
+     * Reset the Receiver and Serial buffers
+     */
+    void reset();
+
 protected:
 	/*@brief Put the Message into a Frame for the Serial Port
 	 *

@@ -39,7 +39,7 @@ TEST_IMPL(TestSerial, ReadWrite){
     char filepath[] = "Serial_readwrite.bin";
     SerialSender sender(filepath);
     SerialReceiver receiver (filepath);
-    char testString[] = "Flitzndafoer_123456 123123";
+    char testString[] = "START Flitzndafoer_123456 123123 END";
     sender.send(testString, sizeof(testString));
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
@@ -67,7 +67,8 @@ TEST_IMPL(TestSerial, Serilizeable) {
 TEST_IMPL(TestSerial, RWOverSerial) {
     SerialSender sender("/dev/ser1");
     SerialReceiver receiver ("/dev/ser2");
-    char testString[] = "Flitzndafoer_123456 123123";
+    receiver.reset();
+    char testString[] = "START Flitzndafoer_123456 123123 END";
     sender.send(testString, sizeof(testString));
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
