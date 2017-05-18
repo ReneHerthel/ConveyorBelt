@@ -1,6 +1,7 @@
 #include <iostream>
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
+#include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
 #include "TestFramework/TestSuite.h"
 
 using namespace std;
@@ -21,6 +22,9 @@ int main() {
     ts.REG_TESTCASE(new TestExample(2, "This is another one"));
     ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
+
+    // PulseMessageWrapper tests
+    ts.REG_TESTCASE(new TestPulseMessageWrapper(4, "Send and Receive pulse messages"));
 
 
     //########################################//
