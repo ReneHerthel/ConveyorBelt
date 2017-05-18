@@ -22,13 +22,37 @@ LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
 {
 	//LOG_SCOPE;
 	//LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
-        taskThread = new thread(&LightSystemController::task, this);
+	taskThread = new thread(&LightSystemController::task, this);
 	controlThread = new thread(&LightSystemController::control, this,chid);
 }
 
-~LightSystemController::LightSystemController(int chid, BLightSystem* boundary) {
-    delete taskThread;
+LightSystemController::~LightSystemController() {
+	//LOG_SCOPE;
+	isRunning = false;
+
+	/* Unblock control thread before join */
+	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);
+	if(coid < 0) {
+        /* FIXME: Discuss sane error handling for message infrastructure failure */
+	//   	LOG_ERROR << "Channel Attach failed" << endl;
+	}
+
+    /* FIXME: Discuss log message format */
+	//LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, LIGHT_SYSTEM_STOP);
+    if(err) {
+        /* FIXME: Discuss sane error handling for message infrastructure failure */
+      //  LOG_ERROR << "Sending message failed" << endl;
+    }
+    //LOG_DEBUG << "Stopped threads" << endl;
+	controlThread->join();
+	//LOG_DEBUG << "Wait for control to join" << endl;
+	taskThread->join();
+	//LOG_DEBUG << "Wait for task to join" << endl;
     delete controlThread;
+    //LOG_DEBUG << "Delete control" << endl;
+    delete taskThread;
+    //LOG_DEBUG << "Delete task" << endl;
 }
 
 int LightSystemController::task(){
@@ -62,7 +86,7 @@ int LightSystemController::task(){
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
 	}
 
-	return 1;
+	return 0;
 }
 
 int LightSystemController::control(int chid) {
@@ -82,6 +106,7 @@ int LightSystemController::control(int chid) {
 			//LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
 		}
 
+		/* TODO: Sanitize input, set color and frequency if warningLevel is in range */
 		/* FIXME: Typesafe conversion */
 		Level warningLevel = (Level) pulse.value.sival_int;
 
@@ -104,6 +129,6 @@ int LightSystemController::control(int chid) {
 	   // LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
 	}
 	/* FIXME: Bogus return value */
-	return 1;
+	return 0;
 }
 

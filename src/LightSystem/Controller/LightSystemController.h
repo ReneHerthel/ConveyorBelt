@@ -16,6 +16,7 @@
 #include <thread>
 #include <vector>
 #include <sys/neutrino.h>
+#include <sys/netmgr.h>
 #include "BLightSystem.h"
 #include "LightSystemEnum.h"
 //#include "Logger.h"
@@ -40,9 +41,16 @@ class LightSystemController {
          * @param   [in] chid ID of channel to receive messages on
          * @param   [in] boundary Hardware abstraction object to manipulate lights with
          */
-		LightSystemController(int chid
-				, BLightSystem* boundary);
-		bool isRunning; /**< @brief Control variable to start or stop both threads */
+		LightSystemController(int chid, BLightSystem* boundary);
+        /**
+         * @brief   Deconstructor
+         *
+         * Stops the threads by toggling control member. Control thread
+         * is unblocked by sending in band message LIGHT_SYSTEM_STOP.
+         * After returning the threads are destroyed.
+         */
+		~LightSystemController();
+		volatile bool isRunning; /**< @brief Control variable to start or stop both threads */
     private:
 		Frequency frequency; /** Control variable to pass blinking frequency to taskThread */
 		Color color; /** Control variable to pass light color to taskThread */

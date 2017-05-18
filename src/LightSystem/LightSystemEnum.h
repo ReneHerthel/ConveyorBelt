@@ -27,7 +27,8 @@ enum Level {
     ERROR_OCCURED, /**< @brief Error occurred, red light blinks quickly */
     ERROR_ACKNOWLEDGED, /**< @brief Error has been acknowledged, red light is on constantly */
     ERROR_GONE_UNACKNOWLEDGED, /**< @brief Error has gone unacknowledged, red light blinks slowly */
-    CLEAR_ALL  /**< @brief Clear everything, all lights are out */
+    CLEAR_ALL,  /**< @brief Clear everything, all lights are out */
+    LIGHT_SYSTEM_STOP /**< In-Band Message to stop control thread */
 };
 /**
  * Define available colors

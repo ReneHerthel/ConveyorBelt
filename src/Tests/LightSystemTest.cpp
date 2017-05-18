@@ -46,7 +46,7 @@ TEST_IMPL(LightSystemTest, test1){
 	std::cout << "Objects"<< std::endl;
 
 	LightSystemHal* boundary = new LightSystemHal();
-	LightSystemController* controller = new LightSystemController(chid, &boundary);
+	LightSystemController* controller = new LightSystemController(chid, boundary);
 	LightSystemService* lightSystem = new LightSystemService(chid);
 	std::cout << "Objects created"<< std::endl;
 
@@ -55,15 +55,16 @@ TEST_IMPL(LightSystemTest, test1){
         std::cout << "Set Warning Level: " << warning << endl;
 
 	std::cout << "The real test"<< std::endl;
-	lightSystem.setWarningLevel(warning);
+	lightSystem->setWarningLevel(warning);
 	this_thread::sleep_for(chrono::seconds(1));
 	port_value = in8(PORTA_ADDR);
 
-        /* Cleanup the mess */
+        std::cout << "Cleanup the mess" << std::endl;
         delete lightSystem;
         delete controller;
         delete boundary;
 
+        std::cout << "Return Result" << std::endl;
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.
 		std::cout << "Passed" << std::endl;
 		return PASSED;

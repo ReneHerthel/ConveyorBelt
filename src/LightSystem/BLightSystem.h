@@ -19,6 +19,7 @@
 namespace HAL {
     class BLightSystem {
         public:
+    		virtual ~BLightSystem() {};
             /**
              * @brief   Turn light on
              * @param   [in] color Specify by color which light to manipulate
