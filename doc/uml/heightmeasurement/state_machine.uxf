@@ -521,7 +521,7 @@ INVALID / msgSend(invalid)</panel_attributes>
     <additional_attributes>370.0;60.0;370.0;20.0;10.0;20.0;10.0;60.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLFrame</id>
     <coordinates>
       <x>306</x>
       <y>153</y>

@@ -18,12 +18,8 @@
 #include "SortingSwitchHal.h"
 #include "HWdefines.h"
 
-ISortingSwitch::~ISortingSwitch() {
-	// Nothing todo so far.
-}
-
 SortingSwitchService::SortingSwitchService()
-	:	hal_(new SortingSwitchHal(PORT_ADDR_A))
+	:	hal_(new SortingSwitchHal())
 {
 	// TODO Auto-generated constructor stub
 
@@ -34,10 +30,10 @@ SortingSwitchService::~SortingSwitchService() {
 }
 
 void SortingSwitchService::sortingSwitchOpen() {
-	hal_->setPin(PIN_4);
+	hal_->set();
 }
 
 void SortingSwitchService::sortingSwitchClose() {
-	hal_->clearPin(PIN_4);
+	hal_->clear();
 }
 

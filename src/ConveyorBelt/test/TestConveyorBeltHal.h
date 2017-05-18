@@ -9,7 +9,7 @@
  * @ingroup    conveyor_belt
  * @{
  *
- * @brief      Function declaration of the ConveyorBelt component
+ * @brief      Test header declaration of the ConveyorBelt component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -21,7 +21,7 @@ class TestConveyorBeltHal {
 public:
 
 	/*
-	 * @brief Quickly test the functionality of the led component.
+	 * @brief Start the test of the conveyor belt component.
 	 */
 	static void startTest();
 };

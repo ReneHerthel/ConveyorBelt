@@ -9,7 +9,7 @@
  * @ingroup    led
  * @{
  *
- * @brief      test of the LED component
+ * @brief      Test header declaration of the LED component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -21,7 +21,7 @@ class TestLedHal {
 public:
 
 	/*
-	 * @brief Quickly test the functionality of the led component.
+	 * @brief Starts the test of the led component.
 	 */
 	static void startTest();
 };

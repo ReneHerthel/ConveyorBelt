@@ -18,22 +18,16 @@
 #include "HWaccess.h"
 #include "HWdefines.h"
 
-BSortingSwitch::~BSortingSwitch() {
+SortingSwitchHal::SortingSwitchHal() {
 	// Nothing todo so far.
 }
 
-SortingSwitchHal::SortingSwitchHal(const int port)
-	:	port_(port)
-{
-	// Nothing todo so far.
+void SortingSwitchHal::set() {
+	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) | (1 << PIN_4)));
 }
 
-void SortingSwitchHal::setPin(const int pin) {
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) | (1 << pin)));
-}
-
-void SortingSwitchHal::clearPin(const int pin) {
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) & ~(1 << pin)));
+void SortingSwitchHal::clear() {
+	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) & ~(1 << PIN_4)));
 }
 
 /** @} */

@@ -9,7 +9,7 @@
  * @ingroup    sorting_switch
  * @{
  *
- * @brief      test of the SortingSwitch component
+ * @brief      Test Header of the SortingSwitch component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */

@@ -9,7 +9,7 @@
  * @ingroup    conveyor_belt
  * @{
  *
- * @brief      Function declaration of the ConveyorBelt component
+ * @brief      Service Function declaration of the ConveyorBelt component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -17,45 +17,49 @@
 #include "ConveyorBeltService.h"
 #include "HWdefines.h"
 
-IConveyorBelt::~IConveyorBelt() {
-	// Nothing todo so far.
-}
-
 ConveyorBeltService::ConveyorBeltService()
-	:	hal_(new ConveyorBeltHal(PORT_ADDR_A))
+	:	hal_(new ConveyorBeltHal())
 {
 	// Nothing todo so far.
 }
 
 ConveyorBeltService::~ConveyorBeltService() {
 	// Nothing todo so far.
+	delete hal_;
 }
 
-void ConveyorBeltService::ConveyorBeltChangeState(const ConveyorBeltState state) {
+void ConveyorBeltService::changeState(const ConveyorBeltState state) {
+
+	// Initialize a new mask with zero.
 	int mask = 0;
 
+	/* Switch between the different states of the conveyor belt.
+	 * Then set the mask with the corresponding pin information.
+	 */
 	switch (state) {
+
 		case RIGHTFAST:
-			mask = (1 << PIN_0);
+			mask = ENGINE_RIGHT_MASK;
 			break;
 
 		case RIGHTSLOW:
-			mask = (1 << (PIN_0 | PIN_2));
+			mask = ENGINE_SLOW_MASK | ENGINE_RIGHT_MASK;
 			break;
 
 		case LEFTFAST:
-			mask = (1 << PIN_1);
+			mask = ENGINE_LEFT_MASK;
 			break;
 
 		case LEFTSLOW:
-			mask = (1 << (PIN_0 | PIN_1));
+			mask = ENGINE_SLOW_MASK | ENGINE_LEFT_MASK;
 			break;
 
 		case STOP:
-			mask = (1 << PIN_3);
+			mask = ENGINE_STOP_MASK;
 			break;
 	}
 
+	// Set the bit mask in the hal.
 	hal_->setMask(mask);
 }
 

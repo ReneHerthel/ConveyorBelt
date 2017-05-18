@@ -6,10 +6,10 @@
  */
 
 /**
- * @ingroup    led
+ * @ingroup    sorting_switch
  * @{
  *
- * @brief      Function declaration of the LED component
+ * @brief      Interface declaration of the SortingSwitch component
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
@@ -19,11 +19,6 @@
 
 class ISortingSwitch {
 public:
-
-	/*
-	 * @brief The virtual destructor.
-	 */
-	virtual ~ISortingSwitch();
 
 	/*
 	 * @brief Open the SortingSwitch.
