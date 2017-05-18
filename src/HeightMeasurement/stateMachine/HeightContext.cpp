@@ -23,10 +23,13 @@
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
 
+#include <iostream>
+
 HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
 {
+
 	LOG_SCOPE;
 	//LOG_SET_LEVEL(DEBUG)
     // All states needs to know the service class.
@@ -43,6 +46,7 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     if (coid < 0) {
         // TODO: Error handling.
         LOG_DEBUG << "[HeightContext] HeightContext() ConnectAttach_r failed\n";
+
     }
 
     statePtr->entry();
@@ -128,25 +132,7 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
 
     LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << "\n";
 
-    std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
-
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-    LOG_DEBUG << "DUMMY MESSAGE\n";
-
+    //std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
     LOG_DEBUG << "DUMMY MESSAGE\n";
 
     if (err < 0) {
@@ -280,7 +266,11 @@ void HeightContext::State::highHeight() {
 /// IDLE : STATE
 ///
 HeightContext::Idle::Idle() {
-    service->stopMeasuring();
+
+	if (service != NULL) {
+	    service->stopMeasuring();
+	}
+
     index = 0;
 }
 
@@ -307,7 +297,9 @@ void HeightContext::Measuring::entry() {
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
 
-    service->startMeasuring();
+    if (service != NULL) {
+        service->startMeasuring();
+    }
     // TODO startTimer()
 }
 
