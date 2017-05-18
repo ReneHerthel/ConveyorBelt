@@ -64,8 +64,8 @@ class LightSystemController {
          */
         int control(int);
 
-        thread controlThread;
-        thread taskThread;
+        thread* controlThread;
+        thread* taskThread;
 };
 
 #endif

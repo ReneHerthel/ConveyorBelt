@@ -37,31 +37,33 @@ TEST_IMPL(LightSystemTest, test1){
 				<< std::endl;
 		return EXIT_FAILURE;
 	}
-	//LOG_SCOPE;
-	//LOG_SET_LEVEL(DEBUG);
 
 	std::cout << "Create Channels"<< std::endl;
 	int chid = ChannelCreate_r(0);
 	if(chid < 0){
-		//LOG_ERROR << "Channel Create failed" << endl;
+            std::cout << "Channel Create failed" << endl;
 	}
 	std::cout << "Objects"<< std::endl;
 
-	LightSystemHal *boundary = new LightSystemHal();
-	LightSystemController *controller = new LightSystemController(chid, &boundary);
-	LightSystemService *lightSystem = new LightSystemService(chid);
+	LightSystemHal* boundary = new LightSystemHal();
+	LightSystemController* controller = new LightSystemController(chid, &boundary);
+	LightSystemService* lightSystem = new LightSystemService(chid);
 	std::cout << "Objects created"<< std::endl;
-
-	//TODO CLEANUP OF CREATED OBJECTS
 
 	unsigned char port_value = 0;
 	Level warning = OPERATING;
-	//LOG_DEBUG << "Set Warning Level: " << warning << endl;
+        std::cout << "Set Warning Level: " << warning << endl;
 
 	std::cout << "The real test"<< std::endl;
 	lightSystem.setWarningLevel(warning);
 	this_thread::sleep_for(chrono::seconds(1));
 	port_value = in8(PORTA_ADDR);
+
+        /* Cleanup the mess */
+        delete lightSystem;
+        delete controller;
+        delete boundary;
+
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.
 		std::cout << "Passed" << std::endl;
 		return PASSED;

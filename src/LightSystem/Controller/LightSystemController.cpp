@@ -22,8 +22,13 @@ LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
 {
 	//LOG_SCOPE;
 	//LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
-	taskThread = thread(&LightSystemController::task, this);
-	controlThread = thread(&LightSystemController::control, this,chid);
+        taskThread = new thread(&LightSystemController::task, this);
+	controlThread = new thread(&LightSystemController::control, this,chid);
+}
+
+~LightSystemController::LightSystemController(int chid, BLightSystem* boundary) {
+    delete taskThread;
+    delete controlThread;
 }
 
 int LightSystemController::task(){
