@@ -23,7 +23,7 @@ ThreadServer::ThreadServer(const int chid)
     :    chid_(chid)
 {
     // Create a thread on the stack, so it will be killed after his task is done.
-    server_t = std::thread(&ThreadServer::sendSinglePulseMessage, this);
+    server_t = std::thread(&ThreadServer::receiveSinglePulseMessage, this);
 }
 
 ThreadServer::~ThreadServer()
@@ -48,7 +48,7 @@ void ThreadServer::receiveSinglePulseMessage()
 
     std::cout << "[ThreadServer] receiveSinglePulseMessage() Is Now waiting for a pulse message" << std::endl;
 
-    int value = receiver.receivePulseMessage();
+    int value = receiver->receivePulseMessage();
 
     std::cout << "[ThreadServer] receiveSinglePulseMessage() received value: " << value << std::endl;
 }

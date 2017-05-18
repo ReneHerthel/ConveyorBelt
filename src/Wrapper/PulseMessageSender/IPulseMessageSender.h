@@ -26,7 +26,7 @@ public:
      * @param[value] A 32-bit value for the pulse message.
      */
     virtual void sendPulseMessage(const int value) = 0;
-}
+};
 
 #endif /* SRC_WRAPPER_PULSEMESSAGESENDER_IPULSEMESSAGESENDER_H_ */
 

@@ -34,7 +34,7 @@ public:
      * @return The new channel identifier.
      */
     virtual int newChannel() = 0;
-}
+};
 
 #endif /* SRC_WRAPPER_PULSEMESSAGERECEIVER_IPULSEMESSAGERECEIVER_H_ */
 /** @} */

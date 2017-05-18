@@ -19,7 +19,7 @@
 
 #include "IPulseMessageSender.h"
 
-class PulseMessageSenderService : IPulseMessageSender
+class PulseMessageSenderService : public IPulseMessageSender
 {
 public:
     /*
@@ -46,7 +46,7 @@ private:
      * @brief The connection ID, where the pulse messages will be sent to.
      */
     int coid_;
-}
+};
 
 #endif /* SRC_WRAPPER_PULSEMESSAGESENDER_PULSEMESSAGESENDERSERVICE_H_ */
 /** @} */

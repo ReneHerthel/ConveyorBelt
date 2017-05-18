@@ -15,9 +15,9 @@
  */
 
 #include "ThreadClient.h"
-#include "ServerClient.h"
+#include "ThreadServer.h"
 
-#include <sys/neutrino>
+#include <sys/neutrino.h>
 #include <chrono>
 #include <iostream>
 
@@ -32,7 +32,7 @@ int main(void)
         std::cout << "[PulseMessageWrapper] Channel creation failed" << std::endl;
     }
 
-    ThreadServer* server = new Threadserver(chid);
+    ThreadServer* server = new ThreadServer(chid);
 
     std::cout << "[PulseMessageWrapper] Server created" << std::endl;
 

@@ -19,7 +19,7 @@
 
 #include "IPulseMessageReceiver.h"
 
-class PulseMessageReceiverService : IPulseMessageReceiver
+class PulseMessageReceiverService : public IPulseMessageReceiver
 {
 public:
     /*
@@ -62,7 +62,7 @@ private:
      *        pulse messages.
      */
     int chid_;
-}
+};
 
 #endif /* SRC_WRAPPER_PULSEMESSAGERECEIVER_PULSEMESSAGERECEIVERSERVICE_H_ */
 /** @} */

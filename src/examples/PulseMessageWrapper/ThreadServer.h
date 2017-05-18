@@ -44,7 +44,7 @@ private:
     /*
      * @brief Receives
      */
-    receiveSinglePulseMessage();
+    void receiveSinglePulseMessage();
 
     /*
      * @brief The channel ID, where the server will receive pulse messages.
@@ -55,7 +55,7 @@ private:
      * @brief The Server thread.
      */
     std::thread server_t;
-}
+};
 
  #endif /* SRC_EXAMPLES_WRAPPER_THREADSERVER_H */
 

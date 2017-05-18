@@ -23,6 +23,7 @@
 #include <thread>
 #include <sys/netmgr.h>
 #include <sys/siginfo.h>
+#include <sys/neutrino.h>
 #include <iostream>
 
 class ThreadClient
@@ -55,7 +56,7 @@ private:
      * @brief The client thread.
      */
     std::thread client_t;
-}
+};
 
 #endif /* SRC_EXAMPLES_WRAPPER_THREADCLIENT_H_ */
 /** @} */

@@ -19,6 +19,9 @@
 #include "Logger.h"
 #include "LogScope.h"
 
+
+#include <sys/netmgr.h>
+#include <sys/siginfo.h>
 #include <sys/neutrino.h>
 
 PulseMessageSenderService::PulseMessageSenderService(const int chid)
@@ -34,7 +37,7 @@ PulseMessageSenderService::PulseMessageSenderService(const int chid)
     }
 
     // Remember the coid for the whole object.
-    coid_(coid);
+    coid_ = coid;
 }
 
 void PulseMessageSenderService::sendPulseMessage(const int value)

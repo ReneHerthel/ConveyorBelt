@@ -37,7 +37,7 @@ void ThreadClient::sendSinglePulseMessage()
     IPulseMessageSender* sender = new PulseMessageSenderService(chid_);
 
     // Transmit a pulse message to the channel ID.
-    sender.sendPulseMessage(42);
+    sender->sendPulseMessage(101010);
 }
 
 /** @} */
