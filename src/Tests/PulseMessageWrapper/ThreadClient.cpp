@@ -30,7 +30,7 @@ ThreadClient::ThreadClient(const int chid)
 
 ThreadClient::~ThreadClient()
 {
-    //
+    // Nothing todo so far.
 }
 
 void ThreadClient::sendSinglePulseMessage()

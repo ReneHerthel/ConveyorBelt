@@ -41,10 +41,8 @@ public:
     ~ThreadServer();
 
     /*
-     * @brief Receives
+     * @brief waits if the thread has a message received.
      */
-    void receive();
-
     int receivePulseMessage();
 
 private:
@@ -59,8 +57,19 @@ private:
      */
     std::thread server_t;
 
+    /*
+     * @brief Receives a pulse message in the thread
+     */
+    void receive();
+
+    /*
+     * @brief To poll if the message was received by the thread.
+     */
     bool messageReceived_;
 
+    /*
+     * @brief The value of the pulse message.
+     */
     int pulseMessageValue_;
 };
 
