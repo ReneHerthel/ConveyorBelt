@@ -1,5 +1,5 @@
-/*
- * isr_pulse.cpp
+                                                                         /*
+ * Isr_pulse.cpp
  *
  *  Created on: 27.04.2017 based on tutorium-example
  *      Author: abt674
@@ -11,6 +11,7 @@
 #include <sys/siginfo.h>
 #include "ConveyorBelt-devel/src/HWaccess.h"
 #include "Control.h"
+#include "ISR_Thread.h"
 
 using namespace std;
 
@@ -74,12 +75,29 @@ void unregisterISR(void){
 }
 
 
+ISR_Thread::ISR_Thread(Control * control) {
+    cout << "ctor: ISR_Thread" << endl;
+    ctrl = control;
+    if ((isrChannel = ChannelCreate(0)) == -1) {
+    		exit(EXIT_FAILURE);
+    	}
+    	cout<< "isrchannel " << isrChannel <<endl;
 
-int main() {
+    	if ((isrConnection = ConnectAttach(0, 0, isrChannel, 0, 0)) == -1) {
+    		exit(EXIT_FAILURE);
+    	}
+
+}
+ISR_Thread::~ISR_Thread() {
+    cout << "dtor: ISR_Thread" << endl;
+
+
+}
+void ISR_Thread::execute(){
     // Init and Register ISR
     if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
         exit(EXIT_FAILURE);
-    }
+    }/*
     //create a channel to receive pulses
     if (( isrChannel = ChannelCreate(0)) == -1){
         exit(EXIT_FAILURE);
@@ -88,7 +106,7 @@ int main() {
     if ((isrConnection = ConnectAttach(0, 0, isrChannel, 0, 0)) == -1){
         exit(EXIT_FAILURE);
     }
-
+   */
     // Register Interrupt Service Routine
     registerISR();
 
@@ -251,5 +269,10 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    return 0;
-}
+
+	}
+
+
+
+
+
