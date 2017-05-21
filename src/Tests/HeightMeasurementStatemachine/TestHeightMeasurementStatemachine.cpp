@@ -26,29 +26,27 @@ SETUP(TestHeightMeasurementStatemachine) {
     REG_TEST(test3, 3, "Test the Invalid type");
     REG_TEST(test4, 4, "Test the Bitcoded 101 type");
     REG_TEST(test5, 5, "Test the Bitcoded 010 type");
-
     return 1;
 }
 
 BEFORE_TC(TestHeightMeasurementStatemachine) {
-
-
-	return 1;
+    // Empty.
+    return 1;
 }
 
 AFTER_TC(TestHeightMeasurementStatemachine) {
     // Empty.
-	return 1;
+    return 1;
 }
 
 BEFORE(TestHeightMeasurementStatemachine) {
     // Empty.
-	return 1;
+    return 1;
 }
 
 AFTER(TestHeightMeasurementStatemachine) {
-	// Empty.
-	return 1;
+    // Empty.
+    return 1;
 }
 
 TEST_IMPL(TestHeightMeasurementStatemachine, test1) {
@@ -82,7 +80,7 @@ TEST_IMPL(TestHeightMeasurementStatemachine, test1) {
     int signal = pulse.value.sival_int;
 
     if (signal == 2) {
-    	return TEST_PASSED;
+    	  return TEST_PASSED;
     }
 
     return TEST_FAILED;
@@ -118,7 +116,7 @@ TEST_IMPL(TestHeightMeasurementStatemachine, test2) {
     int signal = pulse.value.sival_int;
 
     if (signal == 3) {
-    	return TEST_PASSED;
+    	  return TEST_PASSED;
     }
 
     return TEST_FAILED;
@@ -153,7 +151,7 @@ TEST_IMPL(TestHeightMeasurementStatemachine, test3) {
     int signal = pulse.value.sival_int;
 
     if (signal == 0) {
-    	return TEST_PASSED;
+    	  return TEST_PASSED;
     }
 
     return TEST_FAILED;
@@ -193,9 +191,9 @@ TEST_IMPL(TestHeightMeasurementStatemachine, test4) {
 
     std::cout << "[TestHeightMeasurementStatemachine] Received pulse: " << (int)s.ID << " - " << (int)s.BIT0 << (int)s.BIT1 << (int)s.BIT2 << "\n" <<  std::endl;
 
-    if ( ( (int)s.ID == 4) && ( (int)s.BIT0 == 1) && ( (int)s.BIT1 == 0) && ( (int)s.BIT2 == 1) )
+    if (((int)s.ID == 4) && ((int)s.BIT0 == 1) && ((int)s.BIT1 == 0) && ((int)s.BIT2 == 1))
     {
-    	return TEST_PASSED;
+    	  return TEST_PASSED;
     }
 
     return TEST_FAILED;
@@ -235,9 +233,9 @@ TEST_IMPL(TestHeightMeasurementStatemachine, test5) {
 
     std::cout << "[TestHeightMeasurementStatemachine] Received pulse: " << (int)s.ID << " - " << (int)s.BIT0 << (int)s.BIT1 << (int)s.BIT2 << "\n" << std::endl;
 
-    if ( ( (int)s.ID == 4) && ( (int)s.BIT0 == 0) && ( (int)s.BIT1 == 1) && ( (int)s.BIT2 == 0) )
+    if (((int)s.ID == 4) && ((int)s.BIT0 == 0) && ((int)s.BIT1 == 1) && ((int)s.BIT2 == 0) )
     {
-    	return TEST_PASSED;
+    	  return TEST_PASSED;
     }
 
     return TEST_FAILED;

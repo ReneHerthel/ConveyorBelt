@@ -25,6 +25,7 @@
 #include <thread>
 
 int main(void) {
+
     // trying to get right access to the I/O hardware
     int err = ThreadCtl(_NTO_TCTL_IO_PRIV, 0);
 
@@ -35,8 +36,6 @@ int main(void) {
 
     TestHeightMeasurement test;
     test.startTest();
-
-
 
     return 0;
 }
