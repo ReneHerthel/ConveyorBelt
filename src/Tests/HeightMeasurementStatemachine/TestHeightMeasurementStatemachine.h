@@ -26,38 +26,37 @@ public:
     /*
      * @brief
      */
-	TestHeightMeasurementStatemachine(int id, std::string brief) : TestCase(id, brief) { };
+	  TestHeightMeasurementStatemachine(int id, std::string brief) : TestCase(id, brief) { };
 
 protected:
-	/*
-	 * @brief The test for the normal Type.
-	 */
-	TEST(test1);
+	  /*
+	   * @brief The test for the normal Type.
+	   */
+	  TEST(test1);
 
-	/*
-	 * @brief The test for the flipped Type.
-	 */
-	TEST(test2);
+	  /*
+	   * @brief The test for the flipped Type.
+	   */
+	  TEST(test2);
 
-	/*
-	 * @brief The test for the invalid Type.
-	 */
-	TEST(test3);
+	  /*
+	   * @brief The test for the invalid Type.
+	   */
+	  TEST(test3);
 
-	/*
-	 * @brief The test for the Bitcoded 101 type.
-	 */
-	TEST(test4);
+	  /*
+	   * @brief The test for the Bitcoded 101 type.
+	   */
+	  TEST(test4);
 
-	/*
-	 * @brief The test for the Bitcoded 010 type.
-	 */
-	TEST(test5);
+	  /*
+	   * @brief The test for the Bitcoded 010 type.
+	   */
+	  TEST(test5);
 
     // Must have.
     TEST_CASE_METHODS
 };
-
 
 #endif /* TESTHEIGHTMEASUREMENTSTATEMACHINE_H_ */
 /** @} */

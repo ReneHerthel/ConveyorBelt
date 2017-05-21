@@ -33,7 +33,7 @@
 
 #define TEST_HEIGHT_HAL             (0)
 #define TEST_HEIGHT_STATEMACHINE    (0)
-#define TEST_HEIGHT_SERVICE         (1)
+#define TEST_HEIGHT_SERVICE         (0)
 #define SLEEP_TIME                  (1000)
 
 void TestHeightMeasurement::startTest() {
