@@ -36,6 +36,6 @@ __Verantwortlichkeit: Matthis, Jonas__
 ### MainController
 Der MainController wird in mehrere Klassen aufgeteilt. Siehe Klassendiagramm.  
 __Verantwortlichkeit für MainController, Recorder, PulseMessageWrapper : Rene__  
-__Verantwortlichkeit für PuckManager und PuckSort(FSM) : Stephan__
+__Verantwortlichkeit für PuckManager, Port Locking für Port A und PuckSort(FSM) : Stephan__
 
 
