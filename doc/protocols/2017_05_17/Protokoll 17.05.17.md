@@ -26,16 +26,16 @@ Die Pucks haben folgende Typen:
 - invalid
 - BitCoded
  * bei diesem Typ wird das Bitpattern mit abgespeichert
-__
 
-Signale werden in das RDD eingetragen
+
+Signale werden in das RDD eingetragen.  
 Es sind Klassendiagramme,die FSM und Sequenzdiagramme für die Puckübergabe zu dokumentieren und zu implementieren.
 
-__Verantwortlichkeit: Matthis, Jonas__
+__Verantwortlichkeit: Matthis, Jonas__  
 
 ### MainController
-Der MainController wird in mehrere Klassen aufgeteilt. Siehe Klassendiagramm.
-__Verantwortlichkeit für MainController, Recorder, PulseMessageWrapper : Rene__
+Der MainController wird in mehrere Klassen aufgeteilt. Siehe Klassendiagramm.  
+__Verantwortlichkeit für MainController, Recorder, PulseMessageWrapper : Rene__  
 __Verantwortlichkeit für PuckManager und PuckSort(FSM) : Stephan__
 
 
