@@ -6,6 +6,7 @@
  */
 
 #include "SerialProtocoll.h"
+#include "ITopLvlProtocoll.h"
 
 /**
  * This is an unidirectional Protocoll over Serial
@@ -21,29 +22,38 @@ SerialProtocoll::~SerialProtocoll() {
 	// TODO Auto-generated destructor stub
 }
 
-/**
- * Convert an array of bytes to an Code and Value for a pulse message
- * @param buff The arrray of bytes
- * @param size the amount of bytes to read from buff
- * @return struct with code and value
- */
 pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
 
 }
 
-/**
- * Wrap an array of bytes into a sendable frame
- * @param buff
- * @param size
- * @return
- */
+
 serialized SerialProtocoll::wrapInFrame(char *buff, uint32_t size) {
     //TODO Check if implementation is usefull
     //TODO Needs to return the size, too
 }
 
-serialized SerialProtocoll::wrapInFrame(int8_t int8, int32_t int32) {
 
+//TODO Untested
+serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
+    serialized resu;
+    int32_t* msg = new int32_t;
+    switch(code){
+        case IN: //Inout nothing needs to be done
+        case OUT :
+            *msg = value;
+            resu.size = sizeof(int32_t);
+            resu.obj = msg;
+            break;
+        case TRANSM_IN:
+        case TRANSM_OUT:
+            ISerializable* obj = (ISerializable*) value;
+            resu = obj->serialize();
+            break;
+        default: //TODO error handler
+            break;
+    }
+
+    return resu;
 }
 
 
