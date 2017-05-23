@@ -9,6 +9,9 @@
 #include <cstdint>
 #include <stdint.h>
 
+/**
+ * A struct for a binary buffer and its size
+ */
 struct serialized{
     uint32_t size; /*!< Size of the object in bytes*/
     void* obj; /*!<The serialized object */
