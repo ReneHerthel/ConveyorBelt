@@ -9,7 +9,9 @@ SETUP(TestSerial){
     REG_TEST(OpenSernderReceiver, 2, "[SerialWriter] Test to open Receiver and Sender at the same time");
     REG_TEST(ReadWrite,3, "[SerialWriter][SerialSender] Basic Input Output Test");
     REG_TEST(Serilizeable, 4, "[ISerializable][SerialTestStub] Basic Test for the SerialTestObject");
+#ifndef WINDOWS
     REG_TEST(RWOverSerial, 5, "[SerialWriter][SerialReader] Try basic writing from ser1 to ser 2");
+#endif
 }
 
 TEST_IMPL(TestSerial, SerialWriterTest){
@@ -65,15 +67,8 @@ TEST_IMPL(TestSerial, Serilizeable) {
 }
 
 TEST_IMPL(TestSerial, RWOverSerial) {
-#ifndef WINDOWS //Not on windows
     char sender_node[] = "/dev/ser1";
     char receiver_node[] = "/dev/ser2";
-#else //on Windows
-    char sender_node[] = "ser1_testfile";
-    char receiver_node[] = "ser2_testfile";
-#endif
-
-
 
     SerialSender sender(sender_node);
     SerialReceiver receiver (receiver_node);
