@@ -5,6 +5,7 @@
  *      Author: aca619
  */
 
+#include <cstring>
 #include "SerialProtocoll.h"
 #include "ITopLvlProtocoll.h"
 #include "../../Tests/Serial/SerialTestStub.h"
@@ -23,22 +24,29 @@ SerialProtocoll::~SerialProtocoll() {
 	// TODO Auto-generated destructor stub
 }
 
+//TODO Refactor, size isnt needed
 pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
-    pulse resu = new resu;
-    char code = *buff;
-    switch(code){
-        case IN: //Inout nothing needs to be done
-        case OUT :
-            int32_t* value = new int32_t;
-
+    pulse resu;
+    msg msg_in = *(msg*)buff;
+    resu.code = SER_IN;
+    switch(msg_in){
+        case ACCEPT:
+        case STOP:
+        case RESUME:
+        case INVALID:
+            resu.value = msg_in;
             break;
-        case TRANSM_IN:
-        case TRANSM_OUT:
-            ISerializable* obj = new SerialTestStub;
-            obj->deserialize();
+        case TRANSM:
+            {
+                ISerializable *obj = new SerialTestStub;
+                obj->deserialize(buff + 1);
+                resu.value = (uint32_t) obj;
+            }
             break;
-        default: //TODO error handler
-            break;
+        default:
+            break; //TODO ERROR
+    }
+    return resu;
 }
 
 
@@ -52,23 +60,39 @@ serialized SerialProtocoll::wrapInFrame(char *buff, uint32_t size) {
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
     serialized resu;
     switch(code){
-        case IN: //Inout nothing needs to be done
-        case OUT :
-            int32_t* msg = new int32_t;
-            *msg = value;
-            resu.size = sizeof(int32_t);
-            resu.obj = msg;
-            break;
+        case SER_IN: //Inout nothing needs to be done
+        case SER_OUT :
+            {
+                int32_t* msg_type = new int32_t;
+                *msg_type = value;
+                resu.size = sizeof(int32_t);
+                resu.obj = msg_type;
+                break;
+            }
         case TRANSM_IN:
         case TRANSM_OUT:
-            ISerializable* obj = (ISerializable*) value;
-            resu = obj->serialize();
-            break;
+            {
+                serialized tmp;
+                ISerializable* obj = (ISerializable*) value;
+                tmp = obj->serialize();
+                char* frame = new char[tmp.size+ sizeof(msg)]; //make space for msg type
+                memcpy(frame+sizeof(msg), tmp.obj, tmp.size);
+                msg *msg_ptr = (msg *) frame;
+                *msg_ptr = TRANSM;
+                resu.obj = frame;
+                break;
+            }
         default: //TODO error handler
             break;
     }
 
     return resu;
 }
+
+pulse SerialProtocoll::protocollState(int8_t int8, int32_t int32) {
+    pulse empty; //TODO Fill with logic
+    return  empty;
+}
+
 
 

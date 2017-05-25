@@ -3,6 +3,7 @@
 #include "Tests/TestExample.h"
 #include "TestFramework/TestSuite.h"
 #include "Tests/Serial/TestSerial.h"
+#include "Tests/Serial/SerialProtocollTest.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ int main() {
 
     //TEST FOR: Serial
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
-
+    ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll]"));
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//
