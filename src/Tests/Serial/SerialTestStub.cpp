@@ -6,7 +6,7 @@
 
 serialized SerialTestStub::serialize() {
     serialized ser;
-    ser.size = sizeof(value1, value2, zero, value3);
+    ser.size = sizeof(obj);
 
     ser.obj = new obj{value1,value2,zero, value3};
 

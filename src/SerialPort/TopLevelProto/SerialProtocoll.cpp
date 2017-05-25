@@ -76,7 +76,7 @@ serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
                 ISerializable* obj = (ISerializable*) value;
                 tmp = obj->serialize();
                 char* frame = new char[tmp.size+ sizeof(msg)]; //make space for msg type
-                memcpy(frame+sizeof(msg), tmp.obj, tmp.size+4);
+                memcpy((frame+sizeof(msg)), tmp.obj, tmp.size);
                 msg *msg_ptr = (msg *) frame;
                 *msg_ptr = TRANSM;
                 resu.obj = frame;
