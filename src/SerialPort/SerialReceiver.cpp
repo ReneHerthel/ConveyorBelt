@@ -18,7 +18,7 @@ int SerialReceiver::fail() {
 }
 
 char* SerialReceiver::receive() {
-	char msgBuff[1000]; //TODO fix
+	char* msgBuff = new char[1000]; //TODO define
 	char headerBuff[FRAME_HEAD_BYTES];
     char tailBuff[FRAME_TAIL_BYTES];
     uint16_t msgSize;
@@ -75,7 +75,9 @@ char SerialReceiver::checksum(char *buff, uint16_t size) {
 
 
 void SerialReceiver::reset(){
+    #ifndef WINDOWS
 	tcflush(in, TCIOFLUSH);
+    #endif
 }
 
 

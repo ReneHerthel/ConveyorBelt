@@ -17,7 +17,7 @@ public:
 
     serialized serialize() override;
 
-    bool deserialize(serialized ser) override;
+    bool deserialize(void *obj) override;
 
     bool operator==(SerialTestStub const& rhs);
 

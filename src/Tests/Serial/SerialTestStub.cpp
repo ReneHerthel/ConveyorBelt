@@ -13,8 +13,8 @@ serialized SerialTestStub::serialize() {
     return ser;
 }
 
-bool SerialTestStub::deserialize(serialized ser) {
-    obj* tmp = (obj*)ser.obj;
+bool SerialTestStub::deserialize(void *ser) {
+    obj* tmp = (obj*)ser;
     this->value1 = tmp->value1;
     this->value2 = tmp->value2;
     this->zero = tmp->zero;

@@ -27,11 +27,10 @@ public:
 
     /**
      * Deserialize an Object so it can be used again
-     * @tparam T The type of object that should be made by calling this function,
-     *          shall be equal to the class calling
+     * @param ser The bytearray containing the objekt
      * @return if the deserialization worked
      */
-    virtual bool deserialize(serialized ser) = 0; //TODO This makes funny problems
+    virtual bool deserialize(void *ser) = 0; //TODO This makes funny problems
 };
 
 

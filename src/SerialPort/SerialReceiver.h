@@ -7,7 +7,10 @@
 
 #include <string>
 #include <fcntl.h>
+
+#ifndef WINDOWS
 #include <termios.h>
+#endif
 
 using namespace std;
 

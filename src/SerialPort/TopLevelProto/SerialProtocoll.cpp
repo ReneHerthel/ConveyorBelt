@@ -7,6 +7,7 @@
 
 #include "SerialProtocoll.h"
 #include "ITopLvlProtocoll.h"
+#include "../../Tests/Serial/SerialTestStub.h"
 
 /**
  * This is an unidirectional Protocoll over Serial
@@ -23,7 +24,21 @@ SerialProtocoll::~SerialProtocoll() {
 }
 
 pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
+    pulse resu = new resu;
+    char code = *buff;
+    switch(code){
+        case IN: //Inout nothing needs to be done
+        case OUT :
+            int32_t* value = new int32_t;
 
+            break;
+        case TRANSM_IN:
+        case TRANSM_OUT:
+            ISerializable* obj = new SerialTestStub;
+            obj->deserialize();
+            break;
+        default: //TODO error handler
+            break;
 }
 
 
@@ -36,10 +51,10 @@ serialized SerialProtocoll::wrapInFrame(char *buff, uint32_t size) {
 //TODO Untested
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
     serialized resu;
-    int32_t* msg = new int32_t;
     switch(code){
         case IN: //Inout nothing needs to be done
         case OUT :
+            int32_t* msg = new int32_t;
             *msg = value;
             resu.size = sizeof(int32_t);
             resu.obj = msg;

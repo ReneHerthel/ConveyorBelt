@@ -55,7 +55,7 @@ TEST_IMPL(TestSerial, Serilizeable) {
     SerialTestStub copy;
 
     serialized obj_ser = original.serialize();
-    copy.deserialize(obj_ser);
+    copy.deserialize(obj_ser.obj);
 
     if(copy==original){
         return PASSED;
@@ -65,8 +65,18 @@ TEST_IMPL(TestSerial, Serilizeable) {
 }
 
 TEST_IMPL(TestSerial, RWOverSerial) {
-    SerialSender sender("/dev/ser1");
-    SerialReceiver receiver ("/dev/ser2");
+#ifndef WINDOWS //Not on windows
+    char sender_node[] = "/dev/ser1";
+    char receiver_node[] = "/dev/ser2";
+#else //on Windows
+    char sender_node[] = "ser1_testfile";
+    char receiver_node[] = "ser2_testfile";
+#endif
+
+
+
+    SerialSender sender(sender_node);
+    SerialReceiver receiver (receiver_node);
     receiver.reset();
     char testString[] = "START Flitzndafoer_123456 123123 END";
     sender.send(testString, sizeof(testString));
