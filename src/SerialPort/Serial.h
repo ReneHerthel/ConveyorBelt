@@ -1,25 +1,28 @@
 //
-// Created by Silt on 07.05.2017.
+// Created by Silt on 26.05.2017.
 //
 
-#ifndef CONVEYORBELT_SERIAL_H_H
-#define CONVEYORBELT_SERIAL_H_H
+#ifndef CONVEYORBELT_SERIAL_H
+#define CONVEYORBELT_SERIAL_H
 
-#define START  ((char)(1|(1<<7))) //129 -127
-#define END ((char)(4|(1<<7))) //132  -124
-#define CHAR_BITS 8
-#define CNTRL_CHAR_BYTES (1)
-#define SIZE_BYTES (2)
-#define FRAME_HEAD_BYTES (1+SIZE_BYTES)
-#define FRAME_TAIL_BYTES (2)
-#define FRAME_BYTES (FRAME_HEAD_BYTES+FRAME_TAIL_BYTES) //Checksum, END, START
-#define SET_START(buff) (*buff)
-#define SET_MSG_SIZE(buff) uint16_t* tmp = ((uint16_t*)(buff+1)); (*tmp)
-#define GET_MSG_SIZE(buff) ((uint16_t)(*(buff+1)))
 
-#include "SerialSender.h"
 #include "SerialReceiver.h"
+#include "SerialSender.h"
+#include "TopLevelProto/ITopLvlProtocoll.h"
+#include "TopLevelProto/SerialProtocoll.h"
 
-//FRAME DEFINITION [START][SIZE][SIZE][MSG]...[MSG][END][CHECKSUM]
+class Serial {
+public:
+    /**
+     * Create a new Endpoint for a Serial Communication
+     * @param rec The Object containing the thread that will be reading from the device node
+     * @param sender The Object containing the thread that will be writing to the device node
+     * @param proto The Protocol used to transmit messages
+     * @param channel_in Wait for cmd on this channel
+     * @param channel_out Send received data on this channel
+     */
+    Serial(SerialReceiver rec, SerialSender sender, ITopLvlProtocoll proto, int channel_in, int channel_out);
+};
 
-#endif //CONVEYORBELT_SERIAL_H_H
+
+#endif //CONVEYORBELT_SERIAL_H

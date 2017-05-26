@@ -6,7 +6,7 @@
  */
 
 #include <cstring>
-#include "Serial.h"
+#include "Serial_def.h"
 #include "../Logger/Logger.h"
 #include "../Logger/LogScope.h"
 

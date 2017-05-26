@@ -2,7 +2,7 @@
 // Created by Silt on 07.05.2017.
 //
 
-#include "Serial.h"
+#include "Serial_def.h"
 #include "SerialReceiver.h"
 #include "../Logger/Logger.h"
 #include "../Logger/LogScope.h"
@@ -49,7 +49,7 @@ char* SerialReceiver::receive() {
 
     //Read Tail
     if(!readFromSerial(tailBuff, FRAME_TAIL_BYTES)){
-        LOG_ERROR << "Couldnt read tail;
+        LOG_ERROR << "Couldnt read tail \n";
         //TODO Serial Error Handling
     }
 
@@ -95,7 +95,7 @@ void SerialReceiver::reset(){
     #endif
 }
 
-void SerialReceiver::operator()(){
+void SerialReceiver::operator()(int chid){
     while(1){
 
     }
