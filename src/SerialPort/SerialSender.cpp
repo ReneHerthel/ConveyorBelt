@@ -7,6 +7,8 @@
 
 #include <cstring>
 #include "Serial.h"
+#include "../Logger/Logger.h"
+#include "../Logger/LogScope.h"
 
 SerialSender::SerialSender(char *path) {
     out = open(path, O_RDWR | O_CREAT | O_BINARY); //Msg is char based, the Frame is binary, so write binary
@@ -20,6 +22,7 @@ SerialSender::~SerialSender() {
 }
 
 int32_t SerialSender::send(char *msg, uint16_t size) {
+    LOG_SCOPE
     if((size + FRAME_BYTES) > buffSize){
         delete[] buff;
         buff = new char[size];
@@ -47,7 +50,12 @@ void SerialSender::checksum(uint16_t size){
 }
 
 int32_t SerialSender::sendSerial(uint16_t size) {
+    LOG_SCOPE
     err = write(out, buff, size+1);
+    if(err < 0){
+        LOG_ERROR << "Serial write failed with err code: " << err << "\n";
+        //TODO Serial error handling
+    }
 }
 
 int SerialSender::fail() {

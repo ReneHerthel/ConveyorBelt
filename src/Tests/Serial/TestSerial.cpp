@@ -20,9 +20,9 @@ TEST_IMPL(TestSerial, SerialWriterTest){
     SerialSender sender(filepath);
     sender.send(testString, sizeof(testString));
     if(sender.fail()){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 }
 
@@ -31,9 +31,9 @@ TEST_IMPL(TestSerial, OpenSernderReceiver){
     SerialSender sender(filepath);
     SerialReceiver receiver (filepath);
     if(sender.fail() || receiver.fail()){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 }
 
@@ -46,9 +46,9 @@ TEST_IMPL(TestSerial, ReadWrite){
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
     if(equal(testString, testString+sizeof(testString), resu)){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 }
 
@@ -60,9 +60,9 @@ TEST_IMPL(TestSerial, Serilizeable) {
     copy.deserialize(obj_ser.obj);
 
     if(copy==original){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 }
 
@@ -78,9 +78,9 @@ TEST_IMPL(TestSerial, RWOverSerial) {
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
     if(equal(testString, testString+sizeof(testString), resu)){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 }
 

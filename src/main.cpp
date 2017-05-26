@@ -4,6 +4,7 @@
 #include "TestFramework/TestSuite.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
+#include "Logger/Logger.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main() {
 	//## THIS IS THE TEST MAIN, ADD A TEST FOR YOUR MODULE INSTEAD OF WRITING A MAIN##//
 	//################################################################################//
     TestSuite ts;
+    LOG_SET_LEVEL(DEBUG);
     //^ DO NOT TOUCH ^//
 
     //######################################################//

@@ -20,6 +20,7 @@ int SerialReceiver::fail() {
 }
 
 char* SerialReceiver::receive() {
+    LOG_SCOPE
 	char* msgBuff = new char[1000]; //TODO define
 	char headerBuff[FRAME_HEAD_BYTES];
     char tailBuff[FRAME_TAIL_BYTES];
@@ -33,28 +34,36 @@ char* SerialReceiver::receive() {
     //tcsetattr(in, TCSANOW, &ts_in);
 
     //Read Header
-    readFromSerial(headerBuff, FRAME_HEAD_BYTES);
-
+    if(!readFromSerial(headerBuff, FRAME_HEAD_BYTES)){
+        LOG_ERROR << "Couldnt read header \n";
+        //TODO Serial Error Handling
+    }
     msgSize = GET_MSG_SIZE(headerBuff);
 
     //Read Msg
 
-    readFromSerial(msgBuff, msgSize);
+    if(!readFromSerial(msgBuff, msgSize)){
+        LOG_ERROR << "Couldnt read message \n";
+        //TODO Serial Error Handling
+    }
 
     //Read Tail
-    readFromSerial(tailBuff, FRAME_TAIL_BYTES);
+    if(!readFromSerial(tailBuff, FRAME_TAIL_BYTES)){
+        LOG_ERROR << "Couldnt read tail;
+        //TODO Serial Error Handling
+    }
 
     csum = checksum(msgBuff, msgSize);
 
     if(tailBuff[0] != END || tailBuff[1] != csum){
-        //TODO Serial Error Handling
+        LOG_ERROR << "END of file Missing or Checksum Failed \n";
+        //TODO error handling
     }
 
     return msgBuff;
 }
 
 int SerialReceiver::readFromSerial(char *buff, uint32_t size){
-    LOG_SET_LEVEL(DEBUG);
     LOG_SCOPE;
 	uint32_t bytes_read = 0;
 	uint32_t bytes_read_overall = 0;
@@ -80,6 +89,7 @@ char SerialReceiver::checksum(char *buff, uint16_t size) {
 
 
 void SerialReceiver::reset(){
+    LOG_SCOPE
     #ifndef WINDOWS
 	tcflush(in, TCIOFLUSH);
     #endif

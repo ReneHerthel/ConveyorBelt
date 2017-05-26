@@ -22,9 +22,9 @@ TEST_IMPL(SerialProtocollTest, WrapObject){
     pulse tmp = proto.convToPulse((char *) ser.obj);
     SerialTestStub resu = *((SerialTestStub*)tmp.value);
     if(resu == testStub){
-        return PASSED;
+        return TEST_PASSED;
     } else {
-        return FAILED;
+        return TEST_FAILED;
     }
 
 }
@@ -38,10 +38,10 @@ TEST_IMPL(SerialProtocollTest, TestSimpleMessages){
         buff = proto.wrapInFrame(SER_IN, list[i]).obj;
         resu = (msg) proto.convToPulse(buff).value;
         if(resu != list[i]){
-            return FAILED;
+            return TEST_FAILED;
         }
     }
-    return PASSED;
+    return TEST_PASSED;
 }
 
 
