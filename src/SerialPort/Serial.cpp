@@ -27,17 +27,17 @@ void Serial::run() {
         serialized ser;
         ch_in.receivePulseMessage();
         switch(code){
-            case SER_IN: ///TRANS_IN is also SER_IN here, becouse the SerialReceiver doesnt know
+            case SER_IN: ///TRANS_IN is also SER_IN here, becouse the SerialReceiver cant tell the diff
                 pm = proto.convToPulse((void *) value);
                 ch_out.sendPulseMessage(pm.value);
                 break;
-                break;
             case SER_OUT:
-                ser =  proto.wrapInFrame(SER_OUT, value)
+                ser =  proto.wrapInFrame(SER_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
                 break;
             case TRANSM_OUT:
-                
+                ser =  proto.wrapInFrame(TRANSM_OUT, value);
+                sender.send((char *) ser.obj, ser.size);
             default:
                 LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
                 //TODO Serial Error handling

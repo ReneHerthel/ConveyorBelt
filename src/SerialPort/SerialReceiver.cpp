@@ -102,7 +102,7 @@ void SerialReceiver::operator()(int chid){
     PulseMessageSenderService pms(chid);
     while(1){ //TODO Make killable
         buff = receive();
-        pms.sendPulseMessage((int)buff);
+        pms.sendPulseMessage((int)buff); //TODO when code ios available, send ser_in
     }
 }
 
