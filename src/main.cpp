@@ -1,6 +1,8 @@
 #include <iostream>
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
+#include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
+#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
@@ -21,9 +23,9 @@ int main() {
     //######################################################//
 
     //TEST FOR: Example Tests
-    ts.REG_TESTCASE(new TestExample(1, "This is an example"));
-    ts.REG_TESTCASE(new TestExample(2, "This is another one"));
-    ts.REG_TESTCASE(new TestExample(3, "And a third one"));
+    //ts.REG_TESTCASE(new TestExample(1, "This is an example"));
+    //ts.REG_TESTCASE(new TestExample(2, "This is another one"));
+    //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
     //TEST FOR: Serial

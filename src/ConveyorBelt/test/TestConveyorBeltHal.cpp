@@ -28,31 +28,31 @@ void TestConveyorBeltHal::startTest() {
 	// NOTE: Make sure your thread has permissions before using this!
 
 
-	ConveyorBeltService service;
+	ConveyorBeltService conveyorBelt;
 
 	std::cout<<"[TestConveyorBeltHal] Start."<<std::endl;
 
 	std::cout<<"[TestConveyorBeltHal] Run a configured routine."<<std::endl;
 
-	service.ConveyorBeltChangeState(RIGHTFAST);
+	conveyorBelt.changeState(RIGHTFAST);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(STOP);
+	conveyorBelt.changeState(STOP);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(LEFTSLOW);
+	conveyorBelt.changeState(LEFTSLOW);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(RIGHTFAST);
+	conveyorBelt.changeState(RIGHTFAST);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(RIGHTSLOW);
+	conveyorBelt.changeState(RIGHTSLOW);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(LEFTFAST);
+	conveyorBelt.changeState(LEFTFAST);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000)); // 2 seconds.
 
-	service.ConveyorBeltChangeState(STOP);
+	conveyorBelt.changeState(STOP);
 
 	std::cout<<"[TestConveyorBeltHal] Test done."<<std::endl;
 }
