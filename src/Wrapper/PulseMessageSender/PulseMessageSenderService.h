@@ -37,6 +37,11 @@ public:
      */
     void sendPulseMessage(const int code, const int value);
 
+    /*
+     * @brief
+     */
+    void sendPulseMessage(struct _pulse p);
+
 private:
     /*
      * @brief The channel ID, where this object will make a connection to.

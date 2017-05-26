@@ -17,6 +17,7 @@
 #ifndef SRC_WRAPPER_PULSEMESSAGESENDER_IPULSEMESSAGESENDER_H_
 #define SRC_WRAPPER_PULSEMESSAGESENDER_IPULSEMESSAGESENDER_H_
 
+#include <sys/neutrino.h>
 #include <stdint.h>
 
 class IPulseMessageSender
@@ -29,6 +30,11 @@ public:
      * @param[value] A 32-bit value for the pulse message.
      */
     virtual void sendPulseMessage(const int code, const int value) = 0;
+
+    /*
+     * @brief
+     */
+    virtual void sendPulseMessage(struct _pulse p) = 0;
 };
 
 #endif /* SRC_WRAPPER_PULSEMESSAGESENDER_IPULSEMESSAGESENDER_H_ */

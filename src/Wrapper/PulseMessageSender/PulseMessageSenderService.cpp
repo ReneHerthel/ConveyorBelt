@@ -59,4 +59,23 @@ void PulseMessageSenderService::sendPulseMessage(const int code, const int value
     }
 }
 
+void PulseMessageSenderService::sendPulseMessage(struct _pulse p)
+{
+    // Check if there is a valid connection ID.
+    if (coid_ < 0) {
+        // TODO: Error handling.
+        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() The coid is identified as error [" << coid_ << "], exit method.\n";
+        return;
+    }
+
+    // Try to send a pulse message with the given 32-bit value over the connection ID.
+    int err = MsgSendPulse_r(coid_, sched_get_priority_min(0), p.code, p.value.sival_int);
+
+    // Check if an error occurs on MsgSendPulse_r.
+    if (err < 0) {
+        // TODO: Error handling.
+        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() Error occurs on MsgSendPulse_r [" << err << "]\n";
+    }
+}
+
 /** @} */

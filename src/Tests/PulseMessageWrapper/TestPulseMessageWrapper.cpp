@@ -77,7 +77,7 @@ TEST_IMPL(TestPulseMessageWrapper, test1) {
 
     rcv_msg_t structWithValues = server->receivePulseMessage();
 
-    // You can also read structWithValues.code.
+    // You can also read structWithValues.code
     if (structWithValues.value == 42) {
         return TEST_PASSED;
     }
