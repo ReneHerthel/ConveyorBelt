@@ -41,7 +41,7 @@ void ThreadServer::receive()
      *      IPulseMessageReceiver* receiver = new PulseMessageReceiverService()
      *      int chid =  receiver.newChannel();
      *      // Pass chid around.
-     *      int value = receiver.receivePulseMessage();
+     *      rcv_msg_t structWithValues = receiver.receivePulseMessage();
      *      and so on..
      */
     IPulseMessageReceiver* receiver = new PulseMessageReceiverService(chid_);

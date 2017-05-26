@@ -75,9 +75,10 @@ TEST_IMPL(TestPulseMessageWrapper, test1) {
 
     std::cout << "[TestPulseMessageWrapper] Done" << std::endl;
 
-    int value = server->receivePulseMessage();
+    rcv_msg_t structWithValues = server->receivePulseMessage();
 
-    if (value == 42) {
+    // You can also read structWithValues.code.
+    if (structWithValues.value == 42) {
         return TEST_PASSED;
     }
 

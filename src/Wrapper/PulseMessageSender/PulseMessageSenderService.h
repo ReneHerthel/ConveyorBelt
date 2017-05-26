@@ -32,9 +32,10 @@ public:
     /*
      * @brief Transmit a pulse message to a given connection ID.
      *
+     * @param[code] A 8-bit code value for the pulse message.
      * @param[value] A 32-bit value for the pulse message.
      */
-    void sendPulseMessage(const int value);
+    void sendPulseMessage(const int code, const int value);
 
 private:
     /*

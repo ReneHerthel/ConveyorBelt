@@ -40,7 +40,7 @@ PulseMessageSenderService::PulseMessageSenderService(const int chid)
     coid_ = coid;
 }
 
-void PulseMessageSenderService::sendPulseMessage(const int value)
+void PulseMessageSenderService::sendPulseMessage(const int code, const int value)
 {
     // Check if there is a valid connection ID.
     if (coid_ < 0) {
@@ -50,7 +50,7 @@ void PulseMessageSenderService::sendPulseMessage(const int value)
     }
 
     // Try to send a pulse message with the given 32-bit value over the connection ID.
-    int err = MsgSendPulse_r(coid_, sched_get_priority_min(0), 0, value);
+    int err = MsgSendPulse_r(coid_, sched_get_priority_min(0), code, value);
 
     // Check if an error occurs on MsgSendPulse_r.
     if (err < 0) {

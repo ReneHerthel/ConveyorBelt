@@ -44,10 +44,10 @@ public:
      * @description NOTE: This function will BLOCK the using thread, until it
      *                    receives a new pulse message.
      *
-     * @return A 32-bit value from the pulse message on success.
+     * @return A struct of some values from the pulse message on success.
      *         The error-codes from MsgReceive_r and ChannelCreate_r on failure.
      */
-    int receivePulseMessage();
+    rcv_msg_t receivePulseMessage();
 
     /*
      * @brief Creates a new channel.
