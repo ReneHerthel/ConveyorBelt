@@ -35,8 +35,10 @@ PulseMessageReceiverService::PulseMessageReceiverService(const int chid)
      */
 }
 
-int PulseMessageReceiverService::receivePulseMessage()
+rcv_msg_t PulseMessageReceiverService::receivePulseMessage()
 {
+    rcv_msg_t receivedMessage;
+
     // First check if there is a vaild channel ID.
     if (chid_ < 0) {
         LOG_DEBUG << "[PulseMessageReceiverService] receivePulseMessage() chid was an error [" << chid_ << "]\n";
@@ -56,8 +58,11 @@ int PulseMessageReceiverService::receivePulseMessage()
         return err;
     }
 
-    // Returns a 32-bit pulse value.
-    return pulse.value.sival_int;
+    // Extract the code and sival_int from the received pulse message.
+    receivedMessage.code = pulse.code;
+    receivedMessage.value = pulse.value.sival_int;
+
+    return receivedMessage;
 }
 
 int PulseMessageReceiverService::newChannel()
