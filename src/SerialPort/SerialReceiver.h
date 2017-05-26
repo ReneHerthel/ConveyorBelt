@@ -23,7 +23,11 @@ public:
     char checksum(char* buff, uint16_t size);
     int readFromSerial(char* buff, uint32_t size);
 
-    void operator()();
+    /**
+     * Used to create a thread for receiving data
+     * @param chid  channel used to communicate with Serial
+     */
+    void operator()(int chid);
 
     void reset();
 

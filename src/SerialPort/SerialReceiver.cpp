@@ -6,6 +6,8 @@
 #include "SerialReceiver.h"
 #include "../Logger/Logger.h"
 #include "../Logger/LogScope.h"
+#include "../Wrapper/PulseMessageSender/IPulseMessageSender.h"
+#include "../Wrapper/PulseMessageSender/PulseMessageSenderService.h"
 
 SerialReceiver::SerialReceiver(char *path) {
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
@@ -21,7 +23,7 @@ int SerialReceiver::fail() {
 
 char* SerialReceiver::receive() {
     LOG_SCOPE
-	char* msgBuff = new char[1000]; //TODO define
+	char* msgBuff = new char[1000]; //TODO Move this size to the constructor
 	char headerBuff[FRAME_HEAD_BYTES];
     char tailBuff[FRAME_TAIL_BYTES];
     uint16_t msgSize;
@@ -96,8 +98,11 @@ void SerialReceiver::reset(){
 }
 
 void SerialReceiver::operator()(int chid){
-    while(1){
-
+    char* buff;
+    PulseMessageSenderService pms(chid);
+    while(1){ //TODO Make killable
+        buff = receive();
+        pms.sendPulseMessage((int)buff);
     }
 }
 
