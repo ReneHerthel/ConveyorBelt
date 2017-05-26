@@ -17,10 +17,8 @@ typedef struct {
 
 class ITopLvlProtocoll {
 public:
-	virtual pulse convToPulse(char* buff, uint32_t size) = 0;
-	virtual serialized wrapInFrame(char* buff, uint32_t size) = 0;
+	virtual pulse convToPulse(void *buff) = 0;
 	virtual serialized wrapInFrame(int8_t, int32_t) = 0;
-
 private:
     virtual pulse protocollState(int8_t, int32_t) = 0; //TODO Check if usefull
 };

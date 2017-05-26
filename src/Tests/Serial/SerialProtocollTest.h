@@ -13,7 +13,7 @@ class SerialProtocollTest : public TestCase{
         SerialProtocollTest(int id, std::string brief): TestCase(id, brief){};
     protected:
         TEST(WrapObject);
-        //TEST(TestSimpleMessages);
+        TEST(TestSimpleMessages);
         TEST_CASE_METHODS
 };
 

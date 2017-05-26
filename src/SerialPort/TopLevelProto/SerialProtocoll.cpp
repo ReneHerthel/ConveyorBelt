@@ -25,7 +25,7 @@ SerialProtocoll::~SerialProtocoll() {
 }
 
 //TODO Refactor, size isnt needed
-pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
+pulse SerialProtocoll::convToPulse(void *buff) {
     pulse resu;
     msg msg_in = *(msg*)buff;
     resu.code = SER_IN;
@@ -34,12 +34,13 @@ pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
         case STOP:
         case RESUME:
         case INVALID:
+        case RECEIVED:
             resu.value = msg_in;
             break;
         case TRANSM:
             {
                 ISerializable *obj = new SerialTestStub;
-                obj->deserialize(buff + sizeof(msg));
+                obj->deserialize(((char*)buff) + sizeof(msg)); //cast to char* because void* cant be used in arith
                 resu.value = (uint32_t) obj;
             }
             break;
@@ -47,12 +48,6 @@ pulse SerialProtocoll::convToPulse(char *buff, uint32_t size) {
             break; //TODO ERROR
     }
     return resu;
-}
-
-
-serialized SerialProtocoll::wrapInFrame(char *buff, uint32_t size) {
-    //TODO Check if implementation is usefull
-    //TODO Needs to return the size, too
 }
 
 

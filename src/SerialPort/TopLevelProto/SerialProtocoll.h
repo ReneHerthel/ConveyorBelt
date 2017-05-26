@@ -21,6 +21,7 @@
 #define RESUME_VAL 0xFCCC
 #define INVALID_VAL 0xFDDD
 #define TRANSM_VAL 0xFEEE
+#define RECEIVED_VAL 0xEFEF
 
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver
@@ -38,7 +39,8 @@ enum msg : int32_t {
     RESUME  = RESUME_VAL,     /*!<IN/OUT: Sender or Receiver signal their counterpart that their belt should be moved again
                                * Must be send by the participant that send STOP before*/
     INVALID = INVALID_VAL,    /*!<IN/OUT The sending participant received Comands in the wrong order*/
-    TRANSM  = TRANSM_VAL,     /*!!<Used only between two serial endpoints to signal an transmission*/
+    TRANSM  = TRANSM_VAL,     /*!<Used only between two serial endpoints to signal an transmission*/
+	RECEIVED = RECEIVED_VAL, 				  /*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
 };
 
 /// Pulse code identifies in and outgoing signals, transmission need extra code, so the 32Bit pointer can fit into Value
@@ -60,8 +62,7 @@ public:
      * @param size the amount of bytes to read from buff
      * @return struct with code and value, code will be set to IN
      */
-	pulse convToPulse(char *buff, uint32_t size) override;
-    serialized wrapInFrame(char *buff, uint32_t size) override;
+	pulse convToPulse(void *buff) override;
 
     /**
      * Convert to a sendable byte array

@@ -23,6 +23,8 @@ public:
     char checksum(char* buff, uint16_t size);
     int readFromSerial(char* buff, uint32_t size);
 
+    void operator()();
+
     void reset();
 
     int fail();

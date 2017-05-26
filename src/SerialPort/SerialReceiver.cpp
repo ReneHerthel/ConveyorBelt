@@ -4,6 +4,8 @@
 
 #include "Serial.h"
 #include "SerialReceiver.h"
+#include "../Logger/Logger.h"
+#include "../Logger/LogScope.h"
 
 SerialReceiver::SerialReceiver(char *path) {
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
@@ -52,15 +54,18 @@ char* SerialReceiver::receive() {
 }
 
 int SerialReceiver::readFromSerial(char *buff, uint32_t size){
+    LOG_SET_LEVEL(DEBUG);
+    LOG_SCOPE;
 	uint32_t bytes_read = 0;
 	uint32_t bytes_read_overall = 0;
 	do{
 		bytes_read = read(in, buff, size-bytes_read_overall); //TODO make qnx readcond
 		bytes_read_overall += bytes_read;
 	}while(bytes_read >= 0 && bytes_read_overall < size);
-	if(bytes_read_overall < size){
+	if(bytes_read_overall < size || bytes_read < 0){
+        LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " bytes_read_overall: " << bytes_read_overall << " size was: " << size <<"\n";
+        return -1;
 		//TODO Serial Error Handling
-		cout<< "Failure in Receiver, read " << bytes_read_overall << " bytes"<<endl;
 	}
 	return 0; //TODO Err handling
 }
@@ -78,6 +83,12 @@ void SerialReceiver::reset(){
     #ifndef WINDOWS
 	tcflush(in, TCIOFLUSH);
     #endif
+}
+
+void SerialReceiver::operator()(){
+    while(1){
+
+    }
 }
 
 
