@@ -20,10 +20,10 @@ typedef int32_t  logLvl;
 #define STD_LOG_STREAM &std::cout
 
 /////////////Test Results///////////
-#define FAILED (-1)
-#define ALL (0) //Not a test result, used to determin log Levels
-#define WARNING (2)
-#define PASSED (1)
+#define TEST_FAILED (-1)
+#define TEST_ALL (0) //Not a test result, used to determin log Levels
+#define TEST_WARNING (2)
+#define TEST_PASSED (1)
 
 //////////////TestSuite Defs start here//////////////
 #define REG_TESTCASE(x) registerTc(x); /*!<Use to register your Testcase to the TestSuite */

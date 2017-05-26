@@ -4,7 +4,7 @@
 
 \documentclass[a4paper, oneside]{scrreprt}
 \usepackage{scrlayer-scrpage}
-\KOMAoptions{
+\KOMAoptions{%
     footnotes = multiple,
 }
 
@@ -18,6 +18,14 @@
 \clearscrheadings
 \cfoot{v\vhCurrentVersion}
 \ofoot{\pagemark}
+
+\usepackage{booktabs}
+\usepackage{pgfplotstable}
+\pgfplotstableset{%
+	header=true,
+	every head row/.style={before row=\toprule, after row=\midrule},
+	every last row/.style={after row=\bottomrule},
+}
 
 % Set header
 \pagestyle{scrheadings}
