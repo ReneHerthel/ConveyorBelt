@@ -1,118 +1,213 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>10</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>350</x>
-      <y>530</y>
-      <w>200</w>
-      <h>60</h>
+      <x>128</x>
+      <y>536</y>
+      <w>160</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>symbol=component
-Main Controller</panel_attributes>
+&lt;&lt;Component&gt;&gt;
+:Main Controller</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>540</y>
-      <w>100</w>
-      <h>50</h>
+      <x>280</x>
+      <y>584</y>
+      <w>72</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=[&lt;]-(</panel_attributes>
-    <additional_attributes>10.0;20.0;70.0;20.0</additional_attributes>
+    <panel_attributes>lt=[]-(</panel_attributes>
+    <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>550</y>
-      <w>90</w>
-      <h>30</h>
+      <x>656</x>
+      <y>592</y>
+      <w>64</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>lt=()-[&gt;]</panel_attributes>
-    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+    <panel_attributes>lt=()-[]</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>690</x>
-      <y>530</y>
-      <w>200</w>
-      <h>60</h>
+      <x>704</x>
+      <y>576</y>
+      <w>184</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>symbol=component
-Embedded Recorder</panel_attributes>
+&lt;&lt;Component&gt;&gt;
+:Embedded Recorder Controller</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>690</x>
-      <y>340</y>
-      <w>200</w>
-      <h>60</h>
+      <x>704</x>
+      <y>424</y>
+      <w>184</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>symbol=component
-File Descriptor</panel_attributes>
+&lt;&lt;Component&gt;&gt;
+:File Descriptor</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>770</x>
-      <y>460</y>
-      <w>50</w>
-      <h>90</h>
+      <x>776</x>
+      <y>520</y>
+      <w>40</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>lt=[v]-(</panel_attributes>
+    <panel_attributes>lt=[]-(</panel_attributes>
     <additional_attributes>20.0;70.0;20.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
-      <y>390</y>
-      <w>30</w>
-      <h>90</h>
+      <x>784</x>
+      <y>464</y>
+      <w>96</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>lt=()-[^]</panel_attributes>
+    <panel_attributes>lt=()-[]
+IFileDescriptor</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1030</x>
-      <y>530</y>
-      <w>200</w>
-      <h>60</h>
+      <x>1064</x>
+      <y>576</y>
+      <w>184</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>symbol=component
-Data Visualizer</panel_attributes>
+&lt;&lt;Component&gt;&gt;
+:Data Visualizer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>960</x>
-      <y>540</y>
-      <w>90</w>
-      <h>50</h>
+      <x>880</x>
+      <y>584</y>
+      <w>88</w>
+      <h>48</h>
     </coordinates>
-    <panel_attributes>lt=[&gt;]-(</panel_attributes>
-    <additional_attributes>70.0;20.0;20.0;20.0</additional_attributes>
+    <panel_attributes>lt=[]-(
+
+
+</panel_attributes>
+    <additional_attributes>10.0;20.0;80.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>550</y>
-      <w>100</w>
-      <h>30</h>
+      <x>952</x>
+      <y>584</y>
+      <w>128</w>
+      <h>32</h>
     </coordinates>
-    <panel_attributes>lt=()-[&gt;]</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=()-[]
+IDataVisualizer</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>624</x>
+      <y>352</y>
+      <w>640</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+&lt;&lt;Subsystem&gt;&gt; Embedded Recorder
+--
+
+                                                                                           internal structure</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>592</y>
+      <w>64</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=[]-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>104</x>
+      <y>352</y>
+      <w>272</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+&lt;&lt;Subsystem&gt;&gt; Main
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>456</x>
+      <y>584</y>
+      <w>176</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+
+
+IEmbeddedRecorderController</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>592</y>
+      <w>64</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-[]</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>584</y>
+      <w>64</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-(</panel_attributes>
+    <additional_attributes>10.0;20.0;50.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>416</x>
+      <y>592</y>
+      <w>56</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
   </element>
 </diagram>

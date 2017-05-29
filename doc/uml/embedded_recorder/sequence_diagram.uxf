@@ -4,8 +4,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>243</x>
-      <y>171</y>
+      <x>180</x>
+      <y>45</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -15,8 +15,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>207</x>
-      <y>153</y>
+      <x>144</x>
+      <y>27</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -26,8 +26,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>495</x>
-      <y>153</y>
+      <x>432</x>
+      <y>27</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -37,8 +37,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>819</x>
-      <y>153</y>
+      <x>756</x>
+      <y>27</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -48,8 +48,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1152</x>
-      <y>153</y>
+      <x>1089</x>
+      <y>27</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -59,8 +59,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>171</y>
+      <x>819</x>
+      <y>45</y>
       <w>27</w>
       <h>243</h>
     </coordinates>
@@ -70,8 +70,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>171</y>
+      <x>1152</x>
+      <y>45</y>
       <w>27</w>
       <h>189</h>
     </coordinates>
@@ -81,8 +81,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>252</x>
-      <y>216</y>
+      <x>189</x>
+      <y>90</y>
       <w>324</w>
       <h>36</h>
     </coordinates>
@@ -93,8 +93,8 @@ Sende Ereignis</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>558</x>
-      <y>216</y>
+      <x>495</x>
+      <y>90</y>
       <w>18</w>
       <h>297</h>
     </coordinates>
@@ -104,8 +104,8 @@ Sende Ereignis</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>243</y>
+      <x>504</x>
+      <y>117</y>
       <w>234</w>
       <h>99</h>
     </coordinates>
@@ -116,8 +116,8 @@ Sende Ereignis</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>522</x>
-      <y>387</y>
+      <x>459</x>
+      <y>261</y>
       <w>585</w>
       <h>108</h>
     </coordinates>
@@ -130,8 +130,8 @@ Sende Ereignis</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>504</y>
+      <x>495</x>
+      <y>378</y>
       <w>27</w>
       <h>180</h>
     </coordinates>
@@ -141,8 +141,8 @@ Sende Ereignis</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>396</y>
+      <x>504</x>
+      <y>270</y>
       <w>333</w>
       <h>36</h>
     </coordinates>
@@ -153,8 +153,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>882</x>
-      <y>396</y>
+      <x>819</x>
+      <y>270</y>
       <w>18</w>
       <h>90</h>
     </coordinates>
@@ -164,8 +164,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>477</y>
+      <x>819</x>
+      <y>351</y>
       <w>27</w>
       <h>207</h>
     </coordinates>
@@ -175,8 +175,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>243</x>
-      <y>243</y>
+      <x>180</x>
+      <y>117</y>
       <w>27</w>
       <h>441</h>
     </coordinates>
@@ -186,8 +186,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>198</x>
-      <y>666</y>
+      <x>135</x>
+      <y>540</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -197,8 +197,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>495</x>
-      <y>666</y>
+      <x>432</x>
+      <y>540</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -208,8 +208,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>171</y>
+      <x>495</x>
+      <y>45</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -219,8 +219,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>819</x>
-      <y>666</y>
+      <x>756</x>
+      <y>540</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -230,8 +230,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>342</y>
+      <x>504</x>
+      <y>216</y>
       <w>666</w>
       <h>36</h>
     </coordinates>
@@ -242,8 +242,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1215</x>
-      <y>342</y>
+      <x>1152</x>
+      <y>216</y>
       <w>18</w>
       <h>36</h>
     </coordinates>
@@ -253,8 +253,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>180</x>
-      <y>126</y>
+      <x>117</x>
+      <y>0</y>
       <w>1224</w>
       <h>630</h>
     </coordinates>
@@ -264,8 +264,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>369</y>
+      <x>1152</x>
+      <y>243</y>
       <w>27</w>
       <h>315</h>
     </coordinates>
@@ -275,8 +275,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1152</x>
-      <y>666</y>
+      <x>1089</x>
+      <y>540</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -286,8 +286,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>207</x>
-      <y>801</y>
+      <x>144</x>
+      <y>675</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -297,8 +297,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>495</x>
-      <y>801</y>
+      <x>432</x>
+      <y>675</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -308,8 +308,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>819</x>
-      <y>801</y>
+      <x>756</x>
+      <y>675</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -319,8 +319,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1152</x>
-      <y>801</y>
+      <x>1089</x>
+      <y>675</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -330,8 +330,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>252</x>
-      <y>819</y>
+      <x>189</x>
+      <y>693</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -341,8 +341,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>819</y>
+      <x>495</x>
+      <y>693</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -352,8 +352,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>819</y>
+      <x>819</x>
+      <y>693</y>
       <w>27</w>
       <h>81</h>
     </coordinates>
@@ -363,8 +363,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>882</x>
-      <y>882</y>
+      <x>819</x>
+      <y>756</y>
       <w>18</w>
       <h>99</h>
     </coordinates>
@@ -374,8 +374,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>180</x>
-      <y>774</y>
+      <x>117</x>
+      <y>648</y>
       <w>1224</w>
       <h>675</h>
     </coordinates>
@@ -385,8 +385,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>243</x>
-      <y>216</y>
+      <x>180</x>
+      <y>90</y>
       <w>18</w>
       <h>36</h>
     </coordinates>
@@ -396,8 +396,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>252</x>
-      <y>864</y>
+      <x>189</x>
+      <y>738</y>
       <w>18</w>
       <h>36</h>
     </coordinates>
@@ -407,8 +407,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>252</x>
-      <y>891</y>
+      <x>189</x>
+      <y>765</y>
       <w>27</w>
       <h>261</h>
     </coordinates>
@@ -418,8 +418,8 @@ SaveRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>864</y>
+      <x>198</x>
+      <y>738</y>
       <w>315</w>
       <h>36</h>
     </coordinates>
@@ -430,8 +430,8 @@ PlayRecordedData()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>558</x>
-      <y>864</y>
+      <x>495</x>
+      <y>738</y>
       <w>18</w>
       <h>459</h>
     </coordinates>
@@ -441,8 +441,8 @@ PlayRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>882</y>
+      <x>504</x>
+      <y>756</y>
       <w>333</w>
       <h>36</h>
     </coordinates>
@@ -453,8 +453,8 @@ LoadRecordedData()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>945</y>
+      <x>504</x>
+      <y>819</y>
       <w>333</w>
       <h>36</h>
     </coordinates>
@@ -465,8 +465,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>981</y>
+      <x>504</x>
+      <y>855</y>
       <w>270</w>
       <h>99</h>
     </coordinates>
@@ -477,8 +477,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>972</y>
+      <x>819</x>
+      <y>846</y>
       <w>27</w>
       <h>405</h>
     </coordinates>
@@ -488,8 +488,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>1071</y>
+      <x>504</x>
+      <y>945</y>
       <w>666</w>
       <h>36</h>
     </coordinates>
@@ -500,8 +500,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>819</y>
+      <x>1152</x>
+      <y>693</y>
       <w>27</w>
       <h>270</h>
     </coordinates>
@@ -511,8 +511,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1215</x>
-      <y>1071</y>
+      <x>1152</x>
+      <y>945</y>
       <w>18</w>
       <h>36</h>
     </coordinates>
@@ -522,8 +522,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>198</x>
-      <y>1152</y>
+      <x>135</x>
+      <y>1026</y>
       <w>504</w>
       <h>135</h>
     </coordinates>
@@ -536,8 +536,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>252</x>
-      <y>1134</y>
+      <x>189</x>
+      <y>1008</y>
       <w>18</w>
       <h>189</h>
     </coordinates>
@@ -547,8 +547,8 @@ Sende Datensatz</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>1161</y>
+      <x>198</x>
+      <y>1035</y>
       <w>315</w>
       <h>36</h>
     </coordinates>
@@ -559,8 +559,8 @@ SendPulseMessage()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>261</x>
-      <y>1287</y>
+      <x>198</x>
+      <y>1161</y>
       <w>315</w>
       <h>36</h>
     </coordinates>
@@ -571,8 +571,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>558</x>
-      <y>1314</y>
+      <x>495</x>
+      <y>1188</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -582,8 +582,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>252</x>
-      <y>1314</y>
+      <x>189</x>
+      <y>1188</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -593,8 +593,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>207</x>
-      <y>1359</y>
+      <x>144</x>
+      <y>1233</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -604,8 +604,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>495</x>
-      <y>1359</y>
+      <x>432</x>
+      <y>1233</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -615,8 +615,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>828</x>
-      <y>1359</y>
+      <x>765</x>
+      <y>1233</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
@@ -626,8 +626,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>1098</y>
+      <x>1152</x>
+      <y>972</y>
       <w>27</w>
       <h>279</h>
     </coordinates>
@@ -637,8 +637,8 @@ Ack' that the recorder is done</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1152</x>
-      <y>1359</y>
+      <x>1089</x>
+      <y>1233</y>
       <w>144</w>
       <h>27</h>
     </coordinates>
