@@ -16,7 +16,7 @@ Serial::Serial(SerialReceiver &rec, SerialSender &sender,ITopLvlProtocoll &proto
 	LOG_SCOPE
     ch_in = new PulseMessageReceiverService(channel_in);
     ch_out = new PulseMessageSenderService(channel_out);
-    rec_thread(*rec);
+    rec_thread(std::ref(rec));
 }
 
 void Serial::operator()() {
