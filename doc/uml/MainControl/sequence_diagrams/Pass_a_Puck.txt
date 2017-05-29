@@ -1,0 +1,11 @@
+title Pass a Puck
+
+MainControl->PuckManager: LB_SWITCH_IN
+PuckManager->Puck: LB_SWITCH_IN
+Puck-->PuckManager: EVALUATE
+
+PuckManager->PuckSort: TYPE
+PuckSort-->PuckManager: PASS
+
+PuckManager-->MainControl: PASS
+

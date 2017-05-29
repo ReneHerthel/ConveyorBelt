@@ -1,0 +1,7 @@
+title Denied Signal
+
+MainControl->PuckManager: LB_INLET_OUT
+PuckManager->Puck: LB_INLET_OUT
+Puck-->PuckManager: DENY
+PuckManager-->MainControl: DENY
+
