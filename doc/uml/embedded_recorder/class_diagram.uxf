@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>648</y>
+      <w>200</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>type=actclass
+&lt;&lt;control&gt;&gt;
+EmbeddedRecorder
+--
+- ringbuffer : record_t[0..n]
+--
+- ImportData() : void
+- ExportData() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>336</y>
+      <w>200</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IEmbeddedRecorder
+--
++ ShowRecordedData() : void
++ PlayRecordedData() : void
++ SaveRecordedData() : void
++ LoadRecordedData() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>648</y>
+      <w>224</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;boundary&gt;&gt;
+FileDescriptor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>336</y>
+      <w>224</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IFileDescriptor
+--
++ ReadRecordsFromFile() : record_t[0..n]
++ WriteRecordsToFile(data : record_t[0..n]) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>824</x>
+      <y>440</y>
+      <w>24</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1184</x>
+      <y>440</y>
+      <w>24</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>928</x>
+      <y>704</y>
+      <w>168</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+          fileDescriptor
+m1=1</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>64</y>
+      <w>200</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;struct&gt;&gt;
+record_t
+--
++ signalType : uint8_t
++ timeStamp : uint32_t
++ value : uint32_t
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>824</x>
+      <y>168</y>
+      <w>48</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>928</x>
+      <y>88</y>
+      <w>280</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+      &lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0;330.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>336</y>
+      <w>304</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IRecordVisualizer
+--
++ PrintRecordToConsole(record : &lt;&lt;ptr&gt;&gt; record_t) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>88</y>
+      <w>568</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+            &lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>690.0;20.0;10.0;20.0;10.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>776</x>
+      <y>0</y>
+      <w>112</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>TODO:
+value : uint32_t for all
+informations? ideas?
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>216</y>
+      <w>152</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;struct&gt;&gt;
+recordBuffer_t
+--
++ data : record_t[0..n]
++ read : uint8_t
++ write : uint8_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>312</y>
+      <w>48</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>128</y>
+      <w>248</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>290.0;20.0;10.0;20.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>832</y>
+      <w>160</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+RecordBuffer
+--
+- recordBuffer : recordBuffer_t
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>600</y>
+      <w>24</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>392</x>
+      <y>504</y>
+      <w>240</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IRecordBuffer
+--
++ WriteRecord(record : record_t) : void
++ ReadRecord(record : &lt;&lt;ptr&gt;&gt; record_t) : void
++ WriteRecords(record : &lt;&lt;ptr&gt;&gt; record_t) : void
++ ReadRecords(record : &lt;&lt;ptr&gt;&gt; record_t) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>784</y>
+      <w>264</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+m1=1    ringBuffer
+</panel_attributes>
+    <additional_attributes>10.0;140.0;310.0;140.0;310.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>784</y>
+      <w>696</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+m1=1    recordVisualizer
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;330.0;850.0;330.0;850.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>32</x>
+      <y>648</y>
+      <w>304</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;boundar&gt;&gt;
+RecordVisualizer
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>440</y>
+      <w>24</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+  </element>
+</diagram>
