@@ -16,18 +16,17 @@ Serial::Serial(SerialReceiver &rec, SerialSender &sender,ITopLvlProtocoll &proto
 	LOG_SCOPE
     ch_in = new PulseMessageReceiverService(channel_in);
     ch_out = new PulseMessageSenderService(channel_out);
-    //std::thread receiver(rec, channel_in);
-    std::thread serial(&Serial::run, this); //start serial
-
+    rec_thread(*rec);
 }
 
-void Serial::run() {
+void Serial::operator()() {
 	LOG_SCOPE
     while(1){ //TODO make killable
         uint8_t code; //TODO wait for Wrapper fix
         uint32_t  value;
         IPulseMessageReceiver::rcv_msg_t msg;
         serialized ser;
+        LOG_DEBUG << "Serial Waiting for pulse \n";
         msg = ch_in->receivePulseMessage();
         LOG_DEBUG << "Serial received Pulse \n";
         code = msg.code;
@@ -49,5 +48,6 @@ void Serial::run() {
                 LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
                 //TODO Serial Error handling
         }
+        break;
     }
 }

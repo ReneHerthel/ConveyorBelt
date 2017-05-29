@@ -14,6 +14,7 @@
 #include "PulseMessageReceiverService.h"
 #include "IPulseMessageSender.h"
 #include "PulseMessageSenderService.h"
+#include <thread>
 class Serial {
 public:
     /**
@@ -29,7 +30,7 @@ public:
     /**
      * The Serial thread
      */
-    void run();
+    void operator()();
 
 
 
@@ -39,6 +40,7 @@ private:
     ITopLvlProtocoll& proto;         /// Protocol used with Serial communication
     IPulseMessageReceiver *ch_in;    /// Incoming cmd; incoming data from receiver
     IPulseMessageSender *ch_out;      /// Outgoing data
+    std::thread rec_thread;
 };
 
 

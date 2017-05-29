@@ -37,6 +37,8 @@ PulseMessageReceiverService::PulseMessageReceiverService(const int chid)
 
 PulseMessageReceiverService::rcv_msg_t PulseMessageReceiverService::receivePulseMessage()
 {
+	LOG_SCOPE
+	LOG_SET_LEVEL(DEBUG);
     rcv_msg_t receivedMessage;
 
     // First check if there is a vaild channel ID.
@@ -45,11 +47,15 @@ PulseMessageReceiverService::rcv_msg_t PulseMessageReceiverService::receivePulse
         //return chid_;
     }
 
+    LOG_DEBUG << "Checked chid " << chid_ <<"\n";
+
     // The struct that defines a pulse.
     struct _pulse pulse;
 
     // Blocks and wait for an incoming pulse message.
     int err = MsgReceive_r(chid_, &pulse, sizeof(_pulse), NULL);
+
+    LOG_DEBUG << "Checked err " << err <<"\n";
 
     // Check if an error occurs from the MsgReceive_r function.
     if (err < 0) {
