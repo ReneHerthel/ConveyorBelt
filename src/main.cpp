@@ -34,6 +34,6 @@ int main() {
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//
-    ts.START_TEST("TEST_RESULT.txt");
+    ts.START_TEST("/TEST_RESULT.txt");
     return 0;
 }

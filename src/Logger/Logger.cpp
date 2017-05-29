@@ -9,7 +9,7 @@
 
 Logger::Logger()
 	: logginglevel_(DEBUG) { // set default level
-	logfile_.open("logging.txt",ios::trunc);
+	logfile_.open("/logging.txt",ios::trunc);
 	logfile_<<"LOGFILE. Build: "<<__DATE__<<", "<<__TIME__<<endl;
 }
 

@@ -9,6 +9,7 @@
 #include "SerialProtocoll.h"
 #include "ITopLvlProtocoll.h"
 #include "../../Tests/Serial/SerialTestStub.h"
+#include <string.h>
 
 /**
  * This is an unidirectional Protocoll over Serial

@@ -36,7 +36,7 @@ char* SerialReceiver::receive() {
     //tcsetattr(in, TCSANOW, &ts_in);
 
     //Read Header
-    if(!readFromSerial(headerBuff, FRAME_HEAD_BYTES)){
+    if(readFromSerial(headerBuff, FRAME_HEAD_BYTES) != 0){
         LOG_ERROR << "Couldnt read header \n";
         //TODO Serial Error Handling
     }
@@ -44,13 +44,13 @@ char* SerialReceiver::receive() {
 
     //Read Msg
 
-    if(!readFromSerial(msgBuff, msgSize)){
+    if(readFromSerial(msgBuff, msgSize) != 0){
         LOG_ERROR << "Couldnt read message \n";
         //TODO Serial Error Handling
     }
 
     //Read Tail
-    if(!readFromSerial(tailBuff, FRAME_TAIL_BYTES)){
+    if(readFromSerial(tailBuff, FRAME_TAIL_BYTES) != 0){
         LOG_ERROR << "Couldnt read tail \n";
         //TODO Serial Error Handling
     }

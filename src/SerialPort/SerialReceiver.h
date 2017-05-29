@@ -7,6 +7,7 @@
 
 #include <string>
 #include <fcntl.h>
+#include <stdint.h>
 
 #ifndef WINDOWS
 #include <termios.h>
