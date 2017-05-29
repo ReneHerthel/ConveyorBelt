@@ -8,6 +8,7 @@
 #include "../Logger/LogScope.h"
 #include "../Wrapper/PulseMessageSender/IPulseMessageSender.h"
 #include "../Wrapper/PulseMessageSender/PulseMessageSenderService.h"
+#include "SerialProtocoll.h"
 
 SerialReceiver::SerialReceiver(char *path) {
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
@@ -102,7 +103,7 @@ void SerialReceiver::operator()(int chid){
     PulseMessageSenderService pms(chid);
     while(1){ //TODO Make killable
         buff = receive();
-        pms.sendPulseMessage((int)buff);
+        pms.sendPulseMessage(SER_IN, (int)buff);
     }
 }
 

@@ -6,6 +6,7 @@
 #include "TestFramework/TestSuite.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
+#include "FullSerialTest.h"
 #include "Logger/Logger.h"
 
 using namespace std;
@@ -31,6 +32,7 @@ int main() {
     //TEST FOR: Serial
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
     ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll]"));
+    ts.REG_TESTCASE(new FullSerialTest(6, "[Serial]"));
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//

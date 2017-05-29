@@ -51,7 +51,7 @@ enum code : int8_t {
     TRANSM_OUT = TRANSM_OUT_CODE /// Outgoing Transmission of an Puck object
 };
 
-class SerialProtocoll : ITopLvlProtocoll {
+class SerialProtocoll : public ITopLvlProtocoll {
 public:
 	SerialProtocoll(Serial_mode mode);
 	virtual ~SerialProtocoll();

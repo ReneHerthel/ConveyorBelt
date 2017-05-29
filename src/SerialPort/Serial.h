@@ -10,10 +10,10 @@
 #include "SerialSender.h"
 #include "TopLevelProto/ITopLvlProtocoll.h"
 #include "TopLevelProto/SerialProtocoll.h"
-#include "../Wrapper/PulseMessageReceiver/IPulseMessageReceiver.h"
-#include "../Wrapper/PulseMessageReceiver/PulseMessageReceiverService.h"
-#include "../Wrapper/PulseMessageSender/IPulseMessageSender.h"
-#include "../Wrapper/PulseMessageSender/PulseMessageSenderService.h"
+#include "IPulseMessageReceiver.h"
+#include "PulseMessageReceiverService.h"
+#include "IPulseMessageSender.h"
+#include "PulseMessageSenderService.h"
 class Serial {
 public:
     /**

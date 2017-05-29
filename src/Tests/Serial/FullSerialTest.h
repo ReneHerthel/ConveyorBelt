@@ -6,7 +6,13 @@
 #define CONVEYORBELT_FullSerialTest_H
 
 
-#include "../../TestFramework/TestCase.h"
+#include "TestCase.h"
+#include "Serial.h"
+#include "ITopLvlProtocoll.h"
+#include "IPulseMessageReceiver.h"
+#include "PulseMessageReceiverService.h"
+#include "IPulseMessageSender.h"
+#include "PulseMessageSenderService.h"
 
 class FullSerialTest : public TestCase{
     public:
