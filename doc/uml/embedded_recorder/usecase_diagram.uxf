@@ -5,7 +5,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>160</x>
-      <y>910</y>
+      <y>860</y>
       <w>880</w>
       <h>620</h>
     </coordinates>
@@ -17,7 +17,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>910</y>
+      <y>860</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -28,7 +28,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>220</x>
-      <y>1140</y>
+      <y>1090</y>
       <w>170</w>
       <h>80</h>
     </coordinates>
@@ -39,7 +39,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>1020</y>
+      <y>970</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -50,7 +50,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>940</y>
+      <y>890</y>
       <w>220</w>
       <h>220</h>
     </coordinates>
@@ -61,7 +61,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>1050</y>
+      <y>1000</y>
       <w>160</w>
       <h>130</h>
     </coordinates>
@@ -72,7 +72,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>0</x>
-      <y>1130</y>
+      <y>1080</y>
       <w>140</w>
       <h>110</h>
     </coordinates>
@@ -83,7 +83,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>10</x>
-      <y>1240</y>
+      <y>1190</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -94,7 +94,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>1160</y>
+      <y>1110</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
@@ -105,7 +105,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>1200</y>
+      <y>1150</y>
       <w>180</w>
       <h>100</h>
     </coordinates>
@@ -116,7 +116,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>10</x>
-      <y>1350</y>
+      <y>1300</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -127,7 +127,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>1210</y>
+      <y>1160</y>
       <w>220</w>
       <h>200</h>
     </coordinates>
@@ -138,7 +138,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>520</x>
-      <y>1140</y>
+      <y>1090</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -149,7 +149,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>380</x>
-      <y>1150</y>
+      <y>1100</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -161,7 +161,7 @@ halign=left</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>790</x>
-      <y>160</y>
+      <y>110</y>
       <w>250</w>
       <h>690</h>
     </coordinates>
@@ -173,7 +173,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>830</x>
-      <y>1080</y>
+      <y>1030</y>
       <w>170</w>
       <h>80</h>
     </coordinates>
@@ -184,7 +184,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>830</x>
-      <y>950</y>
+      <y>900</y>
       <w>170</w>
       <h>80</h>
     </coordinates>
@@ -195,7 +195,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1160</x>
-      <y>1070</y>
+      <y>1020</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -206,7 +206,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>990</x>
-      <y>1100</y>
+      <y>1050</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
@@ -217,7 +217,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>530</x>
-      <y>170</y>
+      <y>120</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -228,7 +228,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>520</x>
-      <y>750</y>
+      <y>700</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -239,7 +239,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>520</x>
-      <y>580</y>
+      <y>530</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -250,7 +250,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>510</x>
-      <y>440</y>
+      <y>390</y>
       <w>150</w>
       <h>110</h>
     </coordinates>
@@ -261,7 +261,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>530</x>
-      <y>310</y>
+      <y>260</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -272,7 +272,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>160</y>
+      <y>110</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -284,7 +284,7 @@ Signaltyp &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>300</y>
+      <y>250</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -296,7 +296,7 @@ Signaltyp &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>430</y>
+      <y>380</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -308,7 +308,7 @@ Signaltyp &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>570</y>
+      <y>520</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -320,7 +320,7 @@ Signaltyp &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>740</y>
+      <y>690</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -332,7 +332,7 @@ Signaltyp &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>190</y>
+      <y>140</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -344,7 +344,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>330</y>
+      <y>280</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -356,7 +356,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>460</y>
+      <y>410</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -368,7 +368,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>600</y>
+      <y>550</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -380,7 +380,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>770</y>
+      <y>720</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -392,7 +392,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>630</y>
+      <y>580</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -403,7 +403,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>800</y>
+      <y>750</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -414,7 +414,7 @@ Zeitpunkt in ms &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>490</y>
+      <y>440</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -426,7 +426,7 @@ Nachricht &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>360</y>
+      <y>310</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -438,7 +438,7 @@ Signal &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>220</y>
+      <y>170</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -450,7 +450,7 @@ Signal &gt;</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1190</x>
-      <y>440</y>
+      <y>390</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -461,7 +461,7 @@ Signal &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1030</x>
-      <y>460</y>
+      <y>410</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -473,7 +473,7 @@ Pulse Message &gt;</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1150</x>
-      <y>940</y>
+      <y>890</y>
       <w>140</w>
       <h>110</h>
     </coordinates>
@@ -484,7 +484,7 @@ Pulse Message &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>990</x>
-      <y>970</y>
+      <y>920</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
@@ -495,7 +495,7 @@ Pulse Message &gt;</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1170</x>
-      <y>1300</y>
+      <y>1250</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -506,7 +506,7 @@ Pulse Message &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>990</x>
-      <y>1340</y>
+      <y>1290</y>
       <w>220</w>
       <h>70</h>
     </coordinates>
@@ -517,7 +517,7 @@ Pulse Message &gt;</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>830</x>
-      <y>1210</y>
+      <y>1160</y>
       <w>170</w>
       <h>80</h>
     </coordinates>
@@ -528,7 +528,7 @@ Pulse Message &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>640</x>
-      <y>1210</y>
+      <y>1160</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
@@ -540,7 +540,7 @@ Pulse Message &gt;</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>830</x>
-      <y>1340</y>
+      <y>1290</y>
       <w>170</w>
       <h>80</h>
     </coordinates>
@@ -555,7 +555,7 @@ valign=top</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>990</x>
-      <y>1240</y>
+      <y>1190</y>
       <w>220</w>
       <h>110</h>
     </coordinates>
@@ -566,7 +566,7 @@ valign=top</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1180</x>
-      <y>200</y>
+      <y>150</y>
       <w>140</w>
       <h>110</h>
     </coordinates>
@@ -577,7 +577,7 @@ valign=top</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1200</x>
-      <y>640</y>
+      <y>590</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -588,7 +588,7 @@ valign=top</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1030</x>
-      <y>630</y>
+      <y>580</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -600,7 +600,7 @@ Bytestrom &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1030</x>
-      <y>220</y>
+      <y>170</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -612,7 +612,7 @@ String &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1030</x>
-      <y>680</y>
+      <y>630</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -624,7 +624,7 @@ String &gt;</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>1160</x>
-      <y>1170</y>
+      <y>1120</y>
       <w>130</w>
       <h>70</h>
     </coordinates>
@@ -638,7 +638,7 @@ bg=blue</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2070</x>
-      <y>170</y>
+      <y>120</y>
       <w>170</w>
       <h>410</h>
     </coordinates>
@@ -650,7 +650,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1750</x>
-      <y>330</y>
+      <y>280</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -661,7 +661,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1830</x>
-      <y>320</y>
+      <y>270</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -673,7 +673,7 @@ Capsuled information &gt;</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>2380</x>
-      <y>200</y>
+      <y>150</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -684,7 +684,7 @@ Capsuled information &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1830</x>
-      <y>360</y>
+      <y>310</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -696,7 +696,7 @@ Capsuled information &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>220</y>
+      <y>170</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
@@ -708,7 +708,7 @@ Capsuled information &gt;</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>2380</x>
-      <y>400</y>
+      <y>350</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -719,7 +719,7 @@ Capsuled information &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>400</y>
+      <y>350</y>
       <w>190</w>
       <h>40</h>
     </coordinates>
@@ -731,7 +731,7 @@ Bytestrom (save) &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>440</y>
+      <y>390</y>
       <w>190</w>
       <h>40</h>
     </coordinates>
@@ -743,7 +743,7 @@ Bytestrom (save) &gt;</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1850</x>
-      <y>750</y>
+      <y>700</y>
       <w>730</w>
       <h>550</h>
     </coordinates>
@@ -755,7 +755,7 @@ halign=left</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>1660</x>
-      <y>890</y>
+      <y>840</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -766,7 +766,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>1910</x>
-      <y>890</y>
+      <y>840</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -777,7 +777,7 @@ halign=left</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1740</x>
-      <y>920</y>
+      <y>870</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -788,7 +788,7 @@ halign=left</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>2270</x>
-      <y>890</y>
+      <y>840</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -803,7 +803,7 @@ valign=top</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2140</x>
-      <y>910</y>
+      <y>860</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
@@ -815,7 +815,7 @@ valign=top</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>2690</x>
-      <y>980</y>
+      <y>930</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -826,7 +826,7 @@ valign=top</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2500</x>
-      <y>920</y>
+      <y>870</y>
       <w>230</w>
       <h>110</h>
     </coordinates>
@@ -837,7 +837,7 @@ valign=top</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>1420</x>
-      <y>520</y>
+      <y>470</y>
       <w>280</w>
       <h>180</h>
     </coordinates>
@@ -855,7 +855,7 @@ bg=red</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>2270</x>
-      <y>1180</y>
+      <y>1130</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -866,7 +866,7 @@ bg=red</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>2060</x>
-      <y>1080</y>
+      <y>1030</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -877,7 +877,7 @@ bg=red</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>1910</x>
-      <y>780</y>
+      <y>730</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -888,7 +888,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1740</x>
-      <y>820</y>
+      <y>770</y>
       <w>190</w>
       <h>100</h>
     </coordinates>
@@ -899,7 +899,7 @@ bg=red</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>2680</x>
-      <y>1190</y>
+      <y>1140</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -910,7 +910,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2500</x>
-      <y>1210</y>
+      <y>1160</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
@@ -921,7 +921,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2290</x>
-      <y>1020</y>
+      <y>970</y>
       <w>440</w>
       <h>120</h>
     </coordinates>
@@ -932,7 +932,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2020</x>
-      <y>960</y>
+      <y>910</y>
       <w>160</w>
       <h>140</h>
     </coordinates>
