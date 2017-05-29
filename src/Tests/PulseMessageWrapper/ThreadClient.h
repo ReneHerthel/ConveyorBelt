@@ -34,7 +34,7 @@ public:
      *
      * @param[chid] The channel ID, where the client will send to.
      */
-    ThreadClient(const int chid);
+    ThreadClient(const int chid, int mod);
 
     /*
      * @brief Default destructor.
@@ -46,6 +46,8 @@ private:
      * @brief Transmit a single pulse message to the channel id.
      */
     void sendSinglePulseMessage();
+
+    void sendSingleStruct();
 
     /*
      * @brief The channel ID, where the client will send to.
