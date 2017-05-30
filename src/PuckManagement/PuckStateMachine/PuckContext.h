@@ -170,8 +170,8 @@ private:
 	/*******************************************/
 
 	/*******************************************
-		 * Outlet
-		 */
+	 * Outlet
+	 */
 	struct OutletArea : PuckState {
 		void outletOut();
 		PuckReturn entry();
