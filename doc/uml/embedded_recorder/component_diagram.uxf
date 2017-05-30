@@ -4,8 +4,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>128</x>
-      <y>536</y>
+      <x>24</x>
+      <y>528</y>
       <w>160</w>
       <h>88</h>
     </coordinates>
@@ -17,8 +17,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>584</y>
+      <x>176</x>
+      <y>576</y>
       <w>72</w>
       <h>40</h>
     </coordinates>
@@ -28,8 +28,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>656</x>
-      <y>592</y>
+      <x>552</x>
+      <y>584</y>
       <w>64</w>
       <h>24</h>
     </coordinates>
@@ -39,8 +39,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>704</x>
-      <y>576</y>
+      <x>600</x>
+      <y>568</y>
       <w>184</w>
       <h>48</h>
     </coordinates>
@@ -52,8 +52,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>704</x>
-      <y>424</y>
+      <x>600</x>
+      <y>416</y>
       <w>184</w>
       <h>48</h>
     </coordinates>
@@ -65,8 +65,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>776</x>
-      <y>520</y>
+      <x>672</x>
+      <y>512</y>
       <w>40</w>
       <h>72</h>
     </coordinates>
@@ -76,8 +76,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>784</x>
-      <y>464</y>
+      <x>680</x>
+      <y>456</y>
       <w>96</w>
       <h>72</h>
     </coordinates>
@@ -88,8 +88,8 @@ IFileDescriptor</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1064</x>
-      <y>576</y>
+      <x>960</x>
+      <y>568</y>
       <w>184</w>
       <h>48</h>
     </coordinates>
@@ -101,8 +101,8 @@ IFileDescriptor</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>584</y>
+      <x>776</x>
+      <y>576</y>
       <w>88</w>
       <h>48</h>
     </coordinates>
@@ -115,8 +115,8 @@ IFileDescriptor</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>952</x>
-      <y>584</y>
+      <x>848</x>
+      <y>576</y>
       <w>128</w>
       <h>32</h>
     </coordinates>
@@ -127,8 +127,8 @@ IDataVisualizer</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>624</x>
-      <y>352</y>
+      <x>520</x>
+      <y>344</y>
       <w>640</w>
       <h>312</h>
     </coordinates>
@@ -142,8 +142,8 @@ IDataVisualizer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
-      <y>592</y>
+      <x>512</x>
+      <y>584</y>
       <w>64</w>
       <h>24</h>
     </coordinates>
@@ -153,8 +153,8 @@ IDataVisualizer</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>104</x>
-      <y>352</y>
+      <x>0</x>
+      <y>344</y>
       <w>272</w>
       <h>312</h>
     </coordinates>
@@ -166,8 +166,8 @@ IDataVisualizer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>456</x>
-      <y>584</y>
+      <x>352</x>
+      <y>576</y>
       <w>176</w>
       <h>48</h>
     </coordinates>
@@ -180,8 +180,8 @@ IEmbeddedRecorderController</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>592</y>
+      <x>224</x>
+      <y>584</y>
       <w>64</w>
       <h>24</h>
     </coordinates>
@@ -191,8 +191,8 @@ IEmbeddedRecorderController</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>584</y>
+      <x>272</x>
+      <y>576</y>
       <w>64</w>
       <h>40</h>
     </coordinates>
@@ -202,12 +202,51 @@ IEmbeddedRecorderController</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>416</x>
-      <y>592</y>
+      <x>312</x>
+      <y>584</y>
       <w>56</w>
       <h>24</h>
     </coordinates>
     <panel_attributes>lt=.&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>960</x>
+      <y>416</y>
+      <w>184</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+&lt;&lt;Component&gt;&gt;
+Buffer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>472</y>
+      <w>168</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=[]-(
+
+
+</panel_attributes>
+    <additional_attributes>10.0;120.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>872</x>
+      <y>432</y>
+      <w>104</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=()-[]
+IBuffer</panel_attributes>
+    <additional_attributes>10.0;70.0;110.0;10.0</additional_attributes>
   </element>
 </diagram>
