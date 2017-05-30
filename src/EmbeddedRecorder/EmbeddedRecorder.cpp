@@ -44,6 +44,18 @@ void EmbeddedRecorder::showRecordedData() {
 
 void EmbeddedRecorder::playRecordedData() {
     // TODO Send the whole buffered record to the chid via sender.
+
+    int err = 0;
+
+    while (err >= 0) { // Until the buffer is empty. (Or maybe 30 seconds are reached by timestamps)
+        record_t *record = NULL;
+
+        err = recordBuffer->pop(record);
+
+        if (record != NULL) {
+            sender->sendPulseMessage(/*record*/);
+        }
+    }
 }
 
 void EmbeddedRecorder::saveRecordedData() {
@@ -62,6 +74,14 @@ void EmbeddedRecorder::control() {
        *
        */
     }
+}
+
+void EmbeddedRecorder::importData() {
+    // TODO
+}
+
+void EmbeddedRecorder::exportData() {
+    // TODO
 }
 
 } /* namespace rec */

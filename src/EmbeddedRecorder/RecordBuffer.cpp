@@ -55,15 +55,14 @@ int RecordBuffer::push(record_t record) {
 
     buffer.write += 1;
 
-    if ((buffer.write + 1 == buffer.read)) || (buffer.read == 0 && buffer.write + 1 == buffer.size)) {
+    if ((buffer.write + 1 >= buffer.read)) || (buffer.read == 0 && buffer.write + 1 >= buffer.size)) {
         // Actually, we overwrite the old values, but we need to know where the oldest value is.
         // So move the read index forward by one.
         buffer.read += 1;
-    }
 
-    // Reset the write pointer.
-    if (buffer.write >= buffer.size) {
-        buffer.write = 0;
+        if (buffer.read >= buffer.size) {
+            buffer.read = 0;
+        }
     }
 
     // Everything went fine.
