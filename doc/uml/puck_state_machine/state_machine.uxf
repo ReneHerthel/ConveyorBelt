@@ -91,7 +91,7 @@ LATE_TIMER</panel_attributes>
       <w>108</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>Error
+    <panel_attributes>ERROR
 --
 entry / returnError()
 
@@ -130,7 +130,7 @@ EARLY_TIMER</panel_attributes>
       <w>126</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>HEIGHTMAESUREMENT
+    <panel_attributes>HEIGHTMEASUREMENT
 --
 entry / startHeightMesurement()
 valign=top
@@ -157,9 +157,9 @@ LB_HEIGHTMEASUREMENT_IN</panel_attributes>
       <w>108</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>Warning
+    <panel_attributes>WARNING_INLET
 --
-entry / returnWarning
+entry / returnWarning()
 
 valign=top</panel_attributes>
     <additional_attributes/>
@@ -184,7 +184,7 @@ LB_HEIGHTMEASUREMENT_OUT</panel_attributes>
       <w>108</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>MAESUREMENT_AREA
+    <panel_attributes>MEASUREMENT_AREA
 --
 entry / startTimers()
 valign=top
@@ -247,7 +247,7 @@ LB_SWITCH_IN</panel_attributes>
       <h>132</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-METALDETECTOR</panel_attributes>
+METALDETECT</panel_attributes>
     <additional_attributes>10.0;200.0;140.0;200.0;140.0;10.0;270.0;10.0</additional_attributes>
   </element>
   <element>
@@ -619,14 +619,14 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1110</x>
+      <x>1104</x>
       <y>672</y>
-      <w>108</w>
+      <w>114</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>Warning
+    <panel_attributes>WARNING_MEASUREMENT
 --
-entry / returnWarning
+entry / returnWarning()
 
 valign=top</panel_attributes>
     <additional_attributes/>
@@ -663,9 +663,9 @@ EARLY_TIMER</panel_attributes>
       <w>108</w>
       <h>66</h>
     </coordinates>
-    <panel_attributes>Warning
+    <panel_attributes>WARNING_SWITCH
 --
-entry / returnWarning
+entry / returnWarning()
 
 valign=top</panel_attributes>
     <additional_attributes/>
