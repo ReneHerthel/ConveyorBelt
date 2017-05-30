@@ -59,12 +59,31 @@ private:
 		PuckReturn entry();
 	};
 
+	/*******************************************
+	 * Transfer
+	 */
+	struct TransferArea : PuckState {
+		void inletIn();
+		void earlyTimer();
+		PuckReturn entry();
+	};
+
+	struct TransferWarning : PuckState {
+		void earlyTimer();
+		PuckReturn entry();
+	};
+
+	struct TransferTimer : PuckState {
+		void inletIn();
+		PuckReturn entry();
+	};
+	/*******************************************/
 
 	/*******************************************
 	 * Inlet
 	 */
 	struct Inlet : PuckState {
-		void inletIn();
+		void inletOut();
 		PuckReturn entry();
 	};
 
@@ -74,7 +93,7 @@ private:
 		PuckReturn entry();
 	};
 
-	struct WarningInlet : PuckState {
+	struct InletWarning : PuckState {
 		void earlyTimer();
 		PuckReturn entry();
 	};
@@ -99,7 +118,7 @@ private:
 		PuckReturn entry();
 	};
 
-	struct WarningMeasurement : PuckState {
+	struct MeasurementWarning : PuckState {
 		void earlyTimer();
 		PuckReturn entry();
 	};
@@ -136,11 +155,6 @@ private:
 	};
 
 	struct SlideFull : PuckState {
-		void slideOut();
-		PuckReturn entry();
-	};
-
-	struct SlideFull : PuckState {
 		PuckReturn entry(); 			//e-Transition
 	};
 
@@ -158,7 +172,7 @@ private:
 		PuckReturn entry();
 	};
 
-	struct WarningSwitch : PuckState {
+	struct SwitchWarning : PuckState {
 		void earlyTimer();
 		PuckReturn entry();
 	};
