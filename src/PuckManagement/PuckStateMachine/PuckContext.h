@@ -8,6 +8,8 @@
 #ifndef PUCKCONTEXT_H_
 #define PUCKCONTEXT_H_
 
+#include "HeightSignal.h"
+
 class PuckContext {
 public:
 
@@ -19,7 +21,8 @@ public:
 		SEND,
 		EVALUATE,
 		HEIGHT,
-		SLIDE_FULL
+		SLIDE_FULL,
+		WARNING
 	};
 
 	PuckContext();
@@ -28,6 +31,15 @@ public:
 	PuckReturn setType(signal_t type);
 
 private:
+	signal_t puckType;
+	bool metal;
+	uint32_t puckID;
+
+	void startTimers();
+
+	/*******************************************
+	 * SuperState
+	 */
 	struct PuckState {
 		virtual void inletIn();
 		virtual void inletOut();
@@ -53,11 +65,13 @@ private:
 		virtual void lateTimer();
 
 		virtual PuckReturn entry();
-	} *state;
 
-	struct Error : PuckState {
-		PuckReturn entry();
-	};
+		PuckReturn returnVal;
+		PuckContext *context;
+	} *statePtr, state;
+
+
+	/*******************************************/
 
 	/*******************************************
 	 * Transfer
@@ -107,7 +121,7 @@ private:
 	/*******************************************
 	 * Heightmeasurement
 	 */
-	struct HeightMeasurement : PuckState {
+	struct Heightmeasurement : PuckState {
 		void heightmeasurementOut();
 		PuckReturn entry();
 	};
