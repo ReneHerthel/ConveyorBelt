@@ -4,8 +4,8 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>258</x>
-      <y>558</y>
+      <x>96</x>
+      <y>570</y>
       <w>108</w>
       <h>66</h>
     </coordinates>
@@ -19,8 +19,8 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>492</x>
-      <y>558</y>
+      <x>330</x>
+      <y>570</y>
       <w>108</w>
       <h>66</h>
     </coordinates>
@@ -35,8 +35,8 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
-      <y>576</y>
+      <x>198</x>
+      <y>588</y>
       <w>144</w>
       <h>24</h>
     </coordinates>
@@ -47,19 +47,19 @@ LB_INLET_OUT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>570</x>
-      <y>498</y>
-      <w>210</w>
-      <h>108</h>
+      <x>630</x>
+      <y>588</y>
+      <w>168</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LB_HEIGHTMEASUREMENT_IN</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;10.0;130.0;160.0;210.0;160.0</additional_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>282</x>
+      <x>618</x>
       <y>90</y>
       <w>108</w>
       <h>66</h>
@@ -74,7 +74,7 @@ symbol=substate
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
+      <x>720</x>
       <y>114</y>
       <w>210</w>
       <h>24</h>
@@ -86,7 +86,7 @@ LATE_TIMER</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>582</x>
+      <x>918</x>
       <y>90</y>
       <w>108</w>
       <h>66</h>
@@ -102,20 +102,20 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>510</y>
-      <w>72</w>
-      <h>60</h>
+      <x>432</x>
+      <y>588</y>
+      <w>156</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>516</x>
-      <y>492</y>
+      <x>576</x>
+      <y>588</y>
       <w>60</w>
       <h>24</h>
     </coordinates>
@@ -125,8 +125,8 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>696</x>
-      <y>558</y>
+      <x>786</x>
+      <y>564</y>
       <w>126</w>
       <h>66</h>
     </coordinates>
@@ -140,8 +140,8 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>618</y>
+      <x>378</x>
+      <y>630</y>
       <w>138</w>
       <h>66</h>
     </coordinates>
@@ -152,19 +152,23 @@ LB_HEIGHTMEASUREMENT_IN</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>516</x>
-      <y>672</y>
-      <w>60</w>
-      <h>24</h>
+      <x>330</x>
+      <y>684</y>
+      <w>108</w>
+      <h>66</h>
     </coordinates>
-    <panel_attributes>Error</panel_attributes>
+    <panel_attributes>Warning
+--
+entry / returnWarning
+
+valign=top</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>816</x>
-      <y>582</y>
+      <x>906</x>
+      <y>588</y>
       <w>216</w>
       <h>24</h>
     </coordinates>
@@ -175,8 +179,8 @@ LB_HEIGHTMEASUREMENT_OUT</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1020</x>
-      <y>558</y>
+      <x>1110</x>
+      <y>564</y>
       <w>108</w>
       <h>66</h>
     </coordinates>
@@ -190,8 +194,8 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1014</x>
-      <y>498</y>
+      <x>1356</x>
+      <y>588</y>
       <w>114</w>
       <h>24</h>
     </coordinates>
@@ -201,32 +205,32 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1068</x>
-      <y>516</y>
-      <w>72</w>
-      <h>54</h>
+      <x>1212</x>
+      <y>588</y>
+      <w>156</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1122</x>
-      <y>510</y>
-      <w>342</w>
-      <h>108</h>
+      <x>1464</x>
+      <y>594</y>
+      <w>336</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LB_SWITCH_IN</panel_attributes>
-    <additional_attributes>10.0;10.0;150.0;10.0;150.0;160.0;550.0;160.0</additional_attributes>
+    <additional_attributes>10.0;20.0;540.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1068</x>
-      <y>618</y>
+      <x>1158</x>
+      <y>624</y>
       <w>78</w>
       <h>60</h>
     </coordinates>
@@ -235,33 +239,22 @@ LB_SWITCH_IN</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>1044</x>
-      <y>666</y>
-      <w>60</w>
-      <h>24</h>
-    </coordinates>
-    <panel_attributes>Error</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>1122</x>
-      <y>438</y>
-      <w>180</w>
-      <h>78</h>
+      <x>1464</x>
+      <y>474</y>
+      <w>174</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 METALDETECTOR</panel_attributes>
-    <additional_attributes>10.0;110.0;150.0;110.0;150.0;10.0;280.0;10.0</additional_attributes>
+    <additional_attributes>10.0;200.0;140.0;200.0;140.0;10.0;270.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1290</x>
-      <y>414</y>
+      <x>1626</x>
+      <y>450</y>
       <w>108</w>
       <h>66</h>
     </coordinates>
@@ -276,7 +269,7 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1452</x>
+      <x>1788</x>
       <y>558</y>
       <w>108</w>
       <h>66</h>
@@ -291,7 +284,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1554</x>
+      <x>1890</x>
       <y>576</y>
       <w>114</w>
       <h>30</h>
@@ -304,19 +297,19 @@ LB_SWITCH_OPEN
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1392</x>
-      <y>438</y>
+      <x>1728</x>
+      <y>474</y>
       <w>108</w>
-      <h>150</h>
+      <h>114</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LB_SWITCH_IN</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;10.0;60.0;230.0;100.0;230.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;170.0;100.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1500</x>
+      <x>1836</x>
       <y>618</y>
       <w>66</w>
       <h>150</h>
@@ -328,7 +321,7 @@ LB_SLIDE_IN</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1656</x>
+      <x>1992</x>
       <y>558</y>
       <w>108</w>
       <h>66</h>
@@ -343,7 +336,7 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1452</x>
+      <x>1788</x>
       <y>756</y>
       <w>108</w>
       <h>66</h>
@@ -358,7 +351,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1554</x>
+      <x>1890</x>
       <y>774</y>
       <w>114</w>
       <h>24</h>
@@ -370,7 +363,7 @@ LB_SLIDE_OUT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1500</x>
+      <x>1836</x>
       <y>816</y>
       <w>66</w>
       <h>72</h>
@@ -382,7 +375,7 @@ LATE_TIMER</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1452</x>
+      <x>1788</x>
       <y>876</y>
       <w>108</w>
       <h>66</h>
@@ -397,7 +390,7 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1656</x>
+      <x>1992</x>
       <y>756</y>
       <w>108</w>
       <h>66</h>
@@ -412,7 +405,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1554</x>
+      <x>1890</x>
       <y>816</y>
       <w>168</w>
       <h>108</h>
@@ -423,20 +416,20 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1704</x>
-      <y>516</y>
-      <w>72</w>
-      <h>54</h>
+      <x>2094</x>
+      <y>576</y>
+      <w>114</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1674</x>
-      <y>498</y>
+      <x>2196</x>
+      <y>576</y>
       <w>72</w>
       <h>24</h>
     </coordinates>
@@ -446,20 +439,20 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1740</x>
-      <y>504</y>
-      <w>150</w>
-      <h>96</h>
+      <x>2262</x>
+      <y>576</y>
+      <w>120</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LB_OUTLET_IN</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;10.0;130.0;140.0;200.0;140.0</additional_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>192</x>
-      <y>582</y>
+      <x>30</x>
+      <y>594</y>
       <w>78</w>
       <h>18</h>
     </coordinates>
@@ -469,8 +462,8 @@ LB_OUTLET_IN</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>186</x>
-      <y>582</y>
+      <x>24</x>
+      <y>594</y>
       <w>12</w>
       <h>12</h>
     </coordinates>
@@ -480,7 +473,7 @@ LB_OUTLET_IN</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1860</x>
+      <x>2370</x>
       <y>558</y>
       <w>108</w>
       <h>66</h>
@@ -494,7 +487,7 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>2058</x>
+      <x>2568</x>
       <y>558</y>
       <w>108</w>
       <h>66</h>
@@ -509,7 +502,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1962</x>
+      <x>2472</x>
       <y>576</y>
       <w>108</w>
       <h>24</h>
@@ -521,7 +514,7 @@ LB_OUTLET_OUT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2160</x>
+      <x>2670</x>
       <y>576</y>
       <w>126</w>
       <h>24</h>
@@ -533,7 +526,7 @@ SERIAL_RECEIVED</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1758</x>
+      <x>2094</x>
       <y>780</y>
       <w>114</w>
       <h>18</h>
@@ -544,7 +537,7 @@ SERIAL_RECEIVED</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1860</x>
+      <x>2196</x>
       <y>780</y>
       <w>12</w>
       <h>12</h>
@@ -555,7 +548,7 @@ SERIAL_RECEIVED</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>2274</x>
+      <x>2784</x>
       <y>558</y>
       <w>108</w>
       <h>66</h>
@@ -570,7 +563,7 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2376</x>
+      <x>2886</x>
       <y>582</y>
       <w>114</w>
       <h>18</h>
@@ -581,7 +574,7 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>2478</x>
+      <x>2988</x>
       <y>582</y>
       <w>12</w>
       <h>12</h>
@@ -592,9 +585,9 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>156</x>
-      <y>348</y>
-      <w>2388</w>
+      <x>0</x>
+      <y>372</y>
+      <w>3036</w>
       <h>636</h>
     </coordinates>
     <panel_attributes>PUCK_STATE</panel_attributes>
@@ -603,12 +596,90 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>156</x>
+      <x>492</x>
       <y>0</y>
       <w>660</w>
       <h>270</h>
     </coordinates>
-    <panel_attributes>interaction frame</panel_attributes>
+    <panel_attributes>State</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>606</y>
+      <w>186</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+EARLY_TIMER</panel_attributes>
+    <additional_attributes>10.0;190.0;290.0;190.0;290.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1110</x>
+      <y>672</y>
+      <w>108</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Warning
+--
+entry / returnWarning
+
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1212</x>
+      <y>606</y>
+      <w>216</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+EARLY_TIMER</panel_attributes>
+    <additional_attributes>10.0;170.0;340.0;170.0;340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2094</x>
+      <y>468</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+EARLY_TIMER</panel_attributes>
+    <additional_attributes>10.0;20.0;230.0;20.0;230.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1992</x>
+      <y>444</y>
+      <w>108</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Warning
+--
+entry / returnWarning
+
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2040</x>
+      <y>504</y>
+      <w>78</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+LB_OUTLET_IN</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
