@@ -18,6 +18,8 @@
 
 #include <stdlib.h> // malloc
 
+namespace rec {
+
 RecordBuffer::RecordBuffer(const uint64_t size)
 {
     buffer = new Buffer();
@@ -32,7 +34,7 @@ RecordBuffer::~RecordBuffer() {
 }
 
 int RecordBuffer::push(record_t record) {
-    // Check if the there is a bufferfer.
+    // Check if the there is a buffer.
     if (buffer == NULL) {
         return -2;
     }
@@ -42,17 +44,22 @@ int RecordBuffer::push(record_t record) {
         buffer.write = 0; // More security.
     }
 
-    // Check if the bufferfer is full.
+    // Normaly, check if the buffer is full. But we won't do that.
     /*
     if ((buffer.write + 1 == buffer.read ) || ( buffer.read == 0 && buffer.write + 1 == buffer.size )) {
           return -1;
     }
     */
-    // Actually, we overwrite the old values.
 
     buffer.data[buffer.write] = record;
 
     buffer.write += 1;
+
+    if ((buffer.write + 1 == buffer.read)) || (buffer.read == 0 && buffer.write + 1 == buffer.size)) {
+        // Actually, we overwrite the old values, but we need to know where the oldest value is.
+        // So move the read index forward by one.
+        buffer.read += 1;
+    }
 
     // Reset the write pointer.
     if (buffer.write >= buffer.size) {
@@ -64,14 +71,14 @@ int RecordBuffer::push(record_t record) {
 }
 
 int RecordBuffer::pop(record_t *record) {
-    // Check if there is a bufferfer.
+    // Check if there is a buffer.
     if (buffer == NULL) {
         return -1;
     }
 
-    // Don not read from where you write.
+    // Check if the buffer is empty.
     if (buffer.read == buffer.write) {
-        return -1;
+        return -2;
     }
 
     // Write the field of the read index into the record pointer.
@@ -88,5 +95,7 @@ int RecordBuffer::pop(record_t *record) {
     // Everything went fine.
     return 0;
 }
+
+} /* namespace rec */
 
 /** @} /

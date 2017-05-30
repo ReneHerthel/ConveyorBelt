@@ -9,7 +9,7 @@
  * @ingroup    rec
  * @{
  *
- * @brief      The interface of the embedded recorder.
+ * @brief      The interface of the buffer.
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
