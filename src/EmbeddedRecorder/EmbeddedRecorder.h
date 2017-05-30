@@ -65,6 +65,16 @@ namespace rec {
 
     private:
         /*
+         * @brief TODO
+         */
+        void importData();
+
+        /*
+         * @brief TODO
+         */
+        void exportData();
+
+        /*
          * @brief The thread where the recorder is running and controlling all.
          */
         std::thread controller;
