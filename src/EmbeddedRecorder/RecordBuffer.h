@@ -17,7 +17,7 @@
 #ifndef SRC_EMBEDDEDRECORDER_RECORDBUFFER_H_
 #define SRC_EMBEDDEDRECORDER_RECORDBUFFER_H_
 
-#include "Record.h"
+#include "IRecordBuffer.h"
 
 #include <stdint.h>
 
@@ -32,7 +32,7 @@ namespace rec {
         const size_t size; /*< The actual length of the buffer.*/
     };
 
-    class RecordBuffer {
+    class RecordBuffer : public IRecordBuffer {
     public:
         /*
          * @brief TODO
