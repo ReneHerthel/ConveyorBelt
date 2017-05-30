@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>777</x>
-      <y>595</y>
+      <x>749</x>
+      <y>637</y>
       <w>175</w>
       <h>126</h>
     </coordinates>
@@ -26,8 +26,8 @@ EmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>777</x>
-      <y>322</y>
+      <x>749</x>
+      <y>364</y>
       <w>175</w>
       <h>98</h>
     </coordinates>
@@ -43,8 +43,8 @@ IEmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1078</x>
-      <y>595</y>
+      <x>1050</x>
+      <y>637</y>
       <w>196</w>
       <h>126</h>
     </coordinates>
@@ -57,8 +57,8 @@ FileDescriptor
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1078</x>
-      <y>322</y>
+      <x>1050</x>
+      <y>364</y>
       <w>196</w>
       <h>98</h>
     </coordinates>
@@ -72,8 +72,8 @@ IFileDescriptor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>854</x>
-      <y>413</y>
+      <x>826</x>
+      <y>455</y>
       <w>21</w>
       <h>196</h>
     </coordinates>
@@ -83,8 +83,8 @@ IFileDescriptor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1169</x>
-      <y>413</y>
+      <x>1141</x>
+      <y>455</y>
       <w>21</w>
       <h>196</h>
     </coordinates>
@@ -94,8 +94,8 @@ IFileDescriptor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>945</x>
-      <y>644</y>
+      <x>917</x>
+      <y>686</y>
       <w>147</w>
       <h>35</h>
     </coordinates>
@@ -107,25 +107,26 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>777</x>
-      <y>84</y>
+      <x>749</x>
+      <y>126</y>
       <w>175</w>
       <h>98</h>
     </coordinates>
     <panel_attributes>&lt;&lt;struct&gt;&gt;
 record_t
 --
-+ signalType : uint8_t
++ code : uint8_t
 + timeStamp : uint32_t
-+ value : uint32_t
++ msg : uint32_t
++ puck : object ???
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>854</x>
-      <y>175</y>
+      <x>826</x>
+      <y>217</y>
       <w>42</w>
       <h>161</h>
     </coordinates>
@@ -136,8 +137,8 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>945</x>
-      <y>105</y>
+      <x>917</x>
+      <y>147</y>
       <w>245</w>
       <h>231</h>
     </coordinates>
@@ -148,8 +149,8 @@ record_t
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>168</x>
-      <y>322</y>
+      <x>140</x>
+      <y>364</y>
       <w>266</w>
       <h>98</h>
     </coordinates>
@@ -163,8 +164,8 @@ IRecordVisualizer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>294</x>
-      <y>105</y>
+      <x>266</x>
+      <y>147</y>
       <w>497</w>
       <h>231</h>
     </coordinates>
@@ -175,8 +176,8 @@ IRecordVisualizer
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>812</x>
-      <y>28</y>
+      <x>784</x>
+      <y>70</y>
       <w>98</w>
       <h>49</h>
     </coordinates>
@@ -189,8 +190,8 @@ bg=red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>518</x>
-      <y>217</y>
+      <x>490</x>
+      <y>259</y>
       <w>133</w>
       <h>91</h>
     </coordinates>
@@ -205,8 +206,8 @@ recordBuffer_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>574</x>
-      <y>301</y>
+      <x>546</x>
+      <y>343</y>
       <w>42</w>
       <h>182</h>
     </coordinates>
@@ -217,8 +218,8 @@ recordBuffer_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>574</x>
-      <y>140</y>
+      <x>546</x>
+      <y>182</y>
       <w>217</w>
       <h>91</h>
     </coordinates>
@@ -229,8 +230,8 @@ recordBuffer_t
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>511</x>
-      <y>756</y>
+      <x>483</x>
+      <y>798</y>
       <w>140</w>
       <h>147</h>
     </coordinates>
@@ -245,8 +246,8 @@ RecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>574</x>
-      <y>553</y>
+      <x>546</x>
+      <y>595</y>
       <w>42</w>
       <h>217</h>
     </coordinates>
@@ -256,8 +257,8 @@ RecordBuffer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>476</x>
-      <y>469</y>
+      <x>448</x>
+      <y>511</y>
       <w>210</w>
       <h>91</h>
     </coordinates>
@@ -273,8 +274,8 @@ IRecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>644</x>
-      <y>714</y>
+      <x>616</x>
+      <y>756</y>
       <w>231</w>
       <h>119</h>
     </coordinates>
@@ -287,8 +288,8 @@ m1=1    ringBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>644</y>
+      <x>392</x>
+      <y>686</y>
       <w>371</w>
       <h>35</h>
     </coordinates>
@@ -301,8 +302,8 @@ m1=1    recordVisualizer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>161</x>
-      <y>595</y>
+      <x>133</x>
+      <y>637</y>
       <w>266</w>
       <h>126</h>
     </coordinates>
@@ -315,8 +316,8 @@ RecordVisualizer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>294</x>
-      <y>413</y>
+      <x>266</x>
+      <y>455</y>
       <w>21</w>
       <h>196</h>
     </coordinates>
