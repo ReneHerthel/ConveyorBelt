@@ -44,18 +44,18 @@ void ThreadServer::receive()
      *      rcv_msg_t structWithValues = receiver.receivePulseMessage();
      *      and so on..
      */
-    IPulseMessageReceiver* receiver = new PulseMessageReceiverService(chid_);
+    rcv::IPulseMessageReceiver* receiver = new rcv::PulseMessageReceiverService(chid_);
 
     //std::cout << "[ThreadServer] receiveSinglePulseMessage() Is Now waiting for a pulse message" << std::endl;
 
     pulseMessageValue_ = receiver->receivePulseMessage();
 
-    std::cout << "[ThreadServer] receiveSinglePulseMessage() received value: " << pulseMessageValue_ << std::endl;
+    std::cout << "[ThreadServer] receiveSinglePulseMessage() received value: " << pulseMessageValue_.value << std::endl;
 
     messageReceived_ = true;
 }
 
-int ThreadServer::receivePulseMessage()
+rcv::msg_t ThreadServer::receivePulseMessage()
 {
 	// This is just for the test so we dont need to sync with the main.
     while (!messageReceived_) {
