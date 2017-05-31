@@ -50,7 +50,7 @@ void ThreadServer::receive()
 
     pulseMessageValue_ = receiver->receivePulseMessage();
 
-    std::cout << "[ThreadServer] receiveSinglePulseMessage() received value: " << pulseMessageValue_.value << std::endl;
+    std::cout << "[ThreadServer] receiveSinglePulseMessage() received value: " << pulseMessageValue_.value << " received code: " << pulseMessageValue_.code << std::endl;
 
     messageReceived_ = true;
 }
