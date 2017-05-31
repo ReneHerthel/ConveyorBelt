@@ -25,13 +25,13 @@ namespace rec {
         /*
          * @brief TODO
          */
-        int push(record_t record) = 0;
+        virtual int push(record_t record) = 0;
 
         /*
          * @brief TODO
          */
-        int pop(record_t *record) = 0;
-    }
+        virtual int pop(record_t *record) = 0;
+    };
 }
 
 #endif /* SRC_EMBEDDEDRECORDER_IRECORDBUFFER_H_ */

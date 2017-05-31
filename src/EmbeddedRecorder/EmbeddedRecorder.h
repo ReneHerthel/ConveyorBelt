@@ -25,6 +25,8 @@
 #include "PulseMessageReceiverService.h"
 #include "PulseMessageSenderService.h"
 
+#include <thread>
+
 namespace rec {
     class EmbeddedRecorder : public IEmbeddedRecorder {
     public:
@@ -87,12 +89,12 @@ namespace rec {
         /*
          * @brief A reference to the receiver.
          */
-        PulseMessageReceiver *receiver;
+        rcv::PulseMessageReceiverService *receiver;
 
         /*
          * @brief A reference to the sender.
          */
-        PulseMessageSender *sender;
+        PulseMessageSenderService *sender;
 
         /*
          * @brief TODO: A reference to the file descriptor.
@@ -101,7 +103,7 @@ namespace rec {
         /*
          * @brief TODO: A reference to the data visualizer.
          */
-    }
+    };
 }
 
 #endif /* SRC_EMBEDDEDRECORDER_EMBEDDEDRECORDER_H_ */

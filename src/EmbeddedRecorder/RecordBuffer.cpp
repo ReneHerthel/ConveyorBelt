@@ -20,10 +20,10 @@
 
 namespace rec {
 
-RecordBuffer::RecordBuffer(const uint64_t size)
+RecordBuffer::RecordBuffer(const size_t size)
 {
     buffer = new Buffer();
-    buffer->data = malloc(sizeof(record_t) * size);
+    // TODO //buffer->data = malloc(sizeof(record_t) * size);
     buffer->write = 0;
     buffer->read = 0;
     buffer->size = size;
@@ -40,8 +40,8 @@ int RecordBuffer::push(record_t record) {
     }
 
     // Reset the write pointer.
-    if (buffer.write >= buffer.size) {
-        buffer.write = 0; // More security.
+    if (buffer->write >= buffer->size) {
+        buffer->write = 0; // More security.
     }
 
     // Normaly, check if the buffer is full. But we won't do that.
@@ -51,17 +51,17 @@ int RecordBuffer::push(record_t record) {
     }
     */
 
-    buffer.data[buffer.write] = record;
+    buffer->data[buffer->write] = record;
 
-    buffer.write += 1;
+    buffer->write += 1;
 
-    if ((buffer.write + 1 >= buffer.read)) || (buffer.read == 0 && buffer.write + 1 >= buffer.size)) {
+    if ((buffer->write + 1 >= buffer->read) || (buffer->read == 0 && buffer->write + 1 >= buffer->size)) {
         // Actually, we overwrite the old values, but we need to know where the oldest value is.
         // So move the read index forward by one.
-        buffer.read += 1;
+        buffer->read += 1;
 
-        if (buffer.read >= buffer.size) {
-            buffer.read = 0;
+        if (buffer->read >= buffer->size) {
+            buffer->read = 0;
         }
     }
 
@@ -76,19 +76,19 @@ int RecordBuffer::pop(record_t *record) {
     }
 
     // Check if the buffer is empty.
-    if (buffer.read == buffer.write) {
+    if (buffer->read == buffer->write) {
         return -2;
     }
 
     // Write the field of the read index into the record pointer.
-    *record = buffer.data[buffer.read];
+    *record = buffer->data[buffer->read];
 
     // Increment the read index.
-    buffer.read += 1;
+    buffer->read += 1;
 
     // Reset the read pointer.
-    if (buffer.read >= buffer.size) {
-        buffer.read = 0;
+    if (buffer->read >= buffer->size) {
+        buffer->read = 0;
     }
 
     // Everything went fine.
@@ -97,4 +97,4 @@ int RecordBuffer::pop(record_t *record) {
 
 } /* namespace rec */
 
-/** @} /
+/** @} */

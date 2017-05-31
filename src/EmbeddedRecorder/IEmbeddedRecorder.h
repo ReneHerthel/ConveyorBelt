@@ -23,23 +23,23 @@ namespace rec {
         /*
          * @brief TODO
          */
-        void showRecordedData() = 0;
+        virtual void showRecordedData() = 0;
 
         /*
          * @brief TODO
          */
-        void playRecordedData() = 0;
+        virtual void playRecordedData() = 0;
 
         /*
          * @brief TODO
          */
-        void saveRecordedData() = 0;
+        virtual void saveRecordedData() = 0;
 
         /*
          * @brief TODO
          */
-        void loadRecordedData() = 0;
-    }
+        virtual void loadRecordedData() = 0;
+    };
 }
 
 #endif /* SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_ */

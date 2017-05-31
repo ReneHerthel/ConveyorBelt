@@ -17,6 +17,8 @@
 #ifndef SRC_EMBEDDEDRECORDER_RECORD_H_
 #define SRC_EMBEDDEDRECORDER_RECORD_H_
 
+#include <stdint.h>
+
 namespace rec {
     typedef struct {
         uint8_t code;    /*< The code of a pulse message.*/

@@ -53,7 +53,7 @@ void EmbeddedRecorder::playRecordedData() {
         err = recordBuffer->pop(record);
 
         if (record != NULL) {
-            sender->sendPulseMessage(/*record*/);
+            //sender->sendPulseMessage(/*record*/);
         }
     }
 }

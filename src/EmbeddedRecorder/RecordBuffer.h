@@ -19,6 +19,7 @@
 
 #include "IRecordBuffer.h"
 
+#include <stdlib.h>
 #include <stdint.h>
 
 namespace rec {
@@ -29,7 +30,7 @@ namespace rec {
         record_t* data; /*< Contains all recorded data.*/
         uint8_t read;   /*< Points to the field with the oldest content.*/
         uint8_t write;  /*< Points to the next field to write.*/
-        const size_t size; /*< The actual length of the buffer.*/
+        size_t size; /*< The actual length of the buffer.*/
     };
 
     class RecordBuffer : public IRecordBuffer {
@@ -63,7 +64,7 @@ namespace rec {
          * @brief TODO
          */
         Buffer *buffer;
-    }
+    };
 }
 
 #endif /* SRC_EMBEDDEDRECORDER_RECORDBUFFER_H_ */
