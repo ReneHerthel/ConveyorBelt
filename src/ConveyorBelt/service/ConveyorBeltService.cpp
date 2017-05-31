@@ -17,10 +17,16 @@
 #include "ConveyorBeltService.h"
 #include "HWdefines.h"
 
+#include <sys/neutrino.h>
+#include <iostream>
+
 ConveyorBeltService::ConveyorBeltService()
 	:	hal_(new ConveyorBeltHal())
 {
-	// Nothing todo so far.
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
+	{
+		std::cout << "[ConveyorBeltService] Can't get hardware access." << std::endl;
+	}
 }
 
 ConveyorBeltService::~ConveyorBeltService() {
