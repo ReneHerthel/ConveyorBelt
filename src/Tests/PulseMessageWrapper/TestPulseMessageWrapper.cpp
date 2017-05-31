@@ -16,6 +16,8 @@
 
 #include "TestPulseMessageWrapper.h"
 
+#include "IPulseMessageReceiver.h"
+
 #include "ThreadClient.h"
 #include "ThreadServer.h"
 
@@ -75,10 +77,10 @@ TEST_IMPL(TestPulseMessageWrapper, test1) {
 
     std::cout << "[TestPulseMessageWrapper] Done" << std::endl;
 
-    rcv_msg_t structWithValues = server->receivePulseMessage();
+    rcv::msg_t structWithValues = server->receivePulseMessage();
 
-    // You can also read structWithValues.code
-    if (structWithValues.value == 42) {
+    // You can also read structWithValues.code.
+    if (structWithValues.value == 42 && structWithValues.code == 3) {
         return TEST_PASSED;
     }
 

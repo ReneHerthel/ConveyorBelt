@@ -19,6 +19,8 @@
 
 #include "IPulseMessageReceiver.h"
 
+namespace rcv {
+
 class PulseMessageReceiverService : public IPulseMessageReceiver
 {
 public:
@@ -47,7 +49,7 @@ public:
      * @return A struct of some values from the pulse message on success.
      *         The error-codes from MsgReceive_r and ChannelCreate_r on failure.
      */
-    rcv_msg_t receivePulseMessage();
+    msg_t receivePulseMessage();
 
     /*
      * @brief Creates a new channel.
@@ -63,6 +65,8 @@ private:
      */
     int chid_;
 };
+
+} /* namespace rcv */
 
 #endif /* SRC_WRAPPER_PULSEMESSAGERECEIVER_PULSEMESSAGERECEIVERSERVICE_H_ */
 /** @} */
