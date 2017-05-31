@@ -18,11 +18,16 @@
 #include "SortingSwitchHal.h"
 #include "HWdefines.h"
 
+#include <sys/neutrino.h>
+#include <iostream>
+
 SortingSwitchService::SortingSwitchService()
 	:	hal_(new SortingSwitchHal())
 {
-	// TODO Auto-generated constructor stub
-
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
+	{
+		std::cout << "[SortingSwitchService] Can't get hardware access." << std::endl;
+	}
 }
 
 SortingSwitchService::~SortingSwitchService() {
