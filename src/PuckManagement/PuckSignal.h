@@ -34,7 +34,7 @@ namespace PuckSignal {
 	};
 
 	struct Signal {
-
+		// todo: merge signals for this type
 	};
 
 }

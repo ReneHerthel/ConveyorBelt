@@ -10,18 +10,16 @@
 
 #include "HeightSignal.h"
 
+#include "PuckSignal.h"
+
 class PuckContext {
 public:
 
 	PuckContext();
 
-	PuckReturn process(); // todo: pass signal
-	PuckReturn setType(signal_t type);
+	Return process(); // todo: pass signal
 
 private:
-	signal_t puckType;
-	bool metal;
-	uint32_t puckID;
 
 	void startTimers();
 
@@ -36,7 +34,6 @@ private:
 		virtual void heightmeasurmentOut();
 
 		virtual void switchIn();
-		virtual void switchOut();
 		virtual void switchOpen();
 
 		virtual void slideIn();
@@ -45,17 +42,25 @@ private:
 		virtual void outletIn();
 		virtual void outletOut();
 
+		virtual void type();
 		virtual void metalDetect();
 
+		virtual void serialAccept();
 		virtual void serialReceived();
+		virtual void serialStop();
+		virtual void serialResume();
 
 		virtual void earlyTimer();
 		virtual void lateTimer();
 
-		virtual PuckReturn entry();
+		virtual Return entry();
 
-		PuckReturn returnVal;
-		PuckContext *context;
+		signal_t puckType;
+		bool metal;
+		uint32_t puckID;
+		uint16_t highestHeight1;
+		uint16_t highestHeight2;
+		PuckSpeed aquiredSpeed;
 	} *statePtr, state;
 
 
@@ -67,17 +72,14 @@ private:
 	struct TransferArea : PuckState {
 		void inletIn();
 		void earlyTimer();
-		PuckReturn entry();
 	};
 
 	struct TransferWarning : PuckState {
 		void earlyTimer();
-		PuckReturn entry();
 	};
 
 	struct TransferTimer : PuckState {
 		void inletIn();
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -86,23 +88,19 @@ private:
 	 */
 	struct Inlet : PuckState {
 		void inletOut();
-		PuckReturn entry();
 	};
 
 	struct InletArea : PuckState {
 		void earlyTimer();
 		void heightmeasurmentIn();
-		PuckReturn entry();
 	};
 
 	struct InletWarning : PuckState {
 		void earlyTimer();
-		PuckReturn entry();
 	};
 
 	struct InletTimer : PuckState {
 		void heightmeasurementIn();
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -111,24 +109,31 @@ private:
 	 */
 	struct Heightmeasurement : PuckState {
 		void heightmeasurementOut();
-		PuckReturn entry();
+		void type();
+	};
+
+	struct MeasurementType : PuckState {
+		void heightMeasurementOut();
 	};
 
 	struct MeasurementArea : PuckState {
 		void earlyTimer();
 		void switchIn();
-		PuckReturn entry();
+		void type();
 	};
 
 	struct MeasurementWarning : PuckState {
 		void earlyTimer();
-		PuckReturn entry();
+	};
+
+	struct MeasurementTypeLate : PuckState {
+		void earlyTimer();
+		void switchIn();
 	};
 
 	struct MeasurementTimer : PuckState {
 		void metalDetect();
 		void switchIn();
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -137,13 +142,11 @@ private:
 	 */
 	struct MetalType : PuckState {
 		void switchIn();
-		PuckReturn entry();
 	};
 
 	struct TypeKnown : PuckState {
 		void switchOpen();
 		void slideIn();
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -153,15 +156,6 @@ private:
 	struct SlideArea : PuckState {
 		void slideOut();
 		void lateTimer();
-		PuckReturn entry();
-	};
-
-	struct SlideFull : PuckState {
-		PuckReturn entry(); 			//e-Transition
-	};
-
-	struct InSlide : PuckState {
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -171,17 +165,14 @@ private:
 	struct SwitchArea : PuckState {
 		void earlyTimer();
 		void outletIn();
-		PuckReturn entry();
 	};
 
 	struct SwitchWarning : PuckState {
 		void earlyTimer();
-		PuckReturn entry();
 	};
 
 	struct SwitchTimer : PuckState {
 		void outletIn();
-		PuckReturn entry();
 	};
 	/*******************************************/
 
@@ -189,17 +180,27 @@ private:
 	 * Outlet
 	 */
 	struct OutletArea : PuckState {
-		void outletOut();
-		PuckReturn entry();
+		void serialAccept();
 	};
 
 	struct InTransfer : PuckState {
 		void serialReceived();
-		PuckReturn entry();
+		void serialStop();
+	};
+
+	struct TransferStopped : PuckState {
+		void serialResume();
 	};
 
 	struct Transferred : PuckState {
-		PuckReturn entry();
+		void outletOut();
+	};
+
+	struct PhysicalTransfer : PuckState {
+
+	};
+	struct Taken : PuckState {
+
 	};
 	/*******************************************/
 };
