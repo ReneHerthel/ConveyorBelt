@@ -8,18 +8,19 @@
 #include "TopLevelProto/ITopLvlProtocoll.h"
 #include <thread>
 
-Serial::Serial(SerialReceiver &rec, SerialSender &sender,ITopLvlProtocoll &proto, int channel_in, int channel_out) :
+Serial::Serial(SerialReceiver rec, SerialSender sender,SerialProtocoll proto, int channel_in, int channel_out) :
     rec(rec),
     sender(sender),
-    proto(proto)
+    proto(proto),
+	chid(channel_in),
+	ch_in(channel_in),
+    ch_out(channel_out)
 {
 	LOG_SCOPE
-    ch_in = new PulseMessageReceiverService(channel_in);
-    ch_out = new PulseMessageSenderService(channel_out);
-    rec_thread(std::ref(rec));
 }
 
 void Serial::operator()() {
+	std::thread receiver(rec, chid);
 	LOG_SCOPE
     while(1){ //TODO make killable
         uint8_t code; //TODO wait for Wrapper fix
@@ -27,7 +28,7 @@ void Serial::operator()() {
         IPulseMessageReceiver::rcv_msg_t msg;
         serialized ser;
         LOG_DEBUG << "Serial Waiting for pulse \n";
-        msg = ch_in->receivePulseMessage();
+        msg = ch_in.receivePulseMessage();
         LOG_DEBUG << "Serial received Pulse \n";
         code = msg.code;
         value = msg.value;
@@ -35,7 +36,7 @@ void Serial::operator()() {
         switch(code){
             case SER_IN: ///TRANS_IN is also SER_IN here, because the SerialReceiver doesnt know
             	pm = proto.convToPulse((void *) value);
-                ch_out->sendPulseMessage(pm.code, pm.value);
+                ch_out.sendPulseMessage(pm.code, pm.value);
                 break;
                 break;
             case SER_OUT:

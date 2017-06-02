@@ -25,7 +25,7 @@ public:
      * @param channel_in Wait for cmd on this channel
      * @param channel_out Send received data on this channel
      */
-    Serial(SerialReceiver &rec, SerialSender &sender, ITopLvlProtocoll &proto, int channel_in, int channel_out);
+    Serial(SerialReceiver rec, SerialSender sender, SerialProtocoll proto, int channel_in, int channel_out);
 
     /**
      * The Serial thread
@@ -35,12 +35,12 @@ public:
 
 
 private:
-    SerialReceiver& rec;             /// Object holding the thread to receive data from device node
-    SerialSender& sender;            /// Used to send data to device note
-    ITopLvlProtocoll& proto;         /// Protocol used with Serial communication
-    IPulseMessageReceiver *ch_in;    /// Incoming cmd; incoming data from receiver
-    IPulseMessageSender *ch_out;      /// Outgoing data
-    std::thread rec_thread;
+    SerialReceiver rec;             /// Object holding the thread to receive data from device node
+    SerialSender sender;            /// Used to send data to device note
+    SerialProtocoll proto;         /// Protocol used with Serial communication
+    int chid;
+    PulseMessageReceiverService ch_in;    /// Incoming cmd; incoming data from receiver
+    PulseMessageSenderService ch_out;      /// Outgoing data
 };
 
 
