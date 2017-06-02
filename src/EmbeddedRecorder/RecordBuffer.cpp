@@ -60,15 +60,15 @@ int RecordBuffer::read(record_t *record)
         _read = 0;
     }
 
+    // Only increment, when there are not already readed fields left.
+    if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
+        return BUFFER_EMPTY;
+    }
+
     // Read, when there are values. And decrement, when read was successfully.
     if (_count > 0) {
         *record = _buffer[_read];
         _count--;
-    }
-
-    // Only increment, when there are not already readed fields left.
-    if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
-        return BUFFER_EMPTY;
     }
 
     _read++;
