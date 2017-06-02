@@ -23,10 +23,13 @@
 #include <stdint.h>
 
 namespace rec {
+
     class RecordBuffer : public IRecordBuffer {
     public:
         /*
-         * @brief TODO
+         * @brief Constructor, which creates a new buffer on the heap.
+         *
+         * @param[size] The size or amount of fields in the buffer.
          */
         explicit RecordBuffer(const size_t size)
             :    _size(size)
@@ -37,54 +40,44 @@ namespace rec {
         }
 
         /*
-         * @brief TODO
+         * @brief The destructor, which deletes the buffer from the heap.
          */
         ~RecordBuffer()
         {
             delete[] _buffer;
         }
 
-        /*
-         * @brief TODO
-         *
-         * @return 0 < on error.
-         */
         int write(record_t record);
-
-        /*
-         * @brief TODO
-         *
-         * @return 0 < on error.
-         */
         int read(record_t *record);
 
     private:
         /*
-         * @brief TODO
+         * @brief The buffer which contains all data.
          */
         record_t * _buffer;
 
         /*
-         * @brief TODO
+         * @brief The size or length of the buffer.
          */
         size_t _size;
 
         /*
-         * @brief TODO
+         * @brief The read (tail) index of the buffer.
          */
         size_t _read;
 
         /*
-         * @brief TODO
+         * @brief The write (head) index of the buffer.
          */
         size_t _write;
 
         /*
-         * @brief TODO
+         * @brief Counts the amount of values in the buffer.
          */
         size_t _count;
     };
-}
+
+} /* namespace rec */
 
 #endif /* SRC_EMBEDDEDRECORDER_RECORDBUFFER_H_ */
 /** @} */

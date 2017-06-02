@@ -20,13 +20,17 @@
 #include <stdint.h>
 
 namespace rec {
+
+    /*
+     * @brief This struct defines a single record.
+     */
     typedef struct {
-        uint8_t code;    /*< The code of a pulse message.*/
-        uint32_t time;   /*< The timestamp of this record.*/
-        uint32_t msg;    /*< The message of the pulse message */
-        // object? puck; TODO: What type is the puck? /*< The puck as object */
+        uint8_t code;       /*< The code of a pulse message.*/
+        uint32_t timestamp; /*< The timestamp of this record.*/
+        uint32_t value;     /*< The value of the pulse message.*/
     } record_t;
-}
+
+} /* namespace rec */
 
 #endif /* SRC_EMBEDDEDRECORDER_RECORD_H_ */
 /** @} */

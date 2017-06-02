@@ -20,19 +20,30 @@
 #include "Record.h"
 
 namespace rec {
+
     class IRecordBuffer {
     public:
         /*
-         * @brief TODO
+         * @brief Write a new record into the buffer.
+         *
+         * @param[record] The record written into the buffer.
+         *
+         * @return 0 on success. NOTE: There are no error returns yet.
          */
-        virtual int push(record_t record) = 0;
+        virtual int write(record_t record) = 0;
 
         /*
-         * @brief TODO
+         * @brief Read the oldest record from the buffer.
+         *
+         * @param[record] A reference to a record, which will be overwritten.
+         *
+         * @return 0 on success
+         * @return -2, when the buffer is empty.
          */
-        virtual int pop(record_t *record) = 0;
+        virtual int read(record_t *record) = 0;
     };
-}
+
+} /* namespace rec */
 
 #endif /* SRC_EMBEDDEDRECORDER_IRECORDBUFFER_H_ */
 /** @} */

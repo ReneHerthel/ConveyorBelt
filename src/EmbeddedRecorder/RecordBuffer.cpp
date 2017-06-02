@@ -16,8 +16,6 @@
 
 #include "RecordBuffer.h"
 
-#include <stdlib.h> // malloc
-
 namespace rec {
 
 #define BUFFER_NULL    (-1)
