@@ -23,47 +23,66 @@
 #include <stdint.h>
 
 namespace rec {
-    /*
-     * @brief TODO
-     */
-    struct Buffer {
-        record_t* data; /*< Contains all recorded data.*/
-        uint8_t read;   /*< Points to the field with the oldest content.*/
-        uint8_t write;  /*< Points to the next field to write.*/
-        size_t size; /*< The actual length of the buffer.*/
-    };
-
     class RecordBuffer : public IRecordBuffer {
     public:
         /*
          * @brief TODO
          */
-        RecordBuffer(const size_t size);
+        explicit RecordBuffer(const size_t size)
+            :    _size(size)
+            ,    _read(0)
+            ,    _write(0)
+        {
+            _buffer = new record_t[size];
+        }
 
         /*
          * @brief TODO
          */
-        ~RecordBuffer();
+        ~RecordBuffer()
+        {
+            delete[] _buffer;
+        }
 
         /*
          * @brief TODO
          *
          * @return 0 < on error.
          */
-        int push(record_t record);
+        int write(record_t record);
 
         /*
          * @brief TODO
          *
          * @return 0 < on error.
          */
-        int pop(record_t *record);
+        int read(record_t *record);
 
     private:
         /*
          * @brief TODO
          */
-        Buffer *buffer;
+        record_t * _buffer;
+
+        /*
+         * @brief TODO
+         */
+        size_t _size;
+
+        /*
+         * @brief TODO
+         */
+        size_t _read;
+
+        /*
+         * @brief TODO
+         */
+        size_t _write;
+
+        /*
+         * @brief TODO
+         */
+        size_t _count;
     };
 }
 

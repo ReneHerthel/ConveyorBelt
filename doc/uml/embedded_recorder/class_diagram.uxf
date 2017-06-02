@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
-      <y>720</y>
+      <x>648</x>
+      <y>747</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -23,8 +23,8 @@ EmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
-      <y>369</y>
+      <x>648</x>
+      <y>396</y>
       <w>225</w>
       <h>126</h>
     </coordinates>
@@ -39,8 +39,8 @@ IEmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1089</x>
-      <y>720</y>
+      <x>1035</x>
+      <y>747</y>
       <w>270</w>
       <h>162</h>
     </coordinates>
@@ -54,23 +54,23 @@ BufferFileStreamer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1089</x>
-      <y>369</y>
+      <x>1035</x>
+      <y>396</y>
       <w>270</w>
       <h>126</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IBufferFileStreamer
 --
-+ convertAndWrite(buffer : Buffer) : void
-+ readAndConvert(buffer : &lt;&lt;ptr&gt;&gt; Buffer) : void</panel_attributes>
++ export(buffer : Buffer) : void
++ import(buffer : &lt;&lt;ptr&gt;&gt; Buffer) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
-      <y>486</y>
+      <x>747</x>
+      <y>513</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -80,8 +80,8 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1206</x>
-      <y>486</y>
+      <x>1152</x>
+      <y>513</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -91,8 +91,8 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>918</x>
-      <y>783</y>
+      <x>864</x>
+      <y>810</y>
       <w>189</w>
       <h>45</h>
     </coordinates>
@@ -104,7 +104,7 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
+      <x>648</x>
       <y>72</y>
       <w>225</w>
       <h>117</h>
@@ -120,61 +120,63 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
+      <x>747</x>
       <y>180</y>
       <w>54</w>
-      <h>207</h>
+      <h>234</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>495</x>
-      <y>207</y>
-      <w>225</w>
+      <x>459</x>
+      <y>234</y>
+      <w>216</w>
       <h>117</h>
     </coordinates>
     <panel_attributes>&lt;&lt;struct&gt;&gt;
 Buffer
 --
-+ data : record_t[0..n]
-+ read : uint8_t
-+ write : uint8_t
-+ size : size_t</panel_attributes>
++ data : &lt;&lt;ptr&gt;&gt; void
++ end : &lt;&lt;ptr&gt;&gt; void
++ head : &lt;&lt;ptr&gt;&gt; void
++ tail : &lt;&lt;ptr&gt;&gt; void
++ capacity : size_t
++ count : size_t</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
+      <x>360</x>
       <y>108</y>
       <w>306</w>
-      <h>279</h>
+      <h>306</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
-    <additional_attributes>320.0;20.0;10.0;20.0;10.0;290.0</additional_attributes>
+    <additional_attributes>320.0;20.0;10.0;20.0;10.0;320.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>594</x>
-      <y>135</y>
-      <w>126</w>
-      <h>90</h>
+      <x>558</x>
+      <y>144</y>
+      <w>108</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
-    <additional_attributes>120.0;20.0;10.0;20.0;10.0;80.0</additional_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0;10.0;100.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>315</x>
-      <y>720</y>
+      <x>261</x>
+      <y>747</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -189,8 +191,8 @@ RecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
-      <y>486</y>
+      <x>360</x>
+      <y>513</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -200,8 +202,8 @@ RecordBuffer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>315</x>
-      <y>369</y>
+      <x>261</x>
+      <y>396</y>
       <w>225</w>
       <h>126</h>
     </coordinates>
@@ -215,8 +217,8 @@ IRecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>531</x>
-      <y>783</y>
+      <x>477</x>
+      <y>810</y>
       <w>189</w>
       <h>45</h>
     </coordinates>
@@ -229,26 +231,26 @@ m1=1    buffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>225</y>
-      <w>495</w>
+      <x>666</x>
+      <y>252</y>
+      <w>513</w>
       <h>162</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
                    &lt;&lt;use&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;40.0;90.0;40.0;90.0;20.0;130.0;20.0;130.0;40.0;530.0;40.0;530.0;160.0</additional_attributes>
+    <additional_attributes>10.0;40.0;80.0;40.0;80.0;20.0;120.0;20.0;120.0;40.0;550.0;40.0;550.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>531</x>
-      <y>315</y>
-      <w>117</w>
+      <x>477</x>
+      <y>342</y>
+      <w>135</w>
       <h>450</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
-    <additional_attributes>80.0;10.0;80.0;480.0;10.0;480.0</additional_attributes>
+    <additional_attributes>100.0;10.0;100.0;480.0;10.0;480.0</additional_attributes>
   </element>
 </diagram>

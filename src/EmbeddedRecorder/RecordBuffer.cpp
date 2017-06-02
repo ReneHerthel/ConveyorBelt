@@ -20,79 +20,53 @@
 
 namespace rec {
 
-RecordBuffer::RecordBuffer(const size_t size)
+#define BUFFER_NULL    (-1)
+#define BUFFER_EMPTY   (-2)
+#define BUFFER_SUCCESS (0)
+
+int RecordBuffer::write(record_t record)
 {
-    buffer = new Buffer();
-    // TODO //buffer->data = malloc(sizeof(record_t) * size);
-    buffer->write = 0;
-    buffer->read = 0;
-    buffer->size = size;
+    if (_write >= _size) {
+        _write = 0;
+    }
+
+    // Move the _read forward by one.
+    if (_write == _read) {
+        _read++;
+    }
+
+    _buffer[_write] = record;
+    _write++;
+    _count++;
+
+    if (_count > _size) {
+        _count = _size;
+    }
+
+    return BUFFER_SUCCESS;
 }
 
-RecordBuffer::~RecordBuffer() {
-    delete buffer;
-}
-
-int RecordBuffer::push(record_t record) {
-    // Check if the there is a buffer.
-    if (buffer == NULL) {
-        return -2;
+int RecordBuffer::read(record_t *record)
+{
+    if (_read >= _size) {
+        _read = 0;
     }
 
-    // Reset the write pointer.
-    if (buffer->write >= buffer->size) {
-        buffer->write = 0; // More security.
+    // Read, when there are values. And decrement, when read was successfully.
+    if (_count > 0) {
+        *record = _buffer[_read];
+        _count--;
     }
 
-    // Normaly, check if the buffer is full. But we won't do that.
-    /*
-    if ((buffer.write + 1 == buffer.read ) || ( buffer.read == 0 && buffer.write + 1 == buffer.size )) {
-          return -1;
+    // Only increment, when there are not already readed fields left.
+    if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
+        return BUFFER_EMPTY;
     }
-    */
-
-    buffer->data[buffer->write] = record;
-
-    buffer->write += 1;
-
-    if ((buffer->write + 1 >= buffer->read) || (buffer->read == 0 && buffer->write + 1 >= buffer->size)) {
-        // Actually, we overwrite the old values, but we need to know where the oldest value is.
-        // So move the read index forward by one.
-        buffer->read += 1;
-
-        if (buffer->read >= buffer->size) {
-            buffer->read = 0;
-        }
+    else {
+        _read++;
     }
 
-    // Everything went fine.
-    return 0;
-}
-
-int RecordBuffer::pop(record_t *record) {
-    // Check if there is a buffer.
-    if (buffer == NULL) {
-        return -1;
-    }
-
-    // Check if the buffer is empty.
-    if (buffer->read == buffer->write) {
-        return -2;
-    }
-
-    // Write the field of the read index into the record pointer.
-    *record = buffer->data[buffer->read];
-
-    // Increment the read index.
-    buffer->read += 1;
-
-    // Reset the read pointer.
-    if (buffer->read >= buffer->size) {
-        buffer->read = 0;
-    }
-
-    // Everything went fine.
-    return 0;
+    return BUFFER_SUCCESS;
 }
 
 } /* namespace rec */
