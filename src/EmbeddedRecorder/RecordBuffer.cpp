@@ -26,6 +26,7 @@ namespace rec {
 
 int RecordBuffer::write(record_t record)
 {
+    // The read() method can increment the _write value, so check the boundaries.
     if (_write >= _size) {
         _write = 0;
     }
@@ -37,8 +38,14 @@ int RecordBuffer::write(record_t record)
 
     _buffer[_write] = record;
     _write++;
+
+    if (_write >= _size) {
+        _write = 0;
+    }
+
     _count++;
 
+    // There can not be more values in the buffer than the size of the buffer.
     if (_count > _size) {
         _count = _size;
     }
@@ -48,6 +55,7 @@ int RecordBuffer::write(record_t record)
 
 int RecordBuffer::read(record_t *record)
 {
+    // The write() method can increment the _read value, so check the boundaries.
     if (_read >= _size) {
         _read = 0;
     }
@@ -62,8 +70,11 @@ int RecordBuffer::read(record_t *record)
     if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
         return BUFFER_EMPTY;
     }
-    else {
-        _read++;
+
+    _read++;
+
+    if (_read >= _size) {
+        _read = 0;
     }
 
     return BUFFER_SUCCESS;
