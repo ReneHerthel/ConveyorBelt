@@ -8,7 +8,7 @@
 #include "TopLevelProto/ITopLvlProtocoll.h"
 #include <thread>
 
-Serial::Serial(SerialReceiver rec, SerialSender sender,SerialProtocoll proto, int channel_in, int channel_out) :
+Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto, int channel_in, int channel_out) :
     rec(rec),
     sender(sender),
     proto(proto),
@@ -20,7 +20,7 @@ Serial::Serial(SerialReceiver rec, SerialSender sender,SerialProtocoll proto, in
 }
 
 void Serial::operator()() {
-	std::thread receiver(rec, chid);
+	//std::thread receiver(rec, chid);
 	LOG_SCOPE
     while(1){ //TODO make killable
         uint8_t code; //TODO wait for Wrapper fix

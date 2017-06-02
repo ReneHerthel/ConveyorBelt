@@ -28,7 +28,7 @@ public:
      * Used to create a thread for receiving data
      * @param chid  channel used to communicate with Serial
      */
-    void operator()(int chid);
+    void operator()(int chid, char* path);
 
     void reset();
 

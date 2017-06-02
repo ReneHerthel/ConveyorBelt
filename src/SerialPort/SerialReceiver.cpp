@@ -12,6 +12,14 @@
 
 SerialReceiver::SerialReceiver(char *path) {
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
+    fcntl(in, F_SETFL, 0);
+
+    struct termios ts_in;
+    tcgetattr(in, &ts_in);
+    ts_in.c_lflag &= ~ICANON;
+    ts_in.c_cc[VTIME] = 10;
+    ts_in.c_cc[VFWD] = 0;
+    tcsetattr(in, TCSANOW, &ts_in);
 }
 
 SerialReceiver::~SerialReceiver() {
@@ -29,12 +37,6 @@ char* SerialReceiver::receive() {
     char tailBuff[FRAME_TAIL_BYTES];
     uint16_t msgSize;
     char csum;
-
-    //We like to go RAW - this doesnt work
-    //struct termios ts_in;
-    //tcgetattr(in, &ts_in);
-    //cfmakeraw(&ts_in);
-    //tcsetattr(in, TCSANOW, &ts_in);
 
     //Read Header
     if(readFromSerial(headerBuff, FRAME_HEAD_BYTES) != 0){
@@ -71,10 +73,10 @@ int SerialReceiver::readFromSerial(char *buff, uint32_t size){
 	uint32_t bytes_read = 0;
 	uint32_t bytes_read_overall = 0;
 	do{
-		bytes_read = read(in, buff, size-bytes_read_overall); //TODO make qnx readcond
+		bytes_read = readcond(in, buff, size-bytes_read_overall, 0, 0, 50); //TODO make qnx readcond
 		bytes_read_overall += bytes_read;
-	}while(bytes_read >= 0 && bytes_read_overall < size);
-	if(bytes_read_overall < size || bytes_read < 0){
+	}while(bytes_read > 0 && bytes_read_overall < size);
+	if(bytes_read_overall < size || bytes_read <= 0){
         LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " bytes_read_overall: " << bytes_read_overall << " size was: " << size <<"\n";
         return -1;
 		//TODO Serial Error Handling
@@ -98,13 +100,11 @@ void SerialReceiver::reset(){
     #endif
 }
 
-void SerialReceiver::operator()(int chid){
-    char* buff;
-    PulseMessageSenderService pms(chid);
-    while(1){ //TODO Make killable
-        buff = receive();
-        pms.sendPulseMessage(SER_IN, (int)buff);
-    }
+void SerialReceiver::operator()(int chid, char *path){
+    LOG_SCOPE
+	char* buff;
+    in = open(path, O_RDWR | O_CREAT | O_BINARY);
+    receive();
 }
 
 

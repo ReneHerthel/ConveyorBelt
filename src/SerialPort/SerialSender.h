@@ -54,7 +54,7 @@ protected:
 	 *@param[in] msg The Message that will be put into the frame
 	 *@return Size of the frame, including the empty checksum byte
 	 */
-	uint16_t frame(char msg[], uint16_t size);
+	uint16_t frame(char msg[], uint16_t size, char *buff);
 
 	/*@brief Calculate Checksum
 	 *
@@ -62,7 +62,7 @@ protected:
 	 *
 	 *@param[in] size Size of the frame in the buffer, last byte of the frame (index = size-1) will be used to store the checksum
 	 */
-	void checksum(uint16_t size);
+	void checksum(uint16_t size, char *buff);
 
 	/*@brief Write the frame to the Serial
 	 *
@@ -70,12 +70,10 @@ protected:
 	 *
 	 *@param[in] size Size of the frame in the buffer
 	 */
-	int32_t sendSerial(uint16_t size);
+	int32_t sendSerial(uint16_t size, char *buff);
 
 private:
     int out; /*!<Filestream to the Charakter Device to send to*/
-    uint32_t buffSize;
-    char* buff;
     int err; /*!<Err from IO */
 };
 
