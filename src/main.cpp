@@ -31,8 +31,8 @@ int main() {
 
     //TEST FOR: Serial
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
-    ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll]"));
-    ts.REG_TESTCASE(new FullSerialTest(6, "[Serial]"));
+    ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
+    ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//
