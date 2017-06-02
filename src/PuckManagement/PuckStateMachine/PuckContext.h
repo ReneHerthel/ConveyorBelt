@@ -13,18 +13,6 @@
 class PuckContext {
 public:
 
-	enum PuckReturn {
-		ACCEPT,
-		DENY,
-		ERROR,
-		DELETE,
-		SEND,
-		EVALUATE,
-		HEIGHT,
-		SLIDE_FULL,
-		WARNING
-	};
-
 	PuckContext();
 
 	PuckReturn process(); // todo: pass signal
