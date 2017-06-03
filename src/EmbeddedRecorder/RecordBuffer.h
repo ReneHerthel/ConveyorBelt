@@ -75,6 +75,8 @@ namespace rec {
          * @brief Counts the amount of values in the buffer.
          */
         size_t _count;
+
+        // TODO: A reference to the PuckManager.
     };
 
 } /* namespace rec */

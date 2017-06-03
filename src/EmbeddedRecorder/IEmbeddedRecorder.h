@@ -39,6 +39,11 @@ namespace rec {
          * @brief Loads a bytestream from a file and write it to the buffer.
          */
         virtual void loadRecordedData() = 0;
+
+        /*
+         * @brief Write the current buffer to the console.
+         */
+        virtual void showRecordedData() = 0;
     };
 
 } /* namespace rec */

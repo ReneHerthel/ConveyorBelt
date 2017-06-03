@@ -22,93 +22,54 @@
 #include "IRecordBuffer.h"
 #include "RecordBuffer.h"
 
-#include "PulseMessageReceiverService.h"
-#include "PulseMessageSenderService.h"
-
 #include <thread>
 
 namespace rec {
+
     class EmbeddedRecorder : public IEmbeddedRecorder {
     public:
         /*
-         * @brief Constructor with the length of the buffer.
-         *
-         * @param[bufferLength] TODO
-         */
-        EmbeddedRecorder(const int bufferLength);
-
-        /*
          * @brief Constructor with buffer length and the chid to send.
          *
-         * @param[bufferLength] TODO
-         * @param[chid] TODO
+         * @param[bufferLength] The length of the buffer used by the recorder.
+         * @param[chid] Channel, where the sender-thread sends pulse-messages.
          */
-        EmbeddedRecorder(const int bufferLength, const int chid);
+        EmbeddedRecorder(const int bufferLength, const int sendChid);
 
         /*
          * @brief Default destructor.
          */
         ~EmbeddedRecorder();
 
-        /*
-         * @brief The super loop of the thread.
-         */
-        void control();
-
         void playRecordedData();
         void saveRecordedData();
         void loadRecordedData();
-
-        /*
-         * @brief Control flag, true will endless run the thread, false ends it.
-         */
-        bool isRunning;
+        void showRecordedData();
 
     private:
         /*
-         * @brief TODO
+         * @brief The channel, where the send-thread will send to.
          */
-        void showRecordedData();
-      
-        /*
-         * @brief TODO
-         */
-        void importData();
-
-        /*
-         * @brief TODO
-         */
-        void exportData();
+        int _sendChid;
 
         /*
          * @brief The thread where the recorder is running and controlling all.
          */
-        std::thread controller;
+        std::thread _pulseMessageSender;
 
         /*
          * @brief The reference to the buffer.
          */
-        RecordBuffer *recordBuffer;
+        RecordBuffer * _recordBuffer;
 
         /*
-         * @brief A reference to the receiver.
+         * @brief  A reference to the BufferFileStreamer.
          */
-        rcv::PulseMessageReceiverService *receiver;
+        // TODO
 
-        /*
-         * @brief A reference to the sender.
-         */
-        PulseMessageSenderService *sender;
+    }; /* class EmbeddedRecorder : public IEmbeddedRecorder */
 
-        /*
-         * @brief TODO: A reference to the file descriptor.
-         */
-
-        /*
-         * @brief TODO: A reference to the data visualizer.
-         */
-    };
-}
+} /* namespace rec */
 
 #endif /* SRC_EMBEDDEDRECORDER_EMBEDDEDRECORDER_H_ */
 /** @} */

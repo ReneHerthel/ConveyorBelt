@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>9</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>585</x>
-      <y>702</y>
-      <w>225</w>
-      <h>162</h>
+      <x>640</x>
+      <y>770</y>
+      <w>250</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>&lt;&lt;control&gt;&gt;
 EmbeddedRecorder
@@ -15,7 +15,6 @@ EmbeddedRecorder
 - buffer : RecordBuffer
 - stream : BufferFileStreamer
 --
-- showRecordedData() : void
 
 </panel_attributes>
     <additional_attributes/>
@@ -23,26 +22,27 @@ EmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>585</x>
-      <y>351</y>
-      <w>225</w>
-      <h>126</h>
+      <x>640</x>
+      <y>380</y>
+      <w>250</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IEmbeddedRecorder
 --
 + playRecordedData() : void
 + loadRecordedData() : void
-+ saveRecordedData() : void</panel_attributes>
++ saveRecordedData() : void
++ showRecordedData() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>972</x>
-      <y>702</y>
-      <w>270</w>
-      <h>162</h>
+      <x>1070</x>
+      <y>770</y>
+      <w>300</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>&lt;&lt;boundary&gt;&gt;
 BufferFileStreamer
@@ -54,10 +54,10 @@ BufferFileStreamer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>972</x>
-      <y>351</y>
-      <w>270</w>
-      <h>126</h>
+      <x>1070</x>
+      <y>380</y>
+      <w>300</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IBufferFileStreamer
@@ -69,10 +69,10 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>468</y>
-      <w>27</w>
-      <h>252</h>
+      <x>750</x>
+      <y>510</y>
+      <w>30</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
@@ -80,10 +80,10 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
-      <y>468</y>
-      <w>27</w>
-      <h>252</h>
+      <x>1200</x>
+      <y>510</y>
+      <w>30</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
@@ -91,10 +91,10 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
-      <y>765</y>
-      <w>189</w>
-      <h>45</h>
+      <x>880</x>
+      <y>840</y>
+      <w>210</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
         stream            
@@ -104,10 +104,10 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>585</x>
-      <y>27</y>
-      <w>225</w>
-      <h>117</h>
+      <x>640</x>
+      <y>20</y>
+      <w>250</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>&lt;&lt;struct&gt;&gt;
 record_t
@@ -120,10 +120,10 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>135</y>
-      <w>54</w>
-      <h>234</h>
+      <x>750</x>
+      <y>140</y>
+      <w>60</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
@@ -132,10 +132,10 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>63</y>
-      <w>306</w>
-      <h>306</h>
+      <x>320</x>
+      <y>60</y>
+      <w>340</w>
+      <h>340</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;use&gt;&gt;</panel_attributes>
@@ -144,10 +144,10 @@ record_t
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>198</x>
-      <y>702</y>
-      <w>225</w>
-      <h>162</h>
+      <x>210</x>
+      <y>770</y>
+      <w>250</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>&lt;&lt;service&gt;&gt;
 RecordBuffer
@@ -164,10 +164,10 @@ RecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>468</y>
-      <w>27</w>
-      <h>252</h>
+      <x>320</x>
+      <y>510</y>
+      <w>30</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
@@ -175,10 +175,10 @@ RecordBuffer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>198</x>
-      <y>351</y>
-      <w>225</w>
-      <h>126</h>
+      <x>210</x>
+      <y>380</y>
+      <w>250</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IRecordBuffer
@@ -190,10 +190,10 @@ IRecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>414</x>
-      <y>765</y>
-      <w>189</w>
-      <h>45</h>
+      <x>450</x>
+      <y>840</y>
+      <w>210</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 

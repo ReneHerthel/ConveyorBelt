@@ -5,7 +5,7 @@
     <id>Relation</id>
     <coordinates>
       <x>80</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -16,7 +16,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>40</x>
-      <y>130</y>
+      <y>110</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -27,7 +27,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>360</x>
-      <y>130</y>
+      <y>110</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -38,7 +38,7 @@
     <id>Relation</id>
     <coordinates>
       <x>90</x>
-      <y>180</y>
+      <y>160</y>
       <w>360</w>
       <h>40</h>
     </coordinates>
@@ -50,7 +50,7 @@ send(message)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>430</x>
-      <y>200</y>
+      <y>180</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -61,7 +61,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>440</x>
-      <y>200</y>
+      <y>180</y>
       <w>240</w>
       <h>70</h>
     </coordinates>
@@ -73,7 +73,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>240</y>
+      <y>220</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -84,7 +84,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>80</x>
-      <y>210</y>
+      <y>190</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -95,7 +95,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -106,7 +106,7 @@ send(message)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>0</x>
-      <y>100</y>
+      <y>80</y>
       <w>680</w>
       <h>200</h>
     </coordinates>
@@ -117,7 +117,7 @@ send(message)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>730</x>
-      <y>130</y>
+      <y>110</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -128,7 +128,7 @@ send(message)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1050</x>
-      <y>130</y>
+      <y>110</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -139,7 +139,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>780</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -150,7 +150,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1120</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -161,7 +161,7 @@ send(message)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>700</x>
-      <y>100</y>
+      <y>80</y>
       <w>970</w>
       <h>330</h>
     </coordinates>
@@ -172,7 +172,7 @@ send(message)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>80</x>
-      <y>180</y>
+      <y>160</y>
       <w>20</w>
       <h>40</h>
     </coordinates>
@@ -183,7 +183,7 @@ send(message)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>780</x>
-      <y>190</y>
+      <y>170</y>
       <w>20</w>
       <h>40</h>
     </coordinates>
@@ -194,7 +194,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>780</x>
-      <y>220</y>
+      <y>200</y>
       <w>30</w>
       <h>160</h>
     </coordinates>
@@ -205,7 +205,7 @@ send(message)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>180</y>
+      <y>160</y>
       <w>350</w>
       <h>40</h>
     </coordinates>
@@ -217,7 +217,7 @@ playRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1120</x>
-      <y>200</y>
+      <y>180</y>
       <w>20</w>
       <h>100</h>
     </coordinates>
@@ -228,7 +228,7 @@ playRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>780</x>
-      <y>360</y>
+      <y>340</y>
       <w>20</w>
       <h>30</h>
     </coordinates>
@@ -239,7 +239,7 @@ playRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>780</x>
-      <y>380</y>
+      <y>360</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -250,7 +250,7 @@ playRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1130</x>
-      <y>210</y>
+      <y>190</y>
       <w>230</w>
       <h>40</h>
     </coordinates>
@@ -262,7 +262,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1340</x>
-      <y>230</y>
+      <y>210</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -273,7 +273,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1410</x>
-      <y>250</y>
+      <y>230</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -284,7 +284,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1410</x>
-      <y>290</y>
+      <y>270</y>
       <w>20</w>
       <h>70</h>
     </coordinates>
@@ -295,7 +295,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>340</y>
+      <y>320</y>
       <w>640</w>
       <h>40</h>
     </coordinates>
@@ -307,7 +307,7 @@ Send pulse messages</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1120</x>
-      <y>290</y>
+      <y>270</y>
       <w>30</w>
       <h>140</h>
     </coordinates>
@@ -318,7 +318,7 @@ Send pulse messages</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1410</x>
-      <y>350</y>
+      <y>330</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -329,7 +329,7 @@ Send pulse messages</panel_attributes>
     <id>UMLSpecialState</id>
     <coordinates>
       <x>1410</x>
-      <y>390</y>
+      <y>370</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -340,7 +340,7 @@ Send pulse messages</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1420</x>
-      <y>280</y>
+      <y>260</y>
       <w>220</w>
       <h>70</h>
     </coordinates>
@@ -352,7 +352,7 @@ Send pulse messages</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>700</x>
-      <y>450</y>
+      <y>430</y>
       <w>970</w>
       <h>390</h>
     </coordinates>
@@ -363,7 +363,7 @@ Send pulse messages</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>730</x>
-      <y>480</y>
+      <y>460</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -374,7 +374,7 @@ Send pulse messages</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>780</x>
-      <y>500</y>
+      <y>480</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -385,7 +385,7 @@ Send pulse messages</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>780</x>
-      <y>550</y>
+      <y>530</y>
       <w>20</w>
       <h>40</h>
     </coordinates>
@@ -396,7 +396,7 @@ Send pulse messages</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>540</y>
+      <y>520</y>
       <w>230</w>
       <h>40</h>
     </coordinates>
@@ -408,7 +408,7 @@ saveRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>930</x>
-      <y>480</y>
+      <y>460</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -419,7 +419,7 @@ saveRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1000</x>
-      <y>500</y>
+      <y>480</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -430,7 +430,7 @@ saveRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1000</x>
-      <y>560</y>
+      <y>540</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -441,7 +441,7 @@ saveRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1410</x>
-      <y>580</y>
+      <y>560</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -452,7 +452,7 @@ saveRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1480</x>
-      <y>600</y>
+      <y>580</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -463,7 +463,7 @@ saveRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1250</x>
-      <y>570</y>
+      <y>550</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
@@ -475,7 +475,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1480</x>
-      <y>690</y>
+      <y>670</y>
       <w>20</w>
       <h>70</h>
     </coordinates>
@@ -486,7 +486,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1170</x>
-      <y>480</y>
+      <y>460</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -497,7 +497,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1240</x>
-      <y>500</y>
+      <y>480</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -508,7 +508,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1240</x>
-      <y>580</y>
+      <y>560</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -519,7 +519,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1010</x>
-      <y>560</y>
+      <y>540</y>
       <w>250</w>
       <h>40</h>
     </coordinates>
@@ -531,7 +531,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1490</x>
-      <y>700</y>
+      <y>680</y>
       <w>170</w>
       <h>60</h>
     </coordinates>
@@ -543,7 +543,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1480</x>
-      <y>750</y>
+      <y>730</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -554,7 +554,7 @@ export( buffer )</panel_attributes>
     <id>UMLSpecialState</id>
     <coordinates>
       <x>1480</x>
-      <y>800</y>
+      <y>780</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -565,7 +565,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1240</x>
-      <y>620</y>
+      <y>600</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -576,7 +576,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1000</x>
-      <y>600</y>
+      <y>580</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -587,7 +587,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>780</x>
-      <y>580</y>
+      <y>560</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -598,7 +598,7 @@ export( buffer )</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>1690</x>
-      <y>410</y>
+      <y>390</y>
       <w>970</w>
       <h>360</h>
     </coordinates>
@@ -609,7 +609,7 @@ export( buffer )</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1720</x>
-      <y>440</y>
+      <y>420</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -620,7 +620,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1770</x>
-      <y>460</y>
+      <y>440</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -631,7 +631,7 @@ export( buffer )</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1770</x>
-      <y>510</y>
+      <y>490</y>
       <w>20</w>
       <h>40</h>
     </coordinates>
@@ -642,7 +642,7 @@ export( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1780</x>
-      <y>500</y>
+      <y>480</y>
       <w>230</w>
       <h>40</h>
     </coordinates>
@@ -654,7 +654,7 @@ loadRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1920</x>
-      <y>440</y>
+      <y>420</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -665,7 +665,7 @@ loadRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1990</x>
-      <y>460</y>
+      <y>440</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -676,7 +676,7 @@ loadRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1990</x>
-      <y>520</y>
+      <y>500</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -687,7 +687,7 @@ loadRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2400</x>
-      <y>540</y>
+      <y>520</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -698,7 +698,7 @@ loadRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2470</x>
-      <y>560</y>
+      <y>540</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -709,7 +709,7 @@ loadRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2240</x>
-      <y>530</y>
+      <y>510</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
@@ -721,7 +721,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2470</x>
-      <y>630</y>
+      <y>610</y>
       <w>20</w>
       <h>70</h>
     </coordinates>
@@ -732,7 +732,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2160</x>
-      <y>440</y>
+      <y>420</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -743,7 +743,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>460</y>
+      <y>440</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -754,7 +754,7 @@ new</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2230</x>
-      <y>540</y>
+      <y>520</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -765,7 +765,7 @@ new</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2000</x>
-      <y>520</y>
+      <y>500</y>
       <w>250</w>
       <h>40</h>
     </coordinates>
@@ -777,7 +777,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2480</x>
-      <y>640</y>
+      <y>620</y>
       <w>170</w>
       <h>60</h>
     </coordinates>
@@ -789,7 +789,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2470</x>
-      <y>690</y>
+      <y>670</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -800,7 +800,7 @@ import( buffer )</panel_attributes>
     <id>UMLSpecialState</id>
     <coordinates>
       <x>2470</x>
-      <y>740</y>
+      <y>720</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -811,7 +811,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>580</y>
+      <y>560</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -822,7 +822,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1990</x>
-      <y>560</y>
+      <y>540</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -833,7 +833,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1770</x>
-      <y>540</y>
+      <y>520</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -844,7 +844,7 @@ import( buffer )</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1720</x>
-      <y>130</y>
+      <y>110</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -855,7 +855,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1770</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -866,7 +866,7 @@ import( buffer )</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1770</x>
-      <y>200</y>
+      <y>180</y>
       <w>20</w>
       <h>40</h>
     </coordinates>
@@ -877,7 +877,7 @@ import( buffer )</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1780</x>
-      <y>190</y>
+      <y>170</y>
       <w>230</w>
       <h>40</h>
     </coordinates>
@@ -889,7 +889,7 @@ showRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1920</x>
-      <y>130</y>
+      <y>110</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -900,7 +900,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1990</x>
-      <y>150</y>
+      <y>130</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -911,7 +911,7 @@ showRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1990</x>
-      <y>210</y>
+      <y>190</y>
       <w>20</w>
       <h>50</h>
     </coordinates>
@@ -922,7 +922,7 @@ showRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2160</x>
-      <y>120</y>
+      <y>100</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -933,7 +933,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>140</y>
+      <y>120</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -944,7 +944,7 @@ showRecordedData()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>2230</x>
-      <y>230</y>
+      <y>210</y>
       <w>20</w>
       <h>70</h>
     </coordinates>
@@ -955,7 +955,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2240</x>
-      <y>240</y>
+      <y>220</y>
       <w>160</w>
       <h>60</h>
     </coordinates>
@@ -967,7 +967,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2230</x>
-      <y>290</y>
+      <y>270</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -978,7 +978,7 @@ showRecordedData()</panel_attributes>
     <id>UMLSpecialState</id>
     <coordinates>
       <x>2230</x>
-      <y>340</y>
+      <y>320</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -989,7 +989,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1990</x>
-      <y>250</y>
+      <y>230</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -1000,7 +1000,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1770</x>
-      <y>230</y>
+      <y>210</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -1011,7 +1011,7 @@ showRecordedData()</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>1690</x>
-      <y>100</y>
+      <y>80</y>
       <w>730</w>
       <h>290</h>
     </coordinates>
@@ -1022,7 +1022,7 @@ showRecordedData()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2000</x>
-      <y>210</y>
+      <y>190</y>
       <w>250</w>
       <h>40</h>
     </coordinates>

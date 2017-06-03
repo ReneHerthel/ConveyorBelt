@@ -18,70 +18,31 @@
 
 namespace rec {
 
-EmbeddedRecorder::EmbeddedRecorder(const int bufferLength)
-    :    recordBuffer(new RecordBuffer(bufferLength))
+EmbeddedRecorder::EmbeddedRecorder(const int bufferLength, const int sendChid)
+    :    _recordBuffer(new RecordBuffer(bufferLength))
+    :    _sendChid(sendChid);
 {
-    isRunning = true;
-    controller = std::thread(&EmbeddedRecorder::control, this);
-}
-
-EmbeddedRecorder::EmbeddedRecorder(const int bufferLength, const int chid)
-    :    recordBuffer(new RecordBuffer(bufferLength))
-    ,    sender(new PulseMessageSenderService(chid))
-{
-    isRunning = true;
-    controller = std::thread(&EmbeddedRecorder::control, this);
+    // Nothing todo so far.
 }
 
 EmbeddedRecorder::~EmbeddedRecorder() {
-    isRunning = false;
-    delete recordBuffer;
+    delete recordBuffer; // Delete from heap.
 }
 
 void EmbeddedRecorder::showRecordedData() {
-    // TODO send the recorded data to the data visualizer.
+    // TODO Print the current buffer content to the terminal
 }
 
 void EmbeddedRecorder::playRecordedData() {
-    // TODO Send the whole buffered record to the chid via sender.
-
-    int err = 0;
-
-    while (err >= 0) { // Until the buffer is empty. (Or maybe 30 seconds are reached by timestamps)
-        record_t *record = NULL;
-
-        err = recordBuffer->pop(record);
-
-        if (record != NULL) {
-            //sender->sendPulseMessage(/*record*/);
-        }
-    }
+    // TODO Create a thread, which sends the current buffer to the maincontroller.
 }
 
 void EmbeddedRecorder::saveRecordedData() {
-    // TODO export the recorded data to the file descriptor.
+    // TODO Save the current buffer via BufferFileStreamer into a file.
 }
 
 void EmbeddedRecorder::loadRecordedData() {
-    // TODO impport the data from the file descriptor.
-}
-
-void EmbeddedRecorder::control() {
-    while (isRunning) {
-      /* TODO's: Connect to a channel to receive messages.
-       *         wait for new messages.
-       *         dispatch the messages.
-       *
-       */
-    }
-}
-
-void EmbeddedRecorder::importData() {
-    // TODO
-}
-
-void EmbeddedRecorder::exportData() {
-    // TODO
+    // TODO Load via BufferfileStreamer from file to buffer.
 }
 
 } /* namespace rec */
