@@ -52,7 +52,7 @@ void EmbeddedRecorder::showRecordedData()
 
         ret = copyOfBuffer->read(record);
 
-        if (ret > 0 && record != NULL) {
+        if (ret >= 0 && record != NULL) {
             std::cout << "time: " << record.timestamp << "  -  Code: " record.code << "  -  value: " << record.value << std::endl;
         }
     }
