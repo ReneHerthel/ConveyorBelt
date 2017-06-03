@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
-      <y>675</y>
+      <x>585</x>
+      <y>702</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -23,8 +23,8 @@ EmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
-      <y>324</y>
+      <x>585</x>
+      <y>351</y>
       <w>225</w>
       <h>126</h>
     </coordinates>
@@ -39,8 +39,8 @@ IEmbeddedRecorder
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
-      <y>675</y>
+      <x>972</x>
+      <y>702</y>
       <w>270</w>
       <h>162</h>
     </coordinates>
@@ -54,8 +54,8 @@ BufferFileStreamer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
-      <y>324</y>
+      <x>972</x>
+      <y>351</y>
       <w>270</w>
       <h>126</h>
     </coordinates>
@@ -69,8 +69,8 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>513</x>
-      <y>441</y>
+      <x>684</x>
+      <y>468</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -80,8 +80,8 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>918</x>
-      <y>441</y>
+      <x>1089</x>
+      <y>468</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -91,8 +91,8 @@ IBufferFileStreamer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
-      <y>738</y>
+      <x>801</x>
+      <y>765</y>
       <w>189</w>
       <h>45</h>
     </coordinates>
@@ -104,8 +104,8 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
-      <y>0</y>
+      <x>585</x>
+      <y>27</y>
       <w>225</w>
       <h>117</h>
     </coordinates>
@@ -120,8 +120,8 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>513</x>
-      <y>108</y>
+      <x>684</x>
+      <y>135</y>
       <w>54</w>
       <h>234</h>
     </coordinates>
@@ -132,8 +132,8 @@ record_t
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>126</x>
-      <y>36</y>
+      <x>297</x>
+      <y>63</y>
       <w>306</w>
       <h>306</h>
     </coordinates>
@@ -144,8 +144,8 @@ record_t
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>675</y>
+      <x>198</x>
+      <y>702</y>
       <w>225</w>
       <h>162</h>
     </coordinates>
@@ -164,8 +164,8 @@ RecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>126</x>
-      <y>441</y>
+      <x>297</x>
+      <y>468</y>
       <w>27</w>
       <h>252</h>
     </coordinates>
@@ -175,8 +175,8 @@ RecordBuffer
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
-      <y>324</y>
+      <x>198</x>
+      <y>351</y>
       <w>225</w>
       <h>126</h>
     </coordinates>
@@ -190,8 +190,8 @@ IRecordBuffer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>243</x>
-      <y>738</y>
+      <x>414</x>
+      <y>765</y>
       <w>189</w>
       <h>45</h>
     </coordinates>

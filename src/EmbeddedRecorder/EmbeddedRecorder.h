@@ -55,7 +55,6 @@ namespace rec {
          */
         void control();
 
-        void showRecordedData();
         void playRecordedData();
         void saveRecordedData();
         void loadRecordedData();
@@ -66,6 +65,11 @@ namespace rec {
         bool isRunning;
 
     private:
+        /*
+         * @brief TODO
+         */
+        void showRecordedData();
+      
         /*
          * @brief TODO
          */

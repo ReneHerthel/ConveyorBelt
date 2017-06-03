@@ -18,29 +18,30 @@
 #define SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_
 
 namespace rec {
+
     class IEmbeddedRecorder {
     public:
         /*
-         * @brief TODO
-         */
-        virtual void showRecordedData() = 0;
-
-        /*
-         * @brief TODO
+         * @brief Plays the recorded data.
+         *
+         * @description Plays the recorded data by creating a new thread, which
+         *              reads the current buffer and sends pulse messages to a
+         *              specific channel ID of the receiver.
          */
         virtual void playRecordedData() = 0;
 
         /*
-         * @brief TODO
+         * @brief Read the current buffer and save it as bytestream into a file.
          */
         virtual void saveRecordedData() = 0;
 
         /*
-         * @brief TODO
+         * @brief Loads a bytestream from a file and write it to the buffer.
          */
         virtual void loadRecordedData() = 0;
     };
-}
+
+} /* namespace rec */
 
 #endif /* SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_ */
 /** @} */
