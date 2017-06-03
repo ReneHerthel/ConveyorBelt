@@ -19,8 +19,13 @@
 
 #include "IEmbeddedRecorder.h"
 
-#include "IRecordBuffer.h"
+#include "IRecordBuffer.h" // Record_t
 #include "RecordBuffer.h"
+
+#include "IBufferFileStreamer.h"
+#include "BufferFileStreamer.h"
+
+#include "ThreadRecordSender.h"
 
 #include <thread>
 
@@ -41,6 +46,11 @@ namespace rec {
          */
         ~EmbeddedRecorder();
 
+        /*
+         * @brief Write a single record into the buffer.
+         */
+        void writeRecordIntoBuffer(record_t record);
+
         void playRecordedData();
         void saveRecordedData();
         void loadRecordedData();
@@ -55,7 +65,7 @@ namespace rec {
         /*
          * @brief The thread where the recorder is running and controlling all.
          */
-        std::thread _pulseMessageSender;
+        ThreadRecordSender * _threadRecordSender;
 
         /*
          * @brief The reference to the buffer.
@@ -65,7 +75,7 @@ namespace rec {
         /*
          * @brief  A reference to the BufferFileStreamer.
          */
-        // TODO
+        BufferFileStreamer  * _bufferFileStreamer;
 
     }; /* class EmbeddedRecorder : public IEmbeddedRecorder */
 

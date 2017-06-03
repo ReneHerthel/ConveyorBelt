@@ -20,14 +20,13 @@ BufferFileStreamer::BufferFileStreamer() {
     // TODO
 }
 
-BufferFileStreamer::exportBuffer() {
+void BufferFileStreamer::exportBuffer() {
     // TODO
 }
 
-BufferFileStreamer::importBuffer() {
+void BufferFileStreamer::importBuffer() {
     // TODO
 }
 
 } /* namespace rec */
-
  /** @} */
