@@ -53,7 +53,8 @@ void EmbeddedRecorder::showRecordedData()
         ret = copyOfBuffer->read(record);
 
         if (ret >= 0 && record != NULL) {
-            std::cout << "time: " << record.timestamp << "  -  Code: " record.code << "  -  value: " << record.value << std::endl;
+            // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
+            std::cout << "[" << record.timestamp << "]  -  Code: " record.code << "  -  value: " << record.value << std::endl;
         }
     }
 }
