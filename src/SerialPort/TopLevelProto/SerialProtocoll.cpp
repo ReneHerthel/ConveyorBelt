@@ -9,6 +9,9 @@
 #include "SerialProtocoll.h"
 #include "ITopLvlProtocoll.h"
 #include "../../Tests/Serial/SerialTestStub.h"
+#include <string.h>
+#include <Logger.h>
+#include <Logscope.h>
 
 /**
  * This is an unidirectional Protocoll over Serial
@@ -26,6 +29,7 @@ SerialProtocoll::~SerialProtocoll() {
 
 //TODO Refactor, size isnt needed
 pulse SerialProtocoll::convToPulse(void *buff) {
+	LOG_SCOPE;
     pulse resu;
     msg msg_in = *(msg*)buff;
     resu.code = SER_IN;
@@ -53,6 +57,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
 
 //TODO Untested
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
+	LOG_SCOPE;
     serialized resu;
     switch(code){
         case SER_IN: //Inout nothing needs to be done

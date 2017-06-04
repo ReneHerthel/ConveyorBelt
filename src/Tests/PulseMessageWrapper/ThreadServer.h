@@ -70,7 +70,7 @@ private:
     /*
      * @brief The value of the pulse message.
      */
-    int pulseMessageValue_;
+    rcv_msg_t pulseMessageValue_;
 };
 
  #endif /* SRC_EXAMPLES_WRAPPER_THREADSERVER_H */

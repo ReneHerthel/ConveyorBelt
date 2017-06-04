@@ -10,10 +10,11 @@
 #include "SerialSender.h"
 #include "TopLevelProto/ITopLvlProtocoll.h"
 #include "TopLevelProto/SerialProtocoll.h"
-#include "../Wrapper/PulseMessageReceiver/IPulseMessageReceiver.h"
-#include "../Wrapper/PulseMessageReceiver/PulseMessageReceiverService.h"
-#include "../Wrapper/PulseMessageSender/IPulseMessageSender.h"
-#include "../Wrapper/PulseMessageSender/PulseMessageSenderService.h"
+#include "IPulseMessageReceiver.h"
+#include "PulseMessageReceiverService.h"
+#include "IPulseMessageSender.h"
+#include "PulseMessageSenderService.h"
+#include <thread>
 class Serial {
 public:
     /**
@@ -24,21 +25,22 @@ public:
      * @param channel_in Wait for cmd on this channel
      * @param channel_out Send received data on this channel
      */
-    Serial(const SerialReceiver &rec, const SerialSender &sender, const ITopLvlProtocoll &proto, int channel_in, int channel_out);
+    Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto, int channel_in, int channel_out);
 
     /**
      * The Serial thread
      */
-    void run();
+    void operator()();
 
 
 
 private:
-    SerialReceiver rec;             /// Object holding the thread to receive data from device node
-    SerialSender sender;            /// Used to send data to device note
-    ITopLvlProtocoll proto;         /// Protocol used with Serial communication
-    IPulseMessageReceiver ch_in;    /// Incoming cmd; incoming data from receiver
-    IPulseMessageSender ch_out;      /// Outgoing data
+    SerialReceiver& rec;             /// Object holding the thread to receive data from device node
+    SerialSender& sender;            /// Used to send data to device note
+    SerialProtocoll& proto;         /// Protocol used with Serial communication
+    int chid;
+    PulseMessageReceiverService ch_in;    /// Incoming cmd; incoming data from receiver
+    PulseMessageSenderService ch_out;      /// Outgoing data
 };
 
 

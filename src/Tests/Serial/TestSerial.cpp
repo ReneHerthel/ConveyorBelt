@@ -3,6 +3,8 @@
 //
 
 #include "TestSerial.h"
+#include "../Logger/Logger.h"
+#include "../Logger/LogScope.h"
 
 SETUP(TestSerial){
     REG_TEST(SerialWriterTest, 1, "[SerialWriter] Test Basic output functions");
@@ -67,6 +69,7 @@ TEST_IMPL(TestSerial, Serilizeable) {
 }
 
 TEST_IMPL(TestSerial, RWOverSerial) {
+	LOG_SCOPE;
     char sender_node[] = "/dev/ser1";
     char receiver_node[] = "/dev/ser2";
 
@@ -77,7 +80,7 @@ TEST_IMPL(TestSerial, RWOverSerial) {
     sender.send(testString, sizeof(testString));
     char* resu = receiver.receive();
     cout.write(resu, sizeof(testString));
-    if(equal(testString, testString+sizeof(testString), resu)){
+    if(memcmp(testString, resu, sizeof(testString)-1)){
         return TEST_PASSED;
     } else {
         return TEST_FAILED;
