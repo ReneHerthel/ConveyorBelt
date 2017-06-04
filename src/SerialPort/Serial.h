@@ -32,6 +32,12 @@ public:
      */
     void operator()();
 
+    /**
+     * Kill the thread using the functor
+     * ATTENTION: Use join after calling this to assure that the thread is dead
+     * NOTE: Obj needs to be passed as reference to the stack
+     */
+    void kill();
 
 
 private:
@@ -41,6 +47,8 @@ private:
     int chid;
     PulseMessageReceiverService ch_in;    /// Incoming cmd; incoming data from receiver
     PulseMessageSenderService ch_out;      /// Outgoing data
+
+    bool running; ///Control thread
 };
 
 

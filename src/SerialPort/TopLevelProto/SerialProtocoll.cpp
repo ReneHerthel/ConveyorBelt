@@ -27,7 +27,6 @@ SerialProtocoll::~SerialProtocoll() {
 	// TODO Auto-generated destructor stub
 }
 
-//TODO Refactor, size isnt needed
 pulse SerialProtocoll::convToPulse(void *buff) {
 	LOG_SCOPE;
     pulse resu;
@@ -55,7 +54,6 @@ pulse SerialProtocoll::convToPulse(void *buff) {
 }
 
 
-//TODO Untested
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
 	LOG_SCOPE;
     serialized resu;

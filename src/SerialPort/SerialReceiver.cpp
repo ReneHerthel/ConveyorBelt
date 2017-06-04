@@ -10,7 +10,9 @@
 #include "../Wrapper/PulseMessageSender/PulseMessageSenderService.h"
 #include "SerialProtocoll.h"
 
-SerialReceiver::SerialReceiver(char *path) {
+SerialReceiver::SerialReceiver(char *path_):
+    path(path_)
+{
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
     fcntl(in, F_SETFL, 0);
 
@@ -102,12 +104,12 @@ void SerialReceiver::reset(){
     #endif
 }
 
-void SerialReceiver::operator()(int chid, char *path){
+void SerialReceiver::operator()(int chid){
     LOG_SCOPE
     PulseMessageSenderService pms(chid);
 	char* buff;
     running = true;
-    in = open(path, O_RDWR | O_CREAT | O_BINARY);
+    in = open(path.c_str(), O_RDWR | O_CREAT | O_BINARY);
     while(running){
         buff = receive();
         pms.sendPulseMessage(0, (const int) buff);

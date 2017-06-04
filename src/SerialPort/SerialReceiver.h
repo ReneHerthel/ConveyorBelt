@@ -7,6 +7,7 @@
 
 #define SER_REC_TIMEOUT 50 //5 Sec timeout
 #define SER_REC_IN 75 //TODO Make uniform
+#define SER_REC_FAIL 76
 
 #include <string>
 #include <fcntl.h>
@@ -20,7 +21,7 @@ using namespace std;
 
 class SerialReceiver {
 public:
-    SerialReceiver(char* path);
+    SerialReceiver(char* path_);
     ~SerialReceiver();
 
     /**
@@ -67,9 +68,11 @@ private:
      * @return Returns -1 if the communication timed out, return 0 at success
      */
     int readFromSerial(char* buff, uint32_t size);
+
     int in;
     int err; /*!<Err from IO */
     bool running;
+    string path;
 };
 
 

@@ -20,10 +20,10 @@ Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto
 }
 
 void Serial::operator()() {
-	//std::thread receiver(rec, chid);
 	LOG_SCOPE
-    while(1){ //TODO make killable
-        uint8_t code; //TODO wait for Wrapper fix
+    std::thread thread(rec, chid);
+    while(running){
+        uint8_t code;
         uint32_t  value;
         IPulseMessageReceiver::rcv_msg_t msg;
         serialized ser;
@@ -34,10 +34,13 @@ void Serial::operator()() {
         value = msg.value;
         pulse pm;
         switch(code){
-            case SER_IN: ///TRANS_IN is also SER_IN here, because the SerialReceiver doesnt know
+            case SER_REC_IN: ///TRANS_IN is also SER_IN here, because the SerialReceiver doesnt know
             	pm = proto.convToPulse((void *) value);
                 ch_out.sendPulseMessage(pm.code, pm.value);
                 break;
+            case SER_REC_FAIL:
+                LOG_ERROR << "Serial Recorder could'nt read msg from ser \n";
+                //TODO Send Serial error msg
             case SER_OUT:
                 ser =  proto.wrapInFrame(SER_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
@@ -51,4 +54,8 @@ void Serial::operator()() {
         }
         break;
     }
+}
+
+void Serial::kill() {
+    running = false;
 }
