@@ -8,7 +8,7 @@
 #include "TopLevelProto/ITopLvlProtocoll.h"
 #include <thread>
 
-Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto, int channel_in, int channel_out) :
+Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto,const int channel_in,const int channel_out) :
     rec(rec),
     sender(sender),
     proto(proto),

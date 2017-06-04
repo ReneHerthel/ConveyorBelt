@@ -41,7 +41,8 @@ char* SerialReceiver::receive() {
     //Read Header
     if(readFromSerial(headerBuff, FRAME_HEAD_BYTES) != 0){
         LOG_ERROR << "Couldnt read header \n";
-        //TODO Serial Error Handling
+        delete[]msgBuff;
+        return NULL;
     }
     msgSize = GET_MSG_SIZE(headerBuff);
 
@@ -49,20 +50,23 @@ char* SerialReceiver::receive() {
 
     if(readFromSerial(msgBuff, msgSize) != 0){
         LOG_ERROR << "Couldnt read message \n";
-        //TODO Serial Error Handling
+        delete[]msgBuff;
+        return NULL;
     }
 
     //Read Tail
     if(readFromSerial(tailBuff, FRAME_TAIL_BYTES) != 0){
         LOG_ERROR << "Couldnt read tail \n";
-        //TODO Serial Error Handling
+        delete[]msgBuff;
+        return NULL;
     }
 
     csum = checksum(msgBuff, msgSize);
 
     if(tailBuff[0] != END || tailBuff[1] != csum){
         LOG_ERROR << "END of file Missing or Checksum Failed \n";
-        //TODO error handling
+        delete[]msgBuff;
+        return NULL;
     }
 
     return msgBuff;
@@ -71,12 +75,10 @@ char* SerialReceiver::receive() {
 int SerialReceiver::readFromSerial(char *buff, uint32_t size){
     LOG_SCOPE;
 	uint32_t bytes_read = 0;
-	uint32_t bytes_read_overall = 0;
-	do{
-		bytes_read = readcond(in, buff, size-bytes_read_overall, 0, 0, 50); //TODO make qnx readcond
-		bytes_read_overall += bytes_read;
-	}while(bytes_read > 0 && bytes_read_overall < size);
-	if(bytes_read_overall < size || bytes_read <= 0){
+
+    bytes_read = readcond(in, buff, size, size, 0, SER_REC_TIMEOUT); //return with less then size bytes when SER_REC_TIMEOUT has expired, or size bytes when size bytes are available.
+
+	if(bytes_read < size || bytes_read < 0){
         LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " bytes_read_overall: " << bytes_read_overall << " size was: " << size <<"\n";
         return -1;
 		//TODO Serial Error Handling
@@ -102,9 +104,19 @@ void SerialReceiver::reset(){
 
 void SerialReceiver::operator()(int chid, char *path){
     LOG_SCOPE
+    PulseMessageSenderService pms(chid);
 	char* buff;
+    running = true;
     in = open(path, O_RDWR | O_CREAT | O_BINARY);
-    receive();
+    while(running){
+        buff = receive();
+        pms.sendPulseMessage(0, (const int) buff);
+    }
+
+}
+
+void SerialReceiver::kill() {
+    running = false;
 }
 
 
