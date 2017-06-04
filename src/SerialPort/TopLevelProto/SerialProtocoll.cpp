@@ -20,7 +20,7 @@
  * @param mode Be receiver or sender?
  */
 SerialProtocoll::SerialProtocoll(Serial_mode mode) {
-
+    // TODO mode is not implemented
 }
 
 SerialProtocoll::~SerialProtocoll() {
@@ -38,6 +38,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
         case RESUME:
         case INVALID:
         case RECEIVED:
+        case POL:
             resu.value = msg_in;
             break;
         case TRANSM:

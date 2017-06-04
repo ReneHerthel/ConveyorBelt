@@ -22,6 +22,7 @@
 #define INVALID_VAL 0xFDDD
 #define TRANSM_VAL 0xFEEE
 #define RECEIVED_VAL 0xEFEF
+#define POL_VAL 0xABCD
 
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver
@@ -32,15 +33,16 @@ enum Serial_mode {
 
 /// Message types that are used to communicate over the serial and between serial an system
 enum msg : int32_t {
-    ACCEPT  = ACCEPT_VAL,    /*!<IN: The Receiver accepted Transmission,
-                             *OUT: Signal the Receiver that you accept transmission, the puk can be moved */
-    STOP    = STOP_VAL,       /*!<IN/OUT: Sender or Receiver signal their counterpart that their belt must be stopped
-                               * if there are any Pucks in transmission*/
-    RESUME  = RESUME_VAL,     /*!<IN/OUT: Sender or Receiver signal their counterpart that their belt should be moved again
-                               * Must be send by the participant that send STOP before*/
-    INVALID = INVALID_VAL,    /*!<IN/OUT The sending participant received Comands in the wrong order*/
-    TRANSM  = TRANSM_VAL,     /*!<Used only between two serial endpoints to signal an transmission*/
-	RECEIVED = RECEIVED_VAL, 				  /*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
+    ACCEPT  = ACCEPT_VAL,    	/*!<IN: The Receiver accepted Transmission,
+                                 *OUT: Signal the Receiver that you accept transmission, the puk can be moved */
+    STOP    = STOP_VAL,       	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt must be stopped
+                                 * if there are any Pucks in transmission*/
+    RESUME  = RESUME_VAL,     	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt should be moved again
+                                 * Must be send by the participant that send STOP before*/
+    INVALID = INVALID_VAL,   	/*!<IN/OUT The sending participant received Comands in the wrong order*/
+    TRANSM  = TRANSM_VAL,		/*!<Used only between two serial endpoints to signal an transmission*/
+	RECEIVED = RECEIVED_VAL, 	/*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
+	POL = POL_VAL 				/*!<Ping of life */
 };
 
 /// Pulse code identifies in and outgoing signals, transmission need extra code, so the 32Bit pointer can fit into Value
