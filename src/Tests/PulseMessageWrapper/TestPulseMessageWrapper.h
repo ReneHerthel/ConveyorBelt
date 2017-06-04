@@ -39,8 +39,6 @@ protected:
      */
     TEST(test1);
 
-    TEST(test2);
-
     // Must have.
     TEST_CASE_METHODS
 };

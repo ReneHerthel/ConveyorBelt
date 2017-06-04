@@ -21,6 +21,8 @@
 
 #include <sys/neutrino.h>
 
+namespace rcv {
+
 PulseMessageReceiverService::PulseMessageReceiverService()
 {
     // Nothing todo so far.
@@ -35,11 +37,9 @@ PulseMessageReceiverService::PulseMessageReceiverService(const int chid)
      */
 }
 
-PulseMessageReceiverService::rcv_msg_t PulseMessageReceiverService::receivePulseMessage()
+msg_t PulseMessageReceiverService::receivePulseMessage()
 {
-	LOG_SCOPE
-	LOG_SET_LEVEL(DEBUG);
-    rcv_msg_t receivedMessage;
+    msg_t msg;
 
     // First check if there is a vaild channel ID.
     if (chid_ < 0) {
@@ -65,10 +65,10 @@ PulseMessageReceiverService::rcv_msg_t PulseMessageReceiverService::receivePulse
     }
 
     // Extract the code and sival_int from the received pulse message.
-    receivedMessage.code = pulse.code;
-    receivedMessage.value = pulse.value.sival_int;
+    msg.code = pulse.code;
+    msg.value = pulse.value.sival_int;
 
-    return receivedMessage;
+    return msg;
 }
 
 int PulseMessageReceiverService::newChannel()
@@ -87,5 +87,7 @@ int PulseMessageReceiverService::newChannel()
     // Returns the channel ID.
     return chid_;
 }
+
+} /* namespace rcv */
 
  /** @} */

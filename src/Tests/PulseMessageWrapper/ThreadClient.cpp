@@ -47,8 +47,8 @@ void ThreadClient::sendSinglePulseMessage()
 
     std::cout << "[ThreadClient] sendSinglePulseMessage() sending now value 42" << std::endl;
 
-    // Transmit a pulse message to the channel ID.
-    sender->sendPulseMessage(0, 42);
+    // Transmit a code and value to the channel ID.
+    sender->sendPulseMessage(3, 42);
 }
 
 void ThreadClient::sendSingleStruct()
