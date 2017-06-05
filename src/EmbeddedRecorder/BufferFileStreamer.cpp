@@ -36,6 +36,7 @@ void BufferFileStreamer::exportBuffer(RecordBuffer * buffer) {
 
         if (ret >= 0 && record != NULL) {
             fout.write((char *)(&record), sizeof(record));
+            //fin.read(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
         }
     }
 
@@ -51,6 +52,7 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer) {
         record_t record = NULL;
 
         fin.read(reinterpret_cast<char*> (&record), sizeof(record_t));
+        //fin.read(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
 
         if (fin.eof()) {
             break;
