@@ -6,8 +6,8 @@
 #define CONVEYORBELT_SERIALRECEIVER_H
 
 #define SER_REC_TIMEOUT 50 //5 Sec timeout
-#define SER_REC_IN 75 //TODO Make uniform
-#define SER_REC_FAIL 76
+#define SER_REC_IN 85 //TODO Make uniform
+#define SER_REC_FAIL 86
 
 #include <string>
 #include <fcntl.h>
@@ -37,7 +37,7 @@ public:
      * Note that the buffer returned by this via Puilse Msg must be deleted after usage
      * @param chid  channel used to communicate with Serial
      */
-    void operator()(int chid, char* path);
+    void operator()(int chid);
 
     /**
      * Reset the serial device (clear buffers)

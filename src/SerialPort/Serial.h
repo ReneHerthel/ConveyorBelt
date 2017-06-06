@@ -50,7 +50,7 @@ private:
     SerialSender& sender;            /// Used to send data to device note
     SerialProtocoll& proto;         /// Protocol used with Serial communication
     int chid;
-    PulseMessageReceiverService ch_in;    /// Incoming cmd; incoming data from receiver
+    rcv::PulseMessageReceiverService ch_in;    /// Incoming cmd; incoming data from receiver
     PulseMessageSenderService ch_out;      /// Outgoing data
 
     bool running; ///Control thread

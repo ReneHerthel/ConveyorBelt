@@ -27,7 +27,7 @@ TEST_IMPL(FullSerialTest, ConcurrentReceiver){
 	receiver.reset();
 
 
-	PulseMessageReceiverService pmr;
+	rcv::PulseMessageReceiverService pmr;
 	int chid_out = pmr.newChannel();
 
 	std::cout << "Cpy" << std::endl;
@@ -42,10 +42,10 @@ TEST_IMPL(FullSerialTest, ConcurrentReceiver){
 TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	LOG_SET_LEVEL(DEBUG);
 	LOG_DEBUG << "Serial test1 \n";
-	PulseMessageReceiverService pmr;
+	rcv::PulseMessageReceiverService pmr;
 	int chid_out = pmr.newChannel(); //receive from this channel from serial
 
-	PulseMessageReceiverService workaround;
+	rcv::PulseMessageReceiverService workaround;
 	int chid_in = workaround.newChannel(); //send to serial on this one
 	PulseMessageSenderService pms(chid_in);
 
@@ -72,7 +72,7 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 
 
 
-	IPulseMessageReceiver::rcv_msg_t msg = pmr.receivePulseMessage();
+	rcv::msg_t msg = pmr.receivePulseMessage();
 
 	LOG_DEBUG << "Received Pulse \n";
 

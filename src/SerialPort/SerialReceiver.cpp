@@ -13,7 +13,7 @@
 SerialReceiver::SerialReceiver(char *path_):
     path(path_)
 {
-    in = open(path, O_RDWR | O_CREAT | O_BINARY);
+    in = open(path.c_str(), O_RDWR | O_CREAT | O_BINARY);
     fcntl(in, F_SETFL, 0);
 
     struct termios ts_in;
@@ -81,7 +81,7 @@ int SerialReceiver::readFromSerial(char *buff, uint32_t size){
     bytes_read = readcond(in, buff, size, size, 0, SER_REC_TIMEOUT); //return with less then size bytes when SER_REC_TIMEOUT has expired, or size bytes when size bytes are available.
 
 	if(bytes_read < size || bytes_read < 0){
-        LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " bytes_read_overall: " << bytes_read_overall << " size was: " << size <<"\n";
+        LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " size was: " << size <<"\n";
         return -1;
 		//TODO Serial Error Handling
 	}
