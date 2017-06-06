@@ -21,21 +21,21 @@ testResu TestCase::run(logLvl logl, std::ostream* logfile) {
 
         std::string msg;
         switch(tstResu){ //determin results
-            case PASSED:
+            case TEST_PASSED:
                 msg = "PASSED";
                 resu.passed++;
                 break;
-            case WARNING:
+            case TEST_WARNING:
                 msg = "WARNING";
                 resu.warning++;
                 break;
-            case FAILED:
-                msg = "FAILED";
+            case TEST_FAILED:
+                msg = "TEST_FAILED";
                 resu.failed++;
                 break;
             default: msg = "Unknown Result";
         }
-        if(tstResu == logl or logl == ALL){ //log result? (log lvl)
+        if(tstResu == logl or logl == TEST_ALL){ //log result? (log lvl)
             logTest(tests[i], msg);
         }
         after();

@@ -20,51 +20,51 @@ LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
     , chid(chid)
 	, boundary(boundary)
 {
-	//LOG_SCOPE;
-	//LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
+	LOG_SCOPE;
+	LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
 	taskThread = new thread(&LightSystemController::task, this);
 	controlThread = new thread(&LightSystemController::control, this,chid);
 }
 
 LightSystemController::~LightSystemController() {
-	//LOG_SCOPE;
+	LOG_SCOPE;
 	isRunning = false;
 
 	/* Unblock control thread before join */
 	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);
 	if(coid < 0) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */
-	//   	LOG_ERROR << "Channel Attach failed" << endl;
+	   	LOG_ERROR << "Channel Attach failed" << endl;
 	}
 
     /* FIXME: Discuss log message format */
-	//LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
+	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, LIGHT_SYSTEM_STOP);
     if(err) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */
-      //  LOG_ERROR << "Sending message failed" << endl;
+        LOG_ERROR << "Sending message failed" << endl;
     }
-    //LOG_DEBUG << "Stopped threads" << endl;
+    LOG_DEBUG << "Stopped threads" << endl;
 	controlThread->join();
-	//LOG_DEBUG << "Wait for control to join" << endl;
+	LOG_DEBUG << "Wait for control to join" << endl;
 	taskThread->join();
-	//LOG_DEBUG << "Wait for task to join" << endl;
+	LOG_DEBUG << "Wait for task to join" << endl;
     delete controlThread;
-    //LOG_DEBUG << "Delete control" << endl;
+    LOG_DEBUG << "Delete control" << endl;
     delete taskThread;
-    //LOG_DEBUG << "Delete task" << endl;
+    LOG_DEBUG << "Delete task" << endl;
 }
 
 int LightSystemController::task(){
-	//LOG_SCOPE;
+	LOG_SCOPE;
 	thread::id thread_id = this_thread::get_id();
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-		//LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+		LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	//LOG_DEBUG << thread_id << ": Enter loop" << endl;
+	LOG_DEBUG << thread_id << ": Enter loop" << endl;
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
@@ -90,20 +90,20 @@ int LightSystemController::task(){
 }
 
 int LightSystemController::control(int chid) {
-//	LOG_SCOPE;
+	LOG_SCOPE;
     /** Last received message will be stored here */
 	struct _pulse pulse;
 	int err;
 	thread::id thread_id = this_thread::get_id();
 
-	//LOG_DEBUG << thread_id << ": Enter loop" << endl;
-	//LOG_DEBUG << thread_id << ": Channel "<< chid << endl;
+	LOG_DEBUG << thread_id << ": Enter loop" << endl;
+	LOG_DEBUG << thread_id << ": Channel "<< chid << endl;
 	while(isRunning) {
-		//LOG_DEBUG << thread_id << ": Wait for message on channel " << chid << endl;
+		LOG_DEBUG << thread_id << ": Wait for message on channel " << chid << endl;
 		err = MsgReceivePulse_r(chid, &pulse, sizeof(_pulse), NULL);
-		//LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
+		LOG_DEBUG << "Message received: " << pulse.value.sival_int << endl;
 		if(err < 0) {
-			//LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
+			LOG_ERROR << thread_id << ": client MsgReceive_r failed" << std::endl;
 		}
 
 		/* TODO: Sanitize input, set color and frequency if warningLevel is in range */
@@ -124,9 +124,9 @@ int LightSystemController::control(int chid) {
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;
-	   // LOG_DEBUG << thread_id << ": Set color " << color << endl;
+	    LOG_DEBUG << thread_id << ": Set color " << color << endl;
 	    frequency = LightMessageMapping[warningLevel].frequency;
-	   // LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
+	    LOG_DEBUG << thread_id << ": Set frequency " << frequency << endl;
 	}
 	/* FIXME: Bogus return value */
 	return 0;

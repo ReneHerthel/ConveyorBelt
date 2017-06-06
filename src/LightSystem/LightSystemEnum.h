@@ -1,10 +1,11 @@
 /**
- *       @file  enum.h
+ *       @file  LightSystemEnum.h
  *      @brief  Define enums for module LightSystem
  *
  * Detailed description starts here.
  *
  *     @author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *     @author	Matthis Keppner	<matthis.keppner@haw-hamburg.de>
  *
  *   @internal
  *     Created  05/06/2017

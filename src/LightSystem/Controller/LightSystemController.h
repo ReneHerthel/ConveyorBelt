@@ -19,8 +19,8 @@
 #include <sys/netmgr.h>
 #include "BLightSystem.h"
 #include "LightSystemEnum.h"
-//#include "Logger.h"
-//#include "LogScope.h"
+#include "Logger.h"
+#include "LogScope.h"
 
 using namespace std;
 using namespace HAL;

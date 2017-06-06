@@ -9,12 +9,41 @@ Eindeutige Begriffserklärungen
 Listen sie alle Abkürzungen auf, die sie in diesem Dokument benutzt
 haben.
 
-% TODO: Replace by separate table
 \section{Signale}
 
-% TODO: Replace by separate table
-\section{Pulse Message IDs}
+Einen Überblick über die Signale und die beteiligten Module bietet
+\autoref{tab:modsig}.
 
-\begin{description}
-    \item[80] Nachricht für LightSystemController von LightSystemService
-\end{description}
+\begin{table}
+	\centering
+	\pgfplotstabletypeset[%
+            columns/signal/.style={column name=Signal, string type},
+            columns/sender/.style={column name=Sender, string type},
+            columns/receiver/.style={column name=Empfänger, string type},
+        ]{%
+            signal sender receiver
+            LightMessage ILightSystem LightSystemController
+        }
+	\caption{Signale zwischen den Modulen}
+	\label{tab:modsig}
+\end{table}
+
+\section{Pulse Message Module IDs}
+
+In \autoref{tab:modpuid} wird jedem Modul ein eindeutiger Identifier
+zugewiesen.
+Diese werden in den Pulse Messages genutzt, um die Nachrichten den
+Modulen zuordnen zu können.
+
+\begin{table}
+	\centering
+	\pgfplotstabletypeset[%
+            columns/identifier/.style={column name=ID, dec sep},
+            columns/module/.style={column name=Modul, string type},
+        ]{%
+            identifier module
+            80 LightSystem 
+        }
+	\caption{Pulse Message Identifier für die Module}
+	\label{tab:modpuid}
+\end{table}

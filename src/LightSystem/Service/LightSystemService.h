@@ -17,14 +17,14 @@
 #include "LightSystemEnum.h"
 #include "LightSystemController.h"
 #include "ILightSystem.h"
-//#include "Logger.h"
-//#include "LogScope.h"
+#include "Logger.h"
+#include "LogScope.h"
 
 class LightSystemService : public ILightSystem {
 	public:
 		LightSystemService(int chid);
         /**
-         * @brief  Pass a warning to make the light system blink accordingly 
+         * @brief  Pass a warning to make the lightsystem blink accordingly
          * @param  [in] warningLevel Warning level to set
          */
 		void setWarningLevel(Level warningLevel);

@@ -27,4 +27,6 @@
 #UMLet Files
 !*.uxf
 
-
+cmake-build-debug/
+\.idea/
+CMakeLists\.txt

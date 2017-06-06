@@ -14,7 +14,7 @@
 
 #include "BLightSystem.h"
 #include "LightSystemEnum.h"
-//#include "Logger.h"
+#include "Logger.h"
 #include <iostream>
 
 namespace HAL {

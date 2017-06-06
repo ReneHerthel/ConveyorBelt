@@ -13,8 +13,8 @@
 #define LIGHTSYSTEMHAL_H
 
 #include "BLightSystem.h"
-//#include "Logger.h"
-//#include "LogScope.h"
+#include "Logger.h"
+#include "LogScope.h"
 #include "LightSystemEnum.h"
 #include <iostream>
 #include <hw/inout.h>
