@@ -67,10 +67,10 @@ TEST_IMPL(LightSystemTest, test1){
         std::cout << "Return Result" << std::endl;
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.
 		std::cout << "Passed" << std::endl;
-		return PASSED;
+		return TEST_PASSED;
 	} else {
 		std::cout << "Failed"<< std::endl;
-		return FAILED;
+		return TEST_FAILED;
 	}
 }
 

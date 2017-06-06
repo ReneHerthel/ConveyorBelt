@@ -38,7 +38,7 @@ LightSystemController::~LightSystemController() {
 	}
 
     /* FIXME: Discuss log message format */
-	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
+	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << endl;
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, LIGHT_SYSTEM_STOP);
     if(err) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */
