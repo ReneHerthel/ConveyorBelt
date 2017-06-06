@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>10</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1570</x>
-      <y>400</y>
-      <w>180</w>
-      <h>110</h>
+      <x>1092</x>
+      <y>490</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>INLET
 --
@@ -19,10 +19,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1960</x>
-      <y>400</y>
-      <w>180</w>
-      <h>110</h>
+      <x>1400</x>
+      <y>490</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>INLET_AREA
 --
@@ -35,34 +35,34 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1740</x>
-      <y>430</y>
-      <w>240</w>
-      <h>40</h>
+      <x>1211</x>
+      <y>511</y>
+      <w>203</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_INLET_OUT</panel_attributes>
-    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+LB_INLET_OUT / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2460</x>
-      <y>430</y>
-      <w>280</w>
-      <h>40</h>
+      <x>1778</x>
+      <y>511</y>
+      <w>315</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_HEIGHTMEASUREMENT_IN</panel_attributes>
-    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+LB_HEIGHTMEASUREMENT_IN / HEIGHT SLOW</panel_attributes>
+    <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>100</x>
-      <y>250</y>
-      <w>180</w>
-      <h>110</h>
+      <x>63</x>
+      <y>385</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>PUCK_STATE
 --
@@ -74,10 +74,10 @@ symbol=substate
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>160</x>
-      <y>290</y>
-      <w>300</w>
-      <h>160</h>
+      <x>105</x>
+      <y>413</y>
+      <w>210</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 LATE_TIMER/returnError()</panel_attributes>
@@ -86,22 +86,22 @@ LATE_TIMER/returnError()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2130</x>
-      <y>430</y>
-      <w>260</w>
-      <h>40</h>
+      <x>1519</x>
+      <y>511</y>
+      <w>210</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>2370</x>
-      <y>430</y>
-      <w>100</w>
-      <h>40</h>
+      <x>1715</x>
+      <y>511</y>
+      <w>70</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>INLET_TIMER</panel_attributes>
     <additional_attributes/>
@@ -109,15 +109,14 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>2720</x>
-      <y>390</y>
-      <w>210</w>
-      <h>110</h>
+      <x>2079</x>
+      <y>483</y>
+      <w>147</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>HEIGHTMEASUREMENT
 --
-entry / startHeightMesurement()
-           returnSlow()
+
 valign=top
 </panel_attributes>
     <additional_attributes/>
@@ -125,26 +124,26 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2040</x>
-      <y>500</y>
-      <w>230</w>
-      <h>110</h>
+      <x>1456</x>
+      <y>560</y>
+      <w>266</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_HEIGHTMEASUREMENT_IN</panel_attributes>
+LB_HEIGHTMEASUREMENT_IN / WARNING FAST</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1960</x>
-      <y>590</y>
-      <w>180</w>
-      <h>110</h>
+      <x>1400</x>
+      <y>623</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>INLET_WARNING
 --
-entry / returnWarning()
+
 
 valign=top</panel_attributes>
     <additional_attributes/>
@@ -152,22 +151,22 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2920</x>
-      <y>430</y>
-      <w>360</w>
-      <h>40</h>
+      <x>2219</x>
+      <y>511</y>
+      <w>322</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_HEIGHTMEASUREMENT_OUT</panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+LB_HEIGHTMEASUREMENT_OUT / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>3260</x>
-      <y>390</y>
-      <w>180</w>
-      <h>110</h>
+      <x>2527</x>
+      <y>483</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>MEASUREMENT_AREA
 --
@@ -179,10 +178,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>3670</x>
-      <y>430</y>
-      <w>190</w>
-      <h>40</h>
+      <x>2849</x>
+      <y>511</y>
+      <w>133</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>MEASUREMENT_TIMER</panel_attributes>
     <additional_attributes/>
@@ -190,58 +189,58 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3430</x>
-      <y>430</y>
-      <w>260</w>
-      <h>40</h>
+      <x>2646</x>
+      <y>511</y>
+      <w>217</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4270</x>
-      <y>440</y>
-      <w>450</w>
-      <h>40</h>
+      <x>3269</x>
+      <y>518</y>
+      <w>315</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SWITCH_IN</panel_attributes>
+LB_SWITCH_IN / EVALUETE FAST</panel_attributes>
     <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3340</x>
-      <y>490</y>
-      <w>130</w>
-      <h>100</h>
+      <x>2583</x>
+      <y>553</y>
+      <w>182</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SWITCH_IN</panel_attributes>
+LB_SWITCH_IN / WARNING FAST</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4270</x>
-      <y>240</y>
-      <w>180</w>
-      <h>220</h>
+      <x>3269</x>
+      <y>378</y>
+      <w>189</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-METALDETECT</panel_attributes>
+METALDETECT / ACCEPT FAST</panel_attributes>
     <additional_attributes>10.0;200.0;30.0;200.0;30.0;10.0;160.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>4430</x>
-      <y>200</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3381</x>
+      <y>350</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>METAL_TYPE
 --
@@ -254,10 +253,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>4700</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3570</x>
+      <y>476</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>TYPE_KNOWN
 --
@@ -269,47 +268,47 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4870</x>
-      <y>410</y>
-      <w>190</w>
-      <h>50</h>
+      <x>3689</x>
+      <y>497</y>
+      <w>238</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SWITCH_OPEN
+LB_SWITCH_OPEN / ACCEPT FAST
 </panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4600</x>
-      <y>240</y>
-      <w>180</w>
-      <h>190</h>
+      <x>3500</x>
+      <y>378</y>
+      <w>224</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SWITCH_IN</panel_attributes>
+LB_SWITCH_IN / EVALUETE FAST</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;170.0;100.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4780</x>
-      <y>480</y>
-      <w>110</w>
-      <h>250</h>
+      <x>3626</x>
+      <y>546</y>
+      <w>168</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SLIDE_IN</panel_attributes>
+LB_SLIDE_IN / ACCEPT FAST</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>5040</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3913</x>
+      <y>476</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>SWITCH_AREA
 --
@@ -321,10 +320,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>4700</x>
-      <y>710</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3570</x>
+      <y>707</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>SLIDE_AREA
 --
@@ -336,87 +335,46 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4870</x>
-      <y>740</y>
-      <w>190</w>
-      <h>40</h>
+      <x>3689</x>
+      <y>728</y>
+      <w>224</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_SLIDE_OUT</panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+LB_SLIDE_OUT / DELETE FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4780</x>
-      <y>810</y>
-      <w>110</w>
-      <h>120</h>
+      <x>3626</x>
+      <y>742</y>
+      <w>294</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LATE_TIMER</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>4700</x>
-      <y>910</y>
-      <w>180</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>SLIDE_FULL
---
-entry / slideFull()
-valign=top
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>5040</x>
-      <y>710</y>
-      <w>180</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>IN_SLIDE
---
-entry / deletePuck()
-valign=top
-</panel_attributes>
-    <additional_attributes/>
+LATE_TIMER / SLIDE_FULL DELETE FAST</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;100.0;400.0;100.0;400.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4870</x>
-      <y>810</y>
-      <w>280</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;160.0;260.0;160.0;260.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>5210</x>
-      <y>410</y>
-      <w>190</w>
-      <h>40</h>
+      <x>4032</x>
+      <y>497</y>
+      <w>203</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>5380</x>
-      <y>410</y>
-      <w>120</w>
-      <h>40</h>
+      <x>4221</x>
+      <y>497</y>
+      <w>84</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>SWITCH_TIMER</panel_attributes>
     <additional_attributes/>
@@ -424,22 +382,22 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5490</x>
-      <y>410</y>
-      <w>240</w>
-      <h>40</h>
+      <x>4298</x>
+      <y>497</y>
+      <w>217</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_OUTLET_IN</panel_attributes>
-    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+LB_OUTLET_IN / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>610</x>
-      <y>440</y>
-      <w>20</w>
-      <h>20</h>
+      <x>392</x>
+      <y>518</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -447,30 +405,14 @@ LB_OUTLET_IN</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>6010</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
+      <x>4711</x>
+      <y>476</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>OUTLET_AREA
 --
-entry / sendPuck()
-valign=top
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>7040</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>PHYSICAL_TRANSFER
---
-entry / deletePuck()
-           returnFast()
+
 valign=top
 </panel_attributes>
     <additional_attributes/>
@@ -478,45 +420,36 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6880</x>
-      <y>410</y>
-      <w>180</w>
-      <h>40</h>
+      <x>5516</x>
+      <y>497</y>
+      <w>238</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_OUTLET_OUT</panel_attributes>
-    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+SERIAL_RECEIVED / DELETE FAST
+</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6520</x>
-      <y>410</y>
-      <w>210</w>
-      <h>40</h>
+      <x>5173</x>
+      <y>497</y>
+      <w>238</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-SERIAL_RECEIVED</panel_attributes>
-    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>5210</x>
-      <y>750</y>
-      <w>190</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+LB_OUTLET_OUT / ACCEPT SLOW
+</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>5380</x>
-      <y>750</y>
-      <w>20</w>
-      <h>20</h>
+      <x>3899</x>
+      <y>735</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -524,10 +457,10 @@ SERIAL_RECEIVED</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>6710</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
+      <x>5397</x>
+      <y>476</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>TRANSFERRED
 --
@@ -538,10 +471,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>7370</x>
-      <y>420</y>
-      <w>20</w>
-      <h>20</h>
+      <x>5740</x>
+      <y>504</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -549,10 +482,10 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>560</x>
-      <y>100</y>
-      <w>6880</w>
-      <h>970</h>
+      <x>385</x>
+      <y>280</y>
+      <w>5383</w>
+      <h>616</h>
     </coordinates>
     <panel_attributes>PUCK_STATE</panel_attributes>
     <additional_attributes/>
@@ -560,10 +493,10 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>10</x>
-      <y>100</y>
-      <w>500</w>
-      <h>450</h>
+      <x>0</x>
+      <y>280</y>
+      <w>350</w>
+      <h>315</h>
     </coordinates>
     <panel_attributes>State</panel_attributes>
     <additional_attributes/>
@@ -571,26 +504,25 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2130</x>
-      <y>460</y>
-      <w>310</w>
-      <h>210</h>
+      <x>1519</x>
+      <y>532</y>
+      <w>245</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;190.0;290.0;190.0;290.0;10.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;190.0;330.0;190.0;330.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>3250</x>
-      <y>570</y>
-      <w>190</w>
-      <h>110</h>
+      <x>2520</x>
+      <y>609</y>
+      <w>140</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>MEASUREMENT_WARNING
 --
-entry / returnWarning()
 
 valign=top</panel_attributes>
     <additional_attributes/>
@@ -598,34 +530,34 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3430</x>
-      <y>460</y>
-      <w>360</w>
-      <h>190</h>
+      <x>2653</x>
+      <y>532</y>
+      <w>280</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;170.0;340.0;170.0;340.0;10.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;170.0;380.0;170.0;380.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5210</x>
-      <y>230</y>
-      <w>250</w>
-      <h>200</h>
+      <x>4032</x>
+      <y>371</y>
+      <w>238</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;20.0;230.0;20.0;230.0;180.0</additional_attributes>
+EARLY_TIMER / ACCEPT FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0;320.0;180.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>5040</x>
-      <y>190</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3913</x>
+      <y>343</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>SWITCH_WARNING
 --
@@ -637,22 +569,22 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5120</x>
-      <y>290</y>
-      <w>130</w>
-      <h>110</h>
+      <x>3969</x>
+      <y>413</y>
+      <w>182</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_OUTLET_IN</panel_attributes>
+LB_OUTLET_IN / WARNING FAST</panel_attributes>
     <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>430</y>
-      <w>240</w>
-      <h>40</h>
+      <x>399</x>
+      <y>511</y>
+      <w>168</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -661,22 +593,22 @@ LB_OUTLET_IN</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>870</x>
-      <y>430</y>
-      <w>720</w>
-      <h>40</h>
+      <x>574</x>
+      <y>511</y>
+      <w>532</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [machine1]</panel_attributes>
-    <additional_attributes>10.0;20.0;700.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;740.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>850</x>
-      <y>460</y>
-      <w>100</w>
-      <h>170</h>
+      <x>560</x>
+      <y>532</y>
+      <w>70</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 [machine2]</panel_attributes>
@@ -685,10 +617,10 @@ LB_OUTLET_IN</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>770</x>
-      <y>610</y>
-      <w>180</w>
-      <h>110</h>
+      <x>504</x>
+      <y>637</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>TRANSFER_AREA
 --
@@ -700,49 +632,34 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>850</x>
-      <y>710</y>
-      <w>110</w>
-      <h>140</h>
+      <x>560</x>
+      <y>707</y>
+      <w>175</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_INLET_IN</panel_attributes>
+LB_INLET_IN / WARNING SLOW</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>770</x>
-      <y>830</y>
-      <w>180</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>TRANSFER_WARNING
---
-entry / returnWarning()
-
-valign=top</panel_attributes>
-    <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>940</x>
-      <y>640</y>
-      <w>260</w>
-      <h>40</h>
+      <x>623</x>
+      <y>658</y>
+      <w>210</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+EARLY_TIMER / ACCEPT SLOW</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1180</x>
-      <y>640</y>
-      <w>140</w>
-      <h>40</h>
+      <x>819</x>
+      <y>658</y>
+      <w>98</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>TRANSFER_TIMER</panel_attributes>
     <additional_attributes/>
@@ -750,34 +667,22 @@ EARLY_TIMER</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>940</x>
-      <y>670</y>
-      <w>330</w>
-      <h>240</h>
+      <x>910</x>
+      <y>560</y>
+      <w>266</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-EARLY_TIMER</panel_attributes>
-    <additional_attributes>10.0;220.0;310.0;220.0;310.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1310</x>
-      <y>500</y>
-      <w>380</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-LB_INLET_IN</panel_attributes>
+LB_INLET_IN / ACCEPT FAST</panel_attributes>
     <additional_attributes>10.0;160.0;360.0;160.0;360.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>840</x>
-      <y>430</y>
-      <w>40</w>
-      <h>40</h>
+      <x>553</x>
+      <y>511</y>
+      <w>28</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -785,49 +690,36 @@ LB_INLET_IN</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6180</x>
-      <y>410</y>
-      <w>190</w>
-      <h>40</h>
+      <x>4830</x>
+      <y>497</y>
+      <w>238</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-SERIAL_ACCEPT</panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+SERIAL_ACCEPT / ACCEPT SLOW</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>6350</x>
-      <y>380</y>
-      <w>180</w>
-      <h>110</h>
+      <x>5054</x>
+      <y>476</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>IN_TRANSFER
 --
-entry / returnSlow()
 valign=top
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>7210</x>
-      <y>410</y>
-      <w>180</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-</panel_attributes>
-    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>5710</x>
-      <y>410</y>
-      <w>40</w>
-      <h>40</h>
+      <x>4501</x>
+      <y>497</y>
+      <w>28</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -835,34 +727,34 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5740</x>
-      <y>410</y>
-      <w>290</w>
-      <h>40</h>
+      <x>4522</x>
+      <y>497</y>
+      <w>203</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-[machine1]</panel_attributes>
+[machine1] / SEND FAST</panel_attributes>
     <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5720</x>
-      <y>440</y>
-      <w>310</w>
-      <h>240</h>
+      <x>4508</x>
+      <y>518</y>
+      <w>217</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-[machine2]</panel_attributes>
+[machine2] / ACCEPT STOP</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;220.0;290.0;220.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>6010</x>
-      <y>610</y>
-      <w>180</w>
-      <h>110</h>
+      <x>4711</x>
+      <y>637</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>OUTLET_AREA
 --
@@ -874,27 +766,60 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6180</x>
-      <y>640</y>
-      <w>190</w>
-      <h>40</h>
+      <x>4830</x>
+      <y>658</y>
+      <w>252</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-LB_OUTLET_OUT</panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+LB_OUTLET_OUT / DELTE FAST</panel_attributes>
+    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>5068</x>
+      <y>665</y>
+      <w>14</w>
+      <h>14</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>5068</x>
+      <y>378</y>
+      <w>175</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+SERIAL_STOP / ACCEPT STOP</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>5173</x>
+      <y>336</y>
+      <w>252</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+SERIAL_RESUME / ACCEPT SLOW</panel_attributes>
+    <additional_attributes>10.0;210.0;90.0;210.0;90.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>6350</x>
-      <y>610</y>
-      <w>180</w>
-      <h>110</h>
+      <x>5054</x>
+      <y>308</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
-    <panel_attributes>TAKEN
+    <panel_attributes>TRANSFER_STOPPED
 --
-entry / deletePuck()
-           returnFast()
 
 valign=top
 </panel_attributes>
@@ -903,90 +828,54 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6520</x>
-      <y>650</y>
-      <w>190</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLSpecialState</id>
-    <coordinates>
-      <x>6690</x>
-      <y>650</y>
-      <w>20</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>type=final</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>6370</x>
-      <y>240</y>
-      <w>120</w>
-      <h>160</h>
+      <x>2975</x>
+      <y>511</y>
+      <w>189</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-SERIAL_STOP</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>6490</x>
-      <y>240</y>
-      <w>140</w>
-      <h>160</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-SERIAL_RESUME</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>6350</x>
-      <y>140</y>
-      <w>180</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>TRANSFER_STOPPED
---
-entry / returnStop()
-valign=top
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>3850</x>
-      <y>430</y>
-      <w>270</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-TYPE</panel_attributes>
+TYPE / ACCEPT FAST</panel_attributes>
     <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>4100</x>
-      <y>390</y>
-      <w>180</w>
-      <h>110</h>
+      <x>3150</x>
+      <y>483</y>
+      <w>126</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>MEASURMENT_TYPE
 --
 entry / setType(TYPE)
-           returnFast()
 valign=top
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>504</x>
+      <y>791</y>
+      <w>126</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>TRANSFER_WARNING
+--
+
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>623</x>
+      <y>679</y>
+      <w>259</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+EARLY_TIMER / ACCEPT SLOW</panel_attributes>
+    <additional_attributes>10.0;220.0;350.0;220.0;350.0;10.0</additional_attributes>
   </element>
 </diagram>
