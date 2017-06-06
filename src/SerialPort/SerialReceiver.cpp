@@ -112,10 +112,12 @@ void SerialReceiver::operator()(int chid){
     in = open(path.c_str(), O_RDWR | O_CREAT | O_BINARY);
     while(running){
         buff = receive();
-        if(buff = NULL){
-
+        if(buff == NULL){
+        	pms.sendPulseMessage(SER_REC_FAIL, (const int) buff);
+        } else {
+        	pms.sendPulseMessage(SER_REC_IN, (const int) buff);
         }
-        pms.sendPulseMessage(0, (const int) buff);
+
     }
 
 }
