@@ -30,8 +30,8 @@ EmbeddedRecorder::EmbeddedRecorder(const int bufferLength, const int sendChid)
 
 EmbeddedRecorder::~EmbeddedRecorder()
 {
-    delete _recordBuffer;
-    delete _bufferFileStreamer;
+    //delete _recordBuffer;
+    //delete _bufferFileStreamer;
 }
 
 void EmbeddedRecorder::writeRecordIntoBuffer(record_t record)
@@ -44,17 +44,17 @@ void EmbeddedRecorder::showRecordedData()
     int ret = 0;
 
     // Copy the buffer, so the original buffer will not be effected.
-    RecordBuffer copyOfBuffer = _recordBuffer;
+    RecordBuffer * copyOfBuffer = _recordBuffer;
 
     // Print the buffer content to the terminal, while the buffer is not empty.
     while (ret >= 0) {
-        record_t record = NULL;
+        record_t * record = NULL;
 
         ret = copyOfBuffer->read(record);
 
         if (ret >= 0 && record != NULL) {
             // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
-            std::cout << "[" << record.timestamp << "]  -  Code: " record.code << "  -  value: " << record.value << std::endl;
+            std::cout << "[" << (int)record->timestamp << "]  -  Code: " << (int)record->code << "  -  value: " << (int)record->value << std::endl;
         }
     }
 }
@@ -62,7 +62,7 @@ void EmbeddedRecorder::showRecordedData()
 void EmbeddedRecorder::playRecordedData()
 {
     // This object works for itself.
-    _threadRecordSender = new ThreadRecordSender();
+    _threadRecordSender = new ThreadRecordSender(_recordBuffer, _sendChid);
 }
 
 void EmbeddedRecorder::saveRecordedData()

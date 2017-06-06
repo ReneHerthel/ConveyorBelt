@@ -3,6 +3,7 @@
 #include "Tests/TestExample.h"
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
 #include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
+#include "Tests/Ringbuffer/TestRingbuffer.h"
 #include "TestFramework/TestSuite.h"
 
 using namespace std;
@@ -28,8 +29,10 @@ int main() {
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
     // HeightMeasurement tests
-    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
+    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"));
 
+	// Ringbuffer tests
+	ts.REG_TESTCASE(new TestRingbuffer(3, "Test the functionality of the ringbuffer."));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
