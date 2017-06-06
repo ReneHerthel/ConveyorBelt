@@ -30,7 +30,7 @@ namespace rec {
         /*
          * @brief Constructor.
          */
-        ThreadRecordSender(const RecordBuffer * buffer, const int chid);
+        ThreadRecordSender(RecordBuffer * buffer, const int chid);
 
         /*
          * @brief Default destructor.
@@ -57,7 +57,7 @@ namespace rec {
          * @brief The pulse message sender.
          */
         PulseMessageSenderService * _sender;
-    }
+    };
 
 } /* namespace rec */
 

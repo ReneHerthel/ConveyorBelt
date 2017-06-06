@@ -14,10 +14,12 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
+#include "ThreadRecordSender.h"
+
 namespace rec {
 
-ThreadRecordSender::ThreadRecordSender(const RecordBuffer * buffer, const int chid)
-    :    _buffer(buffer);
+ThreadRecordSender::ThreadRecordSender(RecordBuffer * buffer, const int chid)
+    :    _buffer(buffer)
     ,    _sender(new PulseMessageSenderService(chid))
 {
     _client = std::thread(&ThreadRecordSender::sendPulseMessagesToChid, this);
@@ -33,12 +35,12 @@ void ThreadRecordSender::sendPulseMessagesToChid()
     int ret = 0;
 
     while (ret >= 0) {
-        record_t record = NULL;
+        record_t * record = NULL;
 
         ret = _buffer->read(record);
 
         if (ret >= 0 && record != NULL) {
-            sender->sendPulseMessage(record.code, record.value);
+            _sender->sendPulseMessage(record->code, record->value);
         }
     }
 

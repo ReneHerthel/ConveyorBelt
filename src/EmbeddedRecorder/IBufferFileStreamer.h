@@ -36,7 +36,7 @@ namespace rec {
          * @param[buffer] A reference to the imported buffer.
          */
         virtual void importBuffer(RecordBuffer *buffer) = 0;
-    }
+    };
 
 } /* namespace rec */
 

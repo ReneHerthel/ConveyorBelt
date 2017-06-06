@@ -28,9 +28,9 @@ namespace rec {
          */
         BufferFileStreamer();
 
-        exportBuffer(RecordBuffer * buffer);
-        importBuffer(RecordBuffer * buffer);
-    }
+        void exportBuffer(RecordBuffer * buffer);
+        void importBuffer(RecordBuffer * buffer);
+    };
 
 } /* namespace rec */
 

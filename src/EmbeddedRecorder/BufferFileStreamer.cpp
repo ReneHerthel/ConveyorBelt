@@ -14,8 +14,9 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
- #include <fstream.h>
+#include "BufferFileStreamer.h"
 
+#include <fstream.h>
 
 namespace rec {
 
@@ -30,7 +31,7 @@ void BufferFileStreamer::exportBuffer(RecordBuffer * buffer) {
     int ret = 0;
 
     while (ret >= 0) {
-        record_t record = NULL;
+        record_t * record = NULL;
 
         ret = buffer->read(record);
 
@@ -49,7 +50,7 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer) {
     fin.open("records.txt", ios::in | ios::binary);
 
     while (1) {
-        record_t record = NULL;
+        record_t * record = NULL;
 
         fin.read(reinterpret_cast<char*> (&record), sizeof(record_t));
         //fin.read(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
@@ -59,7 +60,7 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer) {
         }
 
         if (record != NULL) {
-            buffer->write(record);
+            buffer->write(*record);
         }
         else {
             break;
