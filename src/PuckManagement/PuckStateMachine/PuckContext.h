@@ -113,12 +113,9 @@ private:
 
 	struct MeasurementTimer : PuckState {
 		PuckSignal::Return switchIn();
+		PuckSignal::Return metaldetect();
 	};
 
-	struct MeasurementType : PuckState {
-		PuckSignal::Return metalDetect();
-		PuckSignal::Return switchIn();
-	};
 	/*******************************************/
 
 	/*******************************************
@@ -152,7 +149,7 @@ private:
 	};
 
 	struct SwitchTimer : PuckState {
-		PuckSignal::Return outletIn();
+		PuckSignal::Return outletIn();  //with guards
 	};
 	/*******************************************/
 
