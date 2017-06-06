@@ -78,7 +78,7 @@ int SerialReceiver::readFromSerial(char *buff, uint32_t size){
     LOG_SCOPE;
 	uint32_t bytes_read = 0;
 
-    bytes_read = readcond(in, buff, size, size, 0, SER_REC_TIMEOUT); //return with less then size bytes when SER_REC_TIMEOUT has expired, or size bytes when size bytes are available.
+    bytes_read = readcond(in, buff, size, size, 0, 60); //return with less then size bytes when SER_REC_TIMEOUT has expired, or size bytes when size bytes are available.
 
 	if(bytes_read < size || bytes_read < 0){
         LOG_ERROR << "Error in SerialReceiver, bytes_read: " << bytes_read << " size was: " << size <<"\n";

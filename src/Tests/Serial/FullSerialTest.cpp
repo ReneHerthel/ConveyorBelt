@@ -107,13 +107,13 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 
 	//START THOSE BAD BOYS
 	std::thread ser1_thread(ref(ser1));
-	//std::thread ser2_thread(ref(ser2));
+	std::thread ser2_thread(ref(ser2));
 
 	//ser1.kill();
 	//ser2.kill();
 
 	ser1_thread.join();
-	//ser2_thread.join();
+	ser2_thread.join();
 
 }
 

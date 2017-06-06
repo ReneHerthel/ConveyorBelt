@@ -24,10 +24,10 @@ Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto
 void Serial::operator()() {
 	LOG_SCOPE
 	running = true;
-    //std::thread rec_thread(rec, chid);
+    std::thread rec_thread(rec, chid);
     TimerService polRecTimer(chid, SERIAL_TIMEOUT_SIG); //Ping of life timer for receiving pol, set after first received msg (makes setup simple)
     TimerService polSendTimer(chid, SERIAL_SEND_POL);  //Ping of life timer for sending pols
-    polSendTimer.setAlarm(2000, 0);
+    polSendTimer.setAlarm(500, 0);
     while(running){
         uint8_t code;
         uint32_t  value;
@@ -49,7 +49,7 @@ void Serial::operator()() {
             	LOG_DEBUG << "Serial received send pol \n";
                 ser =  proto.wrapInFrame(SER_OUT, POL);
                 sender.send((char *) ser.obj, ser.size);
-                polSendTimer.setAlarm(2000, 0);
+                polSendTimer.setAlarm(500, 0);
                 break;
             case SER_REC_IN: //Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
@@ -57,7 +57,7 @@ void Serial::operator()() {
                     ch_out.sendPulseMessage(pm.code, pm.value);
                 }
                 polRecTimer.stopAlarm();
-                polRecTimer.setAlarm(SERIAL_POL_TIMEOUT, 0);
+                polRecTimer.setAlarm(999, 0);
                 break;
             case SER_REC_FAIL:
                 LOG_ERROR << "Serial Recorder could'nt read msg from ser \n";
