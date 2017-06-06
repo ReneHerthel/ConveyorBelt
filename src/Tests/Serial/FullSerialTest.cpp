@@ -93,7 +93,7 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	//Init PMS
 	rcv::PulseMessageReceiverService pmsChannelCreatorSer2;
 	int pmsSer2Chid = pmsChannelCreatorSer2.newChannel();
-	PulseMessageSenderService pmsSer2(pmsSer1Chid);
+	PulseMessageSenderService pmsSer2(pmsSer2Chid);
 
 	//Init Sender & Receiver
 	SerialSender senderSer2(ser2_path);
@@ -109,11 +109,23 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	std::thread ser1_thread(ref(ser1));
 	std::thread ser2_thread(ref(ser2));
 
-	//ser1.kill();
-	//ser2.kill();
+	pmsSer1.sendPulseMessage(SER_OUT, STOP);
+
+	rcv::msg_t msg = pmrSer2.receivePulseMessage();
+
+	if(msg.value == STOP){
+		std::cout << "Rec Stop" << std::endl;
+	} else {
+		std::cout << "Rec something else" << std::endl;
+	}
+
+	ser1.kill();
+	ser2.kill();
 
 	ser1_thread.join();
 	ser2_thread.join();
+
+	return TEST_PASSED;
 
 }
 

@@ -24,7 +24,7 @@ Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto
 void Serial::operator()() {
 	LOG_SCOPE
 	running = true;
-    std::thread rec_thread(rec, chid);
+    std::thread rec_thread(ref(rec), chid);
     TimerService polRecTimer(chid, SERIAL_TIMEOUT_SIG); //Ping of life timer for receiving pol, set after first received msg (makes setup simple)
     TimerService polSendTimer(chid, SERIAL_SEND_POL);  //Ping of life timer for sending pols
     polSendTimer.setAlarm(500, 0);
@@ -56,7 +56,6 @@ void Serial::operator()() {
                 if(pm.value != POL){ //POL doesnt need to be send to the main
                     ch_out.sendPulseMessage(pm.code, pm.value);
                 }
-                polRecTimer.stopAlarm();
                 polRecTimer.setAlarm(999, 0);
                 break;
             case SER_REC_FAIL:
@@ -74,8 +73,8 @@ void Serial::operator()() {
                 //TODO Serial Error handling, send error to main
         }
     }
-    //rec_thread.join();
     rec.kill();
+    rec_thread.join();
 }
 
 void Serial::kill() {
