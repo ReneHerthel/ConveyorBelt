@@ -19,24 +19,28 @@ SETUP(FullSerialTest){
 TEST_IMPL(FullSerialTest, ConcurrentReceiver){
 	char sender_node[] = "/dev/ser1";
 	char receiver_node[] = "/dev/ser2";
-
+	rcv::msg_t msg;
 
 	std::cout << "Opening" << std::endl;
 	SerialSender sender(sender_node);
 	SerialReceiver receiver(receiver_node);
-	receiver.reset();
-
 
 	rcv::PulseMessageReceiverService pmr;
 	int chid_out = pmr.newChannel();
 
-	std::cout << "Cpy" << std::endl;
-	SerialReceiver receiver_cpy(receiver);
+	std::thread rec_thread(ref(receiver), chid_out);
 
-	std::cout << "Read" << std::endl;
-	receiver_cpy.receive();
+	char testString[] = "START Flitzndafoer_123456 123123 END";
+	sender.send(testString, sizeof(testString));
 
-	return TEST_FAILED;
+	std::cout << "Wait for pulse" << std::endl;
+	pmr.receivePulseMessage();
+	std::cout << "Pulse Received" << std::endl;
+	receiver.kill();
+
+	rec_thread.join();
+
+	return TEST_PASSED;
 }
 
 TEST_IMPL(FullSerialTest, SimpleSerialMsg){
