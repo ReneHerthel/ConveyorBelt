@@ -43,7 +43,7 @@ public:
     /*
      * @brief waits if the thread has a message received.
      */
-    int receivePulseMessage();
+    rcv::msg_t receivePulseMessage();
 
 private:
 
@@ -70,7 +70,7 @@ private:
     /*
      * @brief The value of the pulse message.
      */
-    rcv_msg_t pulseMessageValue_;
+    rcv::msg_t pulseMessageValue_;
 };
 
  #endif /* SRC_EXAMPLES_WRAPPER_THREADSERVER_H */
