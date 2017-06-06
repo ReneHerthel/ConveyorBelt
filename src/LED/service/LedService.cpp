@@ -18,6 +18,7 @@
 #include "Led.h"
 #include "HWdefines.h"
 
+#include <sys/neutrino.h>
 #include <iostream>
 
 LedService::LedService() {
@@ -26,6 +27,11 @@ LedService::LedService() {
 	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_1)); /**< RESET */
 	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_2)); /**< Q1    */
 	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_3)); /**< Q2    */
+
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
+	{
+		std::cout << "[LedService] Can't get hardware access." << std::endl;
+	}
 }
 
 void LedService::ledOn(const Led led) {

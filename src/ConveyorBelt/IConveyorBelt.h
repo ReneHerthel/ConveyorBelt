@@ -26,7 +26,7 @@ public:
 	 * @brief Changes the state of the conveyor belt by using the ConveyorBeltStates.
 	 * @param The next state of the ConveyorBelt component.
 	 */
-	virtual void ConveyorBeltChangeState(const ConveyorBeltState state) = 0;
+	virtual void changeState(const ConveyorBeltState state) = 0;
 };
 
 #endif /* ICONVEYORBELT_H_ */

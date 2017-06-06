@@ -17,17 +17,24 @@
 #include "ConveyorBeltService.h"
 #include "HWdefines.h"
 
+#include <sys/neutrino.h>
+#include <iostream>
+
 ConveyorBeltService::ConveyorBeltService()
 	:	hal_(new ConveyorBeltHal())
 {
-	// Nothing todo so far.
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
+	{
+		std::cout << "[ConveyorBeltService] Can't get hardware access." << std::endl;
+	}
 }
 
 ConveyorBeltService::~ConveyorBeltService() {
 	// Nothing todo so far.
+	delete hal_;
 }
 
-void ConveyorBeltService::ConveyorBeltChangeState(const ConveyorBeltState state) {
+void ConveyorBeltService::changeState(const ConveyorBeltState state) {
 
 	// Initialize a new mask with zero.
 	int mask = 0;
@@ -36,24 +43,25 @@ void ConveyorBeltService::ConveyorBeltChangeState(const ConveyorBeltState state)
 	 * Then set the mask with the corresponding pin information.
 	 */
 	switch (state) {
+
 		case RIGHTFAST:
-			mask = (1 << PIN_0);
+			mask = ENGINE_RIGHT_MASK;
 			break;
 
 		case RIGHTSLOW:
-			mask = (1 << (PIN_0 | PIN_2));
+			mask = ENGINE_SLOW_MASK | ENGINE_RIGHT_MASK;
 			break;
 
 		case LEFTFAST:
-			mask = (1 << PIN_1);
+			mask = ENGINE_LEFT_MASK;
 			break;
 
 		case LEFTSLOW:
-			mask = (1 << (PIN_0 | PIN_1));
+			mask = ENGINE_SLOW_MASK | ENGINE_LEFT_MASK;
 			break;
 
 		case STOP:
-			mask = (1 << PIN_3);
+			mask = ENGINE_STOP_MASK;
 			break;
 	}
 
