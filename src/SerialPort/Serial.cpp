@@ -23,10 +23,11 @@ Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto
 
 void Serial::operator()() {
 	LOG_SCOPE
-    std::thread thread(rec, chid);
+	running = true;
+    //std::thread rec_thread(rec, chid);
     TimerService polRecTimer(chid, SERIAL_TIMEOUT_SIG); //Ping of life timer for receiving pol, set after first received msg (makes setup simple)
     TimerService polSendTimer(chid, SERIAL_SEND_POL);  //Ping of life timer for sending pols
-    polSendTimer.setAlarm(SERIAL_POL_INTERVALL, 0);
+    polSendTimer.setAlarm(1000*2, 0);
     while(running){
         uint8_t code;
         uint32_t  value;
@@ -42,10 +43,13 @@ void Serial::operator()() {
             case SERIAL_TIMEOUT_SIG:
                 LOG_ERROR << "Ping of life was not received \n";
                 //TODO Serial Error handling, send error to main
+                ch_out.sendPulseMessage(SER_OUT, POL);
                 break;
             case SERIAL_SEND_POL:
+            	LOG_DEBUG << "Serial received send pol \n";
                 ser =  proto.wrapInFrame(SER_OUT, POL);
                 sender.send((char *) ser.obj, ser.size);
+                polSendTimer.setAlarm(1000*2, 0);
                 break;
             case SER_REC_IN: //Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
@@ -69,8 +73,9 @@ void Serial::operator()() {
                 LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
                 //TODO Serial Error handling, send error to main
         }
-        break;
     }
+    //rec_thread.join();
+    rec.kill();
 }
 
 void Serial::kill() {

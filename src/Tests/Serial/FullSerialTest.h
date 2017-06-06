@@ -19,6 +19,7 @@ class FullSerialTest : public TestCase{
 		FullSerialTest(int id, std::string brief): TestCase(id, brief){};
     protected:
         TEST(SimpleSerialMsg);
+        TEST(SerialPOLFailTest);
         TEST(ConcurrentReceiver);
         TEST_CASE_METHODS
     private:

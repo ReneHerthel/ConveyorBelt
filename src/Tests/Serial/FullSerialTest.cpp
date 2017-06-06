@@ -12,75 +12,110 @@
 #include <thread>
 
 SETUP(FullSerialTest){
-	REG_TEST(ConcurrentReceiver, 1, "[Serial]Send one msg (stop)");
-    //REG_TEST(SimpleSerialMsg, 2, "[Serial]Send one msg (stop)");
+	//REG_TEST(ConcurrentReceiver, 1, "[Serial]Send one msg (stop)");
+    REG_TEST(SimpleSerialMsg, 2, "[Serial]Construct an kill 2 serials");
 }
 
 TEST_IMPL(FullSerialTest, ConcurrentReceiver){
 	char sender_node[] = "/dev/ser1";
 	char receiver_node[] = "/dev/ser2";
-
+	rcv::msg_t msg;
 
 	std::cout << "Opening" << std::endl;
 	SerialSender sender(sender_node);
 	SerialReceiver receiver(receiver_node);
-	receiver.reset();
-
 
 	rcv::PulseMessageReceiverService pmr;
 	int chid_out = pmr.newChannel();
 
-	std::cout << "Cpy" << std::endl;
-	SerialReceiver receiver_cpy(receiver);
+	std::thread rec_thread(ref(receiver), chid_out);
 
-	std::cout << "Read" << std::endl;
-	receiver_cpy.receive();
+	char testString[] = "START Flitzndafoer_123456 123123 END";
+	sender.send(testString, sizeof(testString));
 
-	return TEST_FAILED;
+	std::cout << "Wait for pulse" << std::endl;
+	msg = pmr.receivePulseMessage();
+	std::cout << "Pulse Received" << std::endl;
+	receiver.kill();
+
+	rec_thread.join();
+
+
+	cout.write((char*)msg.value, sizeof(testString));
+
+	if(memcmp(testString, (char*)msg.value, sizeof(testString))==0){
+		return TEST_PASSED;
+	} else {
+		return TEST_FAILED;
+	}
+
+
+}
+
+TEST_IMPL(FullSerialTest, SerialPOLFailTest){
 }
 
 TEST_IMPL(FullSerialTest, SimpleSerialMsg){
-	LOG_SET_LEVEL(DEBUG);
-	LOG_DEBUG << "Serial test1 \n";
-	rcv::PulseMessageReceiverService pmr;
-	int chid_out = pmr.newChannel(); //receive from this channel from serial
-
-	rcv::PulseMessageReceiverService workaround;
-	int chid_in = workaround.newChannel(); //send to serial on this one
-	PulseMessageSenderService pms(chid_in);
-
-
-	char sender_node[] = "/dev/ser1";
-	char receiver_node[] = "/dev/ser2";
-
-	int testsig = STOP;
-	pms.sendPulseMessage(SER_IN,(int)&testsig);
-
-
-	//Init serial1
-	SerialSender sender_s(sender_node);
-	//sender_s.reset();
-	SerialReceiver receiver_s(sender_node);
-	receiver_s.reset();
-	SerialProtocoll proto_s = SerialProtocoll(SENDER);
-	Serial *serial_s = new Serial(receiver_s, sender_s, proto_s, chid_in, chid_out);
-
-	//std::thread *sers = new thread((*serial_s));
-	std::thread sers(*serial_s);
-
-	LOG_DEBUG << "Send pulse \n";
+	char ser1_path[] = "/dev/ser1";
+	char ser2_path[] = "/dev/ser2";
 
 
 
-	rcv::msg_t msg = pmr.receivePulseMessage();
+	//---------------INIT SER1---------------------
+	//Init PMR
+	rcv::PulseMessageReceiverService pmrSer1;
+	int pmrSer1Chid = pmrSer1.newChannel();
 
-	LOG_DEBUG << "Received Pulse \n";
+	//Init PMS
+	rcv::PulseMessageReceiverService pmsChannelCreatorSer1;
+	int pmsSer1Chid = pmsChannelCreatorSer1.newChannel();
+	PulseMessageSenderService pmsSer1(pmsSer1Chid);
 
-	//std::cout << "Code: " << msg.code << " Value: " << msg.code << std::endl;
+	//Init Sender & Receiver
+	SerialSender senderSer1(ser1_path);
+	SerialReceiver receiverSer1(ser1_path);
 
-	sers.join();
-	return TEST_FAILED;
-};
+	//Init Protocol
+	SerialProtocoll protoSer1(SENDER);
+
+	//Init Serial
+	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, pmrSer1Chid);
+
+
+
+
+
+	//---------------INIT SER2---------------------
+	//Init PMR
+	rcv::PulseMessageReceiverService pmrSer2;
+	int pmrSer2Chid = pmrSer2.newChannel();
+
+	//Init PMS
+	rcv::PulseMessageReceiverService pmsChannelCreatorSer2;
+	int pmsSer2Chid = pmsChannelCreatorSer2.newChannel();
+	PulseMessageSenderService pmsSer2(pmsSer1Chid);
+
+	//Init Sender & Receiver
+	SerialSender senderSer2(ser2_path);
+	SerialReceiver receiverSer2(ser2_path);
+
+	//Init Protocol
+	SerialProtocoll protoSer2(RECEIVER);
+
+	//Init Serial
+	Serial ser2(receiverSer2, senderSer2, protoSer2, pmsSer2Chid, pmrSer2Chid);
+
+	//START THOSE BAD BOYS
+	std::thread ser1_thread(ref(ser1));
+	//std::thread ser2_thread(ref(ser2));
+
+	//ser1.kill();
+	//ser2.kill();
+
+	ser1_thread.join();
+	//ser2_thread.join();
+
+}
 
 //v UNUSED v//
 BEFORE(FullSerialTest){return 0;}
