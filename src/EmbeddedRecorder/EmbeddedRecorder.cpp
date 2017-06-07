@@ -36,10 +36,15 @@ EmbeddedRecorder::~EmbeddedRecorder()
 
 void EmbeddedRecorder::writePulseIntoBuffer(struct _pulse pulse)
 {
+    writeValuesIntoBuffer(pulse.code, pulse.value.sival_int);
+}
+
+void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
+{
     record_t * record;
 
-    record.code = pulse.code;
-    record.value = pulse.value.sival_int;
+    record.code = code;
+    record.value = value;
     record.timestamp = -1; // TODO
 
     m_recordBuffer->write(record);

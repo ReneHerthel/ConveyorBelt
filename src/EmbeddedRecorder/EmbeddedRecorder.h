@@ -47,9 +47,14 @@ namespace rec {
         ~EmbeddedRecorder();
 
         /*
+         * @brief Write values into the buffer.
+         */
+        void writeValuesIntoBuffer(const int code, const int value);
+
+        /*
          * @brief Write a single record into the buffer.
          */
-        void writePulseIntoBuffer(struct _pulse pulse);
+        void writePulseIntoBuffer(const struct _pulse pulse);
 
         void playRecordedData();
         void saveRecordedData();
