@@ -31,8 +31,8 @@ int main() {
     // HeightMeasurement tests
     ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"));
 
-	// Ringbuffer tests
-	ts.REG_TESTCASE(new TestRingbuffer(3, "Test the functionality of the ringbuffer."));
+	  // Ringbuffer tests
+	  ts.REG_TESTCASE(new TestRecordBuffer(3, "Test the functionality of the ringbuffer."));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

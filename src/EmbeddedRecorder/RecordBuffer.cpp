@@ -34,27 +34,27 @@ int RecordBuffer::write(record_t record)
     read_write_mutex.lock();
 
     // The read() method can increment the _write value, so check the boundaries.
-    if (_write >= _size) {
-        _write = 0;
+    if (m_write >= m_size) {
+        m_write = 0;
     }
 
     // Move the _read forward by one.
-    if (_write == _read) {
+    if (_write == m_read) {
         _read++;
     }
 
-    _buffer[_write] = record;
-    _write++;
+    m_buffer[m_write] = record;
+    m_write++;
 
-    if (_write >= _size) {
-        _write = 0;
+    if (m_write >= m_size) {
+        m_write = 0;
     }
 
-    _count++;
+    m_count++;
 
     // There can not be more values in the buffer than the size of the buffer.
-    if (_count > _size) {
-        _count = _size;
+    if (m_count > m_size) {
+        m_count = m_size;
     }
 
     read_write_mutex.unlock();
@@ -67,26 +67,24 @@ int RecordBuffer::read(record_t *record)
     read_write_mutex.lock();
 
     // The write() method can increment the _read value, so check the boundaries.
-    if (_read >= _size) {
-        _read = 0;
-    }
-
-    // Only increment, when there are not already readed fields left.
-    if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
-        read_write_mutex.unlock();
-        return BUFFER_EMPTY;
+    if (m_read >= m_size) {
+        m_read = 0;
     }
 
     // Read, when there are values. And decrement, when read was successfully.
     if (_count > 0) {
-        *record = _buffer[_read];
-        _count--;
+        *record = m_buffer[m_read];
+        m_count--;
+    }
+    else {
+        read_write_mutex.unlock();
+        return BUFFER_EMPTY;
     }
 
-    _read++;
+    m_read++;
 
-    if (_read >= _size) {
-        _read = 0;
+    if (m_read >= m_size) {
+        m_read = 0;
     }
 
     read_write_mutex.unlock();

@@ -16,9 +16,11 @@
 
 #include "TestRingbuffer.h"
 
+#include "IRecordBuffer.h"
+#include "RecordBuffer.h"
+
 SETUP(TestRingbuffer) {
     REG_TEST(test1, 1, "Fill the buffer complete");
-    REG_TEST(test2, 2, "Empty the buffer complete");
 
     return 1;
 }
@@ -44,10 +46,26 @@ AFTER(TestRingbuffer) {
 }
 
 TEST_IMPL(TestRingbuffer, test1) {
-    return TEST_FAILED;
-}
+    IRecordBuffer * buffer = new RecordBuffer();
 
-TEST_IMPL(TestRingbuffer, test2) {
+    record_t * r;
+
+    // Make sure the defined buffersize of the buffer is 128.
+    for (int i = 0; i < 128; i++) {
+        r.code = i;
+        r.value = i;
+        r.timeStamp = i;
+        buffer->write(r);
+    }
+
+    for (int i = 0; i < 128; i++) {
+        buffer->read(r);
+    }
+
+    if (buffer->read(r) == -2) {
+        return TEST_PASSED;
+    }
+
     return TEST_FAILED;
 }
 

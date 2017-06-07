@@ -14,8 +14,8 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef SRC_TESTS_RINGBUFFER_TESTRINGBUFFER_H_
-#define SRC_TESTS_RINGBUFFER_TESTRINGBUFFER_H_
+#ifndef SRC_TESTS_RINGBUFFER_TESTRECORDBUFFER_H_
+#define SRC_TESTS_RINGBUFFER_TESTRECORDBUFFER_H_
 
 #include "../TestFramework/TestCase.h"
 #include "../TestFramework/TestFramework.h"
@@ -33,11 +33,6 @@ protected:
      * @brief TODO
      */
     TEST(test1);
-
-    /*
-     * @brief TODO
-     */
-    TEST(test2);
 
     // Must have.
     TEST_CASE_METHODS

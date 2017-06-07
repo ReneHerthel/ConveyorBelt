@@ -30,6 +30,8 @@ void BufferFileStreamer::exportBuffer(RecordBuffer * buffer)
     // Just write the whole object to the file
     fout.write(reinterpret_cast<const char*> (&buffer), sizeof(RecordBuffer));
 
+    // TODO: Write the puck manager to file.
+
     fout << flush;
     fout.close();
 }
@@ -43,6 +45,8 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer)
 
     // Just read the whole buffer once.
     fin.read(reinterpret_cast<const char*> (&buffer), sizeof(RecordBuffer));
+
+    // TODO: Read the puck manager from file.
 
     fin.close();
 }
