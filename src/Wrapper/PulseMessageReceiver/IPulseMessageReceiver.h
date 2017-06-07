@@ -17,6 +17,16 @@
 #ifndef SRC_WRAPPER_PULSEMESSAGERECEIVER_IPULSEMESSAGERECEIVER_H_
 #define SRC_WRAPPER_PULSEMESSAGERECEIVER_IPULSEMESSAGERECEIVER_H_
 
+namespace rcv {
+
+/*
+ * @brief The struct for some of the received pulse message values.
+ */
+typedef struct {
+    int code;
+    int value;
+} msg_t ;
+
 class IPulseMessageReceiver
 {
 public:
@@ -26,7 +36,7 @@ public:
      * @return A 32-bit value from the pulse message on success.
      *         The error-codes from MsgReceive_r and ChannelCreate_r on failure.
      */
-    virtual int receivePulseMessage() = 0;
+    virtual msg_t receivePulseMessage() = 0;
 
     /*
      * @brief Creates a new channel.
@@ -35,6 +45,8 @@ public:
      */
     virtual int newChannel() = 0;
 };
+
+} /* namespace rcv */
 
 #endif /* SRC_WRAPPER_PULSEMESSAGERECEIVER_IPULSEMESSAGERECEIVER_H_ */
 /** @} */

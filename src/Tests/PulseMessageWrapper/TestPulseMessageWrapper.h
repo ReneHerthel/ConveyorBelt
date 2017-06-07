@@ -26,12 +26,12 @@ public:
     /*
      * @brief Constructor.
      */
-	TestPulseMessageWrapper(int id, std::string brief) : TestCase(id, brief) { };
+	  TestPulseMessageWrapper(int id, std::string brief) : TestCase(id, brief) { };
 
 protected:
-	/*
-	 * @brief The pulse message which is carried around.
-	 */
+	  /*
+	   * @brief The pulse message which is carried around.
+	   */
     int testPulseMessage_ = 42;
 
     /*

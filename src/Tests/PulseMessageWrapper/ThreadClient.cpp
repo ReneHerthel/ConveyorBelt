@@ -21,11 +21,18 @@
 
 #include <iostream>
 
-ThreadClient::ThreadClient(const int chid)
+ThreadClient::ThreadClient(const int chid, int mod)
     :    chid_(chid)
 {
-    // Create a thread on the stack, so it will be killed after his task is done.
-    client_t = std::thread(&ThreadClient::sendSinglePulseMessage, this);
+    // quick and dirty
+    if (mod == 1) {
+        // Create a thread on the stack, so it will be killed after his task is done.
+        client_t = std::thread(&ThreadClient::sendSinglePulseMessage, this);
+    }
+    else if (mod == 2) {
+        // Create a thread on the stack, so it will be killed after his task is done.
+        client_t = std::thread(&ThreadClient::sendSingleStruct, this);
+    }
 }
 
 ThreadClient::~ThreadClient()
@@ -40,8 +47,24 @@ void ThreadClient::sendSinglePulseMessage()
 
     std::cout << "[ThreadClient] sendSinglePulseMessage() sending now value 42" << std::endl;
 
-    // Transmit a pulse message to the channel ID.
-    sender->sendPulseMessage(42);
+    // Transmit a code and value to the channel ID.
+    sender->sendPulseMessage(3, 42);
+}
+
+void ThreadClient::sendSingleStruct()
+{
+  struct _pulse pulse;
+
+  // Creates a new Sender.
+  IPulseMessageSender* sender = new PulseMessageSenderService(chid_);
+
+  std::cout << "[ThreadClient] sendSinglePulseMessage() sending now value 42" << std::endl;
+
+  pulse.code = 4;
+  pulse.value.sival_int = 55;
+
+  // Transmit a pulse message to the channel ID.
+  sender->sendPulseMessage(pulse);
 }
 
 /** @} */

@@ -16,6 +16,8 @@
 
 #include "TestPulseMessageWrapper.h"
 
+#include "IPulseMessageReceiver.h"
+
 #include "ThreadClient.h"
 #include "ThreadServer.h"
 
@@ -67,7 +69,7 @@ TEST_IMPL(TestPulseMessageWrapper, test1) {
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    ThreadClient* client = new ThreadClient(chid);
+    ThreadClient* client = new ThreadClient(chid, 1);
 
     std::cout << "[TestPulseMessageWrapper] Client created" << std::endl;
 
@@ -75,9 +77,10 @@ TEST_IMPL(TestPulseMessageWrapper, test1) {
 
     std::cout << "[TestPulseMessageWrapper] Done" << std::endl;
 
-    int value = server->receivePulseMessage();
+    rcv::msg_t structWithValues = server->receivePulseMessage();
 
-    if (value == 42) {
+    // You can also read structWithValues.code.
+    if (structWithValues.value == 42 && structWithValues.code == 3) {
         return TEST_PASSED;
     }
 
