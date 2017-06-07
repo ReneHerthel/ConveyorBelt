@@ -23,11 +23,6 @@ namespace rec {
 
     class BufferFileStreamer : public IBufferFileStreamer {
     public:
-        /*
-         * @brief TODO
-         */
-        BufferFileStreamer();
-
         void exportBuffer(RecordBuffer * buffer);
         void importBuffer(RecordBuffer * buffer);
     };

@@ -19,10 +19,10 @@
 namespace rec {
 
 ThreadRecordSender::ThreadRecordSender(RecordBuffer * buffer, const int chid)
-    :    _buffer(buffer)
-    ,    _sender(new PulseMessageSenderService(chid))
+    :    m_buffer(buffer)
+    ,    m_sender(new PulseMessageSenderService(chid))
 {
-    _client = std::thread(&ThreadRecordSender::sendPulseMessagesToChid, this);
+    m_client = std::thread(&ThreadRecordSender::sendPulseMessagesToChid, this);
 }
 
 ThreadRecordSender::~ThreadRecordSender()
@@ -37,10 +37,10 @@ void ThreadRecordSender::sendPulseMessagesToChid()
     while (ret >= 0) {
         record_t * record = NULL;
 
-        ret = _buffer->read(record);
+        ret = m_buffer->read(record);
 
         if (ret >= 0 && record != NULL) {
-            _sender->sendPulseMessage(record->code, record->value);
+            m_sender->sendPulseMessage(record->code, record->value);
         }
     }
 

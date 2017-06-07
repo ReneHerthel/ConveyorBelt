@@ -46,17 +46,17 @@ namespace rec {
         /*
          * @brief The buffer from where the pulse messages are.
          */
-        RecordBuffer * _buffer;
+        RecordBuffer * m_buffer;
 
         /*
          * @brief The client, which sends pulse messages.
          */
-        std::thread _client;
+        std::thread m_client;
 
         /*
          * @brief The pulse message sender.
          */
-        PulseMessageSenderService * _sender;
+        PulseMessageSenderService * m_sender;
     };
 
 } /* namespace rec */

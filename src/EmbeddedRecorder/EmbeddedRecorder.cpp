@@ -20,10 +20,10 @@
 
 namespace rec {
 
-EmbeddedRecorder::EmbeddedRecorder(const int bufferLength, const int sendChid)
-    :    _recordBuffer(new RecordBuffer(bufferLength))
-    ,    _sendChid(sendChid)
-    ,    _bufferFileStreamer(new BufferFileStreamer())
+EmbeddedRecorder::EmbeddedRecorder(const int sendChid)
+    :    m_recordBuffer(new RecordBuffer())
+    ,    m_sendChid(sendChid)
+    ,    m_bufferFileStreamer(new BufferFileStreamer())
 {
     // Nothing todo so far.
 }
@@ -36,25 +36,22 @@ EmbeddedRecorder::~EmbeddedRecorder()
 
 void EmbeddedRecorder::writeRecordIntoBuffer(record_t record)
 {
-    _recordBuffer->write(record);
+    m_recordBuffer->write(record);
 }
 
 void EmbeddedRecorder::showRecordedData()
 {
-    int ret = 0;
-
     // Copy the buffer, so the original buffer will not be effected.
-    RecordBuffer * copyOfBuffer = _recordBuffer;
+    RecordBuffer tmp(m_recordBuffer);
+
+    record_t * record = NULL;
 
     // Print the buffer content to the terminal, while the buffer is not empty.
-    while (ret >= 0) {
-        record_t * record = NULL;
-
-        ret = copyOfBuffer->read(record);
-
-        if (ret >= 0 && record != NULL) {
-            // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
+    while ((tmp->read(record)) >= 0) {
+        // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
+        if (record != NULL) {
             std::cout << "[" << (int)record->timestamp << "]  -  Code: " << (int)record->code << "  -  value: " << (int)record->value << std::endl;
+            record = NULL;
         }
     }
 }
@@ -62,17 +59,17 @@ void EmbeddedRecorder::showRecordedData()
 void EmbeddedRecorder::playRecordedData()
 {
     // This object works for itself.
-    _threadRecordSender = new ThreadRecordSender(_recordBuffer, _sendChid);
+    m_threadRecordSender = new ThreadRecordSender(m_recordBuffer, m_sendChid);
 }
 
 void EmbeddedRecorder::saveRecordedData()
 {
-    _bufferFileStreamer->exportBuffer(_recordBuffer);
+    m_bufferFileStreamer->exportBuffer(m_recordBuffer);
 }
 
 void EmbeddedRecorder::loadRecordedData()
 {
-    _bufferFileStreamer->importBuffer(_recordBuffer);
+    m_bufferFileStreamer->importBuffer(m_recordBuffer);
 }
 
 } /* namespace rec */

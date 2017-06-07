@@ -16,15 +16,22 @@
 
 #include "RecordBuffer.h"
 
+#include <mutex>
+
 namespace rec {
 
 #define BUFFER_NULL    (-1)
 #define BUFFER_EMPTY   (-2)
 #define BUFFER_SUCCESS (0)
 
+/*
+ * @brief A mutex to prevent, that more than one thread has access to the buffer.
+ */
+std::mutex read_write_mutex;
+
 int RecordBuffer::write(record_t record)
 {
-    // TODO: Implement a semaphore, so only one thread will use this method.
+    read_write_mutex.lock();
 
     // The read() method can increment the _write value, so check the boundaries.
     if (_write >= _size) {
@@ -50,12 +57,14 @@ int RecordBuffer::write(record_t record)
         _count = _size;
     }
 
+    read_write_mutex.unlock();
+
     return BUFFER_SUCCESS;
 }
 
 int RecordBuffer::read(record_t *record)
 {
-    // TODO: Implement a semaphore, so only one thread will use this method.
+    read_write_mutex.lock();
 
     // The write() method can increment the _read value, so check the boundaries.
     if (_read >= _size) {
@@ -64,6 +73,7 @@ int RecordBuffer::read(record_t *record)
 
     // Only increment, when there are not already readed fields left.
     if (    (_read + 1 == _write)    ||    (_write == 0 && _read + 1 >= _size)    ) {
+        read_write_mutex.unlock();
         return BUFFER_EMPTY;
     }
 
@@ -78,6 +88,8 @@ int RecordBuffer::read(record_t *record)
     if (_read >= _size) {
         _read = 0;
     }
+
+    read_write_mutex.unlock();
 
     return BUFFER_SUCCESS;
 }

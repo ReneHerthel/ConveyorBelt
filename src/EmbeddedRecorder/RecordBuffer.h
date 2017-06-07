@@ -24,19 +24,39 @@
 
 namespace rec {
 
+/*
+ * @brief The length of the buffer.
+ *
+ * @description NOTE: This needs to be defined here, otherwise we need object
+ *                    serialization for the buffer.
+ */
+#define BUFFER_LENGTH    (8)
+
     class RecordBuffer : public IRecordBuffer {
     public:
         /*
          * @brief Constructor, which creates a new buffer on the heap.
-         *
-         * @param[size] The size or amount of fields in the buffer.
          */
-        explicit RecordBuffer(const size_t size)
-            :    _size(size)
-            ,    _read(0)
-            ,    _write(0)
+        explicit RecordBuffer()
+            :    m_read(0)
+            ,    m_write(0)
+            ,    m_size(BUFFER_LENGTH)
+            ,    m_count(0)
         {
-            _buffer = new record_t[size];
+            // Nothing todo so far.
+        }
+
+        /*
+         * @brief Copy constructor.
+         */
+        explicit RecordBuffer(const RecordBuffer & other)
+            :    m_read(other.m_read)
+            ,    m_write(other.m_write)
+            ,    m_length(other.m_length)
+            ,    m_count(other.m_count)
+            ,    m_buffer(other.m_buffer)
+        {
+            // Nothing todo so far.
         }
 
         /*
@@ -44,7 +64,7 @@ namespace rec {
          */
         ~RecordBuffer()
         {
-            delete[] _buffer;
+            // Nothing todo so far.
         }
 
         int write(record_t record);
@@ -54,27 +74,27 @@ namespace rec {
         /*
          * @brief The buffer which contains all data.
          */
-        record_t * _buffer;
+        record_t m_buffer[BUFFER_LENGTH];
 
         /*
          * @brief The size or length of the buffer.
          */
-        size_t _size;
+        size_t m_length;
 
         /*
          * @brief The read (tail) index of the buffer.
          */
-        size_t _read;
+        size_t m_read;
 
         /*
          * @brief The write (head) index of the buffer.
          */
-        size_t _write;
+        size_t m_write;
 
         /*
          * @brief Counts the amount of values in the buffer.
          */
-        size_t _count;
+        size_t m_count;
 
         // TODO: A reference to the PuckManager.
     };

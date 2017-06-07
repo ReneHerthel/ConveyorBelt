@@ -36,10 +36,9 @@ namespace rec {
         /*
          * @brief Constructor with buffer length and the chid to send.
          *
-         * @param[bufferLength] The length of the buffer used by the recorder.
          * @param[chid] Channel, where the sender-thread sends pulse-messages.
          */
-        EmbeddedRecorder(const int bufferLength, const int sendChid);
+        EmbeddedRecorder(const int sendChid);
 
         /*
          * @brief Default destructor.
@@ -60,22 +59,22 @@ namespace rec {
         /*
          * @brief The channel, where the send-thread will send to.
          */
-        int _sendChid;
+        int m_sendChid;
 
         /*
          * @brief The thread where the recorder is running and controlling all.
          */
-        ThreadRecordSender * _threadRecordSender;
+        ThreadRecordSender * m_threadRecordSender;
 
         /*
          * @brief The reference to the buffer.
          */
-        RecordBuffer * _recordBuffer;
+        RecordBuffer * m_recordBuffer;
 
         /*
          * @brief  A reference to the BufferFileStreamer.
          */
-        BufferFileStreamer  * _bufferFileStreamer;
+        BufferFileStreamer  * m_bufferFileStreamer;
 
     }; /* class EmbeddedRecorder : public IEmbeddedRecorder */
 
