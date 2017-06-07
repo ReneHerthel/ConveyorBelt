@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <sys/neutrino.h>
 #include <sys/siginfo.h>
-#include "ConveyorBelt-devel/src/HWaccess.h"
+#include "HWaccess.h"
 #include "Control.h"
 #include "ISR_Thread.h"
 

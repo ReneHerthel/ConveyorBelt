@@ -11,9 +11,9 @@
 #include "Control.h"
 #include <chrono>
 #include <thread>
-#include "ConveyorBelt-devel/src/HWaccess.h"
+#include "HWaccess.h"
 #include "ConveyorBeltService.h"
-#include "ConveyorBelt-devel/src/ConveyorBelt/ConveyorBeltState.h"
+#include "ConveyorBeltState.h"
 #include "SortingSwitchService.h"
 
 
