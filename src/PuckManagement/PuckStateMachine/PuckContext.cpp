@@ -11,11 +11,7 @@ PuckContext::PuckContext() {
 
 }
 
-PuckReturn PuckContext::process() {
-
-}
-
-PuckReturn PuckContext::setType(signal_t type) {
+void PuckContext::process() {
 
 }
 
@@ -27,102 +23,100 @@ void PuckContext::startTimers() {
  * SuperState
  */
 void PuckContext::PuckState::inletIn() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::inletOut() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::heightmeasurmentIn() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::heightmeasurmentOut() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::switchIn() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::switchOut() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::switchOpen() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::slideIn() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::slideOut() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::outletIn() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::outletOut() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::metalDetect() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::serialReceived() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
 void PuckContext::PuckState::earlyTimer() {
-	returnVal = PuckContext::DENY;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::lateTimer() {
-	returnVal = PuckContext::ERROR;
-}
-
-
-PuckReturn entry() {
-	return returnVal;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ERROR;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
 }
 /*******************************************/
 
+#if machine
 /*******************************************
  * TransferArea
  */
 void PuckContext::TransferArea::inletIn() {
-	returnVal = PuckContext::WARNING;
-	new (this) TransferWarning;
+	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 }
 
 void PuckContext::TransferArea::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
-	new (this) TransferTimer;
-}
-
-PuckReturn PuckContext::TransferArea::entry() {
-	startTimers();
-	return returnVal;
-}
-/*******************************************/
-
-/*******************************************
- * TransferWarning
- */
-void PuckContext::TransferWarning::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	new (this) TransferTimer;
 }
 /*******************************************/
@@ -131,16 +125,20 @@ void PuckContext::TransferWarning::earlyTimer() {
  * TransferTimer
  */
 void PuckContext::TransferTimer::inletIn() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) Inlet;
 }
 /*******************************************/
+#endif
 
 /*******************************************
  * Inlet
  */
 void PuckContext::Inlet::inletOut() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	startTimers();
 	new (this) InletArea;
 }
 /*******************************************/
@@ -149,25 +147,13 @@ void PuckContext::Inlet::inletOut() {
  * InletArea
  */
 void PuckContext::InletArea::heightmeasurementIn() {
-	returnVal = PuckContext::WARNING;
-	new (this) WarningInlet;
+	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::InletArea::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
-	new (this) InletTimer;
-}
-PuckReturn PuckContext::InletArea::entry() {
-	startTimers();
-	return returnVal;
-}
-/*******************************************/
-
-/*******************************************
- * InletWarning
- */
-void PuckContext::InletWarning::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) InletTimer;
 }
 /*******************************************/
@@ -176,7 +162,8 @@ void PuckContext::InletWarning::earlyTimer() {
  * InletTimer
  */
 void PuckContext::InletTimer::heightmeasurementIn() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::HEIGHT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	new (this) Heightmeasurement;
 }
 /*******************************************/
@@ -185,8 +172,15 @@ void PuckContext::InletTimer::heightmeasurementIn() {
  * Heightmeasurement
  */
 void PuckContext::Heightmeasurement::heightmeasurementOut() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	startTimers();
 	new (this) MeasurementArea;
+}
+void PuckContext::Heightmeasurement::type() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// todo: setType
 }
 /*******************************************/
 
@@ -194,26 +188,20 @@ void PuckContext::Heightmeasurement::heightmeasurementOut() {
  * MeasurementArea
  */
 void PuckContext::MeasurementArea::switchIn() {
-	returnVal = PuckContext::WARNING;
-	new (this) MeasurementWarning;
+	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::MeasurementArea::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
-	new (this) InletTimer;
-}
-PuckReturn PuckContext::MeasurementArea::entry() {
-	startTimers();
-	return returnVal;
-}
-/*******************************************/
-
-/*******************************************
- * MeasurementWarning
- */
-void PuckContext::MeasurementWarning::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) MeasurementTimer;
+}
+
+void PuckContext::MeasurementArea::type() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// todo: setType
 }
 /*******************************************/
 
@@ -221,12 +209,15 @@ void PuckContext::MeasurementWarning::earlyTimer() {
  * MeasurementTimer
  */
 void PuckContext::MeasurementTimer::switchIn() {
-	returnVal = PuckContext::EVALUATE;
+	returnValue.puckReturn = PuckSignal::PuckReturn::EVALUATE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) TypeKnown;
 }
+
 void PuckContext::MeasurementTimer::MetalDetect(){
-	returnVal = PuckContext::ACCEPT;
-	context->metal = true;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// todo: setType
 	new (this) MetalType;
 }
 /*******************************************/
@@ -235,7 +226,8 @@ void PuckContext::MeasurementTimer::MetalDetect(){
  * MetalType
  */
 void PuckContext::MetalType::switchIn() {
-	returnVal = PuckContext::EVALUATE;
+	returnValue.puckReturn = PuckSignal::PuckReturn::EVALUATE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) TypeKnown;
 }
 /*******************************************/
@@ -244,16 +236,17 @@ void PuckContext::MetalType::switchIn() {
  * TypeKnown
  */
 void PuckContext::TypeKnown::switchOpen() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	startTimers();
 	new (this) SwitchArea;
 }
-void PuckContext::TypeKnown::slideIn(){
-	returnVal = PuckContext::ACCEPT;
-	new (this) SlideArea;
-}
-PuckReturn PuckContext::TypeKnown::entry() {
+
+void PuckContext::TypeKnown::slideIn() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	startTimers();
-	return returnVal;
+	new (this) SlideArea;
 }
 /*******************************************/
 
@@ -261,57 +254,101 @@ PuckReturn PuckContext::TypeKnown::entry() {
  * SlideArea
  */
 void PuckContext::SlideArea::slideOut() {
-	returnVal = PuckContext::DELETE;
-	new (this) InSlide;
-}
-void PuckContext::SlideArea::LateTimer(){
-	returnVal = PuckContext::SLIDE_FULL;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// dies here
 }
 
+void PuckContext::SlideArea::LateTimer() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::SLIDE_FULL;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// dies here
+}
 /*******************************************/
 
 /*******************************************
  * SwitchArea
  */
-void PuckContext::SwitchArea::switchIn() {
-	returnVal = PuckContext::WARNING;
-	new (this) SwitchWarning;
+void PuckContext::SwitchArea::outletIn() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::SwitchArea::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) SwitchTimer;
-}
-PuckReturn PuckContext::SwitchArea::entry() {
-	startTimers();
-	return returnVal;
-}
-/*******************************************/
-
-/*******************************************
- * SwitchWarning
- */
-void PuckContext::SwitchWarning::earlyTimer() {
-	returnVal = PuckContext::ACCEPT;
-	new (this) MeasurementTimer;
 }
 /*******************************************/
 
 /*******************************************
  * SwitchTimer
  */
-void PuckContext::SwitchTimer::switchIn() {
-	returnVal = PuckContext::ACCEPT;
+void PuckContext::SwitchTimer::outletIn() {
+#if !machine
+	returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	new (this) OutletArea;
+#else
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) OutletArea;
+#endif
 }
 /*******************************************/
 
 /*******************************************
+ * OutletArea
+ */
+#if !machine
+void PuckContext::OutletArea::serialAccept() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	new (this) InTransfer;
+}
+#else
+void PuckContext::OutletArea::outletOut() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// dies here
+}
+#endif
+/*******************************************/
+
+#if !machine
+/*******************************************
  * InTransfer
  */
-void PuckContext::InTransfer::serialReceived() {
-	returnVal = PuckContext::DELETE;
+void PuckContext::InTransfer::serialStop() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) TransferStopped;
+}
+
+void PuckContext::InTransfer::outletOut() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	new (this) Transferred;
 }
 /*******************************************/
 
+/*******************************************
+ * TransferStopped
+ */
+void PuckContext::TransferStopped::serialResume() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	new (this) InTransfer;
+}
+/*******************************************/
+
+/*******************************************
+ * Transferred
+ */
+void PuckContext::Transferred::serialReceived() {
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	// dies here
+}
+/*******************************************/
+#endif

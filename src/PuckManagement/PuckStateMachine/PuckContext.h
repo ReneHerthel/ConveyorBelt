@@ -12,12 +12,14 @@
 
 #include "PuckSignal.h"
 
+
+#define machine (0) // 0 or 1
+
 class PuckContext {
 public:
 
 	PuckContext();
-
-	PuckSignal::Return process(); // todo: pass signal
+	void process(); // todo: pass signal
 
 private:
 
@@ -27,72 +29,74 @@ private:
 	 * SuperState
 	 */
 	struct PuckState {
-		virtual PuckSignal::PuckSignal::Return inletIn();
-		virtual PuckSignal::Return inletOut();
+		virtual void inletIn();
+		virtual void inletOut();
 
-		virtual PuckSignal::Return heightmeasurmentIn();
-		virtual PuckSignal::Return heightmeasurmentOut();
+		virtual void heightmeasurmentIn();
+		virtual void heightmeasurmentOut();
 
-		virtual PuckSignal::Return switchIn();
-		virtual PuckSignal::Return switchOpen();
+		virtual void switchIn();
+		virtual void switchOpen();
 
-		virtual PuckSignal::Return slideIn();
-		virtual PuckSignal::Return slideOut();
+		virtual void slideIn();
+		virtual void slideOut();
 
-		virtual PuckSignal::Return outletIn();
-		virtual PuckSignal::Return outletOut();
+		virtual void outletIn();
+		virtual void outletOut();
 
-		virtual PuckSignal::Return type();
-		virtual PuckSignal::Return metalDetect();
+		virtual void type();
+		virtual void metalDetect();
 
-		virtual PuckSignal::Return serialAccept();
-		virtual PuckSignal::Return serialReceived();
-		virtual PuckSignal::Return serialStop();
-		virtual PuckSignal::Return serialResume();
+		virtual void serialAccept();
+		virtual void serialReceived();
+		virtual void serialStop();
+		virtual void serialResume();
 
-		virtual PuckSignal::Return earlyTimer();
-		virtual PuckSignal::Return lateTimer();
+		virtual void earlyTimer();
+		virtual void lateTimer();
 
-		virtual void entry();
+		PuckSignal::Return returnValue;
 
 		signal_t puckType;
 		bool metal;
 		uint32_t puckID;
 		uint16_t highestHeight1;
 		uint16_t highestHeight2;
-		PuckSpeed aquiredSpeed;
+		PuckSignal::PuckSpeed aquiredSpeed;
 	} *statePtr, state;
 
 
 	/*******************************************/
 
+#if machine
 	/*******************************************
 	 * Transfer
 	 */
 	struct TransferArea : PuckState {
-		PuckSignal::Return inletIn();
-		PuckSignal::Return earlyTimer();
+		void inletIn();
+		void earlyTimer();
 	};
 
 	struct TransferTimer : PuckState {
-		PuckSignal::Return inletIn();
+		void inletIn();
 	};
 	/*******************************************/
+#endif
 
 	/*******************************************
 	 * Inlet
 	 */
 	struct Inlet : PuckState {
-		PuckSignal::Return inletOut();
+		void inletOut();
 	};
 
 	struct InletArea : PuckState {
-		PuckSignal::Return earlyTimer();
-		PuckSignal::Return heightmeasurmentIn();
+		void earlyTimer();
+		void heightmeasurmentIn();
 	};
 
 	struct InletTimer : PuckState {
-		PuckSignal::Return heightmeasurementIn();
+		void heightmeasurementIn();
 	};
 	/*******************************************/
 
@@ -100,20 +104,20 @@ private:
 	 * Heightmeasurement
 	 */
 	struct Heightmeasurement : PuckState {
-		PuckSignal::Return heightmeasurementOut();
-		PuckSignal::Return type();
+		void heightmeasurementOut();
+		void type();
 	};
 
 
 	struct MeasurementArea : PuckState {
-		PuckSignal::Return earlyTimer();
-		PuckSignal::Return switchIn();
-		PuckSignal::Return type();
+		void earlyTimer();
+		void switchIn();
+		void type();
 	};
 
 	struct MeasurementTimer : PuckState {
-		PuckSignal::Return switchIn();
-		PuckSignal::Return metaldetect();
+		void switchIn();
+		void metaldetect();
 	};
 
 	/*******************************************/
@@ -122,12 +126,12 @@ private:
 	 * Type
 	 */
 	struct MetalType : PuckState {
-		PuckSignal::Return switchIn();
+		void switchIn();
 	};
 
 	struct TypeKnown : PuckState {
-		PuckSignal::Return switchOpen();
-		PuckSignal::Return slideIn();
+		void switchOpen();
+		void slideIn();
 	};
 	/*******************************************/
 
@@ -135,8 +139,8 @@ private:
 	 * Slide
 	 */
 	struct SlideArea : PuckState {
-		PuckSignal::Return slideOut();
-		PuckSignal::Return lateTimer();
+		void slideOut();
+		void lateTimer();
 	};
 	/*******************************************/
 
@@ -144,12 +148,12 @@ private:
 	 * Switch
 	 */
 	struct SwitchArea : PuckState {
-		PuckSignal::Return earlyTimer();
-		PuckSignal::Return outletIn();
+		void earlyTimer();
+		void outletIn();
 	};
 
 	struct SwitchTimer : PuckState {
-		PuckSignal::Return outletIn();  //with guards
+		void outletIn();  //with guards
 	};
 	/*******************************************/
 
@@ -157,22 +161,27 @@ private:
 	 * Outlet
 	 */
 	struct OutletArea : PuckState {
-		PuckSignal::Return serialAccept();
+#if !machine
+		void serialAccept();
+#else
+		void outletOut();
+#endif
 	};
 
+#if !machine
 	struct InTransfer : PuckState {
-		PuckSignal::Return outletOut();
-		PuckSignal::Return serialStop();
+		void outletOut();
+		void serialStop();
 	};
 
 	struct TransferStopped : PuckState {
-		PuckSignal::Return serialResume();
+		void serialResume();
 	};
 
 	struct Transferred : PuckState {
-		PuckSignal::Return serialReceived();
+		void serialReceived();
 	};
-
+#endif
 	/*******************************************/
 };
 

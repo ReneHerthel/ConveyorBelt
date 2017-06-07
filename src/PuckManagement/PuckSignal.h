@@ -8,6 +8,9 @@
 #ifndef PUCKSIGNAL_H_
 #define PUCKSIGNAL_H_
 
+#include "HeightSignal.h"
+#include <stdint.h>
+
 namespace PuckSignal {
 
 	enum PuckReturn {
@@ -25,7 +28,7 @@ namespace PuckSignal {
 	enum PuckSpeed {
 		FAST,
 		SLOW,
-		STOPPED
+		STOP
 	};
 
 	struct Return {
@@ -33,9 +36,28 @@ namespace PuckSignal {
 		PuckSpeed puckSpeed;
 	};
 
-	struct Signal {
-		// todo: merge signals for this type
+	enum TimerType : uint8_t {
+		EARLY_TIMER,
+		LATE_TIMER
 	};
+
+	struct TimerSignal {
+		uint16_t puckID;
+		TimerType type;
+	} __attribute__((packed));
+
+	enum SignalType {
+		HEIGHT_SIGNAL,
+		TIMER_SIGNAL,
+		INTERRUPT_SIGNAL
+	};
+
+	struct Signal {
+		SignalType signalType;
+		signal_t heightSignal;
+		TimerSignal timerSignal;
+	};
+
 
 }
 
