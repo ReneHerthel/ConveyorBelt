@@ -19,33 +19,33 @@
 #include "IRecordBuffer.h"
 #include "RecordBuffer.h"
 
-SETUP(TestRingbuffer) {
+SETUP(TestRecordBuffer) {
     REG_TEST(test1, 1, "Fill the buffer complete");
 
     return 1;
 }
 
-BEFORE_TC(TestRingbuffer) {
+BEFORE_TC(TestRecordBuffer) {
     // Empty.
-	return 1;
+	  return 1;
 }
 
-AFTER_TC(TestRingbuffer) {
+AFTER_TC(TestRecordBuffer) {
     // Empty.
-	return 1;
+	  return 1;
 }
 
-BEFORE(TestRingbuffer) {
+BEFORE(TestRecordBuffer) {
     // Empty.
-	return 1;
+	  return 1;
 }
 
-AFTER(TestRingbuffer) {
+AFTER(TestRecordBuffer) {
     // Empty.
-	return 1;
+	  return 1;
 }
 
-TEST_IMPL(TestRingbuffer, test1) {
+TEST_IMPL(TestRecordBuffer, test1) {
     IRecordBuffer * buffer = new RecordBuffer();
 
     record_t * r;
