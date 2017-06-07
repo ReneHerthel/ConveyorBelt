@@ -33,9 +33,7 @@ void MainController::messageInterpreter()
 {
     while (m_messageInterpreterIsRunning) {
         rcv::msg_t msg = m_receiver->receivePulseMessage();
-
-        // m_recorder->writeIntoBuffer(msg.code, msg.value);
-
+        // m_embeddedRecorder->writeValuesIntoBuffer(msg.code, msg.value);
         // TODO: Interpret the message.
     }
 }
