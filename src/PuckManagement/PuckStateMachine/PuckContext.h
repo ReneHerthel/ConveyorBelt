@@ -11,24 +11,33 @@
 #include "HeightSignal.h"
 
 #include "PuckSignal.h"
+#include <stdint.h>
 
 
 #define machine (0) // 0 or 1
 
 class PuckContext {
 public:
+	PuckContext(uint32_t puckID);
+	void process(PuckSignal::Signal signal);
 
-	PuckContext();
-	void process(); // todo: pass signal
+	// Getter for Puckmanager
+	PuckSignal::PuckType getType() {
+		return statePtr->puckType;
+	}
 
-private:
+	uint32_t getPuckID() {
+		return statePtr->puckID;
+	}
 
-	void startTimers();
+
+
 
 	/*******************************************
 	 * SuperState
 	 */
 	struct PuckState {
+		// Signals
 		virtual void inletIn();
 		virtual void inletOut();
 
@@ -55,29 +64,28 @@ private:
 		virtual void earlyTimer();
 		virtual void lateTimer();
 
+		// The return struct for the PuckManager
 		PuckSignal::Return returnValue;
 
-		signal_t puckType;
-		bool metal;
 		uint32_t puckID;
-		uint16_t highestHeight1;
-		uint16_t highestHeight2;
-		PuckSignal::PuckSpeed aquiredSpeed;
-	} *statePtr, state;
+		PuckSignal::PuckType puckType;
 
-
+		// Timer stuff
+		void startTimers();
+		void stopTimer();
+	} *statePtr;
 	/*******************************************/
 
 #if machine
 	/*******************************************
 	 * Transfer
 	 */
-	struct TransferArea : PuckState {
+	struct TransferArea : public PuckState {
 		void inletIn();
 		void earlyTimer();
-	};
+	} transferState;
 
-	struct TransferTimer : PuckState {
+	struct TransferTimer : public PuckState {
 		void inletIn();
 	};
 	/*******************************************/
@@ -86,16 +94,16 @@ private:
 	/*******************************************
 	 * Inlet
 	 */
-	struct Inlet : PuckState {
+	struct Inlet : public PuckState {
 		void inletOut();
-	};
+	} inletState;
 
-	struct InletArea : PuckState {
+	struct InletArea : public PuckState {
 		void earlyTimer();
-		void heightmeasurmentIn();
+		void heightmeasurementIn();
 	};
 
-	struct InletTimer : PuckState {
+	struct InletTimer : public PuckState {
 		void heightmeasurementIn();
 	};
 	/*******************************************/
@@ -103,33 +111,32 @@ private:
 	/*******************************************
 	 * Heightmeasurement
 	 */
-	struct Heightmeasurement : PuckState {
+	struct Heightmeasurement : public PuckState {
 		void heightmeasurementOut();
 		void type();
 	};
 
 
-	struct MeasurementArea : PuckState {
+	struct MeasurementArea : public PuckState {
 		void earlyTimer();
 		void switchIn();
 		void type();
 	};
 
-	struct MeasurementTimer : PuckState {
+	struct MeasurementTimer : public PuckState {
 		void switchIn();
-		void metaldetect();
+		void metalDetect();
 	};
-
 	/*******************************************/
 
 	/*******************************************
 	 * Type
 	 */
-	struct MetalType : PuckState {
+	struct MetalType : public PuckState {
 		void switchIn();
 	};
 
-	struct TypeKnown : PuckState {
+	struct TypeKnown : public PuckState {
 		void switchOpen();
 		void slideIn();
 	};
@@ -138,7 +145,7 @@ private:
 	/*******************************************
 	 * Slide
 	 */
-	struct SlideArea : PuckState {
+	struct SlideArea : public PuckState {
 		void slideOut();
 		void lateTimer();
 	};
@@ -147,12 +154,12 @@ private:
 	/*******************************************
 	 * Switch
 	 */
-	struct SwitchArea : PuckState {
+	struct SwitchArea : public PuckState {
 		void earlyTimer();
 		void outletIn();
 	};
 
-	struct SwitchTimer : PuckState {
+	struct SwitchTimer : public PuckState {
 		void outletIn();  //with guards
 	};
 	/*******************************************/
@@ -160,7 +167,7 @@ private:
 	/*******************************************
 	 * Outlet
 	 */
-	struct OutletArea : PuckState {
+	struct OutletArea : public PuckState {
 #if !machine
 		void serialAccept();
 #else
@@ -169,16 +176,16 @@ private:
 	};
 
 #if !machine
-	struct InTransfer : PuckState {
+	struct InTransfer : public PuckState {
 		void outletOut();
 		void serialStop();
 	};
 
-	struct TransferStopped : PuckState {
+	struct TransferStopped : public PuckState {
 		void serialResume();
 	};
 
-	struct Transferred : PuckState {
+	struct Transferred : public PuckState {
 		void serialReceived();
 	};
 #endif

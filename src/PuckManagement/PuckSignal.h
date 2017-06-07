@@ -56,9 +56,15 @@ namespace PuckSignal {
 		SignalType signalType;
 		signal_t heightSignal;
 		TimerSignal timerSignal;
+
 	};
 
-
+	struct PuckType {
+		signal_t heightType;
+		uint8_t metal;
+		uint16_t height1;
+		uint16_t height2;
+	};
 }
 
 #endif

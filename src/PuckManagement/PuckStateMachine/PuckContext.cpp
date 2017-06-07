@@ -7,16 +7,27 @@
 
 #include "PuckContext.h"
 
-PuckContext::PuckContext() {
+#include <new>
 
+PuckContext::PuckContext(uint32_t puckID) {
+#if !machine
+	statePtr = &inletState;
+#else
+	statePtr = &transferState;
+	startTimers();
+#endif
+	statePtr->puckID = puckID;
 }
 
-void PuckContext::process() {
-
-}
-
-void PuckContext::startTimers() {
-
+void PuckContext::process(PuckSignal::Signal signal) {
+	switch(signal.signalType) {
+		case PuckSignal::SignalType::HEIGHT_SIGNAL:
+			statePtr->type();
+			if(statePtr->returnValue.puckReturn == PuckSignal::PuckReturn::ACCEPT) {
+				statePtr->puckType.heightType = signal.heightSignal;
+			}
+			break;
+	}
 }
 
 /*******************************************
@@ -45,11 +56,6 @@ void PuckContext::PuckState::heightmeasurmentOut() {
 
 
 void PuckContext::PuckState::switchIn() {
-	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-}
-
-void PuckContext::PuckState::switchOut() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
@@ -214,7 +220,7 @@ void PuckContext::MeasurementTimer::switchIn() {
 	new (this) TypeKnown;
 }
 
-void PuckContext::MeasurementTimer::MetalDetect(){
+void PuckContext::MeasurementTimer::metalDetect() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	// todo: setType
@@ -259,7 +265,7 @@ void PuckContext::SlideArea::slideOut() {
 	// dies here
 }
 
-void PuckContext::SlideArea::LateTimer() {
+void PuckContext::SlideArea::lateTimer() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::SLIDE_FULL;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	// dies here
