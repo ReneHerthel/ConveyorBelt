@@ -28,6 +28,7 @@
 #include "ThreadRecordSender.h"
 
 #include <thread>
+#include <sys/neutrino.h>
 
 namespace rec {
 
@@ -48,7 +49,7 @@ namespace rec {
         /*
          * @brief Write a single record into the buffer.
          */
-        void writeRecordIntoBuffer(record_t record);
+        void writePulseIntoBuffer(struct _pulse pulse);
 
         void playRecordedData();
         void saveRecordedData();

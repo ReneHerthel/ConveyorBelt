@@ -23,10 +23,10 @@
 class TestRecordBuffer : public TestCase
 {
 public:
-	/*
-	 * @brief TODO
-	 */
-	TestRecordBuffer(int id, std::string brief) : TestCase(id, brief) { };
+	  /*
+	   * @brief TODO
+	   */
+	  TestRecordBuffer(int id, std::string brief) : TestCase(id, brief) { };
 
 protected:
     /*

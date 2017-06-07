@@ -21,7 +21,6 @@
 
 SETUP(TestRecordBuffer) {
     REG_TEST(test1, 1, "Fill the buffer complete");
-
     return 1;
 }
 
