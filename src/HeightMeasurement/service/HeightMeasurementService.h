@@ -84,7 +84,19 @@ public:
      */
     void stopMeasuring();
 
+    /*
+     * @brief Get the heighest measured height from the measuring thread.
+     *
+     * @return returns a structure with all needed data.
+     */
+    signal_t getHeighestHeight();
+
 private:
+    /*
+     * @brief the heighest measured height
+     */
+    signal_t heighestHeight;
+
     /*
      * @brief A pointer to the statemachine object.
      */

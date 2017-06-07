@@ -29,9 +29,8 @@ HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
 {
-
-  LOG_SCOPE;
-  //LOG_SET_LEVEL(DEBUG)
+    LOG_SCOPE;
+    //LOG_SET_LEVEL(DEBUG)
     // All states needs to know the service class.
     state.service = service;
 
@@ -128,10 +127,9 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
 
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value); // TODO: Fix the magic-numbers.
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << "\n";
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value);
 
-    //std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " OTHER: " << (int)signal.OTHER "\n";
     LOG_DEBUG << "DUMMY MESSAGE\n";
 
     if (err < 0) {
@@ -167,6 +165,7 @@ void HeightContext::State::timeout() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -180,6 +179,7 @@ void HeightContext::State::start() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -228,6 +228,7 @@ void HeightContext::State::patternRead() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -292,6 +293,7 @@ void HeightContext::Measuring::invalid() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -358,6 +360,7 @@ void HeightContext::Surface::refHeight() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -394,6 +397,7 @@ void HeightContext::Top::entry() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
+        signal.OTHER = 0;
         send(coid, signal);
         new (this) Idle;
     }
@@ -415,6 +419,7 @@ void HeightContext::Top::refHeight() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
+        signal.OTHER = 0;
    		  send(coid, signal);
    		  new (this) Idle;
     }
@@ -489,6 +494,7 @@ void HeightContext::Flipped::entry() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.OTHER = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }
@@ -505,6 +511,7 @@ void HeightContext::BitCoded::entry() {
     signal.BIT0 = pattern[0];
     signal.BIT1 = pattern[1];
     signal.BIT2 = pattern[2];
+    signal.OTHER = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }

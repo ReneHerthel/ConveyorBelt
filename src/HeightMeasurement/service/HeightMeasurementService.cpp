@@ -41,6 +41,12 @@ HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_ch
     statemachineIsRunning = true;
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
+
+    heighestHeight.ID = 0;
+    heighestHeight.BIT0 = 0;
+    heighestHeight.BIT1 = 0;
+    heighestHeight.BIT2 = 0;
+    heighestHeight.OTHER = 0;
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
@@ -84,28 +90,26 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * transition.
      */
     while (measurementIsRunning) {
+    	  hal.read(data);
+    	  dataInRange(&state, data);
 
-    	hal.read(data);
-
-    	dataInRange(&state, data);
-
+        if (data > heighestHeight.OTHER) {
+            heighestHeight.OTHER = data;
+            heighestHeight.ID = state;
+        }
 
         // But send only a message if there is a new state.
         if (state != oldState) {
             err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
-
             if (err < 0) {
                 // TODO Error handling.
                 LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
             }
-
             //LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
         }
-
         // Remember the current state as old state for the next loop.
         oldState = state;
     }
-
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
 }
 
@@ -114,16 +118,16 @@ void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
         *state = REF_HEIGHT;
     }
     else if (RANGE(data, HOLE_HEIGHT_VAL)) {
-    	*state = HOLE_HEIGHT;
+    	  *state = HOLE_HEIGHT;
     }
     else if (RANGE(data, SURFACE_HEIGHT_VAL)) {
-    	*state = SURFACE_HEIGHT;
+    	  *state = SURFACE_HEIGHT;
     }
     else if (RANGE(data, LOW_HEIGHT_VAL)) {
-    	*state = LOW_HEIGHT;
+    	  *state = LOW_HEIGHT;
     }
     else if (RANGE(data, HIGH_HEIGHT_VAL)) {
-    	*state = HIGH_HEIGHT;
+    	  *state = HIGH_HEIGHT;
     }
     else if (RANGE(data, INVALID_HEIGHT_VAL)){
         *state = INVALID;
@@ -156,6 +160,10 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
     }
 
     LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Leaves superloop\n";
+}
+
+signal_t HeightMeasurementService::getHeighestHeight() {
+    return heighestHeight;
 }
 
 /** @} */

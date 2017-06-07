@@ -31,6 +31,7 @@ typedef union SIGNAL_t {
         uint8_t BIT0 : 1;
 		    uint8_t BIT1 : 1;
 		    uint8_t BIT2 : 1;
+        uint16_t OTHER : 12; // For something like the heighest height.
     } __attribute__((packed));
     uint8_t value;  // The whole structure as a value.
 
@@ -52,7 +53,7 @@ enum SignalID {
  * @brief This enum describes the signals to be processed.
  */
 enum Signal {
-	REF_HEIGHT = 0,
+	  REF_HEIGHT = 0,
     HOLE_HEIGHT = 1,
     SURFACE_HEIGHT = 2,
     LOW_HEIGHT = 3,
