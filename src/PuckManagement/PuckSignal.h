@@ -9,6 +9,8 @@
 #define PUCKSIGNAL_H_
 
 #include "HeightSignal.h"
+#include "SerialProtocoll.h"
+
 #include <stdint.h>
 
 namespace PuckSignal {
@@ -49,14 +51,16 @@ namespace PuckSignal {
 	enum SignalType {
 		HEIGHT_SIGNAL,
 		TIMER_SIGNAL,
-		INTERRUPT_SIGNAL
+		INTERRUPT_SIGNAL,
+		SERIAL_SIGNAL
 	};
 
 	struct Signal {
 		SignalType signalType;
 		signal_t heightSignal;
 		TimerSignal timerSignal;
-
+		uint32_t interruptSignal;
+		msg serialSignal;
 	};
 
 	struct PuckType {

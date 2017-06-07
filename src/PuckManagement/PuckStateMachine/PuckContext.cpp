@@ -27,6 +27,28 @@ void PuckContext::process(PuckSignal::Signal signal) {
 				statePtr->puckType.heightType = signal.heightSignal;
 			}
 			break;
+
+		case PuckSignal::SignalType::TIMER_SIGNAL:
+			switch(signal.timerSignal.type) {
+				case PuckSignal::TimerType::EARLY_TIMER:
+					statePtr->earlyTimer();
+					break;
+				case PuckSignal::TimerType::LATE_TIMER:
+					statePtr->lateTimer();
+					break;
+				default:
+					;
+					// todo: error handling
+			}
+			break;
+
+		case PuckSignal::SignalType::INTERRUPT_SIGNAL:
+			// todo: implement interrupt signals
+			break;
+
+		case PuckSignal::SignalType::SERIAL_SIGNAL:
+
+			break;
 	}
 }
 
