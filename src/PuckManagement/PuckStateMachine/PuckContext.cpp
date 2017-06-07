@@ -7,6 +7,8 @@
 
 #include "PuckContext.h"
 
+#include "Signals.h"
+
 #include <new>
 
 PuckContext::PuckContext(uint32_t puckID) {
@@ -19,7 +21,7 @@ PuckContext::PuckContext(uint32_t puckID) {
 	statePtr->puckID = puckID;
 }
 
-void PuckContext::process(PuckSignal::Signal signal) {
+PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 	switch(signal.signalType) {
 		case PuckSignal::SignalType::HEIGHT_SIGNAL:
 			statePtr->type();
@@ -43,13 +45,65 @@ void PuckContext::process(PuckSignal::Signal signal) {
 			break;
 
 		case PuckSignal::SignalType::INTERRUPT_SIGNAL:
-			// todo: implement interrupt signals
+			switch(signal.interruptSignal) {
+				case INLET_IN:
+					statePtr->inletIn();
+					break;
+				case INLET_OUT:
+					statePtr->inletOut();
+					break;
+				case HEIGHTMEASUREMENT_IN:
+					statePtr->heightmeasurmentIn();
+					break;
+				case HEIGHTMEASUREMENT_OUT:
+					statePtr->heightmeasurmentOut();
+					break;
+				case SWITCH_IN:
+					statePtr->switchIn();
+					break;
+				case SWITCH_OPEN:
+					statePtr->switchOpen();
+					break;
+				case SLIDE_IN:
+					statePtr->slideIn();
+					break;
+				case SLIDE_OUT:
+					statePtr->slideOut();
+					break;
+				case OUTLET_IN:
+					statePtr->outletIn();
+					break;
+				case OUTLET_OUT:
+					statePtr->outletOut();
+					break;
+				default:
+					// todo: error handling
+					;
+			}
 			break;
 
 		case PuckSignal::SignalType::SERIAL_SIGNAL:
-
+			switch(signal.serialSignal) {
+				case msg::ACCEPT:
+					statePtr->serialAccept();
+					break;
+				case msg::STOP:
+					statePtr->serialStop();
+					break;
+				case msg::RESUME:
+					statePtr->serialResume();
+					break;
+				case msg::RECEIVED:
+					statePtr->serialReceived();
+					break;
+				default:
+					// todo: error handling
+					;
+			}
 			break;
 	}
+
+	return statePtr->returnValue;
 }
 
 /*******************************************

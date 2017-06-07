@@ -19,7 +19,7 @@
 class PuckContext {
 public:
 	PuckContext(uint32_t puckID);
-	void process(PuckSignal::Signal signal);
+	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
 	PuckSignal::PuckType getType() {
