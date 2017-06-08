@@ -14,10 +14,6 @@
 !LICENSE
 !README.*
 
-Do not ignore subfolders
-!*/
-!*/
-
 #C++ Files
 !*.cpp
 !*.h
@@ -31,12 +27,8 @@ Do not ignore subfolders
 #UMLet Files
 !*.uxf
 
-
-
 cmake-build-debug/
-
 \.idea/
-
 CMakeLists\.txt
 
 x86/o-g/LogScope\.o
