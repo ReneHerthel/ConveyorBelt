@@ -22,32 +22,22 @@ namespace rec {
 
 void BufferFileStreamer::exportBuffer(RecordBuffer * buffer)
 {
-    ofstream fout;
-
+    fstream file;
     // Open the file for writing, as binary and discard the content.
-    fout.open("buffer.bin", ios::out | ios::binary | ios::trunc);
-
+    file.open("/buffer.bin", ios::out | ios::binary | ios::trunc);
     // Just write the whole object to the file
-    fout.write(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
-
+    file.write((char*)buffer, sizeof(RecordBuffer));
     // TODO: Write the puck manager to file.
-
-    fout << flush;
-    fout.close();
+    file.close();
 }
 
 void BufferFileStreamer::importBuffer(RecordBuffer * buffer)
 {
     ifstream fin;
-
     // Open the file for reading and binary operation.
-    fin.open("buffer.bin", ios::in | ios::binary);
-
-    // Just read the whole buffer once.
-    fin.read(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
-
+    fin.open("/buffer.bin", ios::in | ios::binary);
+    fin.read((char*)buffer, sizeof(RecordBuffer));
     // TODO: Read the puck manager from file.
-
     fin.close();
 }
 

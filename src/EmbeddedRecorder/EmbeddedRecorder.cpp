@@ -54,8 +54,6 @@ void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 
 void EmbeddedRecorder::showRecordedData()
 {
-	std::cout << "[EmbeddedRecorder] showRecordedData()" << std::endl;
-
     // Copy the buffer, so the original buffer will not be effected.
     rec::RecordBuffer * tmp = m_recordBuffer;
 
@@ -73,20 +71,19 @@ void EmbeddedRecorder::showRecordedData()
 
 void EmbeddedRecorder::playRecordedData()
 {
-	//std::cout << "[EmbeddedRecorder] playRecordedData() chid: " << m_sendChid << std::endl;
-    // This object works for itself.
+    /* This will actually create a thread, which sends all messages from the buffer to the main controller.
+     * It will stop itself, after his function ends.
+     */
     new ThreadRecordSender(m_recordBuffer, m_sendChid);
 }
 
 void EmbeddedRecorder::saveRecordedData()
 {
-	std::cout << "[EmbeddedRecorder] saveRecordedData()" << std::endl;
     m_bufferFileStreamer->exportBuffer(m_recordBuffer);
 }
 
 void EmbeddedRecorder::loadRecordedData()
 {
-	std::cout << "[EmbeddedRecorder] loadRecordedData()" << std::endl;
     m_bufferFileStreamer->importBuffer(m_recordBuffer);
 }
 

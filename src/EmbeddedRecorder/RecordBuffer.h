@@ -42,6 +42,7 @@ namespace rec {
             ,    m_read(0)
             ,    m_write(0)
             ,    m_count(0)
+            ,    m_buffer()
         {
             // Nothing todo so far.
         }

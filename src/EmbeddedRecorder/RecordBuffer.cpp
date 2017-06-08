@@ -17,7 +17,7 @@
 #include "RecordBuffer.h"
 
 #include <mutex>
-#include <iostream>
+//#include <iostream>
 
 namespace rec {
 
@@ -34,7 +34,7 @@ int RecordBuffer::write(record_t record)
 {
     read_write_mutex.lock();
 
-    std::cout << "[RecordBuffer] write: " << m_write << " count: " << m_count << std::endl;
+    //std::cout << "[RecordBuffer] write: " << m_write << " count: " << m_count << std::endl;
 
     // The read() method can increment the _write value, so check the boundaries.
     if (m_write >= m_length) {
@@ -68,7 +68,7 @@ int RecordBuffer::read(record_t *record)
 {
     read_write_mutex.lock();
 
-    std::cout << "[RecordBuffer] read: " << m_read << " count: " << m_count << std::endl;
+    //std::cout << "[RecordBuffer] read: " << m_read << " count: " << m_count << std::endl;
 
     // The write() method can increment the _read value, so check the boundaries.
     if (m_read >= m_length) {
