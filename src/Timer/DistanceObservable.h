@@ -9,22 +9,22 @@
 #define DISTANCEOBSERVABLE_H_
 
 #include <set>
+#include <stdint.h>
+#include "DistanceTracker.h"
+#include "DistanceEnum.h"
+
 
 using namespace std;
 
-class DistanceObservable {
-public:
-	enum speed_t{
-		FAST,
-		SLOW,
-		STOP
-	};
+class DistanceTracker;
 
+class DistanceObservable{
+public:
 	/**
 	 * Update the Speed of all Observers
 	 * @param speed the new Speed of the belt
 	 */
-	void updateSpeed(speed_t speed);
+	void updateSpeed(DistanceSpeed::speed_t speed);
 
 	/**
 	 * Register a new DistanceTracker as Observer to this
@@ -44,7 +44,7 @@ public:
 	 * NOTE! Stop doesnt work as speed
 	 * @param speed the calibration data for the speed_t
 	 */
-	uint32_t getCalibrationData(speed_t speed);
+	uint32_t getCalibrationData(DistanceSpeed::speed_t speed);
 
 
 	/**
@@ -53,7 +53,7 @@ public:
 	 * @param mmToTime the factor used to determin the time
 	 * @param speed the calibration data for the speed_t
 	 */
-	void setCalibrationData(speed_t speed, uint32_t mmToTime);
+	void setCalibrationData(DistanceSpeed::speed_t speed, uint32_t mmToTime);
 
 	/**
 	 * Get an Instance of the DistanceObservable

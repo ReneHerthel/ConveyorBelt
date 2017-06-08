@@ -8,13 +8,18 @@
 #ifndef SRC_TIMER_DISTANCETRACKER_H_
 #define SRC_TIMER_DISTANCETRACKER_H_
 
-#include "ITimer.h"
+#include "TimerService.h"
+#include <stdint.h>
+#include "DistanceObservable.h"
+#include "DistanceEnum.h"
 
-using namespace DistanceObservable;
+class DistanceObservable;
 
 class DistanceTracker{
 private:
-	ITimer *timer;
+	int8_t code_;
+	int chid_;
+	TimerService timer_;
 	uint32_t mmToTimeFast_;
 	uint32_t mmToTimeSlow_;
 public:
@@ -35,7 +40,7 @@ public:
 	 * The Distance tracker will adapt his timers accordingly
 	 * @param speed The current speed of the belt
 	 */
-	void notify(speed_t speed);
+	void notify(DistanceSpeed::speed_t speed);
 
 	/**
 	 *Start an Alarm, will override any alarm pending
