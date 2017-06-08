@@ -59,7 +59,7 @@ namespace PuckSignal {
 		SignalType signalType;
 		signal_t heightSignal;
 		TimerSignal timerSignal;
-		uint32_t interruptSignal;
+		interrupts::InterruptSignals interruptSignal;
 		msg serialSignal;
 	};
 

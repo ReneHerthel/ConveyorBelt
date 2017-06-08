@@ -9,7 +9,7 @@
 #define PUCKCONTEXT_H_
 
 #include "HeightSignal.h"
-
+#include "Signals.h"
 #include "PuckSignal.h"
 #include <stdint.h>
 

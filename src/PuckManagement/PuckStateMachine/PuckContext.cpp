@@ -58,6 +58,10 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 				case HEIGHTMEASUREMENT_OUT:
 					statePtr->heightmeasurmentOut();
 					break;
+				case interrupts::interruptSignals::METAL_DETECT:
+					statePtr->puckType.metal = 1;
+					statePtr->metalDetect();
+					break;
 				case SWITCH_IN:
 					statePtr->switchIn();
 					break;

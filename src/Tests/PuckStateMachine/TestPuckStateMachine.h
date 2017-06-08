@@ -13,6 +13,8 @@
 
 #include "PuckContext.h"
 #include "PuckSignal.h"
+#include "Signals.h"
+#include "HeightSignal.h"
 
 class TestPuckStateMachine : public TestCase {
 public:
