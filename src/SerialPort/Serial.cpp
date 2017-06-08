@@ -10,6 +10,8 @@
 #include <Timer/TimerService.h>
 #include <TopLevelProto/ITopLvlProtocoll.h>
 
+using namespace Serial_n;
+
 Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto,const int channel_in,const int channel_out) :
     rec(rec),
     sender(sender),
@@ -23,10 +25,11 @@ Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto
 
 void Serial::operator()() {
 	LOG_SCOPE
-    std::thread thread(rec, chid);
+	running = true;
+    std::thread rec_thread(ref(rec), chid);
     TimerService polRecTimer(chid, SERIAL_TIMEOUT_SIG); //Ping of life timer for receiving pol, set after first received msg (makes setup simple)
     TimerService polSendTimer(chid, SERIAL_SEND_POL);  //Ping of life timer for sending pols
-    polSendTimer.setAlarm(SERIAL_POL_INTERVALL, 0);
+    polSendTimer.setAlarm(500, 0);
     while(running){
         uint8_t code;
         uint32_t  value;
@@ -42,18 +45,20 @@ void Serial::operator()() {
             case SERIAL_TIMEOUT_SIG:
                 LOG_ERROR << "Ping of life was not received \n";
                 //TODO Serial Error handling, send error to main
+                ch_out.sendPulseMessage(SER_OUT, POL_SER);
                 break;
             case SERIAL_SEND_POL:
-                ser =  proto.wrapInFrame(SER_OUT, POL);
+            	LOG_DEBUG << "Serial received send pol \n";
+                ser =  proto.wrapInFrame(SER_OUT, POL_SER);
                 sender.send((char *) ser.obj, ser.size);
+                polSendTimer.setAlarm(500, 0);
                 break;
             case SER_REC_IN: //Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
-                if(pm.value != POL){ //POL doesnt need to be send to the main
+                if(pm.value != POL_SER){ //POL doesnt need to be send to the main
                     ch_out.sendPulseMessage(pm.code, pm.value);
                 }
-                polRecTimer.stopAlarm();
-                polRecTimer.setAlarm(SERIAL_POL_TIMEOUT, 0);
+                polRecTimer.setAlarm(999, 0);
                 break;
             case SER_REC_FAIL:
                 LOG_ERROR << "Serial Recorder could'nt read msg from ser \n";
@@ -69,8 +74,9 @@ void Serial::operator()() {
                 LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
                 //TODO Serial Error handling, send error to main
         }
-        break;
     }
+    rec.kill();
+    rec_thread.join();
 }
 
 void Serial::kill() {
