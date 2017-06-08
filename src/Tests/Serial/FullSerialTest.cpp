@@ -130,10 +130,39 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	}
 
 	//------------TEST SENDING AN OBJ-----------//
-	SerialTestStub testObj(10,20,30,0,40);
-	Serialized serTestObj;
+	SerialTestStub testObj(10,20,0,40);
 
-	serTestObj = testObj.serialize();
+	pmsSer1.sendPulseMessage(TRANSM_OUT, (int)&testObj);
+	msg = pmrSer2.receivePulseMessage();
+
+	std::cout << "Rec Pulse of Obj \n";
+
+	SerialTestStub *recObj = ((SerialTestStub*)msg.value);
+
+	switch(msg.code){
+		case SER_IN:		cout << "SER_IN \n"; break;
+		case SER_OUT:		cout << "SER_OUT \n"; break;
+		case TRANSM_IN:		cout << "TRANSM_IN \n"; break;
+		case TRANSM_OUT:	cout << "TRANSM_OUT \n"; break;
+	}
+
+	switch(msg.value){
+			case ACCEPT:		cout << "ACCEPT \n"; break;
+			case STOP:			cout << "STOP \n"; break;
+			case RESUME:		cout << "RESUME \n"; break;
+			case INVALID:		cout << "INVALID \n"; break;
+			case TRANSM:		cout << "TRANSM \n"; break;
+			case RECEIVED:		cout << "RECEIVED \n"; break;
+			case POL:			cout << "POL \n"; break;
+			default: 			cout << "UNKNOWN SHID \n"; break;
+	}
+
+	if(!(testObj == *recObj)){
+		testObj.print();
+		recObj->print();
+		std::cout << "TestFailed\n";
+		return TEST_FAILED;
+	}
 
 
 	ser1.kill();

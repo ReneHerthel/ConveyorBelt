@@ -43,6 +43,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
             break;
         case TRANSM:
             {
+            	resu.code = TRANSM_IN;
                 ISerializable *obj = new SerialTestStub;
                 obj->deserialize(((char*)buff) + sizeof(msg)); //cast to char* because void* cant be used in arith
                 resu.value = (uint32_t) obj;
@@ -79,6 +80,7 @@ serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
                 msg *msg_ptr = (msg *) frame;
                 *msg_ptr = TRANSM;
                 resu.obj = frame;
+                resu.size = tmp.size + sizeof(msg);
                 break;
             }
         default: //TODO error handler
