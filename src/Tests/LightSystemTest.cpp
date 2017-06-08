@@ -61,8 +61,11 @@ TEST_IMPL(LightSystemTest, test1){
 
         std::cout << "Cleanup the mess" << std::endl;
         delete lightSystem;
+        std::cout << "lightSystem deleted" << std::endl;
         delete controller;
+        std::cout << "controller deleted" << std::endl;
         delete boundary;
+        std::cout << "boundary deleted" << std::endl;
 
         std::cout << "Return Result" << std::endl;
 	if((port_value & (1 << GREEN_SHIFT))){ // checks if greenLED  is on.

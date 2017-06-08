@@ -45,10 +45,10 @@ LightSystemController::~LightSystemController() {
         LOG_ERROR << "Sending message failed" << endl;
     }
     LOG_DEBUG << "Stopped threads" << endl;
-	controlThread->join();
 	LOG_DEBUG << "Wait for control to join" << endl;
-	taskThread->join();
+	controlThread->join();
 	LOG_DEBUG << "Wait for task to join" << endl;
+	taskThread->join();
     delete controlThread;
     LOG_DEBUG << "Delete control" << endl;
     delete taskThread;
@@ -74,7 +74,9 @@ int LightSystemController::task(){
 		} else {
 			boundary->lightOn(color);
 		}
+		LOG_DEBUG << thread_id << ": Before wait 1" << endl;
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
+		LOG_DEBUG << thread_id << ": After wait 1" << endl;
         /* Blinking is realized by turning off the lights in the second
          * half of the period */
 		if(frequency == FAST_BLINKING || frequency == SLOW_BLINKING)
@@ -83,7 +85,10 @@ int LightSystemController::task(){
              * entering this condition block */
 			boundary->lightOff(ALL_COLORS);
 		}
+		LOG_DEBUG << thread_id << ": Before wait 2" << endl;
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
+		LOG_DEBUG << thread_id << ": After wait 2" << endl;
+		LOG_DEBUG << thread_id << ": isRunning = " << isRunning << endl;
 	}
 
 	return 0;
@@ -120,7 +125,8 @@ int LightSystemController::control(int chid) {
 	            { RED, FAST_BLINKING }, // ERROR_OCCURED
 	            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
 	            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
-	            { ALL_COLORS, ALWAYS_OFF } // CLEAR_ALL
+	            { ALL_COLORS, ALWAYS_OFF }, // CLEAR_ALL
+	            { ALL_COLORS, ALWAYS_OFF } // LIGHT_SYSTEM_STOP
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;

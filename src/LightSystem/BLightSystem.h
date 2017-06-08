@@ -33,5 +33,4 @@ namespace HAL {
     };
 }
 
-
 #endif /* BLIGHTSYSTEM_H_ */

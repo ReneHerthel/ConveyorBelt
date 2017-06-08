@@ -50,8 +50,8 @@ class LightSystemController {
          * After returning the threads are destroyed.
          */
 		~LightSystemController();
-		volatile bool isRunning; /**< @brief Control variable to start or stop both threads */
     private:
+		volatile bool isRunning; /**< @brief Control variable to start or stop both threads */
 		Frequency frequency; /** Control variable to pass blinking frequency to taskThread */
 		Color color; /** Control variable to pass light color to taskThread */
 		int chid; /** Channel ID */

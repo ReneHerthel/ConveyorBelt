@@ -42,7 +42,7 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Set requested bit */
-        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask << endl;
+        LOG_DEBUG << "lightOn: Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask << endl;
     	out8(PORTA_ADDR, (port_value | (1 << bitMask)));
     }
 
@@ -74,7 +74,7 @@ namespace HAL {
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
         /* Clear requested bit */
-        LOG_DEBUG << "Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask << endl;
+        LOG_DEBUG << "lightOff: Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask << endl;
     	out8(PORTA_ADDR, (port_value & ~(1 << bitMask)));
     }
 
