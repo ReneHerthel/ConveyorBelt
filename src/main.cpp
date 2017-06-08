@@ -4,14 +4,11 @@
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
 #include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
-<<<<<<< HEAD
 #include "LightSystemTest.h"
-=======
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
 #include "FullSerialTest.h"
 #include "Logger/Logger.h"
->>>>>>> devel
 
 using namespace std;
 
