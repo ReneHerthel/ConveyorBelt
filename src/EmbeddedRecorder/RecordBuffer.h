@@ -30,7 +30,7 @@ namespace rec {
  * @description NOTE: This needs to be defined here, otherwise we need object
  *                    serialization for the buffer.
  */
-#define BUFFER_LENGTH    (128)
+#define BUFFER_LENGTH    (65536) // 2^16
 
     class RecordBuffer : public IRecordBuffer {
     public:

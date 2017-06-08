@@ -16,6 +16,7 @@
 
 #include "EmbeddedRecorder.h"
 
+#include <time.h>
 #include <iostream>
 
 namespace rec {
@@ -41,13 +42,13 @@ void EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
 
 void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 {
-	std::cout << "[writeValuesIntoBuffer] writeValuesIntoBuffer()" << std::endl;
+	struct timespec time;
+	clock_gettime(CLOCK_REALTIME, &time);
 
     record_t record;
-
     record.code = code;
     record.value = value;
-    record.timestamp = -1; // TODO
+    record.timestamp = time.tv_sec;
 
     m_recordBuffer->write(record);
 }
@@ -57,15 +58,12 @@ void EmbeddedRecorder::showRecordedData()
     // Copy the buffer, so the original buffer will not be effected.
     rec::RecordBuffer * tmp = m_recordBuffer;
 
-    record_t * record = NULL;
+    record_t record;
 
     // Print the buffer content to the terminal, while the buffer is not empty.
-    while ((tmp->read(record)) >= 0) {
+    while ((tmp->read(&record)) >= 0) {
         // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
-        if (record != NULL) {
-            std::cout << "[" << (int)record->timestamp << "]  -  Code: " << (int)record->code << "  -  value: " << (int)record->value << std::endl;
-            record = NULL;
-        }
+        std::cout << "[" << (int)record.timestamp << "]  -  Code: " << (int)record.code << "  -  value: " << (int)record.value << std::endl;
     }
 }
 

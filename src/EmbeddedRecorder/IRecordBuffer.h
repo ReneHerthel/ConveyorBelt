@@ -32,15 +32,7 @@ namespace rec {
          */
         virtual int write(record_t record) = 0;
 
-        /*
-         * @brief Read the oldest record from the buffer.
-         *
-         * @param[record] A reference to a record, which will be overwritten.
-         *
-         * @return 0 on success
-         * @return -2, when the buffer is empty.
-         */
-        virtual int read(record_t *record) = 0;
+        virtual int read(record_t * record) = 0;
     };
 
 } /* namespace rec */

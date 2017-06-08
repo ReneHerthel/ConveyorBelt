@@ -49,19 +49,21 @@ TEST_IMPL(TestRecordBuffer, test1) {
 
     rec::record_t r;
 
+    int size = 65536;
+
     // Make sure the defined buffersize of the buffer is 128.
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < size; i++) {
         r.code = i;
         r.value = i;
         r.timestamp = i;
         buffer->write(r);
     }
 
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < size; i++) {
         buffer->read(&r);
     }
 
-    if (buffer->read(&r) == -2) {
+    if (buffer->read(&r) < 0) {
         return TEST_PASSED;
     }
 

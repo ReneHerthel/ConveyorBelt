@@ -17,12 +17,12 @@
 #include "RecordBuffer.h"
 
 #include <mutex>
-//#include <iostream>
 
 namespace rec {
 
 #define BUFFER_NULL    (-1)
 #define BUFFER_EMPTY   (-2)
+#define BUFFER_FULL    (-3)
 #define BUFFER_SUCCESS (0)
 
 /*
@@ -34,8 +34,20 @@ int RecordBuffer::write(record_t record)
 {
     read_write_mutex.lock();
 
-    //std::cout << "[RecordBuffer] write: " << m_write << " count: " << m_count << std::endl;
+    if (m_write >= m_length || m_count >= m_length) {
+    	read_write_mutex.unlock();
+        return BUFFER_FULL;
+    }
 
+    m_buffer[m_write] = record;
+    m_write++;
+    m_count++;
+
+    if (m_count > m_length) {
+        m_count = m_length;
+    }
+
+    /*
     // The read() method can increment the _write value, so check the boundaries.
     if (m_write >= m_length) {
         m_write = 0;
@@ -58,6 +70,7 @@ int RecordBuffer::write(record_t record)
     if (m_count > m_length) {
         m_count = m_length;
     }
+    */
 
     read_write_mutex.unlock();
 
@@ -68,9 +81,22 @@ int RecordBuffer::read(record_t *record)
 {
     read_write_mutex.lock();
 
-    //std::cout << "[RecordBuffer] read: " << m_read << " count: " << m_count << std::endl;
+    if (m_read >= m_length) {
+    	read_write_mutex.unlock();
+    	return BUFFER_FULL;
+    }
+
+    if (m_read == m_write || m_count <= 0) {
+    	read_write_mutex.unlock();
+    	return BUFFER_EMPTY;
+    }
+
+    *record = m_buffer[m_read];
+    m_read++;
+    m_count--;
 
     // The write() method can increment the _read value, so check the boundaries.
+    /*
     if (m_read >= m_length) {
         m_read = 0;
     }
@@ -89,6 +115,7 @@ int RecordBuffer::read(record_t *record)
     if (m_read >= m_length) {
         m_read = 0;
     }
+    */
 
     read_write_mutex.unlock();
 

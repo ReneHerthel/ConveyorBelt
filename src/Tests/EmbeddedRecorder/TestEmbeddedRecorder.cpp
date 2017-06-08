@@ -59,7 +59,7 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
 
     struct _pulse pulse;
 
-    pulse.value.sival_int = 24;
+    pulse.value.sival_int = 4096;
 
     recorder->writePulseIntoBuffer(pulse);
     recorder->playRecordedData();
@@ -81,6 +81,18 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     rcv::msg_t msg_3 = receiver->receivePulseMessage();
 
     std::cout << "[AFTER MSG 3] value " << (int)msg_3.value << "\n" << std::endl;
+
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->writePulseIntoBuffer(pulse);
+    recorder->showRecordedData();
 
     if (msg_1.value == 24 && msg_2.value == 24 && msg_3.value == 24) {
         return TEST_PASSED;

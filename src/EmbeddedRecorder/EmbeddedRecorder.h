@@ -75,7 +75,7 @@ namespace rec {
         /*
          * @brief  A reference to the BufferFileStreamer.
          */
-        BufferFileStreamer  * m_bufferFileStreamer;
+        BufferFileStreamer * m_bufferFileStreamer;
 
         /*
          * @brief
