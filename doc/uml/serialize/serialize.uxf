@@ -9,7 +9,7 @@
       <w>210</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>Serializable
+    <panel_attributes>ISerializable
 --
 + serialize(): char*;
 + deserialize(char* in): ;</panel_attributes>

@@ -30,3 +30,7 @@
 cmake-build-debug/
 \.idea/
 CMakeLists\.txt
+
+x86/o-g/LogScope\.o
+
+x86/

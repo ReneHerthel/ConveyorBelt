@@ -1,0 +1,40 @@
+/*
+ * Signals.h
+ *
+ *  Created on: 07.06.2017
+ *      Author: abt674
+ */
+
+#ifndef SIGNALS_H_
+#define SIGNALS_H_
+
+//Lightbarriers and Sensor
+#define INLET_IN 					0b0000000000000001
+#define INLET_OUT 					0b0000000000000011
+
+#define HEIGHTMEASUREMENT_IN  		0b0000000000000010
+#define HEIGHTMEASUREMENT_OUT  		0b0000000000000110
+
+//#define SENSOR_HEIGHT 	        0b0000000000000100
+
+#define SWITCH_IN 		            0b0000000000001000
+#define SWITCH_OUT 		            0b0000000000011000
+
+#define METAL_DETECT 	            0b0000000000010000
+
+#define SWITCH_OPEN					0b0000000000100000
+
+#define SLIDE_IN		   			0b0000000001000000
+#define SLIDE_OUT 		    		0b0000000011000000
+
+#define OUTLET_IN		 			0b0000000010000000
+#define OUTLET_OUT		 			0b0000000110000000
+
+//Buttons
+#define BUTTON_START	            0b0001000000000000
+#define BUTTON_STOP			  	  	0b0010000000000000
+#define BUTTON_RESET				0b0100000000000000
+#define BUTTON_ESTOP				0b1000000000000000
+
+
+#endif /* SIGNALS_H_ */

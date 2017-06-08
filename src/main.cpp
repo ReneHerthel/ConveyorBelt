@@ -4,7 +4,14 @@
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
 #include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
+<<<<<<< HEAD
 #include "LightSystemTest.h"
+=======
+#include "Tests/Serial/TestSerial.h"
+#include "Tests/Serial/SerialProtocollTest.h"
+#include "FullSerialTest.h"
+#include "Logger/Logger.h"
+>>>>>>> devel
 
 using namespace std;
 
@@ -13,6 +20,7 @@ int main() {
 	//## THIS IS THE TEST MAIN, ADD A TEST FOR YOUR MODULE INSTEAD OF WRITING A MAIN##//
 	//################################################################################//
     TestSuite ts;
+    LOG_SET_LEVEL(DEBUG);
     //^ DO NOT TOUCH ^//
 
     //######################################################//
@@ -34,6 +42,10 @@ int main() {
     // LightSystem tests
     ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
 
+    //TEST FOR: Serial
+    ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
+    ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
+    ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
