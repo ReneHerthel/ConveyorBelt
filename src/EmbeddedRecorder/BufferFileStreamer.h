@@ -23,8 +23,9 @@ namespace rec {
 
     class BufferFileStreamer : public IBufferFileStreamer {
     public:
-        void exportBuffer(RecordBuffer * buffer);
-        void importBuffer(RecordBuffer * buffer);
+        void exportBufferBinary(RecordBuffer * buffer);
+        void importBufferBinary(RecordBuffer * buffer);
+        void printBufferToTxt(RecordBuffer * buffer);
     };
 
 } /* namespace rec */

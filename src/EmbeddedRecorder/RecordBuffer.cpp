@@ -17,12 +17,14 @@
 #include "RecordBuffer.h"
 
 #include <mutex>
+#include <iostream>
 
 namespace rec {
 
 #define BUFFER_NULL    (-1)
 #define BUFFER_EMPTY   (-2)
 #define BUFFER_FULL    (-3)
+#define OUT_OF_BOUNDS  (-4)
 #define BUFFER_SUCCESS (0)
 
 /*
@@ -120,6 +122,17 @@ int RecordBuffer::read(record_t *record)
     read_write_mutex.unlock();
 
     return BUFFER_SUCCESS;
+}
+
+int RecordBuffer::readFromIndex(record_t * record, const int index)
+{
+    if (index > m_length || index < 0 || index >= m_write) {
+        return OUT_OF_BOUNDS;
+    }
+
+	*record = m_buffer[index];
+
+	return BUFFER_SUCCESS;
 }
 
 } /* namespace rec */

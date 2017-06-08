@@ -70,6 +70,7 @@ namespace rec {
 
         int write(record_t record);
         int read(record_t *record);
+        int readFromIndex(record_t * record, const int index);
 
     private:
         /*

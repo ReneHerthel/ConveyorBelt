@@ -35,36 +35,32 @@ EmbeddedRecorder::~EmbeddedRecorder()
     //delete _bufferFileStreamer;
 }
 
-void EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
+void EmbeddedRecorder::newBuffer()
 {
-    writeValuesIntoBuffer(pulse.code, pulse.value.sival_int);
+    m_recordBuffer = new RecordBuffer();
 }
 
-void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
+int EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
+{
+    return writeValuesIntoBuffer(pulse.code, pulse.value.sival_int);
+}
+
+int EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 {
 	struct timespec time;
-	clock_gettime(CLOCK_REALTIME, &time);
+	clock_gettime(CLOCK_MONOTONIC, &time);
 
     record_t record;
     record.code = code;
     record.value = value;
-    record.timestamp = time.tv_sec;
+    record.timestamp = time;
 
-    m_recordBuffer->write(record);
+    return m_recordBuffer->write(record);
 }
 
 void EmbeddedRecorder::showRecordedData()
 {
-    // Copy the buffer, so the original buffer will not be effected.
-    rec::RecordBuffer * tmp = m_recordBuffer;
-
-    record_t record;
-
-    // Print the buffer content to the terminal, while the buffer is not empty.
-    while ((tmp->read(&record)) >= 0) {
-        // TODO: Convert the timestamp into something like: "[HH::MM::SS]".
-        std::cout << "[" << (int)record.timestamp << "]  -  Code: " << (int)record.code << "  -  value: " << (int)record.value << std::endl;
-    }
+    m_bufferFileStreamer->printBufferToTxt(m_recordBuffer);
 }
 
 void EmbeddedRecorder::playRecordedData()
@@ -77,12 +73,12 @@ void EmbeddedRecorder::playRecordedData()
 
 void EmbeddedRecorder::saveRecordedData()
 {
-    m_bufferFileStreamer->exportBuffer(m_recordBuffer);
+    m_bufferFileStreamer->exportBufferBinary(m_recordBuffer);
 }
 
 void EmbeddedRecorder::loadRecordedData()
 {
-    m_bufferFileStreamer->importBuffer(m_recordBuffer);
+    m_bufferFileStreamer->importBufferBinary(m_recordBuffer);
 }
 
 } /* namespace rec */

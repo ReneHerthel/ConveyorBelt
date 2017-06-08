@@ -32,7 +32,15 @@ namespace rec {
          */
         virtual int write(record_t record) = 0;
 
+        /*
+         * @brief Reads from where the read index is.
+         */
         virtual int read(record_t * record) = 0;
+
+        /*
+         * @brief Read from a specific field of a specific index.
+         */
+        virtual int readFromIndex(record_t * record, const int index) = 0;
     };
 
 } /* namespace rec */

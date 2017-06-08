@@ -59,42 +59,39 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
 
     struct _pulse pulse;
 
-    pulse.value.sival_int = 4096;
+    int size = 512; // Make sure the buffer size is equals in RecordBuffer.h.
+    int ret_code;
 
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->playRecordedData();
-    rcv::msg_t msg_1 = receiver->receivePulseMessage();
+    for (int i = 0; i < size; i++) {
+    	pulse.value.sival_int = i;
+    	ret_code = recorder->writePulseIntoBuffer(pulse);
+    }
 
-    std::cout << "[AFTER MSG 1] value " << (int)msg_1.value << "\n" << std::endl;
-
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->saveRecordedData();
-    recorder->playRecordedData();
-    rcv::msg_t msg_2 = receiver->receivePulseMessage();
-
-    std::cout << "[AFTER MSG 2] value " << (int)msg_2.value << "\n" << std::endl;
-
-    recorder->writePulseIntoBuffer(pulse);
     recorder->saveRecordedData();
     recorder->loadRecordedData();
     recorder->playRecordedData();
-    rcv::msg_t msg_3 = receiver->receivePulseMessage();
 
-    std::cout << "[AFTER MSG 3] value " << (int)msg_3.value << "\n" << std::endl;
+    rcv::msg_t msg;
+    int amountOfReceived = 0;
 
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
-    recorder->writePulseIntoBuffer(pulse);
+    for (int i = 0; i < size; i++) {
+        msg = receiver->receivePulseMessage();
+        amountOfReceived++;
+    }
+
+    int ret_code2;
+
+    recorder->newBuffer();
+
+    for (int i = 0; i < size; i++) {
+    	pulse.value.sival_int = i;
+    	pulse.code = i;
+    	ret_code2 = recorder->writePulseIntoBuffer(pulse);
+    }
+
     recorder->showRecordedData();
 
-    if (msg_1.value == 24 && msg_2.value == 24 && msg_3.value == 24) {
+    if (ret_code >= 0 && ret_code2 >= 0 && amountOfReceived == size) {
         return TEST_PASSED;
     }
 

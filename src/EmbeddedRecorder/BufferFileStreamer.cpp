@@ -20,7 +20,7 @@
 
 namespace rec {
 
-void BufferFileStreamer::exportBuffer(RecordBuffer * buffer)
+void BufferFileStreamer::exportBufferBinary(RecordBuffer * buffer)
 {
     fstream file;
     // Open the file for writing, as binary and discard the content.
@@ -31,7 +31,7 @@ void BufferFileStreamer::exportBuffer(RecordBuffer * buffer)
     file.close();
 }
 
-void BufferFileStreamer::importBuffer(RecordBuffer * buffer)
+void BufferFileStreamer::importBufferBinary(RecordBuffer * buffer)
 {
     ifstream fin;
     // Open the file for reading and binary operation.
@@ -39,6 +39,24 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer)
     fin.read((char*)buffer, sizeof(RecordBuffer));
     // TODO: Read the puck manager from file.
     fin.close();
+}
+
+void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
+{
+    ofstream file ("/records.txt");
+
+    record_t record;
+    int index = 0;
+
+    do {
+        if (file.is_open()) {
+
+            file << "Time[" << (int)record.timestamp.tv_sec << "::" << (int)record.timestamp.tv_nsec << "] code[" << (int)record.code << "] value[" << (int)record.value << "].\n";
+        	index++;
+        }
+    } while (buffer->readFromIndex(&record, index) >= 0);
+
+    file.close();
 }
 
 } /* namespace rec */

@@ -28,14 +28,21 @@ namespace rec {
          *
          * @param[buffer] A reference to the exported buffer.
          */
-        virtual void exportBuffer(RecordBuffer *buffer) = 0;
+        virtual void exportBufferBinary(RecordBuffer *buffer) = 0;
 
         /*
          * @brief Imports the given buffer from file.
          *
          * @param[buffer] A reference to the imported buffer.
          */
-        virtual void importBuffer(RecordBuffer *buffer) = 0;
+        virtual void importBufferBinary(RecordBuffer *buffer) = 0;
+
+        /*
+         * @brief Prints the content of the buffer into a .txt file.
+         *
+         * @param[buffer] A reference to the buffer which should be printed.
+         */
+        virtual void printBufferToTxt(RecordBuffer * buffer) = 0;
     };
 
 } /* namespace rec */

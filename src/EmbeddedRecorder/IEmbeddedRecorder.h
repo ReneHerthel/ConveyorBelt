@@ -24,14 +24,19 @@ namespace rec {
     class IEmbeddedRecorder {
     public:
     	/*
+    	 * @brief
+    	 */
+    	virtual void newBuffer() = 0;
+
+    	/*
     	 * @brief Write the pure values into the buffer.
     	 */
-    	virtual void writeValuesIntoBuffer(const int code, const int value) = 0;
+    	virtual int writeValuesIntoBuffer(const int code, const int value) = 0;
 
     	/*
     	 * @brief Writes a pulse message into a buffer.
     	 */
-    	virtual void writePulseIntoBuffer(const struct _pulse pulse) = 0;
+    	virtual int writePulseIntoBuffer(const struct _pulse pulse) = 0;
 
         /*
          * @brief Plays the recorded data.

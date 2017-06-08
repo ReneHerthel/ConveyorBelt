@@ -18,6 +18,7 @@
 #define SRC_EMBEDDEDRECORDER_RECORD_H_
 
 #include <stdint.h>
+#include <time.h>
 
 namespace rec {
 
@@ -26,7 +27,7 @@ namespace rec {
      */
     typedef struct {
         uint8_t code;       /*< The code of a pulse message.*/
-        uint32_t timestamp; /*< The timestamp of this record.*/
+        timespec timestamp;   /*< The timestamp of this record.*/
         uint32_t value;     /*< The value of the pulse message.*/
     } record_t;
 

@@ -55,7 +55,6 @@ TEST_IMPL(TestRecordBuffer, test1) {
     for (int i = 0; i < size; i++) {
         r.code = i;
         r.value = i;
-        r.timestamp = i;
         buffer->write(r);
     }
 
@@ -63,6 +62,7 @@ TEST_IMPL(TestRecordBuffer, test1) {
         buffer->read(&r);
     }
 
+    // Another one should not be allowed.
     if (buffer->read(&r) < 0) {
         return TEST_PASSED;
     }

@@ -35,7 +35,7 @@ void ThreadRecordSender::sendPulseMessagesToChid()
     int ret = 0;
 
     while (ret >= 0) {
-        record_t record;;
+        record_t record;
 
         ret = m_buffer->read(&record);
 
