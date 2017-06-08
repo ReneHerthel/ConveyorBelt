@@ -48,12 +48,21 @@ int EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
 int EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 {
 	struct timespec time;
+
 	clock_gettime(CLOCK_MONOTONIC, &time);
 
     record_t record;
+
     record.code = code;
     record.value = value;
     record.timestamp = time;
+
+    record.timestamp.tv_nsec -= m_firstRecord.timestamp.tv_nsec;
+    record.timestamp.tv_sec -= m_firstRecord.timestamp.tvsec;
+
+	if (m_firstRecord.timestamp.tv_sec == 0) {
+		m_firstRecord.timestamp = record.timestamp;
+	}
 
     return m_recordBuffer->write(record);
 }

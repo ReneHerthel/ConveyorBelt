@@ -87,6 +87,11 @@ namespace rec {
          */
         ThreadRecordSender * m_threadRecordSender;
 
+        /*
+         * @brief This record is used to subtract the time values.
+         */
+        record_t m_firstRecord;
+
     }; /* class EmbeddedRecorder : public IEmbeddedRecorder */
 
 } /* namespace rec */
