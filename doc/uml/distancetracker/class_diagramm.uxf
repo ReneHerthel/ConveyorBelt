@@ -15,7 +15,8 @@ DistanceHandler
 -dtList: std::vector&lt;DistanceTracker*&gt;
 -mmToTime: uint32_T
 --
-+register(void): void
++updateSpeed(speed: ???): void
++register(dt: DistanceTracker*): void
 +getCalibrationData(void): uint32_t
 +getInstance(void): DistanceHandler
 -DistanceHandler(calibrationData: uint32_t)</panel_attributes>
@@ -25,9 +26,9 @@ DistanceHandler
     <id>UMLClass</id>
     <coordinates>
       <x>630</x>
-      <y>580</y>
+      <y>550</y>
       <w>470</w>
-      <h>160</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>DistanceTracker
 --
@@ -47,12 +48,12 @@ DistanceHandler
       <x>850</x>
       <y>390</y>
       <w>130</w>
-      <h>210</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=1
 Register Here ^</panel_attributes>
-    <additional_attributes>10.0;190.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
