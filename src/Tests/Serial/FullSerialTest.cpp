@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <thread>
 
+using namespace Serial_n;
+
 SETUP(FullSerialTest){
 	//REG_TEST(ConcurrentReceiver, 1, "[Serial]Send one msg (stop)");
     REG_TEST(SimpleSerialMsg, 2, "[Serial]Construct an kill 2 serials");
@@ -116,10 +118,10 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	rcv::msg_t msg;
 	for(int i = 1; i <= 4; i++){ //Test 4 Simple signals
 		switch(i){
-			case 1: signal = ACCEPT; break;
-			case 2: signal = STOP; break;
-			case 3: signal = RESUME; break;
-			case 4: signal = RECEIVED; break;
+			case 1: signal = ACCEPT_SER; break;
+			case 2: signal = STOP_SER; break;
+			case 3: signal = RESUME_SER; break;
+			case 4: signal = RECEIVED_SER; break;
 		}
 		pmsSer1.sendPulseMessage(SER_OUT, signal);
 		msg = pmrSer2.receivePulseMessage();
@@ -147,13 +149,13 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	}
 
 	switch(msg.value){
-			case ACCEPT:		cout << "ACCEPT \n"; break;
-			case STOP:			cout << "STOP \n"; break;
-			case RESUME:		cout << "RESUME \n"; break;
-			case INVALID:		cout << "INVALID \n"; break;
-			case TRANSM:		cout << "TRANSM \n"; break;
-			case RECEIVED:		cout << "RECEIVED \n"; break;
-			case POL:			cout << "POL \n"; break;
+			case ACCEPT_SER:		cout << "ACCEPT \n"; break;
+			case STOP_SER:			cout << "STOP \n"; break;
+			case RESUME_SER:		cout << "RESUME \n"; break;
+			case INVALID_SER:		cout << "INVALID \n"; break;
+			case TRANSM_SER:		cout << "TRANSM \n"; break;
+			case RECEIVED_SER:		cout << "RECEIVED \n"; break;
+			case POL_SER:			cout << "POL \n"; break;
 			default: 			cout << "UNKNOWN SHID \n"; break;
 	}
 

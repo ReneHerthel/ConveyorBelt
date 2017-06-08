@@ -10,6 +10,8 @@
 #include <Timer/TimerService.h>
 #include <TopLevelProto/ITopLvlProtocoll.h>
 
+using namespace Serial_n;
+
 Serial::Serial(SerialReceiver& rec, SerialSender& sender, SerialProtocoll& proto,const int channel_in,const int channel_out) :
     rec(rec),
     sender(sender),
@@ -43,17 +45,17 @@ void Serial::operator()() {
             case SERIAL_TIMEOUT_SIG:
                 LOG_ERROR << "Ping of life was not received \n";
                 //TODO Serial Error handling, send error to main
-                ch_out.sendPulseMessage(SER_OUT, POL);
+                ch_out.sendPulseMessage(SER_OUT, POL_SER);
                 break;
             case SERIAL_SEND_POL:
             	LOG_DEBUG << "Serial received send pol \n";
-                ser =  proto.wrapInFrame(SER_OUT, POL);
+                ser =  proto.wrapInFrame(SER_OUT, POL_SER);
                 sender.send((char *) ser.obj, ser.size);
                 polSendTimer.setAlarm(500, 0);
                 break;
             case SER_REC_IN: //Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
-                if(pm.value != POL){ //POL doesnt need to be send to the main
+                if(pm.value != POL_SER){ //POL doesnt need to be send to the main
                     ch_out.sendPulseMessage(pm.code, pm.value);
                 }
                 polRecTimer.setAlarm(999, 0);

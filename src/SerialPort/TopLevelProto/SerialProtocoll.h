@@ -23,7 +23,8 @@
 #define TRANSM_VAL 		0xFEEE
 #define RECEIVED_VAL	0xEFEF
 #define POL_VAL 		0xABCD
-
+#define NO_CON_VAL 		0xDBCA
+#define ERROR_VAL 		0xFABF
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver
 enum Serial_mode {
@@ -31,27 +32,32 @@ enum Serial_mode {
     SENDER
 };
 
-/// Message types that are used to communicate over the serial and between serial an system
-enum msg : int32_t {
-    ACCEPT  = ACCEPT_VAL,    	/*!<IN: The Receiver accepted Transmission,
-                                 *OUT: Signal the Receiver that you accept transmission, the puk can be moved */
-    STOP    = STOP_VAL,       	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt must be stopped
-                                 * if there are any Pucks in transmission*/
-    RESUME  = RESUME_VAL,     	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt should be moved again
-                                 * Must be send by the participant that send STOP before*/
-    INVALID = INVALID_VAL,   	/*!<IN/OUT The sending participant received Comands in the wrong order*/
-    TRANSM  = TRANSM_VAL,		/*!<Used only between two serial endpoints to signal an transmission*/
-	RECEIVED = RECEIVED_VAL, 	/*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
-	POL = POL_VAL 				/*!<Ping of life */
-};
+namespace Serial_n{
+	/// Message types that are used to communicate over the serial and between serial an system
+	enum ser_proto_msg : int32_t {
+		ACCEPT_SER  = ACCEPT_VAL,    	/*!<IN: The Receiver accepted Transmission,
+									 *OUT: Signal the Receiver that you accept transmission, the puk can be moved */
+		STOP_SER    = STOP_VAL,       	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt must be stopped
+									 * if there are any Pucks in transmission*/
+		RESUME_SER  = RESUME_VAL,     	/*!<IN/OUT: Sender or Receiver signal their counterpart that their belt should be moved again
+									 * Must be send by the participant that send STOP before*/
+		INVALID_SER = INVALID_VAL,   	/*!<IN/OUT The sending participant received Comands in the wrong order*/
+		TRANSM_SER  = TRANSM_VAL,		/*!<Used only between two serial endpoints to signal an transmission*/
+		RECEIVED_SER = RECEIVED_VAL, 	/*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
+		POL_SER = POL_VAL, 				/*!<Ping of life */
+		NO_CON_SER = NO_CON_VAL, 		/*!<Serial Disconnected, no POL */
+		ERROR_SER = ERROR_VAL,			/*!<Serial received something it can not handle, maybe Char loss */
+	};
 
-/// Pulse code identifies in and outgoing signals, transmission need extra code, so the 32Bit pointer can fit into Value
-enum code : int8_t {
-    SER_IN = IN_CODE,                /// Incoming msg from other serial
-    SER_OUT = OUT_CODE,              /// Msg from the System to send to the other serial
-    TRANSM_IN = TRANSM_IN_CODE,  /// Incoming Transmission of an Puck object
-    TRANSM_OUT = TRANSM_OUT_CODE /// Outgoing Transmission of an Puck object
-};
+	/// Pulse code identifies in and outgoing signals, transmission need extra code, so the 32Bit pointer can fit into Value
+	enum code : int8_t {
+	    SER_IN = IN_CODE,                /// Incoming msg from other serial
+	    SER_OUT = OUT_CODE,              /// Msg from the System to send to the other serial
+	    TRANSM_IN = TRANSM_IN_CODE,  /// Incoming Transmission of an Puck object
+	    TRANSM_OUT = TRANSM_OUT_CODE /// Outgoing Transmission of an Puck object
+	};
+}
+
 
 class SerialProtocoll : public ITopLvlProtocoll {
 public:
