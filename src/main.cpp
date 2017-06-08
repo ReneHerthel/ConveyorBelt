@@ -7,8 +7,10 @@
 #include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
-#include "FullSerialTest.h"
+//#include "FullSerialTest.h"
+#include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
+
 
 using namespace std;
 
@@ -30,6 +32,7 @@ int main() {
     //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
+ /*
     // PulseMessageWrapper tests
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
@@ -43,7 +46,12 @@ int main() {
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
     ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
-
+*/
+#if !machine
+    ts.REG_TESTCASE(new TestPuckStateMachine(1, "Longest path on Machine 0"));
+#else
+    ts.REG_TESTCASE(new TestPuckStateMachine(1, "Longest path on Machine 1"));
+#endif
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//

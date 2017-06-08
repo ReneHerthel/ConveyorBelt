@@ -59,8 +59,8 @@ namespace PuckSignal {
 		SignalType signalType;
 		signal_t heightSignal;
 		TimerSignal timerSignal;
-		interrupts::InterruptSignals interruptSignal;
-		msg serialSignal;
+		interrupts::interruptSignals interruptSignal;
+		Serial_n::ser_proto_msg serialSignal;
 	};
 
 	struct PuckType {

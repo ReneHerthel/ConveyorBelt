@@ -24,7 +24,7 @@ SortingSwitchService service1;
 
 void Control::LightBarrier_ENTRY_IN(){
 
-	service.ConveyorBeltChangeState(RIGHTFAST);
+	//service.ConveyorBeltChangeState(RIGHTFAST);
 	//out8(0x300, (in8(0x300) | 1 << 0));
 	cout << "Control Entry_IN" << endl;
 
@@ -43,7 +43,7 @@ void Control::LightBarrier_HEIGHT_IN(){
 }
 
 void Control::LightBarrier_HEIGHT_OUT(){
-	service.ConveyorBeltChangeState(RIGHTFAST);
+	//service.ConveyorBeltChangeState(RIGHTFAST);
 	cout << "Control Height_OUT" << endl;
 }
 
@@ -75,13 +75,13 @@ void Control::LightBarrier_RAMP_IN(){
 }
 
 void Control::LightBarrier_RAMP_OUT(){
-	service.ConveyorBeltChangeState(STOP);
+	//service.ConveyorBeltChangeState(STOP);
 	cout << "Control Ramp_OUT" << endl;
 
 }
 
 void Control::LightBarrier_EXIT_IN(){
-	service.ConveyorBeltChangeState(STOP);
+	//service.ConveyorBeltChangeState(STOP);
 	cout << "Control EXIT_IN" << endl;
 
 }
@@ -91,21 +91,21 @@ void Control::LightBarrier_EXIT_OUT(){
 }
 
 void Control::B_Start(){
-	service.ConveyorBeltChangeState(RIGHTFAST);
+	//service.ConveyorBeltChangeState(RIGHTFAST);
 	//out8(0x300, (in8(0x300) | 1 << 0));
 	cout << "Control buttonStart" << endl;
 }
 
 void Control::B_STOP(){
-	service.ConveyorBeltChangeState(STOP);
+	//service.ConveyorBeltChangeState(STOP);
 	//out8(0x300, (in8(0x300) & ~(0x0F)));
 	cout << "Control buttonStop" << endl;
 
 }
 
 void Control::B_EStop(){
-	service1.sortingSwitchClose();
-	service.ConveyorBeltChangeState(STOP);
+	//service1.sortingSwitchClose();
+	//service.ConveyorBeltChangeState(STOP);
 	//out8(0x300, (in8(0x300) & ~(0x0F)));
 	cout << "Control buttonEStop" << endl;
 }

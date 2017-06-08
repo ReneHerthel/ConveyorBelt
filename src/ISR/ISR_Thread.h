@@ -9,7 +9,7 @@
 #define ISR_THREAD_H_
 
 #include <stdint.h>
-#include "ConveyorBelt-devel/src/HWaccess.h"
+#include "HWaccess.h"
 #include "Control.h"
 
 

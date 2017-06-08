@@ -12,13 +12,13 @@
 #include "Signals.h"
 #include "PuckSignal.h"
 #include <stdint.h>
-
+#include "SerialProtocoll.h"
 
 #define machine (0) // 0 or 1
 
 class PuckContext {
 public:
-	PuckContext(uint32_t puckID);
+	PuckContext(uint16_t puckID);
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
@@ -26,7 +26,7 @@ public:
 		return statePtr->puckType;
 	}
 
-	uint32_t getPuckID() {
+	uint16_t getPuckID() {
 		return statePtr->puckID;
 	}
 
@@ -41,8 +41,8 @@ public:
 		virtual void inletIn();
 		virtual void inletOut();
 
-		virtual void heightmeasurmentIn();
-		virtual void heightmeasurmentOut();
+		virtual void heightmeasurementIn();
+		virtual void heightmeasurementOut();
 
 		virtual void switchIn();
 		virtual void switchOpen();
@@ -67,7 +67,7 @@ public:
 		// The return struct for the PuckManager
 		PuckSignal::Return returnValue;
 
-		uint32_t puckID;
+		uint16_t puckID;
 		PuckSignal::PuckType puckType;
 
 		// Timer stuff
