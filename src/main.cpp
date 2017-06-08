@@ -48,9 +48,9 @@ int main() {
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
 */
 #if !machine
-    ts.REG_TESTCASE(new TestPuckStateMachine(1, "Longest path on Machine 0"));
+    ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 0"));
 #else
-    ts.REG_TESTCASE(new TestPuckStateMachine(1, "Longest path on Machine 1"));
+    ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
