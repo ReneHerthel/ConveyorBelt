@@ -13,6 +13,9 @@
 #include <Logger.h>
 #include <Logscope.h>
 
+
+using namespace Serial_n;
+
 /**
  * This is an unidirectional Protocoll over Serial
  * One must always be the Sender of Pucks
@@ -30,21 +33,22 @@ SerialProtocoll::~SerialProtocoll() {
 pulse SerialProtocoll::convToPulse(void *buff) {
 	LOG_SCOPE;
     pulse resu;
-    msg msg_in = *(msg*)buff;
+    ser_proto_msg msg_in = *(ser_proto_msg*)buff;
     resu.code = SER_IN;
     switch(msg_in){
-        case ACCEPT:
-        case STOP:
-        case RESUME:
-        case INVALID:
-        case RECEIVED:
-        case POL:
+        case ACCEPT_SER:
+        case STOP_SER:
+        case RESUME_SER:
+        case INVALID_SER:
+        case RECEIVED_SER:
+        case POL_SER:
             resu.value = msg_in;
             break;
-        case TRANSM:
+        case TRANSM_SER:
             {
+            	resu.code = TRANSM_IN;
                 ISerializable *obj = new SerialTestStub;
-                obj->deserialize(((char*)buff) + sizeof(msg)); //cast to char* because void* cant be used in arith
+                obj->deserialize(((char*)buff) + sizeof(ser_proto_msg)); //cast to char* because void* cant be used in arith
                 resu.value = (uint32_t) obj;
             }
             break;
@@ -74,11 +78,12 @@ serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
                 serialized tmp;
                 ISerializable* obj = (ISerializable*) value;
                 tmp = obj->serialize();
-                char* frame = new char[tmp.size+ sizeof(msg)]; //make space for msg type
-                memcpy((frame+sizeof(msg)), tmp.obj, tmp.size);
-                msg *msg_ptr = (msg *) frame;
-                *msg_ptr = TRANSM;
+                char* frame = new char[tmp.size+ sizeof(ser_proto_msg)]; //make space for msg type
+                memcpy((frame+sizeof(ser_proto_msg)), tmp.obj, tmp.size);
+                ser_proto_msg *msg_ptr = (ser_proto_msg *) frame;
+                *msg_ptr = TRANSM_SER;
                 resu.obj = frame;
+                resu.size = tmp.size + sizeof(ser_proto_msg);
                 break;
             }
         default: //TODO error handler
