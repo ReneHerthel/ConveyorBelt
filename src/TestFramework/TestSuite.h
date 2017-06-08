@@ -13,7 +13,7 @@
 #include <math.h>
 
 struct tsTestCase{
-    TestCase* tc; //pointer becouse abstract
+    TestCase* tc; //pointer because abstract
     testResu resu; //this is unused, but could come in handy later
 };
 

@@ -4,6 +4,7 @@
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
 #include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
+#include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
 #include "FullSerialTest.h"
@@ -29,10 +30,20 @@ int main() {
     //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
+    // PulseMessageWrapper tests
+    ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
+
+    // HeightMeasurement tests
+    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
+
+    // LightSystem tests
+    ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
+
     //TEST FOR: Serial
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
     ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
+
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//
