@@ -16,13 +16,13 @@
 #define TRANSM_OUT_CODE 0x4
 
 
-#define ACCEPT_VAL 0xFAAA
-#define STOP_VAL 0xFBBB
-#define RESUME_VAL 0xFCCC
-#define INVALID_VAL 0xFDDD
-#define TRANSM_VAL 0xFEEE
-#define RECEIVED_VAL 0xEFEF
-#define POL_VAL 0xABCD
+#define ACCEPT_VAL 		0xFAAA
+#define STOP_VAL 		0xFBBB
+#define RESUME_VAL 		0xFCCC
+#define INVALID_VAL		0xFDDD
+#define TRANSM_VAL 		0xFEEE
+#define RECEIVED_VAL	0xEFEF
+#define POL_VAL 		0xABCD
 
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver

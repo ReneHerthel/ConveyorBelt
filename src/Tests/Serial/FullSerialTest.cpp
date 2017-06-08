@@ -59,6 +59,7 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	char ser1_path[] = "/dev/ser1";
 	char ser2_path[] = "/dev/ser2";
 
+	bool test_failed = false;
 
 
 	//---------------INIT SER1---------------------
@@ -109,15 +110,31 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	std::thread ser1_thread(ref(ser1));
 	std::thread ser2_thread(ref(ser2));
 
-	pmsSer1.sendPulseMessage(SER_OUT, STOP);
 
-	rcv::msg_t msg = pmrSer2.receivePulseMessage();
+	//------------TEST SIMPLE SIGNALS------------//
+	uint32_t signal;
+	rcv::msg_t msg;
+	for(int i = 1; i <= 4; i++){ //Test 4 Simple signals
+		switch(i){
+			case 1: signal = ACCEPT; break;
+			case 2: signal = STOP; break;
+			case 3: signal = RESUME; break;
+			case 4: signal = RECEIVED; break;
+		}
+		pmsSer1.sendPulseMessage(SER_OUT, signal);
+		msg = pmrSer2.receivePulseMessage();
 
-	if(msg.value == STOP){
-		std::cout << "Rec Stop" << std::endl;
-	} else {
-		std::cout << "Rec something else" << std::endl;
+		if((uint32_t)msg.value != (uint32_t)signal){
+			return TEST_FAILED;
+		}
 	}
+
+	//------------TEST SENDING AN OBJ-----------//
+	SerialTestStub testObj(10,20,30,0,40);
+	Serialized serTestObj;
+
+	serTestObj = testObj.serialize();
+
 
 	ser1.kill();
 	ser2.kill();
