@@ -13,7 +13,7 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 
-class DistanceObservable;
+class DistanceObservable; //Predeclaration cyclic dependency with DistanceTracker
 
 class DistanceTracker{
 private:
