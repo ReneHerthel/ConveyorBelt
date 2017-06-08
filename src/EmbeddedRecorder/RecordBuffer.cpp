@@ -17,6 +17,7 @@
 #include "RecordBuffer.h"
 
 #include <mutex>
+#include <iostream>
 
 namespace rec {
 
@@ -33,28 +34,29 @@ int RecordBuffer::write(record_t record)
 {
     read_write_mutex.lock();
 
-    // The read() method can increment the _write value, so check the boundaries.
-    if (m_write >= m_size) {
-        m_write = 0;
-    }
+    std::cout << "[RecordBuffer] write: " << m_write << " count: " << m_count << std::endl;
 
-    // Move the _read forward by one.
-    if (_write == m_read) {
-        _read++;
+    // The read() method can increment the _write value, so check the boundaries.
+    if (m_write >= m_length) {
+        m_write = 0;
     }
 
     m_buffer[m_write] = record;
     m_write++;
+    m_count++;
 
-    if (m_write >= m_size) {
+    // Move the _read forward by one. But only when it is not empty.
+    if (m_write == m_read && m_count > 0) {
+        m_read++;
+    }
+
+    if (m_write >= m_length) {
         m_write = 0;
     }
 
-    m_count++;
-
     // There can not be more values in the buffer than the size of the buffer.
-    if (m_count > m_size) {
-        m_count = m_size;
+    if (m_count > m_length) {
+        m_count = m_length;
     }
 
     read_write_mutex.unlock();
@@ -66,14 +68,17 @@ int RecordBuffer::read(record_t *record)
 {
     read_write_mutex.lock();
 
+    std::cout << "[RecordBuffer] read: " << m_read << " count: " << m_count << std::endl;
+
     // The write() method can increment the _read value, so check the boundaries.
-    if (m_read >= m_size) {
+    if (m_read >= m_length) {
         m_read = 0;
     }
 
     // Read, when there are values. And decrement, when read was successfully.
-    if (_count > 0) {
+    if (m_count > 0) {
         *record = m_buffer[m_read];
+        m_read++;
         m_count--;
     }
     else {
@@ -81,9 +86,7 @@ int RecordBuffer::read(record_t *record)
         return BUFFER_EMPTY;
     }
 
-    m_read++;
-
-    if (m_read >= m_size) {
+    if (m_read >= m_length) {
         m_read = 0;
     }
 

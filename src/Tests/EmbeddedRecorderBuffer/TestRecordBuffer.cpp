@@ -14,7 +14,7 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#include "TestRingbuffer.h"
+#include "TestRecordBuffer.h"
 
 #include "IRecordBuffer.h"
 #include "RecordBuffer.h"
@@ -26,42 +26,42 @@ SETUP(TestRecordBuffer) {
 
 BEFORE_TC(TestRecordBuffer) {
     // Empty.
-	  return 1;
+	return 1;
 }
 
 AFTER_TC(TestRecordBuffer) {
     // Empty.
-	  return 1;
+	return 1;
 }
 
 BEFORE(TestRecordBuffer) {
     // Empty.
-	  return 1;
+	return 1;
 }
 
 AFTER(TestRecordBuffer) {
     // Empty.
-	  return 1;
+	return 1;
 }
 
 TEST_IMPL(TestRecordBuffer, test1) {
-    IRecordBuffer * buffer = new RecordBuffer();
+    rec::IRecordBuffer * buffer = new rec::RecordBuffer();
 
-    record_t * r;
+    rec::record_t r;
 
     // Make sure the defined buffersize of the buffer is 128.
     for (int i = 0; i < 128; i++) {
         r.code = i;
         r.value = i;
-        r.timeStamp = i;
+        r.timestamp = i;
         buffer->write(r);
     }
 
     for (int i = 0; i < 128; i++) {
-        buffer->read(r);
+        buffer->read(&r);
     }
 
-    if (buffer->read(r) == -2) {
+    if (buffer->read(&r) == -2) {
         return TEST_PASSED;
     }
 

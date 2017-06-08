@@ -28,7 +28,7 @@ void BufferFileStreamer::exportBuffer(RecordBuffer * buffer)
     fout.open("buffer.bin", ios::out | ios::binary | ios::trunc);
 
     // Just write the whole object to the file
-    fout.write(reinterpret_cast<const char*> (&buffer), sizeof(RecordBuffer));
+    fout.write(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
 
     // TODO: Write the puck manager to file.
 
@@ -44,7 +44,7 @@ void BufferFileStreamer::importBuffer(RecordBuffer * buffer)
     fin.open("buffer.bin", ios::in | ios::binary);
 
     // Just read the whole buffer once.
-    fin.read(reinterpret_cast<const char*> (&buffer), sizeof(RecordBuffer));
+    fin.read(reinterpret_cast<char*> (&buffer), sizeof(RecordBuffer));
 
     // TODO: Read the puck manager from file.
 

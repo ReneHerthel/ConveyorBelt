@@ -17,10 +17,22 @@
 #ifndef SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_
 #define SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_
 
+#include <sys/neutrino.h>
+
 namespace rec {
 
     class IEmbeddedRecorder {
     public:
+    	/*
+    	 * @brief Write the pure values into the buffer.
+    	 */
+    	virtual void writeValuesIntoBuffer(const int code, const int value) = 0;
+
+    	/*
+    	 * @brief Writes a pulse message into a buffer.
+    	 */
+    	virtual void writePulseIntoBuffer(const struct _pulse pulse) = 0;
+
         /*
          * @brief Plays the recorded data.
          *

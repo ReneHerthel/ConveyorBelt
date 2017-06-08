@@ -22,12 +22,14 @@
 #include "IPulseMessageReceiver.h"
 #include "PulseMessageReceiverService.h"
 
+#include <iostream>
+
 SETUP(TestEmbeddedRecorder) {
     REG_TEST(test1, 1, "Test Play-, Save-, load-RecordedData");
     return 1;
 }
 
-BEFORCE_TC(TestEmbeddedRecorder) {
+BEFORE_TC(TestEmbeddedRecorder) {
     // Empty.
     return 1;
 }
@@ -37,7 +39,7 @@ AFTER_TC(TestEmbeddedRecorder) {
     return 1;
 }
 
-BEFORCE(TestEmbeddedRecorder) {
+BEFORE(TestEmbeddedRecorder) {
     // Empty.
     return 1;
 }
@@ -49,11 +51,11 @@ AFTER(TestEmbeddedRecorder) {
 
 TEST_IMPL(TestEmbeddedRecorder, test1)
 {
-    rcv::IPulseMessageReceiver * receiver = new PulseMessageReceiverService();
+    rcv::IPulseMessageReceiver* receiver = new rcv::PulseMessageReceiverService();
 
     int chid = receiver->newChannel();
 
-    IEmbeddedRecorder * recorder = new EmbeddedRecorder(chid);
+    rec::IEmbeddedRecorder * recorder = new rec::EmbeddedRecorder(chid);
 
     struct _pulse pulse;
 
@@ -63,16 +65,22 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     recorder->playRecordedData();
     rcv::msg_t msg_1 = receiver->receivePulseMessage();
 
+    std::cout << "[AFTER MSG 1] value " << (int)msg_1.value << "\n" << std::endl;
+
     recorder->writePulseIntoBuffer(pulse);
     recorder->saveRecordedData();
     recorder->playRecordedData();
     rcv::msg_t msg_2 = receiver->receivePulseMessage();
+
+    std::cout << "[AFTER MSG 2] value " << (int)msg_2.value << "\n" << std::endl;
 
     recorder->writePulseIntoBuffer(pulse);
     recorder->saveRecordedData();
     recorder->loadRecordedData();
     recorder->playRecordedData();
     rcv::msg_t msg_3 = receiver->receivePulseMessage();
+
+    std::cout << "[AFTER MSG 3] value " << (int)msg_3.value << "\n" << std::endl;
 
     if (msg_1.value == 24 && msg_2.value == 24 && msg_3.value == 24) {
         return TEST_PASSED;

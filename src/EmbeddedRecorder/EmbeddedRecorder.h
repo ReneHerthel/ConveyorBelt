@@ -63,24 +63,24 @@ namespace rec {
 
     private:
         /*
-         * @brief The channel, where the send-thread will send to.
-         */
-        int m_sendChid;
-
-        /*
-         * @brief The thread where the recorder is running and controlling all.
-         */
-        ThreadRecordSender * m_threadRecordSender;
-
-        /*
          * @brief The reference to the buffer.
          */
         RecordBuffer * m_recordBuffer;
 
         /*
+         * @brief The channel, where the send-thread will send to.
+         */
+        int m_sendChid;
+
+        /*
          * @brief  A reference to the BufferFileStreamer.
          */
         BufferFileStreamer  * m_bufferFileStreamer;
+
+        /*
+         * @brief
+         */
+        ThreadRecordSender * m_threadRecordSender;
 
     }; /* class EmbeddedRecorder : public IEmbeddedRecorder */
 

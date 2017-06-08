@@ -38,9 +38,9 @@ namespace rec {
          * @brief Constructor, which creates a new buffer on the heap.
          */
         explicit RecordBuffer()
-            :    m_read(0)
+            :    m_length(BUFFER_LENGTH)
+            ,    m_read(0)
             ,    m_write(0)
-            ,    m_size(BUFFER_LENGTH)
             ,    m_count(0)
         {
             // Nothing todo so far.
@@ -50,9 +50,9 @@ namespace rec {
          * @brief Copy constructor.
          */
         explicit RecordBuffer(const RecordBuffer & other)
-            :    m_read(other.m_read)
+            :    m_length(other.m_length)
+            ,    m_read(other.m_read)
             ,    m_write(other.m_write)
-            ,    m_length(other.m_length)
             ,    m_count(other.m_count)
             ,    m_buffer(other.m_buffer)
         {
@@ -72,11 +72,6 @@ namespace rec {
 
     private:
         /*
-         * @brief The buffer which contains all data.
-         */
-        record_t m_buffer[BUFFER_LENGTH];
-
-        /*
          * @brief The size or length of the buffer.
          */
         size_t m_length;
@@ -95,6 +90,11 @@ namespace rec {
          * @brief Counts the amount of values in the buffer.
          */
         size_t m_count;
+
+        /*
+         * @brief The buffer which contains all data.
+         */
+        record_t m_buffer[BUFFER_LENGTH];
 
         // TODO: A reference to the PuckManager.
     };

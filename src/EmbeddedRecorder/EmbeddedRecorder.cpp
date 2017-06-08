@@ -34,14 +34,16 @@ EmbeddedRecorder::~EmbeddedRecorder()
     //delete _bufferFileStreamer;
 }
 
-void EmbeddedRecorder::writePulseIntoBuffer(struct _pulse pulse)
+void EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
 {
     writeValuesIntoBuffer(pulse.code, pulse.value.sival_int);
 }
 
 void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 {
-    record_t * record;
+	std::cout << "[writeValuesIntoBuffer] writeValuesIntoBuffer()" << std::endl;
+
+    record_t record;
 
     record.code = code;
     record.value = value;
@@ -52,8 +54,10 @@ void EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 
 void EmbeddedRecorder::showRecordedData()
 {
+	std::cout << "[EmbeddedRecorder] showRecordedData()" << std::endl;
+
     // Copy the buffer, so the original buffer will not be effected.
-    RecordBuffer tmp(m_recordBuffer);
+    rec::RecordBuffer * tmp = m_recordBuffer;
 
     record_t * record = NULL;
 
@@ -69,17 +73,20 @@ void EmbeddedRecorder::showRecordedData()
 
 void EmbeddedRecorder::playRecordedData()
 {
+	//std::cout << "[EmbeddedRecorder] playRecordedData() chid: " << m_sendChid << std::endl;
     // This object works for itself.
-    m_threadRecordSender = new ThreadRecordSender(m_recordBuffer, m_sendChid);
+    new ThreadRecordSender(m_recordBuffer, m_sendChid);
 }
 
 void EmbeddedRecorder::saveRecordedData()
 {
+	std::cout << "[EmbeddedRecorder] saveRecordedData()" << std::endl;
     m_bufferFileStreamer->exportBuffer(m_recordBuffer);
 }
 
 void EmbeddedRecorder::loadRecordedData()
 {
+	std::cout << "[EmbeddedRecorder] loadRecordedData()" << std::endl;
     m_bufferFileStreamer->importBuffer(m_recordBuffer);
 }
 

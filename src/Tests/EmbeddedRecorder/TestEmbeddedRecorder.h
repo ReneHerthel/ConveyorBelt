@@ -36,7 +36,7 @@ protected:
 
     // Must have.
     TEST_CASE_METHODS
-}
+};
 
 #endif /* SRC_TESTS_EMBEDDEDRECORDER_TESTEMBEDDEDRECORDER_H_ */
 /** @} */
