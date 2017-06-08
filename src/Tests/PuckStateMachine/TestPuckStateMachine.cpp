@@ -13,7 +13,8 @@ SETUP(TestPuckStateMachine) {
 }
 
 BEFORE_TC(TestPuckStateMachine) {
-	context = new PuckContext();
+	uint32_t puckID = 1;
+	context = new PuckContext(puckID);
 	return 1;
 }
 
@@ -31,6 +32,32 @@ AFTER(TestPuckStateMachine) {
 }
 
 TEST_IMPL(TestPuckStateMachine, test1) {
+	PuckSignal::Signal signal;
+	PuckSignal::Return returnVal;
+
+	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+	signal.interruptSignal = INLET_OUT;
+
+	returnVal = context->process(signal);
+	if(returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT and returnVal.puckSpeed != PuckSignal::PuckSpeed::FAST){
+		return TEST_FAILED;
+	}
+
+	signal.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
+	signal.TimerSignal = PuckSignal::TimerSignal;
+
+	returnVal = context->process(signal);
+	if(returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT and returnVal.puckSpeed != PuckSignal::PuckSpeed::FAST){
+		return TEST_FAILED;
+	}
+
+	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+	signal.interruptSignal = INLET_OUT;
+
+	returnVal = context->process(signal);
+	if(returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT and returnVal.puckSpeed != PuckSignal::PuckSpeed::FAST){
+		return TEST_FAILED;
+	}
 
 	return TEST_PASSED;
 }
