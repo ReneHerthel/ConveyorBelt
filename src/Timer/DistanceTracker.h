@@ -10,9 +10,13 @@
 
 #include "ITimer.h"
 
+using namespace DistanceObservable;
+
 class DistanceTracker{
 private:
 	ITimer *timer;
+	uint32_t mmToTimeFast_;
+	uint32_t mmToTimeSlow_;
 public:
 	/**
 	 *Send a Signal when the conveyor belt has covered a certain distance

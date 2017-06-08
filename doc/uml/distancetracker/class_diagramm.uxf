@@ -29,21 +29,24 @@ fontsize=14
     <id>UMLClass</id>
     <coordinates>
       <x>140</x>
-      <y>170</y>
+      <y>160</y>
       <w>330</w>
-      <h>260</h>
+      <h>300</h>
     </coordinates>
     <panel_attributes>&lt;&lt;singelton&gt;&gt;
 DistanceObservable
 --
--dtList_: std::vector&lt;DistanceTracker*&gt;
--mmToTime_: uint32_T
+-dtList_: std::set&lt;DistanceTracker*&gt;
+-mmToTimeFast_: uint32_T
+-mmToTimeSlow_: uint32_T
 --
 +updateSpeed(speed: speed_t): void
-+register(dt: DistanceTracker*): void
-+getCalibrationData(void): uint32_t
-+getInstance(void): DistanceHandler
--DistanceHandler(mmToTime: uint32_t)
++registerObserver(dt: DistanceTracker*): void
++unregisterObserver(dt: DistanceTracker*): void
++getCalibrationData(speed_t speed): uint32_t
++setCalibrationData(speed_t speed, mmToTime: uint32_t): void
++static getInstance(void): DistanceHandler&amp;
+-DistanceHandler()
 {innerclass
  &lt;&lt;enum&gt;&gt;
 speed_t
@@ -58,14 +61,15 @@ innerclass}</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>70</x>
-      <y>620</y>
+      <y>610</y>
       <w>470</w>
-      <h>150</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>DistanceTracker
 --
 -timer: Timer
--mmToTime: uint32_T
+-mmToTimeFast_: uint32_T
+-mmToTimeSlow_: uint32_T
 --
 +DistanceTracker(chid: int, code: int8_t)
 +notify(speed: speed_t): void
@@ -78,14 +82,14 @@ innerclass}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>290</x>
-      <y>420</y>
+      <y>450</y>
       <w>130</w>
-      <h>220</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=1
 Register Here ^</panel_attributes>
-    <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
