@@ -31,7 +31,7 @@ fontsize=14
       <x>140</x>
       <y>160</y>
       <w>330</w>
-      <h>300</h>
+      <h>320</h>
     </coordinates>
     <panel_attributes>&lt;&lt;singelton&gt;&gt;
 DistanceObservable
@@ -72,6 +72,7 @@ innerclass}</panel_attributes>
 -chid_: int
 -timer_: TimerService
 -lastValue_: int32_t
+-currSpeed_: speed_t
 -mmToTimeFast_: uint32_T
 -mmToTimeSlow_: uint32_T
 --
@@ -86,14 +87,14 @@ innerclass}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>290</x>
-      <y>450</y>
+      <y>470</y>
       <w>130</w>
-      <h>180</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=1
 Register Here ^</panel_attributes>
-    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

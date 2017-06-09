@@ -28,15 +28,26 @@ DistanceTracker::~DistanceTracker(){
 using namespace DistanceSpeed;
 
 void DistanceTracker::notify(DistanceSpeed::speed_t speed){
+	uint32_t remainingTime = 0;
+
 	switch(speed){
 		case FAST:
-			//timer_.setAlarm();
+			remainingTime = timer_.killAlarm();
+			if(remainingTime > 0){
+				timer_.setAlarm(remainingTime*mmToTimeFast_, lastValue_);
+			}
 			break;
 		case SLOW:
-			//timer_.setAlarm();
+			remainingTime = timer_.killAlarm();
+			if(remainingTime > 0){
+				timer_.setAlarm(remainingTime*mmToTimeSlow_, lastValue_);
+			}
 			break;
 		case STOP:
-			//timer_.stopAlarm();
+			remainingTime = timer_.killAlarm();
+			if(remainingTime > 0){
+				timer_.setAlarm(remainingTime*mmToTimeSlow_, lastValue_);
+			}
 			break;
 	}
 }

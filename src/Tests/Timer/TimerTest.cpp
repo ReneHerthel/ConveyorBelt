@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include "PulseMessageReceiverService.h"
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 
 SETUP(TimerTest){
 	REG_TEST(TestSeconds, 1, "Test1 Brief");
@@ -32,6 +34,7 @@ TEST_IMPL(TimerTest, TestSeconds){
 
 	TimerService timer(chid, code);
 
+	auto start = std::chrono::system_clock::now();
 	try {
 		timer.setAlarm(milsec, value);
 	} catch(int exception) {
@@ -41,10 +44,14 @@ TEST_IMPL(TimerTest, TestSeconds){
 
 
 	msg = pmr.receivePulseMessage();
+	auto end = std::chrono::system_clock::now();
+	std::chrono::duration<double> diff = end-start;
 
 	std::cout << "worked" << std::endl;
 	if(msg.code == code && msg.value == value){
-		return TEST_PASSED;
+		if(diff.count() > 5.4 && diff.count() < 5.6){
+			return TEST_PASSED;
+		}
 	}
 
 	return TEST_FAILED;
@@ -68,9 +75,13 @@ TEST_IMPL(TimerTest, KillAlarm){
 		std::cout << "Timer error is: " << exception << std::endl;
 	}
 
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
 	milsecResu = timer.killAlarm();
 
-	std::cout << "Should be arround 5500: " << milsecResu << std::endl;
-
-	return TEST_FAILED;
+	if(milsecResu > 3490 && milsecResu < 3510){
+		return TEST_PASSED;
+	} else {
+		return TEST_FAILED;
+	}
 }

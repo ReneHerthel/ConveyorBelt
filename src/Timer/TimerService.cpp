@@ -118,6 +118,6 @@ milliseconds TimerService::killAlarm() throw(int) {
 	}
 	timerRunning = false;
 	timerCreated = false;
-	return mSec;
+	return mSec; //Zero at failure
 }
 
