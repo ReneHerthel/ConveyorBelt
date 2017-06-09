@@ -22,20 +22,30 @@
 
 class SortingSwitchService : public ISortingSwitch {
 public:
+	/*
+	 * @brief Default constructor.
+	 */
 	SortingSwitchService();
+
+	/*
+	 * @brief Virtual destructor.
+	 */
 	virtual ~SortingSwitchService();
 
 	/*
-	 * @brief
+	 * @brief Opens the sorting switch.
 	 */
 	void sortingSwitchOpen();
 
 	/*
-	 * @brief
+	 * @brief Close the sorting switch.
 	 */
 	void sortingSwitchClose();
 
 private:
+	/*
+	 * @brief A reference to the hal object of this component.
+	 */
 	SortingSwitchHal* hal_;
 };
 

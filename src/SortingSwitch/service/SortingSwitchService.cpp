@@ -18,15 +18,16 @@
 #include "SortingSwitchHal.h"
 #include "HWdefines.h"
 
-ISortingSwitch::~ISortingSwitch() {
-	// Nothing todo so far.
-}
+#include <sys/neutrino.h>
+#include <iostream>
 
 SortingSwitchService::SortingSwitchService()
-	:	hal_(new SortingSwitchHal(PORT_ADDR_A))
+	:	hal_(new SortingSwitchHal())
 {
-	// TODO Auto-generated constructor stub
-
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
+	{
+		std::cout << "[SortingSwitchService] Can't get hardware access." << std::endl;
+	}
 }
 
 SortingSwitchService::~SortingSwitchService() {
@@ -34,10 +35,10 @@ SortingSwitchService::~SortingSwitchService() {
 }
 
 void SortingSwitchService::sortingSwitchOpen() {
-	hal_->setPin(PIN_4);
+	hal_->set();
 }
 
 void SortingSwitchService::sortingSwitchClose() {
-	hal_->clearPin(PIN_4);
+	hal_->clear();
 }
 
