@@ -4,44 +4,214 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
-      <y>30</y>
-      <w>210</w>
+      <x>570</x>
+      <y>40</y>
+      <w>230</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>PuckContext
 --
-- currentState : PuckState
-- type : PuckType
-- hightVal1 : uint16
-- hightVal2 : uint16
+- statePtr : PuckState*
+- state : PuckState
 --
-+ process(signal : Signal) : Info
++ process(signal : Signal) : Return
++ getType() : PuckType
++ getpuckID() : uint16_t
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
-      <y>330</y>
-      <w>210</w>
-      <h>190</h>
+      <x>570</x>
+      <y>340</y>
+      <w>230</w>
+      <h>420</h>
     </coordinates>
     <panel_attributes>PuckState
 --
-</panel_attributes>
++ returnValue : Return
++ puckID : uint16_t
++ puckType : PuckType
+--
++ inletIn() : void
++ inletOut() : void
++ heightmeasurementIn() : void
++ heightmeasurementOut() : void
++ switchIn() : void
++ switchOpen() : void
++ slideIn() : void
++ slideOut() : void
++ outletIn() : void
++ outletOut() : void
++ type() : void
++ metalDetect() : void
++ serialAccept() : void
++ serialReceived() : void
++ serialStop() : void
++ serialResume() : void
++ earlyTimer() : void
++ lateTimer() : void
+
++ startTimers() : void
++ stopTimer() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>150</x>
-      <y>140</y>
+      <x>670</x>
+      <y>150</y>
       <w>30</w>
       <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>350</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Inlet
+--
++ inletOut() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>790</x>
+      <y>350</y>
+      <w>340</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1200</x>
+      <y>390</y>
+      <w>90</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>lt=.
+dot dot dot</panel_attributes>
+    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>650</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Transferred
+--
++ serialReceived() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>790</x>
+      <y>650</y>
+      <w>340</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>200</y>
+      <w>260</w>
+      <h>570</h>
+    </coordinates>
+    <panel_attributes>PuckSignal
+{innerclass
+&lt;&lt;Enum&gt;&gt;
+PuckReturn
+innerclass}
+{innerclass
+&lt;&lt;Enum&gt;&gt;
+PuckSpeed
+innerclass}
+{innerclass
+&lt;&lt;Struct&gt;&gt;
+Return
+--
++ puckReturn : PuckReturn
++ puckSpeed : PuckSpeed
+innerclass}
+{innerclass
+&lt;&lt;Enum&gt;&gt;
+TimerType
+innerclass}
+{innerclass
+&lt;&lt;Struct&gt;&gt;
+TimerSignal
+--
++ puckID : uint16_t
++ type : TimerType
+innerclass}
+{innerclass
+&lt;&lt;Enum&gt;&gt;
+SignalType
+innerclass}
+{innerclass
+&lt;&lt;Struct&gt;&gt;
+Signal
+--
++ signalType : SignalType
++ heightSignal : signal_t
++ timerSignal : TimerSignal
++ interruptSignal : interruptSignals
++ serialSignal : ser_proto_msg
+innerclass}
+{innerclass
+&lt;&lt;Struct&gt;&gt;
+PuckType
+--
++ heightType : signal_t
++ metal : uint8_t
++ height1 : uint16_t
++ height2 : uint16_t
+innerclass}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>290</x>
+      <y>440</y>
+      <w>300</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>290</x>
+      <y>90</y>
+      <w>300</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;170.0;150.0;170.0;150.0;10.0;280.0;10.0</additional_attributes>
   </element>
 </diagram>
