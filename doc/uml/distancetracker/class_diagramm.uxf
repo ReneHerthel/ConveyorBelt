@@ -37,6 +37,7 @@ fontsize=14
 DistanceObservable
 --
 -dtList_: std::set&lt;DistanceTracker*&gt;
+-currSpeed_: speed_t
 -mmToTimeFast_: uint32_T
 -mmToTimeSlow_: uint32_T
 --
@@ -63,13 +64,14 @@ innerclass}</panel_attributes>
       <x>70</x>
       <y>610</y>
       <w>470</w>
-      <h>200</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>DistanceTracker
 --
 -code_: int8_t
 -chid_: int
 -timer_: TimerService
+-lastValue_: int32_t
 -mmToTimeFast_: uint32_T
 -mmToTimeSlow_: uint32_T
 --

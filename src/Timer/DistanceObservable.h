@@ -27,8 +27,8 @@ public:
 	void updateSpeed(DistanceSpeed::speed_t speed);
 
 	/**
-	 * Register a new DistanceTracker as Observer to this
-	 * DistanceObservable
+	 * Register a new DistanceTracker as Observer to this DistanceObservable
+	 * The Distance tracker will be instantly notified to get the current belt speed
 	 * @param dt The pointer to the distance tracker that wants to observ
 	 */
 	void registerObserver(DistanceTracker *dt);
@@ -64,7 +64,8 @@ private:
 	DistanceObservable(){};
 	virtual ~DistanceObservable(){};
 
-	set<DistanceTracker*> dtlist_; 	///This list contains all DistanceTracker that are currently registered to the Observable
+	set<DistanceTracker*> dtlist_; 	    ///This list contains all DistanceTracker that are currently registered to the Observable
+	DistanceSpeed::speed_t currSpeed_;  ///Current speed of the belt
 	uint32_t mmToTimeFast_; 			///Multiply with this to conv the mm to time
 	uint32_t mmToTimeSlow_; 			///Multiply with this to conv the mm to time
 };

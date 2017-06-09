@@ -20,6 +20,7 @@ private:
 	int8_t code_;
 	int chid_;
 	TimerService timer_;
+	int32_t last_value_;
 	uint32_t mmToTimeFast_;
 	uint32_t mmToTimeSlow_;
 public:

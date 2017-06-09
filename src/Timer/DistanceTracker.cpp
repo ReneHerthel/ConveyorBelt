@@ -25,8 +25,20 @@ DistanceTracker::~DistanceTracker(){
 }
 
 
+using namespace DistanceSpeed;
+
 void DistanceTracker::notify(DistanceSpeed::speed_t speed){
-	//TODO Implement
+	switch(speed){
+		case FAST:
+			//timer_.setAlarm();
+			break;
+		case SLOW:
+			//timer_.setAlarm();
+			break;
+		case STOP:
+			//timer_.stopAlarm();
+			break;
+	}
 }
 
 int32_t DistanceTracker::startAlarm(int32_t value, uint32_t distanceMm){

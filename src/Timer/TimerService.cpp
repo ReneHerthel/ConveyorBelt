@@ -16,7 +16,9 @@
 
 TimerService::TimerService(int chid, char code) throw(int)
 	: timerid()
-	, code(code) {
+	, code(code)
+	, timerRunning(false)
+	, timerCreated(false){
 	LOG_SCOPE;
 
 	coid = ConnectAttach_r(0, 0, chid, 0, 0);
@@ -27,19 +29,26 @@ TimerService::TimerService(int chid, char code) throw(int)
 }
 
 TimerService::~TimerService() throw(int) {
-	if(timer_delete(timerid) == -1) { // delete the timer
-		LOG_ERROR << "Error in timer_delete\n";
-		throw(EXIT_FAILURE);
+	if(timerCreated){
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
 	}
+
 }
 
 void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 	// initialize the sigevent
+	timerRunning = true;
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
 		LOG_ERROR << "Error in timer_create\n";
 		throw(EXIT_FAILURE);
+	} else {
+		timerCreated = false;
 	}
+
 
 	unsigned int milliseconds = time;
 	unsigned int seconds = 0;
@@ -60,26 +69,55 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 }
 
 void TimerService::stopAlarm() throw(int) {
-	if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
-		LOG_ERROR << "Error in timer_gettime\n";
-		throw(EXIT_FAILURE);
-	}
+	if(timerRunning && timerCreated){
+		if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
+			LOG_ERROR << "Error in timer_gettime\n";
+			throw(EXIT_FAILURE);
+		}
 
-	if(timer_delete(timerid) == -1) { // delete the timer
-		LOG_ERROR << "Error in timer_delete\n";
-		throw(EXIT_FAILURE);
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
 	}
+	timerRunning = false;
+	timerCreated = false;
 }
 
 void TimerService::resumeAlarm() throw(int) {
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) { // create new timer with last values
 		LOG_ERROR << "Error in timer_create\n";
 		throw(EXIT_FAILURE);
+	} else {
+		timerCreated = true;
 	}
 
 	if(timer_settime(timerid, 0, &timer, NULL) == -1) { // set new timer to resume
 		LOG_ERROR << "Error in timer_settime\n";
 		throw(EXIT_FAILURE);
 	}
+
+}
+
+milliseconds TimerService::killAlarm() throw(int) {
+	unsigned int mSec = 0;;
+	unsigned int seconds = 0;
+
+	if(timerRunning){
+		if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
+			LOG_ERROR << "Error in timer_gettime\n";
+			throw(EXIT_FAILURE);
+		}
+
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
+
+		mSec = timer.it_value.tv_nsec / MILLISECOND + timer.it_value.tv_sec * SECOND; //Inacurate, but sowhat
+	}
+	timerRunning = false;
+	timerCreated = false;
+	return mSec;
 }
 
