@@ -9,6 +9,7 @@
 #include "Tests/Serial/SerialProtocollTest.h"
 #include "FullSerialTest.h"
 #include "Logger/Logger.h"
+#include "TimerTest.h"
 
 using namespace std;
 
@@ -43,6 +44,9 @@ int main() {
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
     ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
+
+    //TIMER TESTS
+    ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
