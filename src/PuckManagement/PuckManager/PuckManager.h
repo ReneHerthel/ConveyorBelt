@@ -20,17 +20,21 @@ public:
 	};
 
 	enum ErrorSignal {
-		PUCK_LOST,
-		PUCK_MOVED,
-		UNEXPECTED_SIGNAL
+		PUCK_LOST,			// Late timer expired
+		PUCK_MOVED,			// Puck triggered light barrier before early timer expired
+		UNEXPECTED_SIGNAL,	// Signal could not be processed
+		MULTIPLE_ACCEPT,	// Shouldn't happen - multiple pucks were triggered
+		MULTIPLE_WARNING	// Shouldn't happen - multiple pucks were triggered
 	};
 
 	struct ManagerReturn {
 		PuckSignal::PuckSpeed speedSignal;
-		uint8_t actorFlag;
+		bool actorFlag;
 		ActorSignal actorSignal;
-		uint8_t errorFlag;
+		bool errorFlag;
 		ErrorSignal errorSignal;
+		bool slideFullFlag;
+		PuckContext *puck;					// Null except on send Signal
 	};
 
 	PuckManager();
@@ -40,7 +44,7 @@ public:
 	void addPuck(PuckContext *puck);
 
 private:
-	std::vector<PuckContext*> puckList;
+	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 };
 
