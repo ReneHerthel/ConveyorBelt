@@ -18,9 +18,11 @@ PuckContext::PuckContext(uint16_t puckID) {
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 #else
 	LOG_DEBUG << "Using machine1\n";
 	statePtr = &transferState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	//startTimers();
 #endif
 	statePtr->puckID = puckID;
@@ -143,14 +145,12 @@ void PuckContext::PuckState::inletIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::inletOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -158,14 +158,12 @@ void PuckContext::PuckState::heightmeasurementIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::heightmeasurementOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -173,14 +171,12 @@ void PuckContext::PuckState::switchIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::switchOpen() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -188,14 +184,12 @@ void PuckContext::PuckState::slideIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::slideOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -203,28 +197,24 @@ void PuckContext::PuckState::outletIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::outletOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::type() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::metalDetect() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -232,28 +222,24 @@ void PuckContext::PuckState::serialAccept() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::serialReceived() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::serialStop() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::serialResume() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 
@@ -261,7 +247,6 @@ void PuckContext::PuckState::earlyTimer() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 }
 
 void PuckContext::PuckState::lateTimer() {
