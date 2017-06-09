@@ -16,6 +16,7 @@ public:
 protected:
     TEST(SimpleTest);
     TEST(ChangeSpeed);
+    TEST(StopBelt);
     TEST_CASE_METHODS
 };
 

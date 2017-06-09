@@ -22,6 +22,7 @@ private:
 	TimerService timer_;
 	int32_t lastValue_;
 	DistanceSpeed::speed_t currSpeed_;
+	bool stopped_;
 	uint32_t mmToTimeFast_;
 	uint32_t mmToTimeSlow_;
 public:

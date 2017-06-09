@@ -16,6 +16,7 @@
 SETUP(DistanceTrackingTest){
 	REG_TEST(SimpleTest, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 	REG_TEST(ChangeSpeed, 2, "Create a distance tracker, start it, and change speed in the middle of the run");
+	REG_TEST(StopBelt, 3, "Create a distance tracker, start it, stop is, and resume it");
 };
 
 BEFORE_TC(DistanceTrackingTest){return 1;}
@@ -125,6 +126,49 @@ TEST_IMPL(DistanceTrackingTest, ChangeSpeed){
 	std::chrono::duration<double> diff= end-start;
 	if(!(diff.count() > 1.49 && diff.count() < 1.51)){ //right time (with delta of 10%)
 		LOG_ERROR << "ChangeSpeed time was: " << diff.count() << "s\n";
+		return TEST_FAILED;
+	}
+
+	return TEST_PASSED;
+}
+
+TEST_IMPL(DistanceTrackingTest, StopBelt){
+	DistanceObservable& distO = DistanceObservable::getInstance();
+	distO.setCalibrationData(FAST, 1); //Slow takes
+	distO.setCalibrationData(SLOW, 2); //Slow takes twice as long as fast
+	distO.updateSpeed(FAST);
+
+	uint32_t distance = 1000; //1m -> 1000ms Fast
+
+
+	//INI COM CHANNEL
+	int8_t code = 123;
+	int32_t value = 987;
+
+	int chid;
+	rcv::msg_t msg;
+	rcv::PulseMessageReceiverService pmr;
+	chid = pmr.newChannel();
+
+	//INIT TR1
+	DistanceTracker tr1(chid, code);
+	auto start = std::chrono::system_clock::now();
+	tr1.startAlarm(value, distance);
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
+	distO.updateSpeed(STOP);
+	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
+	distO.updateSpeed(SLOW);
+
+	msg = pmr.receivePulseMessage();
+	auto end = std::chrono::system_clock::now();
+	if(msg.code != code || msg.value != value){ //right code and value?
+		return TEST_FAILED;
+	}
+
+	std::chrono::duration<double> diff= end-start;
+	if(!(diff.count() > 1.99 && diff.count() < 2.01)){ //right time (with delta of 10%)
+		LOG_ERROR << "Stop time was: " << diff.count() << "s\n";
 		return TEST_FAILED;
 	}
 

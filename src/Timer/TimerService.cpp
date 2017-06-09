@@ -46,7 +46,7 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 		LOG_ERROR << "Error in timer_create\n";
 		throw(EXIT_FAILURE);
 	} else {
-		timerCreated = false;
+		timerCreated = true;
 	}
 
 
@@ -65,6 +65,8 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 	if(timer_settime(timerid, 0, &timer, NULL) == -1) {
 		LOG_ERROR << "Error in timer_settime\n";
 		throw(EXIT_FAILURE);
+	} else {
+		timerRunning = true;
 	}
 }
 
@@ -79,9 +81,10 @@ void TimerService::stopAlarm() throw(int) {
 			LOG_ERROR << "Error in timer_delete\n";
 			throw(EXIT_FAILURE);
 		}
+
+		timerRunning = false;
+		timerCreated = false;
 	}
-	timerRunning = false;
-	timerCreated = false;
 }
 
 void TimerService::resumeAlarm() throw(int) {
@@ -95,6 +98,8 @@ void TimerService::resumeAlarm() throw(int) {
 	if(timer_settime(timerid, 0, &timer, NULL) == -1) { // set new timer to resume
 		LOG_ERROR << "Error in timer_settime\n";
 		throw(EXIT_FAILURE);
+	} else {
+		timerRunning = true;
 	}
 
 }

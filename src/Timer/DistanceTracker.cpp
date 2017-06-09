@@ -8,7 +8,9 @@
 DistanceTracker::DistanceTracker(int chid, int8_t code):
 	chid_(chid),
 	code_(code),
-	timer_(chid, code){
+	timer_(chid, code),
+	stopped_(false),
+	currSpeed_(DistanceSpeed::STOP){
 
 	DistanceObservable& distO = DistanceObservable::getInstance();
 
@@ -29,6 +31,10 @@ using namespace DistanceSpeed;
 
 void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 	uint32_t remainingTime = 0;
+	if(stopped_){ //Timer was stopped, resume it
+		timer_.resumeAlarm();
+		stopped_ = false;
+	}
 	if(currSpeed_ != speed){
 		switch(speed){
 			case FAST:
@@ -36,21 +42,20 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 				if(remainingTime > 0){
 					timer_.setAlarm(remainingTime/mmToTimeSlow_*mmToTimeFast_, lastValue_);
 				}
+				currSpeed_ = speed;
 				break;
 			case SLOW:
 				remainingTime = timer_.killAlarm();
 				if(remainingTime > 0){
 					timer_.setAlarm(remainingTime/mmToTimeFast_*mmToTimeSlow_, lastValue_);
 				}
+				currSpeed_ = speed;
 				break;
 			case STOP:
-				remainingTime = timer_.killAlarm();
-				if(remainingTime > 0){
-					timer_.stopAlarm();
-				}
+				timer_.stopAlarm();
+				stopped_ = true;
 				break;
 		}
-	currSpeed_ = speed;
 	}
 }
 
