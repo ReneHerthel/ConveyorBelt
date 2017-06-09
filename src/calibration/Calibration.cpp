@@ -15,6 +15,9 @@
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
 #include "SortingSwitchService.h"
+#include <thread>
+
+using namespace chrono;
 
 void Calibration::calibrate(void){
 	ConveyorBeltService cbs;
@@ -28,29 +31,46 @@ void Calibration::calibrate(void){
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
 
+
+	//CENTER THE PUCK
+	while(!pollLB(LB_ENTRY));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	cbs.changeState(RIGHTFAST);
+	while(!pollLB(LB_HEIGHT));
+	cbs.changeState(LEFTFAST);
+	while(!pollLB(LB_ENTRY));
+	cbs.changeState(STOP);
+
 	for(int i = 0; i < 2; i++){
 		while(!pollLB(LB_ENTRY));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		if(i == 0) 	cbs.changeState(RIGHTFAST);
 		else		cbs.changeState(RIGHTSLOW);
 
 		while(pollLB(LB_ENTRY));
 
-		auto start = std::chrono::system_clock::now;
+		auto start = system_clock::now();
 
 		while(!pollLB(LB_HEIGHT));
-		heightMeasure[i] = std::chrono::system_clock::now - start;
+		heightMeasure[i] = milliseconds(duration_cast<milliseconds>(system_clock::now() - start));
+		sss.sortingSwitchOpen();
 
 		while(!pollLB(LB_SWITCH));
-		sss.sortingSwitchOpen();
-		sortingSwitch[i] = std::chrono::system_clock::now - heightMeasure[i] - start;
+		sortingSwitch[i] = duration_cast<milliseconds>(system_clock::now()  - start) - heightMeasure[i];
 
 
 		while(!pollLB(LB_EXIT));
-		outlet[i] = td::chrono::system_clock::now - heightMeasure[i] - sortingSwitch[i] - start;
+		outlet[i] = duration_cast<milliseconds>(system_clock::now() - start) - heightMeasure[i] - sortingSwitch[i];
 		cbs.changeState(STOP);
-
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		cbs.changeState(LEFTFAST);
+		while(!pollLB(LB_HEIGHT));
+		sss.sortingSwitchClose();
+		while(!pollLB(LB_ENTRY));
+		cbs.changeState(STOP);
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
+	sss.sortingSwitchClose(); //Safety
 
 
 }

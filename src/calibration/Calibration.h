@@ -32,10 +32,10 @@ public:
 	bool pollLB(sensor_t sensor);
 
 private:
-	milliseconds overall;
-	milliseconds heightMeasure;
-	milliseconds sortingSwitch;
-	milliseconds outlet;
+	milliseconds overall[2];
+	milliseconds heightMeasure[2];
+	milliseconds sortingSwitch[2];
+	milliseconds outlet[2];
 
 	uint32_t sowToFastFactor;
 	uint32_t fastToSlowDivisor;
