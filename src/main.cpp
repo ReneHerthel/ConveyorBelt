@@ -10,6 +10,7 @@
 #include "FullSerialTest.h"
 #include "Logger/Logger.h"
 #include "TimerTest.h"
+#include "DistanceTrackingTest.h"
 
 using namespace std;
 
@@ -47,6 +48,9 @@ int main() {
 
     //TIMER TESTS
     ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
+
+    //DistanceTracking test
+    ts.REG_TESTCASE(new DistanceTrackingTest(7, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

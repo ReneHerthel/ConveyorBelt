@@ -16,6 +16,7 @@ public:
 protected:
     int32_t testint = 12345;
     TEST(TestSeconds);
+    TEST(KillAlarm);
     TEST_CASE_METHODS
 };
 

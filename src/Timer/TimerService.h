@@ -20,6 +20,8 @@ private:
 	timer_t timerid;
 	char code;
 	int coid;
+	bool timerRunning;
+	bool timerCreated;
 	struct sigevent event;
 	struct itimerspec timer;
 public:
@@ -28,6 +30,7 @@ public:
 	void setAlarm(milliseconds time, int value) throw(int);
 	void stopAlarm() throw(int);
 	void resumeAlarm() throw(int);
+	milliseconds killAlarm() throw(int);
 };
 
 #endif /* SRC_TIMER_TIMERSERVICE_H_ */
