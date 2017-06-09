@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>210</y>
+      <w>210</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Calibration
+--
+-overall[2]: std::chrono::milliseconds
+-heightMeasure[2]: std::chrono::milliseconds
+-sortingSwitch[2]: std::chrono::milliseconds
+-outlet[2]: std::chrono::milliseconds
+-slowToFastFactor
+-fastToSlowDivisor
+--
+calibrate(): void
+poll(sensor: sensor_t): void
+getCalibration(sensor: sensor_t, speed speed_t);</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
