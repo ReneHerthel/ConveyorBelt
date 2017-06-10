@@ -51,7 +51,6 @@ void ThreadRecordSender::sendPulseMessagesToChid()
         ret = m_buffer->readFromIndex(&record, index);
 
         if (ret >= 0) {
-            record.timestamp -= firstRecord.timestamp;
             timer = new TimerService(m_chid, record.code);
             std::chrono::duration<unsigned int, std::milli> timeSpan = record.timestamp - firstRecord.timestamp;
             timer->setAlarm(timeSpan, record.value);
