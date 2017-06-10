@@ -51,7 +51,7 @@ int EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
 
     record.code = code;
     record.value = value;
-    record.timestamp = std::chrono::system_clock::now();
+    record.timestamp = std::chrono::high_resolution_clock::now();
 
     return m_recordBuffer->write(record);
 }

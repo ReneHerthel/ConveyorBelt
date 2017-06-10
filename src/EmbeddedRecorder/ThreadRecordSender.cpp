@@ -19,6 +19,8 @@
 #include "ITimer.h"
 #include "TimerService.h"
 
+#include <chrono>
+
 namespace rec {
 
 ThreadRecordSender::ThreadRecordSender(RecordBuffer * buffer, const int chid)
@@ -46,22 +48,15 @@ void ThreadRecordSender::sendPulseMessagesToChid()
 
     while (ret >= 0) {
         record_t record;
-
         index++;
-
         ret = m_buffer->readFromIndex(&record, index);
 
         if (ret >= 0) {
-            // Zeit abziehen
             record.timestamp -= firstRecord.timestamp;
-
-            timer = new TimerService(m_chid, record.code, record.value);
-            timer->setAlarm()
-
-            // aufziehuhr stellen
-            //m_sender->sendPulseMessage(record.code, record.value);
+            timer = new TimerService(m_chid, record.code);
+            std::chrono::duration<unsigned int, std::milli> timeSpan = record.timestamp - firstRecord.timestamp;
+            timer->setAlarm(timeSpan, record.value);
         }
-
     }
 
     // NOTE: The thread will be delete after the while loop.
