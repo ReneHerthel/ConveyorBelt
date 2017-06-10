@@ -15,10 +15,10 @@ PuckManager::~PuckManager() {
 	// TODO Auto-generated destructor stub
 }
 
-void PuckManager::addPuck(puck) {
+void PuckManager::addPuck(PuckContext *puck) {
 	// TODO: Add setPuckID()
 	//(*puck).setPuckID(nextPuckID);
-	puckList.push_back(*puck);
+	puckList.push_back(puck);
 	nextPuckID++;
 }
 
@@ -56,7 +56,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				break;
 			case PuckSignal::PuckReturn::DELETE:
 				acceptCounter++;
-				it = puckList.erase(it);
+				delete *it;					// delete the puck from memory
+				it = puckList.erase(it);	// delete the puck from list
 				break;
 			case PuckSignal::PuckReturn::SEND:
 				acceptCounter++;
