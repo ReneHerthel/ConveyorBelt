@@ -16,11 +16,15 @@
 
 #include "ThreadRecordSender.h"
 
+#include "ITimer.h"
+#include "TimerService.h"
+
 namespace rec {
 
 ThreadRecordSender::ThreadRecordSender(RecordBuffer * buffer, const int chid)
     :    m_buffer(buffer)
-    ,    m_sender(new PulseMessageSenderService(chid))
+    //,    m_sender(new PulseMessageSenderService(chid))
+    ,    m_chid(chid)
 {
     m_client = std::thread(&ThreadRecordSender::sendPulseMessagesToChid, this);
 }
@@ -33,15 +37,31 @@ ThreadRecordSender::~ThreadRecordSender()
 void ThreadRecordSender::sendPulseMessagesToChid()
 {
     int ret = 0;
+    int index = 0;
+    ITimer * timer;
+
+    record_t firstRecord;
+
+    ret = m_buffer->readFromIndex(&firstRecord, index);
 
     while (ret >= 0) {
         record_t record;
 
-        ret = m_buffer->read(&record);
+        index++;
+
+        ret = m_buffer->readFromIndex(&record, index);
 
         if (ret >= 0) {
-            m_sender->sendPulseMessage(record.code, record.value);
+            // Zeit abziehen
+            record.timestamp -= firstRecord.timestamp;
+
+            timer = new TimerService(m_chid, record.code, record.value);
+            timer->setAlarm()
+
+            // aufziehuhr stellen
+            //m_sender->sendPulseMessage(record.code, record.value);
         }
+
     }
 
     // NOTE: The thread will be delete after the while loop.

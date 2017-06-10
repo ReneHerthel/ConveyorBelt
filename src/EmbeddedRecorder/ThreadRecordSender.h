@@ -57,6 +57,11 @@ namespace rec {
          * @brief The pulse message sender.
          */
         PulseMessageSenderService * m_sender;
+
+        /*
+         * @brief The channel ID to send.
+         */
+        int m_chid;
     };
 
 } /* namespace rec */
