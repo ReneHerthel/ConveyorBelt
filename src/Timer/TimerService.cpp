@@ -7,24 +7,46 @@
 
 #include "TimerService.h"
 
+#include "Logger.h"
+#include "LogScope.h"
+
 #include <sys/neutrino.h>
 #include <time.h>
 #include <signal.h>
 
-TimerService::TimerService(int chid, char code, int value)
+TimerService::TimerService(int chid, char code) throw(int)
 	: timerid()
 	, code(code)
-	, value(value) {
+	, timerRunning(false)
+	, timerCreated(false){
+	LOG_SCOPE;
+
 	coid = ConnectAttach_r(0, 0, chid, 0, 0);
 	if(coid < 0) {
-		// TODO error handling
+		LOG_ERROR << "Error in ConnectAttach_r\n";
+		throw(-coid);
 	}
 }
 
-void TimerService::setAlarm(milliseconds time) {
+TimerService::~TimerService() throw(int) {
+	if(timerCreated){
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
+	}
+
+}
+
+void TimerService::setAlarm(milliseconds time, int value) throw(int) {
+	// initialize the sigevent
+	timerRunning = true;
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
 	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) {
-		// TODO error handling
+		LOG_ERROR << "Error in timer_create\n";
+		throw(EXIT_FAILURE);
+	} else {
+		timerCreated = true;
 	}
 
 
@@ -36,9 +58,71 @@ void TimerService::setAlarm(milliseconds time) {
 		seconds = (time - milliseconds);
 	}
 
-	timer.it_value.tv_nsec = time * MILLISECOND;
+	timer.it_value.tv_nsec = milliseconds * MILLISECOND;
 	timer.it_value.tv_sec = seconds / SECOND;
 	timer.it_interval = { 0, 0 }; // Make it a one shot timer
-	timer_settime(timerid, 0, &timer, NULL);
+
+	if(timer_settime(timerid, 0, &timer, NULL) == -1) {
+		LOG_ERROR << "Error in timer_settime\n";
+		throw(EXIT_FAILURE);
+	} else {
+		timerRunning = true;
+	}
+}
+
+void TimerService::stopAlarm() throw(int) {
+	if(timerRunning && timerCreated){
+		if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
+			LOG_ERROR << "Error in timer_gettime\n";
+			throw(EXIT_FAILURE);
+		}
+
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
+
+		timerRunning = false;
+		timerCreated = false;
+	}
+}
+
+void TimerService::resumeAlarm() throw(int) {
+	if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) { // create new timer with last values
+		LOG_ERROR << "Error in timer_create\n";
+		throw(EXIT_FAILURE);
+	} else {
+		timerCreated = true;
+	}
+
+	if(timer_settime(timerid, 0, &timer, NULL) == -1) { // set new timer to resume
+		LOG_ERROR << "Error in timer_settime\n";
+		throw(EXIT_FAILURE);
+	} else {
+		timerRunning = true;
+	}
+
+}
+
+milliseconds TimerService::killAlarm() throw(int) {
+	unsigned int mSec = 0;;
+	unsigned int seconds = 0;
+
+	if(timerRunning){
+		if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
+			LOG_ERROR << "Error in timer_gettime\n";
+			throw(EXIT_FAILURE);
+		}
+
+		if(timer_delete(timerid) == -1) { // delete the timer
+			LOG_ERROR << "Error in timer_delete\n";
+			throw(EXIT_FAILURE);
+		}
+
+		mSec = timer.it_value.tv_nsec / MILLISECOND + timer.it_value.tv_sec * SECOND; //Inacurate, but sowhat
+	}
+	timerRunning = false;
+	timerCreated = false;
+	return mSec; //Zero at failure
 }
 

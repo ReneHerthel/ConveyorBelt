@@ -16,6 +16,7 @@
 
 class ILightSystem {
 	public:
+		virtual ~ILightSystem() = 0;
 		virtual void setWarningLevel(Level warningLevel) = 0;
 };
 

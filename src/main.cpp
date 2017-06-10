@@ -6,6 +6,13 @@
 #include "Tests/EmbeddedRecorderBuffer/TestRecordBuffer.h"
 #include "Tests/EmbeddedRecorder/TestEmbeddedRecorder.h"
 #include "TestFramework/TestSuite.h"
+#include "LightSystemTest.h"
+#include "Tests/Serial/TestSerial.h"
+#include "Tests/Serial/SerialProtocollTest.h"
+#include "FullSerialTest.h"
+#include "Logger/Logger.h"
+#include "TimerTest.h"
+#include "DistanceTrackingTest.h"
 
 using namespace std;
 
@@ -14,6 +21,7 @@ int main() {
 	//## THIS IS THE TEST MAIN, ADD A TEST FOR YOUR MODULE INSTEAD OF WRITING A MAIN##//
 	//################################################################################//
     TestSuite ts;
+    LOG_SET_LEVEL(DEBUG);
     //^ DO NOT TOUCH ^//
 
     //######################################################//
@@ -32,11 +40,19 @@ int main() {
     // HeightMeasurement tests
     ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"));
 
-	// Ringbuffer tests
-	ts.REG_TESTCASE(new TestRecordBuffer(3, "Test the functionality of the ringbuffer."));
+    // LightSystem tests
+    ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
 
-	// EmbeddedRecorder
-	ts.REG_TESTCASE(new TestEmbeddedRecorder(4, "Test the functionality of the EmbeddedRecorder."));
+    //TEST FOR: Serial
+    ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
+    ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
+    ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
+
+    //TIMER TESTS
+    ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
+
+    //DistanceTracking test
+    ts.REG_TESTCASE(new DistanceTrackingTest(7, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
