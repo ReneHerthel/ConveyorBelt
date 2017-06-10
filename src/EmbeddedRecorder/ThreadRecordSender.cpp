@@ -44,11 +44,10 @@ void ThreadRecordSender::sendPulseMessagesToChid()
 
     record_t firstRecord;
 
-    ret = m_buffer->readFromIndex(&firstRecord, index);
+    ret = m_buffer->readFromIndex(&firstRecord, 0);
 
     while (ret >= 0) {
         record_t record;
-        index++;
         ret = m_buffer->readFromIndex(&record, index);
 
         if (ret >= 0) {
@@ -57,6 +56,8 @@ void ThreadRecordSender::sendPulseMessagesToChid()
             std::chrono::duration<unsigned int, std::milli> timeSpan = record.timestamp - firstRecord.timestamp;
             timer->setAlarm(timeSpan, record.value);
         }
+
+        index++;
     }
 
     // NOTE: The thread will be delete after the while loop.
