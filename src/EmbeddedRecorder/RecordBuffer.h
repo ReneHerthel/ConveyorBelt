@@ -97,8 +97,6 @@ namespace rec {
          * @brief The buffer which contains all data.
          */
         record_t m_buffer[BUFFER_LENGTH];
-
-        // TODO: A reference to the PuckManager.
     };
 
 } /* namespace rec */

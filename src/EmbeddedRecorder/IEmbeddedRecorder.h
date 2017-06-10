@@ -23,20 +23,24 @@ namespace rec {
 
     class IEmbeddedRecorder {
     public:
-    	/*
-    	 * @brief
-    	 */
-    	virtual void newBuffer() = 0;
+    	  /*
+    	   * @brief Discard the old buffer and create a new one.
+    	   */
+    	  virtual void newBuffer() = 0;
 
-    	/*
-    	 * @brief Write the pure values into the buffer.
-    	 */
-    	virtual int writeValuesIntoBuffer(const int code, const int value) = 0;
+    	  /*
+    	   * @brief Write the code and value directly into the buffer.
+         *
+         * @return The return codes of the RecordBuffer.
+    	   */
+    	  virtual int writeValuesIntoBuffer(const int code, const int value) = 0;
 
-    	/*
-    	 * @brief Writes a pulse message into a buffer.
-    	 */
-    	virtual int writePulseIntoBuffer(const struct _pulse pulse) = 0;
+    	  /*
+    	   * @brief Extracts the code and value from a pulse message.
+         *
+         * @return The return codes of the RecordBuffer.
+    	   */
+    	  virtual int writePulseIntoBuffer(const struct _pulse pulse) = 0;
 
         /*
          * @brief Plays the recorded data.
@@ -48,17 +52,17 @@ namespace rec {
         virtual void playRecordedData() = 0;
 
         /*
-         * @brief Read the current buffer and save it as bytestream into a file.
+         * @brief Export the current buffer into a .bin file.
          */
         virtual void saveRecordedData() = 0;
 
         /*
-         * @brief Loads a bytestream from a file and write it to the buffer.
+         * @brief Import a new buffer from a .bin file.
          */
         virtual void loadRecordedData() = 0;
 
         /*
-         * @brief Write the current buffer to the console.
+         * @brief Write the current buffer into a .txt file.
          */
         virtual void showRecordedData() = 0;
     };

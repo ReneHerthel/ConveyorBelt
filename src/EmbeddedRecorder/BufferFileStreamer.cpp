@@ -27,7 +27,6 @@ void BufferFileStreamer::exportBufferBinary(RecordBuffer * buffer)
     file.open("/buffer.bin", ios::out | ios::binary | ios::trunc);
     // Just write the whole object to the file
     file.write((char*)buffer, sizeof(RecordBuffer));
-    // TODO: Write the puck manager to file.
     file.close();
 }
 
@@ -37,22 +36,19 @@ void BufferFileStreamer::importBufferBinary(RecordBuffer * buffer)
     // Open the file for reading and binary operation.
     fin.open("/buffer.bin", ios::in | ios::binary);
     fin.read((char*)buffer, sizeof(RecordBuffer));
-    // TODO: Read the puck manager from file.
     fin.close();
 }
 
 void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
 {
     ofstream file ("/records.txt");
-
     record_t record;
     int index = 0;
 
     do {
         if (file.is_open()) {
-
             file << "Time[" << (int)record.timestamp.tv_sec << "::" << (int)record.timestamp.tv_nsec << "] code[" << (int)record.code << "] value[" << (int)record.value << "].\n";
-        	index++;
+        	  index++;
         }
     } while (buffer->readFromIndex(&record, index) >= 0);
 
