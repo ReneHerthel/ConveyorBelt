@@ -13,7 +13,7 @@
 
 #include <new>
 
-PuckContext::PuckContext(uint16_t puckID) {
+PuckContext::PuckContext() {
 	LOG_SCOPE;
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
@@ -25,7 +25,6 @@ PuckContext::PuckContext(uint16_t puckID) {
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	//startTimers();
 #endif
-	setPuckID(puckID);
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {

@@ -18,7 +18,7 @@
 
 class PuckContext {
 public:
-	PuckContext(uint16_t puckID);
+	PuckContext();
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
