@@ -16,10 +16,8 @@ PuckManager::~PuckManager() {
 }
 
 void PuckManager::addPuck(PuckContext *puck) {
-	// TODO: Add setPuckID()
-	//(*puck).setPuckID(nextPuckID);
+	puck->setPuckID(nextPuckID++);
 	puckList.push_back(puck);
-	nextPuckID++;
 }
 
 PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
