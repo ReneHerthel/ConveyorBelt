@@ -34,6 +34,10 @@ public:
 		statePtr->puckID = puckID;
 	}
 
+	PuckSignal::PuckSpeed getCurrentSpeed() {
+		return statePtr->returnValue.puckSpeed;
+	}
+
 
 	/*******************************************
 	 * SuperState
