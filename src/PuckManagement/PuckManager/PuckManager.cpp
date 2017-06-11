@@ -29,12 +29,61 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.puck = nullptr;
 
 	// TODO: Pass timer signals to puck with puckid
-	//if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
-	//	do {
-	//
-	//	} while ()
-	//
-	//}
+	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
+		std::list<PuckContext*>::iterator it = puckList.begin();
+		do {
+			uint16_t currentPuckID = (*it)->getPuckID();
+			if(currentPuckID == signal.timerSignal.puckID) {
+				PuckSignal::Return returnVal = (*it)->process(signal);
+
+				switch(returnVal.puckReturn) {
+					case PuckSignal::PuckReturn::ACCEPT:
+
+						break;
+					case PuckSignal::PuckReturn::DELETE:
+
+						delete *it;					// delete the puck from memory
+						it = puckList.erase(it);	// delete the puck from list
+						break;
+					case PuckSignal::PuckReturn::SEND:
+
+						prioReturnVal.puck = (*it);
+						prioReturnVal.actorFlag = true;
+						prioReturnVal.actorSignal = ActorSignal::SEND_PUCK;
+						break;
+					case PuckSignal::PuckReturn::EVALUATE:
+
+						// todo: sort
+						break;
+					case PuckSignal::PuckReturn::HEIGHT:
+
+						prioReturnVal.actorFlag = true;
+						prioReturnVal.actorSignal = ActorSignal::START_MEASUREMENT;
+						break;
+					case PuckSignal::PuckReturn::SLIDE_FULL:
+
+						prioReturnVal.slideFullFlag = true;
+						break;
+					//
+					case PuckSignal::PuckReturn::WARNING:
+
+						break;
+					case PuckSignal::PuckReturn::DENY:
+						break;
+					case PuckSignal::PuckReturn::ERROR:
+						prioReturnVal.errorFlag = true;
+						prioReturnVal.errorSignal = ErrorSignal::PUCK_LOST;
+						break;
+					default:
+						prioReturnVal.errorFlag = true;
+						prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+						return prioReturnVal;
+				}
+			}
+		} while (it != puckList.end());
+
+		return prioReturnVal;
+	}
 
 
 	int32_t acceptCounter = 0; // count all accepted signals
