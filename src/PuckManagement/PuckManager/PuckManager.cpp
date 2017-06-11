@@ -28,6 +28,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.slideFullFlag = false;
 	prioReturnVal.puck = nullptr;
 
+	// Pass the timer signal to the given puckID
 	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
 		std::list<PuckContext*>::iterator it = puckList.begin();
 		do {
@@ -35,46 +36,16 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.puckSpeed = (*it)->getCurrentSpeed();
 			}
 
+			// check for puckID
 			uint16_t currentPuckID = (*it)->getPuckID();
 			if(currentPuckID == signal.timerSignal.puckID) {
+				// pass the timer signal
 				PuckSignal::Return returnVal = (*it)->process(signal);
 
-				switch(returnVal.puckReturn) {
-					case PuckSignal::PuckReturn::ACCEPT:
-						break;
-					case PuckSignal::PuckReturn::DELETE:
-						delete *it;					// delete the puck from memory
-						it = puckList.erase(it);	// delete the puck from list
-						break;
-					case PuckSignal::PuckReturn::SEND:
-						prioReturnVal.puck = (*it);
-						prioReturnVal.actorFlag = true;
-						prioReturnVal.actorSignal = ActorSignal::SEND_PUCK;
-						break;
-					case PuckSignal::PuckReturn::EVALUATE:
-						// todo: sort
-						break;
-					case PuckSignal::PuckReturn::HEIGHT:
-						prioReturnVal.actorFlag = true;
-						prioReturnVal.actorSignal = ActorSignal::START_MEASUREMENT;
-						break;
-					case PuckSignal::PuckReturn::SLIDE_FULL:
-						prioReturnVal.slideFullFlag = true;
-						break;
-					//
-					case PuckSignal::PuckReturn::WARNING:
-						prioReturnVal.errorFlag = true;
-						prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
-						break;
-					case PuckSignal::PuckReturn::DENY:
-						prioReturnVal.errorFlag = true;
-						prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
-						break;
-					case PuckSignal::PuckReturn::ERROR:
-						prioReturnVal.errorFlag = true;
-						prioReturnVal.errorSignal = ErrorSignal::PUCK_LOST;
-						break;
-					default:
+				// check return value
+				if(	returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT &&
+					returnVal.puckReturn != PuckSignal::PuckReturn::ERROR) {
+						// puck should be triggered on accept or error -> unexpected otherwise
 						prioReturnVal.errorFlag = true;
 						prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
 				}
