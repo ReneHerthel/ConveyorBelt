@@ -7,13 +7,10 @@
 
 #include "PuckManager.h"
 
-PuckManager::PuckManager() {
-	// TODO Auto-generated constructor stub
-}
-
-PuckManager::~PuckManager() {
-	// TODO Auto-generated destructor stub
-}
+PuckManager::PuckManager()
+	: puckList()
+	, nextPuckID(0)
+{}
 
 void PuckManager::addPuck(PuckContext *puck) {
 	puck->setPuckID(nextPuckID++);
@@ -27,6 +24,21 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.errorFlag = false;
 	prioReturnVal.slideFullFlag = false;
 	prioReturnVal.puck = nullptr;
+
+	int32_t acceptCounter = 0; // count all accepted signals
+	int32_t warningCounter = 0; // count all warnings
+
+#if !machine // machine0
+	// check for first interrupt signal - puck must be created
+	if(	signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL &&
+		signal.interruptSignal == interrupts::interruptSignals::INLET_IN) {
+
+		addPuck(new PuckContext());
+		acceptCounter++; // accept the signal manually
+	}
+
+	// signal can be passed for speed prio -> every puck should return deny
+#endif
 
 	// Pass the timer signal to the given puckID
 	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
@@ -55,10 +67,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		return prioReturnVal;
 	}
 
-
-	int32_t acceptCounter = 0; // count all accepted signals
-	int32_t warningCounter = 0; // count all warnings
-
+	// check the signal for every puck in the list
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	do {
 		PuckSignal::Return returnVal = (*it)->process(signal);
