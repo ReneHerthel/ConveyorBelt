@@ -25,7 +25,7 @@ PuckContext::PuckContext(uint16_t puckID) {
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	//startTimers();
 #endif
-	statePtr->puckID = puckID;
+	setPuckID(puckID);
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {

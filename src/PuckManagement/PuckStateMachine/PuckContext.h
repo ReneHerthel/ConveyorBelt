@@ -30,7 +30,9 @@ public:
 		return statePtr->puckID;
 	}
 
-
+	void setPuckID(uint16_t puckID) {
+		statePtr->puckID = puckID;
+	}
 
 
 	/*******************************************
