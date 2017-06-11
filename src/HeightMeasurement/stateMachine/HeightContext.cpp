@@ -25,6 +25,8 @@
 
 #include <iostream>
 
+using namespace HeightMeasurement;
+
 HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
@@ -127,14 +129,16 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
 
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value);
+	signal.highestHeight = service->getHighestHeight();
 
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " OTHER: " << (int)signal.OTHER "\n";
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value);
+
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " highestHeight: " << (int)signal.highestHeight "\n";
     LOG_DEBUG << "DUMMY MESSAGE\n";
 
     if (err < 0) {
         // TODO Error handling.
-    	  //LOG_SET_LEVEL(DEBUG);
+    	//LOG_SET_LEVEL(DEBUG);
         LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }

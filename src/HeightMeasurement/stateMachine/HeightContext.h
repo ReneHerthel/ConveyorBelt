@@ -36,6 +36,8 @@
 
 class HeightMeasurementService;
 
+using namespace HeightMeasurement;
+
 class HeightContext {
 private:
     /*
