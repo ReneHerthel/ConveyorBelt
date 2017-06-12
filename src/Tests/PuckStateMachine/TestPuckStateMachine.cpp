@@ -24,7 +24,8 @@ AFTER_TC(TestPuckStateMachine) {
 
 BEFORE(TestPuckStateMachine) {
 	uint16_t puckID = 1;
-	context = new PuckContext(puckID);
+	context = new PuckContext();
+	context->setPuckID(puckID);
 	return 1;
 }
 
@@ -65,7 +66,8 @@ TEST_IMPL(TestPuckStateMachine, test2) {
 
 		uint16_t ID = context->getPuckID();
 		delete context;
-		context = new PuckContext(ID);
+		context = new PuckContext();
+		context->setPuckID(ID);
 	}
 	return TEST_PASSED;
 }
@@ -89,7 +91,8 @@ TEST_IMPL(TestPuckStateMachine, test3) {
 
 		uint16_t ID = context->getPuckID();
 		delete context;
-		context = new PuckContext(ID);
+		context = new PuckContext();
+		context->setPuckID(ID);
 	}
 	return TEST_PASSED;
 }
