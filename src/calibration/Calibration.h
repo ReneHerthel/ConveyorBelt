@@ -9,6 +9,7 @@
 #define CALIBRATION_H_
 
 #include <chrono>;
+#include "DistanceEnum.h"
 
 #define PORTB_ADDR 0x301
 
@@ -27,18 +28,37 @@ public:
 		LB_EXIT		   =0b10000000
 	};
 
+	/**
+	 * Calibrate the light barrier distances
+	 */
 	void calibrate(void);
 
 	bool pollLB(sensor_t sensor);
 
+	/**
+	 * Get the Instance of the Calibration Sigleton
+	 */
+	Calibration& getInstance();
+
+	/**
+	 * Get the Calibration data for a distance between two Lightbarriers
+	 * @param distance The distance of which the calibration is needed
+	 * @param speed The speed the belt is running with
+	 */
+	uint32_t getCalibration(DistanceSpeed::lb_distance distance, DistanceSpeed::speed_t speed);
+
 private:
+	Calibration();
+	~Calibration();
+
 	milliseconds overall[2];
 	milliseconds heightMeasure[2];
 	milliseconds sortingSwitch[2];
 	milliseconds outlet[2];
+	milliseconds inlet[2];
 
-	uint32_t sowToFastFactor;
-	uint32_t fastToSlowDivisor;
+	double slowToFastFactor;
+	double fastToSlowDivisor;
 };
 
 #endif /* CALIBRATION_H_ */

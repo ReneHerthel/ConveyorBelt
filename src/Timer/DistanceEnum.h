@@ -19,8 +19,10 @@ namespace DistanceSpeed{
 	 * Distanced between the exit of one lightbarrier and the entry of another
 	 * |				   |
 	 * |<----Distance----->|
-	 * |				   |
+	 * |o				  o|
 	 * LB				   LB
+	 * LB = Lighbarrier
+	 * o = Puck
 	 */
 	enum lb_distance{
 		INLET_TO_HEIGHT,

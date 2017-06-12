@@ -76,6 +76,30 @@ void Calibration::calibrate(void){
 }
 
 
+Calibration& getInstance(){
+	static Calibratrion instance;
+	return instance;
+}
+
+using namespace DistanceSpeed;
+
+uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, DistanceSpeed::speed_t speed){
+	int slowOrFast = 0;
+	switch(speed){
+		case FAST: slowOrFast = 0; break;
+		case SLOW: slowOrFast = 1; break;
+		case STOP: return 0;
+	}
+
+	switch(distance){
+		case INLET_TO_HEIGHT:	return heightMeasure[slowOrFast].count();
+		case HEIGHT_TO_SWITCH:  return sortingSwitch[slowOrFast].count();
+		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
+		case OUT_TO_IN:			return
+	}
+
+}
+
 bool Calibration::pollLB(sensor_t sensor){
 	return((in8(PORTB_ADDR) & sensor) == 0);
 }
