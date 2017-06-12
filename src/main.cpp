@@ -59,7 +59,7 @@ int main() {
     ts.REG_TESTCASE(new CalibrationTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
 
     // EmbeddedRecorder
-    ts.REG_TESTCASE(new TestEmbeddedRecorder(9, "WriteToBuffer/Save/Load/Play/Show EmbeddedRecorder"));
+    ts.REG_TESTCASE(new TestEmbeddedRecorder(10, "WriteToBuffer/Save/Load/Play/Show EmbeddedRecorder"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

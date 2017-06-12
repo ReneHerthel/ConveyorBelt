@@ -22,6 +22,8 @@
 #include "IPulseMessageReceiver.h"
 #include "PulseMessageReceiverService.h"
 
+#include "TestEmbeddedRecorderStub.h"
+#include "SerialProtocoll.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -57,30 +59,43 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
 
     int chid = receiver->newChannel();
 
+    std::cout << "test chid " << chid << std::endl;
+
     rec::IEmbeddedRecorder * recorder = new rec::EmbeddedRecorder(chid);
 
-    struct _pulse pulse;
+    rcv::msg_t message;
 
-    int size = 32; // Make sure the buffer size is equals in RecordBuffer.h.
+    int size = 64; // Make sure the buffer size is equals in RecordBuffer.h.
+
     int ret_code;
 
+    std::cout << "TEST - write messages into buffer" << std::endl;
+
     for (int i = 0; i < size; i++) {
-    	pulse.value.sival_int = i;
-    	ret_code = recorder->writePulseIntoBuffer(pulse);
+    	message.value = (int)new TestEmbeddedRecorderStub(i);
+    	message.code = TRANSM_IN_CODE;
+    	ret_code = recorder->writeMessageIntoBuffer(message);
     	std::this_thread::sleep_for(std::chrono::milliseconds(2));
     }
 
+    std::cout << "[TestEmbeddedRecorder] save" << std::endl;
     recorder->saveRecordedData();
+    std::cout << "[TestEmbeddedRecorder] load" << std::endl;
     recorder->loadRecordedData();
+    std::cout << "[TestEmbeddedRecorder] play" << std::endl;
     recorder->playRecordedData();
 
     rcv::msg_t msg;
     int amountOfReceived = 0;
 
     auto start = std::chrono::system_clock::now();
+
+    std::cout << "TEST - receive messages" << std::endl;
+
     for (int i = 0; i < size-1; i++) {
         msg = receiver->receivePulseMessage();
         std::cout << "[TestEmbeddedRecorder] received message at " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count() << " milliseconds" << std::endl;
+        (*(TestEmbeddedRecorderStub*)msg.value).print();
         amountOfReceived++;
     }
 
@@ -89,9 +104,9 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     recorder->newBuffer();
 
     for (int i = 0; i < size; i++) {
-    	pulse.value.sival_int = i;
-    	pulse.code = i;
-    	ret_code2 = recorder->writePulseIntoBuffer(pulse);
+    	message.value = i;
+    	message.code = i;
+    	ret_code2 = recorder->writeMessageIntoBuffer(message);
     }
 
     recorder->showRecordedData();

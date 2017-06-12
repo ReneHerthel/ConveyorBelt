@@ -17,6 +17,8 @@
 #ifndef SRC_EMBEDDEDRECORDER_RECORD_H_
 #define SRC_EMBEDDEDRECORDER_RECORD_H_
 
+#include "TestEmbeddedRecorderStub.h"
+
 #include <stdint.h>
 #include <chrono>
 
@@ -29,6 +31,7 @@ namespace rec {
         uint8_t code;       /*< The code of a pulse message.*/
         std::chrono::time_point<std::chrono::system_clock> timestamp;   /*< The timestamp of this record.*/
         uint32_t value;     /*< The value of the pulse message.*/
+        TestEmbeddedRecorderStub stub;
     } record_t;
 
 } /* namespace rec */

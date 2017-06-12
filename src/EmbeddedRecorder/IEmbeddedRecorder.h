@@ -17,30 +17,25 @@
 #ifndef SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_
 #define SRC_EMBEDDEDRECORDER_IEMBEDDEDRECORDER_H_
 
+#include "IPulseMessageReceiver.h"
+
 #include <sys/neutrino.h>
 
 namespace rec {
 
     class IEmbeddedRecorder {
     public:
-    	  /*
-    	   * @brief Discard the old buffer and create a new one.
-    	   */
-    	  virtual void newBuffer() = 0;
+    	/*
+    	 * @brief Discard the old buffer and create a new one.
+    	 */
+    	virtual void newBuffer() = 0;
 
-    	  /*
-    	   * @brief Write the code and value directly into the buffer.
+    	/*
+    	 * @brief Extracts the code and value from a pulse message.
          *
          * @return The return codes of the RecordBuffer.
-    	   */
-    	  virtual int writeValuesIntoBuffer(const int code, const int value) = 0;
-
-    	  /*
-    	   * @brief Extracts the code and value from a pulse message.
-         *
-         * @return The return codes of the RecordBuffer.
-    	   */
-    	  virtual int writePulseIntoBuffer(const struct _pulse pulse) = 0;
+    	 */
+    	virtual int writeMessageIntoBuffer(const rcv::msg_t message) = 0;
 
         /*
          * @brief Plays the recorded data.

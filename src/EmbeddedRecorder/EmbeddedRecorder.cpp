@@ -15,6 +15,9 @@
  */
 
 #include "EmbeddedRecorder.h"
+#include "TestEmbeddedRecorderStub.h"
+#include "SerialProtocoll.h"
+#include "IPulseMessageReceiver.h"
 
 #include <chrono>
 #include <iostream>
@@ -40,18 +43,20 @@ void EmbeddedRecorder::newBuffer()
     m_recordBuffer = new RecordBuffer();
 }
 
-int EmbeddedRecorder::writePulseIntoBuffer(const struct _pulse pulse)
+int EmbeddedRecorder::writeMessageIntoBuffer(const rcv::msg_t message)
 {
-    return writeValuesIntoBuffer(pulse.code, pulse.value.sival_int);
-}
+	record_t record;
 
-int EmbeddedRecorder::writeValuesIntoBuffer(const int code, const int value)
-{
-    record_t record;
+	record.timestamp = std::chrono::system_clock::now();
+	record.code = message.code;
 
-    record.code = code;
-    record.value = value;
-    record.timestamp = std::chrono::system_clock::now();
+    if (record.code == TRANSM_IN_CODE) {
+    	TestEmbeddedRecorderStub stub = *((TestEmbeddedRecorderStub*)message.value);
+        record.stub = stub;
+        //record.stub.print();
+    }
+
+    record.value = message.value;
 
     return m_recordBuffer->write(record);
 }

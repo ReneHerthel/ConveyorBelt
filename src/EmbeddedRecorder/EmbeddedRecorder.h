@@ -52,14 +52,9 @@ namespace rec {
         void newBuffer();
 
         /*
-         * @brief Write values into the buffer.
-         */
-        int writeValuesIntoBuffer(const int code, const int value);
-
-        /*
          * @brief Write a single record into the buffer.
          */
-        int writePulseIntoBuffer(const struct _pulse pulse);
+        int writeMessageIntoBuffer(const rcv::msg_t message);
 
         void playRecordedData();
         void saveRecordedData();
