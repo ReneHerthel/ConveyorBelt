@@ -121,5 +121,11 @@ bool Calibration::pollLB(sensor_t sensor){
 }
 
 
+void Calibration::print(){
+	for(int i = 0; i < 2; i++){
+		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << "Overall" << overall[i].count() << "\n";
+	}
+}
+
 Calibration::Calibration(){}
 Calibration::~Calibration(){}

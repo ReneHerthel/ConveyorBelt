@@ -47,6 +47,8 @@ public:
 	 */
 	uint32_t getCalibration(DistanceSpeed::lb_distance distance, DistanceSpeed::speed_t speed);
 
+	void print(void);
+
 private:
 	Calibration();
 	~Calibration();
