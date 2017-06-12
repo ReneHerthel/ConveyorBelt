@@ -18,11 +18,11 @@ PuckContext::PuckContext() {
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
-	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 #else
 	LOG_DEBUG << "Using machine1\n";
 	statePtr = &transferState;
-	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	//startTimers();
 #endif
 }

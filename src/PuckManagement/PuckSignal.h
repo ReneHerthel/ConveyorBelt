@@ -10,6 +10,7 @@
 
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
+#include "Signals.h"
 
 #include <stdint.h>
 
