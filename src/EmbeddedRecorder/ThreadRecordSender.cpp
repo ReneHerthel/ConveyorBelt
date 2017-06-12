@@ -52,8 +52,7 @@ void ThreadRecordSender::sendPulseMessagesToChid()
 
         if (ret >= 0) {
             timer = new TimerService(m_chid, record.code);
-            std::chrono::duration<unsigned int, std::milli> timeSpan = record.timestamp - firstRecord.timestamp;
-            timer->setAlarm(timeSpan, record.value);
+            timer->setAlarm(duration_cast<std::chrono::milliseconds>(firstRecord.timestamp - record.timestamp).count(), record.value);
         }
 
         index++;

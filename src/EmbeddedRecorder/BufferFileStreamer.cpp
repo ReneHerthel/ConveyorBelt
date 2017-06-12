@@ -47,8 +47,8 @@ void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
 
     do {
         if (file.is_open()) {
-            file << "Time[" << (int)record.timestamp.tv_sec << "::" << (int)record.timestamp.tv_nsec << "] code[" << (int)record.code << "] value[" << (int)record.value << "].\n";
-        	  index++;
+            //file << "Time[" << (int)record.timestamp.tv_sec << "::" << (int)record.timestamp.tv_nsec << "] code[" << (int)record.code << "] value[" << (int)record.value << "].\n";
+        	index++;
         }
     } while (buffer->readFromIndex(&record, index) >= 0);
 

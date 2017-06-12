@@ -27,7 +27,7 @@ namespace rec {
      */
     typedef struct {
         uint8_t code;       /*< The code of a pulse message.*/
-        std::chrono::high_resolution_clock::timestamp;   /*< The timestamp of this record.*/
+        std::chrono::time_point<std::chrono::system_clock> timestamp;   /*< The timestamp of this record.*/
         uint32_t value;     /*< The value of the pulse message.*/
     } record_t;
 
