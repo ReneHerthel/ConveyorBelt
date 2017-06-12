@@ -80,6 +80,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 					prioReturnVal.errorSignal = ErrorSignal::PUCK_LOST; //Late Timer expiered
 				}
 			}
+
+			it++;
 		} while (it != puckList.end());
 
 		return prioReturnVal;
