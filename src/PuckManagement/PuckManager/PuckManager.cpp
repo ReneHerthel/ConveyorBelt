@@ -7,19 +7,25 @@
 
 #include "PuckManager.h"
 
+#include "logger.h"
+#include "logscope.h"
+
 PuckManager::PuckManager()
 	: puckList()
 	, nextPuckID(0)
 {}
 
 void PuckManager::addPuck(PuckContext *puck) {
+	LOG_SCOPE;
 	puck->setPuckID(nextPuckID++);
 	puckList.push_back(puck);
 }
 
 PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
+	LOG_SCOPE;
+
 	ManagerReturn prioReturnVal; // the prioritized return value
-	prioReturnVal.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	prioReturnVal.speedSignal = PuckSignal::PuckSpeed::FAST;
 	prioReturnVal.actorFlag = false;
 	prioReturnVal.errorFlag = false;
 	prioReturnVal.slideFullFlag = false;
@@ -34,7 +40,16 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		signal.interruptSignal == interrupts::interruptSignals::INLET_IN) {
 
 		addPuck(new PuckContext());
-		acceptCounter++; // accept the signal manually
+
+		std::list<PuckContext*>::iterator it = puckList.begin();
+		do {
+			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
+				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
+			}
+			it++;
+		} while(it != puckList.end());
+
+		return prioReturnVal;
 	}
 
 	// signal can be passed for speed prio -> every puck should return deny
@@ -44,8 +59,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
 		std::list<PuckContext*>::iterator it = puckList.begin();
 		do {
-			if((*it)->getCurrentSpeed() > prioReturnVal.puckSpeed) { // Check for speed prio
-				prioReturnVal.puckSpeed = (*it)->getCurrentSpeed();
+			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
+				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
 			}
 
 			// check for puckID
@@ -75,8 +90,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	do {
 		PuckSignal::Return returnVal = (*it)->process(signal);
 
-		if(returnVal.puckSpeed > prioReturnVal.puckSpeed) { // Check for speed prio
-			prioReturnVal.puckSpeed = returnVal.puckSpeed;
+		if(returnVal.puckSpeed > prioReturnVal.speedSignal) { // Check for speed prio
+			prioReturnVal.speedSignal = returnVal.puckSpeed;
 		}
 
 		switch(returnVal.puckReturn) {
@@ -140,7 +155,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			return prioReturnVal;
 		}
 
-		if(acceptCount == 0) {
+		if(acceptCounter == 0) {
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
 			return prioReturnVal;

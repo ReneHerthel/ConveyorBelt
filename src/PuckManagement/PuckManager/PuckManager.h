@@ -11,6 +11,8 @@
 #include "PuckSignal.h"
 #include "PuckContext.h"
 
+#include <list>
+
 class PuckManager {
 public:
 	enum ActorSignal {
