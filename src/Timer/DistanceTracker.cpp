@@ -59,7 +59,7 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 	}
 }
 
-int32_t DistanceTracker::startAlarm(int32_t value, uint32_t distanceMm){
+int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance distance){
 	lastValue_ = value;
 	timer_.stopAlarm();
 	switch(currSpeed_){
