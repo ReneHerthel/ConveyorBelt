@@ -57,9 +57,12 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				// check return value
 				if(	returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT &&
 					returnVal.puckReturn != PuckSignal::PuckReturn::ERROR) {
-						// puck should be triggered on accept or error -> unexpected otherwise
-						prioReturnVal.errorFlag = true;
-						prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+					// puck should be triggered on accept or error -> unexpected otherwise
+					prioReturnVal.errorFlag = true;
+					prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+				} else if(returnVal.puckReturn == PuckSignal::PuckReturn::ERROR) {
+					prioReturnVal.errorFlag = true;
+					prioReturnVal.errorSignal = ErrorSignal::PUCK_LOST; //Late Timer expiered
 				}
 			}
 		} while (it != puckList.end());
@@ -103,6 +106,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			case PuckSignal::PuckReturn::SLIDE_FULL:
 				acceptCounter++;
 				prioReturnVal.slideFullFlag = true;
+				delete *it;					// delete the puck from memory
+				it = puckList.erase(it);	// delete the puck from list
 				break;
 			//
 			case PuckSignal::PuckReturn::WARNING:
@@ -120,7 +125,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				return prioReturnVal;
 		}
 
-		if(returnVal.puckReturn != PuckSignal::PuckReturn::DELETE) {
+		if(		returnVal.puckReturn != PuckSignal::PuckReturn::DELETE ||
+				returnVal.puckReturn != PuckSignal::PuckReturn::SLIDE_FULL) {
 			++it;
 		}
 	} while ( it != puckList.end());
