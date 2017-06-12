@@ -13,6 +13,7 @@
 #include "Logger/Logger.h"
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
+#include "CalibrationTest.h"
 
 using namespace std;
 
@@ -52,7 +53,10 @@ int main() {
     ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
 
     //DistanceTracking test
-    ts.REG_TESTCASE(new DistanceTrackingTest(7, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
+    ts.REG_TESTCASE(new DistanceTrackingTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
+
+    //Calibration Test
+    ts.REG_TESTCASE(new CalibrationTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
 
     // EmbeddedRecorder
     ts.REG_TESTCASE(new TestEmbeddedRecorder(9, "WriteToBuffer/Save/Load/Play/Show EmbeddedRecorder"));
