@@ -5,7 +5,7 @@
     <id>UMLSpecialState</id>
     <coordinates>
       <x>308</x>
-      <y>112</y>
+      <y>0</y>
       <w>14</w>
       <h>14</h>
     </coordinates>
@@ -16,7 +16,7 @@
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>210</y>
+      <y>98</y>
       <w>126</w>
       <h>105</h>
     </coordinates>
@@ -30,7 +30,7 @@ lt=-&gt;
     <id>UMLState</id>
     <coordinates>
       <x>217</x>
-      <y>406</y>
+      <y>294</y>
       <w>182</w>
       <h>42</h>
     </coordinates>
@@ -41,7 +41,7 @@ lt=-&gt;
     <id>UMLState</id>
     <coordinates>
       <x>217</x>
-      <y>518</y>
+      <y>406</y>
       <w>182</w>
       <h>42</h>
     </coordinates>
@@ -52,7 +52,7 @@ lt=-&gt;
     <id>UMLState</id>
     <coordinates>
       <x>217</x>
-      <y>301</y>
+      <y>189</y>
       <w>182</w>
       <h>42</h>
     </coordinates>
@@ -63,7 +63,7 @@ lt=-&gt;
     <id>Relation</id>
     <coordinates>
       <x>63</x>
-      <y>203</y>
+      <y>91</y>
       <w>196</w>
       <h>119</h>
     </coordinates>
@@ -79,10 +79,10 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>427</y>
-      <w>343</w>
-      <h>126</h>
+      <x>196</x>
+      <y>441</y>
+      <w>112</w>
+      <h>161</h>
     </coordinates>
     <panel_attributes>( Kennung 2 ||
 Kennung 4 ||
@@ -90,13 +90,13 @@ Keine Bohrung )
 [isOnMachine2]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;160.0;360.0;160.0;360.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>110.0;10.0;110.0;100.0;10.0;100.0;10.0;210.0;140.0;210.0;140.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>294</x>
-      <y>336</y>
+      <y>224</y>
       <w>126</w>
       <h>84</h>
     </coordinates>
@@ -109,7 +109,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>294</x>
-      <y>441</y>
+      <y>329</y>
       <w>98</w>
       <h>91</h>
     </coordinates>
@@ -122,7 +122,7 @@ lt=-&gt;</panel_attributes>
     <id>UMLState</id>
     <coordinates>
       <x>217</x>
-      <y>175</y>
+      <y>63</y>
       <w>182</w>
       <h>42</h>
     </coordinates>
@@ -133,7 +133,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>112</y>
+      <y>0</y>
       <w>77</w>
       <h>77</h>
     </coordinates>
@@ -146,7 +146,7 @@ lt=-&gt;
     <id>Relation</id>
     <coordinates>
       <x>392</x>
-      <y>203</y>
+      <y>91</y>
       <w>238</w>
       <h>119</h>
     </coordinates>
@@ -162,7 +162,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>63</x>
-      <y>329</y>
+      <y>217</y>
       <w>196</w>
       <h>98</h>
     </coordinates>
@@ -179,9 +179,9 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>63</x>
-      <y>434</y>
-      <w>196</w>
-      <h>105</h>
+      <y>406</y>
+      <w>210</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>( Kennung 1 ||
 Kennung 5 ||
@@ -190,13 +190,13 @@ Flache Werkstücke )
 [rampe1IsEmpty &amp;&amp; isOnMachine1]
 /return(false)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>220.0;130.0;10.0;130.0;10.0;10.0;220.0;10.0</additional_attributes>
+    <additional_attributes>220.0;10.0;10.0;10.0;10.0;120.0;280.0;120.0;280.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>392</x>
-      <y>329</y>
+      <y>217</y>
       <w>238</w>
       <h>98</h>
     </coordinates>
@@ -211,10 +211,10 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>434</y>
-      <w>238</w>
-      <h>105</h>
+      <x>308</x>
+      <y>406</y>
+      <w>182</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>( Kennung 2 ||
 Kennung 4 ||
@@ -222,13 +222,13 @@ Keine Bohrung )
 [rampe2IsEmpty &amp;&amp; isOnMachine1]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;130.0;70.0;130.0;70.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>60.0;60.0;60.0;110.0;190.0;110.0;190.0;10.0;130.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>392</x>
-      <y>322</y>
+      <y>210</y>
       <w>343</w>
       <h>112</h>
     </coordinates>
@@ -244,7 +244,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>392</x>
-      <y>196</y>
+      <y>84</y>
       <w>343</w>
       <h>133</h>
     </coordinates>
