@@ -23,6 +23,8 @@
 #include "PulseMessageReceiverService.h"
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 SETUP(TestEmbeddedRecorder) {
     REG_TEST(test1, 1, "Test Play-, Save-, load-RecordedData");
@@ -59,12 +61,13 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
 
     struct _pulse pulse;
 
-    int size = 512; // Make sure the buffer size is equals in RecordBuffer.h.
+    int size = 32; // Make sure the buffer size is equals in RecordBuffer.h.
     int ret_code;
 
     for (int i = 0; i < size; i++) {
     	pulse.value.sival_int = i;
     	ret_code = recorder->writePulseIntoBuffer(pulse);
+    	std::this_thread::sleep_for(std::chrono::milliseconds(2));
     }
 
     recorder->saveRecordedData();
@@ -74,8 +77,10 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     rcv::msg_t msg;
     int amountOfReceived = 0;
 
-    for (int i = 0; i < size; i++) {
+    auto start = std::chrono::system_clock::now();
+    for (int i = 0; i < size-1; i++) {
         msg = receiver->receivePulseMessage();
+        std::cout << "[TestEmbeddedRecorder] received message at " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count() << " milliseconds" << std::endl;
         amountOfReceived++;
     }
 

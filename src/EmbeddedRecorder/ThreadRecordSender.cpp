@@ -20,6 +20,7 @@
 #include "TimerService.h"
 
 #include <chrono>
+//#include <iostream>
 
 namespace rec {
 
@@ -52,7 +53,9 @@ void ThreadRecordSender::sendPulseMessagesToChid()
 
         if (ret >= 0) {
             timer = new TimerService(m_chid, record.code);
-            timer->setAlarm(duration_cast<std::chrono::milliseconds>(firstRecord.timestamp - record.timestamp).count(), record.value);
+            auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(record.timestamp - firstRecord.timestamp).count();
+            //std::cout << "[ThreadRecordSender] milsec: " << milsec << std::endl;
+            timer->setAlarm(milsec, record.value);
         }
 
         index++;
