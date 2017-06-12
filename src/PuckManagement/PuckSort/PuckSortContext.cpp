@@ -1,6 +1,6 @@
 // =====================================================================================
 //
-//       Filename:  PuckSort.cpp
+//       Filename:  PuckSortContext.cpp
 //
 //    Description: 
 //
@@ -10,9 +10,9 @@
 //
 // =====================================================================================
 
-#include "PuckSort.h"
+#include "PuckSortContext.h"
 
-bool PuckSort::process(PuckType signal) {
+bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 }
