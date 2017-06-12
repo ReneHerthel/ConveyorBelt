@@ -97,6 +97,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			case PuckSignal::PuckReturn::EVALUATE:
 				acceptCounter++;
 				// todo: sort
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::OPEN_SWITCH;
 				break;
 			case PuckSignal::PuckReturn::HEIGHT:
 				acceptCounter++;

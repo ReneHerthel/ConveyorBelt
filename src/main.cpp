@@ -49,6 +49,7 @@ int main() {
 */
 #if !machine
     ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 0"));
+    ts.REG_TESTCASE(new TestPuckManager(1, "[PuckManager] BasicTests on Machine 0")))
 #else
     ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
