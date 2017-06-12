@@ -23,7 +23,7 @@ BEFORE(CalibrationTest){return 1;}
 AFTER(CalibrationTest){return 1;}
 
 TEST_IMPL(CalibrationTest, Calibrate){
-	Calibration cal;
+	Calibration& cal = Calibration::getInstance();
 	cal.calibrate();
 }
 

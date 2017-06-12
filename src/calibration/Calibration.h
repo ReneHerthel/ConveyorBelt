@@ -38,7 +38,7 @@ public:
 	/**
 	 * Get the Instance of the Calibration Sigleton
 	 */
-	Calibration& getInstance();
+	static Calibration& getInstance();
 
 	/**
 	 * Get the Calibration data for a distance between two Lightbarriers

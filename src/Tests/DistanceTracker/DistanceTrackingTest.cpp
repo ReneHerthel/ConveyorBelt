@@ -52,7 +52,7 @@ TEST_IMPL(DistanceTrackingTest, SimpleTest){
 	//INIT TR1
 	DistanceTracker tr1(chid, tr1Code);
 	auto startTr1 = std::chrono::system_clock::now();
-	tr1.startAlarm(tr1Value, distance);
+	//tr1.startAlarm(tr1Value, distance);
 
 	msg = pmr.receivePulseMessage();
 	auto endTr1 = std::chrono::system_clock::now();
@@ -70,7 +70,7 @@ TEST_IMPL(DistanceTrackingTest, SimpleTest){
 	//INIT TR2
 	DistanceTracker tr2(chid, tr2Code);
 	auto startTr2 = std::chrono::system_clock::now();
-	tr2.startAlarm(tr2Value, distance);
+	//tr2.startAlarm(tr2Value, distance);
 
 	msg = pmr.receivePulseMessage();
 	auto endTr2 = std::chrono::system_clock::now();
@@ -112,7 +112,7 @@ TEST_IMPL(DistanceTrackingTest, ChangeSpeed){
 	//INIT TR1
 	DistanceTracker tr1(chid, code);
 	auto start = std::chrono::system_clock::now();
-	tr1.startAlarm(value, distance);
+	//tr1.startAlarm(value, distance);
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
 	distO.updateSpeed(SLOW);
@@ -153,7 +153,7 @@ TEST_IMPL(DistanceTrackingTest, StopBelt){
 	//INIT TR1
 	DistanceTracker tr1(chid, code);
 	auto start = std::chrono::system_clock::now();
-	tr1.startAlarm(value, distance);
+	//tr1.startAlarm(value, distance);
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
 	distO.updateSpeed(STOP);
