@@ -22,6 +22,7 @@
 #include "PulseMessageSenderService.h"
 
 #include <thread>
+#include <chrono>
 
 namespace rec {
 
@@ -37,11 +38,6 @@ namespace rec {
          */
         ~ThreadRecordSender();
 
-        /*
-         * @brief
-         */
-        void sendPulseMessagesToChid();
-
     private:
         /*
          * @brief The buffer from where the pulse messages are.
@@ -54,14 +50,20 @@ namespace rec {
         std::thread m_client;
 
         /*
-         * @brief The pulse message sender.
-         */
-        PulseMessageSenderService * m_sender;
-
-        /*
          * @brief The channel ID to send.
          */
         int m_chid;
+
+        /*
+         * @brief Sends the whole buffer to the chid.
+         */
+        void sendWholeBuffer();
+
+        /*
+         * @brief Use the timer wrapper to wind up a clock and send messages,
+         *        When its expired.
+         */
+        void windUpClockAndSend(const record_t record, std::chrono::time_point<std::chrono::system_clock> start);
     };
 
 } /* namespace rec */

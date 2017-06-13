@@ -28,17 +28,26 @@ namespace rec {
          *
          * @param[record] The record written into the buffer.
          *
-         * @return 0 on success. NOTE: There are no error returns yet.
+         * @return 0 on success. return < 0 on Error.
          */
         virtual int write(record_t record) = 0;
 
         /*
          * @brief Reads from where the read index is.
+         *
+         * @param[record] A reference to a record to write into it.
+         *
+         * @return 0 on success. return < 0 on Error.
          */
         virtual int read(record_t * record) = 0;
 
         /*
          * @brief Read from a specific field of a specific index.
+         *
+         * @param[record] A reference to  a record to write into it.
+         * @param[index] The index of the field to read from.
+         *
+         * @return 0 on success. return < 0 on Error.
          */
         virtual int readFromIndex(record_t * record, const int index) = 0;
     };

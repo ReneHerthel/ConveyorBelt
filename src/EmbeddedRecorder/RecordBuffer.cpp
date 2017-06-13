@@ -17,7 +17,7 @@
 #include "RecordBuffer.h"
 
 #include <mutex>
-#include <iostream>
+//#include <iostream>
 
 namespace rec {
 
@@ -130,9 +130,9 @@ int RecordBuffer::readFromIndex(record_t * record, const int index)
         return OUT_OF_BOUNDS;
     }
 
-	*record = m_buffer[index];
+    *record = m_buffer[index];
 
-	return BUFFER_SUCCESS;
+    return BUFFER_SUCCESS;
 }
 
 } /* namespace rec */

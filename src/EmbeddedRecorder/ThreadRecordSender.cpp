@@ -23,17 +23,14 @@
 #include "SerialProtocoll.h"
 
 #include <chrono>
-#include <iostream>
 
 namespace rec {
 
 ThreadRecordSender::ThreadRecordSender(RecordBuffer * buffer, const int chid)
     :    m_buffer(buffer)
-    //,    m_sender(new PulseMessageSenderService(chid))
     ,    m_chid(chid)
 {
-    m_client = std::thread(&ThreadRecordSender::sendPulseMessagesToChid, this);
-	std::cout << "chid of sender: " << m_chid << std::endl;
+    m_client = std::thread(&ThreadRecordSender::sendWholeBuffer, this);
 }
 
 ThreadRecordSender::~ThreadRecordSender()
@@ -41,36 +38,41 @@ ThreadRecordSender::~ThreadRecordSender()
     // Nothing todo so far.
 }
 
-void ThreadRecordSender::sendPulseMessagesToChid()
+void ThreadRecordSender::sendWholeBuffer()
 {
-    int ret = 0;
-    int index = 0;
-    ITimer * timer;
+    /* Read the first record, so it will be used
+     * to get the duration between records.
+     */
+    record_t start;
+    ret = m_buffer->readFromIndex(&start, 0);
+    windUpClockAndSend(start, start.timestamp);
 
-    record_t firstRecord;
+    int i = 0;
+    record_t next;
 
-    ret = m_buffer->readFromIndex(&firstRecord, 0);
-
-    while (ret >= 0) {
-        record_t record;
-        ret = m_buffer->readFromIndex(&record, index);
-
-        if (ret >= 0) {
-            timer = new TimerService(m_chid, record.code);
-
-            if (record.code == TRANSM_IN_CODE) {
-                record.value = (int)new TestEmbeddedRecorderStub(record.stub);
-            }
-
-            auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(record.timestamp - firstRecord.timestamp).count();
-            //std::cout << "[ThreadRecordSender] milsec: " << milsec << std::endl;
-            timer->setAlarm(milsec, record.value);
-        }
-
-        index++;
+    // Get the next records and wind up a clock to send a pulse message.
+    while (m_buffer->readFromIndex(&next, i) >= 0) {
+        windUpClockAndSend(next, start.timestamp);
+        i++;
     }
 
     // NOTE: The thread will be delete after the while loop.
+}
+
+void ThreadRecordSender::windUpClockAndSend(const record_t next, std::chrono::time_point<std::chrono::system_clock> start)
+{
+    ITimer * timer = new TimerService(m_chid, next.code);
+
+    /* Check if there was a puck (TODO) inside the record.
+     * Cast the pointer of the puck (TODO) into an integer value.
+     * This must be cast into a pointer again after receiving this message.
+     */
+    if (next.code == TRANSM_IN_CODE) {
+        next.value = (int)new TestEmbeddedRecorderStub(next.stub);
+    }
+
+    auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start).count();
+    timer->setAlarm(milsec, next.value);
 }
 
 } /* namespace rec */

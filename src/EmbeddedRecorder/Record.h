@@ -28,9 +28,13 @@ namespace rec {
      * @brief This struct defines a single record.
      */
     typedef struct {
-        uint8_t code;       /*< The code of a pulse message.*/
-        std::chrono::time_point<std::chrono::system_clock> timestamp;   /*< The timestamp of this record.*/
-        uint32_t value;     /*< The value of the pulse message.*/
+        /* The code of a pulse message. */
+        uint8_t code;
+        /* The timestamp of this record. */
+        std::chrono::time_point<std::chrono::system_clock> timestamp;
+        /* The value of the pulse message. */
+        uint32_t value;
+        // TODO: Replace this with the puck.
         TestEmbeddedRecorderStub stub;
     } record_t;
 

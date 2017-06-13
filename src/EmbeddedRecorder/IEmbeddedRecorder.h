@@ -25,17 +25,19 @@ namespace rec {
 
     class IEmbeddedRecorder {
     public:
-    	/*
-    	 * @brief Discard the old buffer and create a new one.
-    	 */
-    	virtual void newBuffer() = 0;
+    	  /*
+    	   * @brief Discard the old buffer and create a new one.
+    	   */
+    	  virtual void newBuffer() = 0;
 
-    	/*
-    	 * @brief Extracts the code and value from a pulse message.
+    	  /*
+    	   * @brief Extracts the code and value from a pulse message.
+         *
+         * @param[message] The message written into the buffer.
          *
          * @return The return codes of the RecordBuffer.
-    	 */
-    	virtual int writeMessageIntoBuffer(const rcv::msg_t message) = 0;
+    	   */
+    	  virtual int writeMessageIntoBuffer(const rcv::msg_t message) = 0;
 
         /*
          * @brief Plays the recorded data.

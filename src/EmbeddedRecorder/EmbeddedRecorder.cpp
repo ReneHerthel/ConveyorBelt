@@ -45,13 +45,13 @@ void EmbeddedRecorder::newBuffer()
 
 int EmbeddedRecorder::writeMessageIntoBuffer(const rcv::msg_t message)
 {
-	record_t record;
+    record_t record;
 
-	record.timestamp = std::chrono::system_clock::now();
-	record.code = message.code;
+    record.timestamp = std::chrono::system_clock::now();
+    record.code = message.code;
 
     if (record.code == TRANSM_IN_CODE) {
-    	TestEmbeddedRecorderStub stub = *((TestEmbeddedRecorderStub*)message.value);
+    	  TestEmbeddedRecorderStub stub = *((TestEmbeddedRecorderStub*)message.value);
         record.stub = stub;
         //record.stub.print();
     }
