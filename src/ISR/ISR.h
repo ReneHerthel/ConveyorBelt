@@ -14,14 +14,14 @@
 
 
 
-class ISR_Thread{
+class ISR{
 
 
     // Methoden deklarationen
     public:
-	 	ISR_Thread(Control * control); ///< Standard Konstruktor. Offentlich Aufrufbar.
-        virtual ~ISR_Thread();      ///< Standard Dekonstruktor.
-        void execute();
+	 	ISR(Control * control); ///< Standard Konstruktor. Offentlich Aufrufbar.
+        virtual ~ISR();      ///< Standard Dekonstruktor.
+        void operator()();
 };
 
 #endif
