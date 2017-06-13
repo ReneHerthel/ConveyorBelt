@@ -17,6 +17,9 @@
 #ifndef SRC_MAINCONTROLLER_MAINCONTROLLER_H_
 #define SRC_MAINCONTROLLER_MAINCONTROLLER_H_
 
+#include "IEmbeddedRecorder.h"
+#include "EmbeddedRecorder.h"
+
 #include "IPulseMessageReceiver.h"
 #include "PulseMessageReceiverService.h"
 
@@ -54,14 +57,24 @@ private:
     bool m_messageInterpreterIsRunning;
 
     /*
+     * @brief A reference to the EmbeddedRecorder.
+     */
+    rec::EmbeddedRecorder * m_embeddedRecorder;
+
+    /*
      * @brief The own channel ID of the MainController to receive messages.
      */
     int m_chid;
 
+    /*
+     * @brief
+     */
+    bool m_recorderIsPlaying;
+
     /* TODO: Add a reference to:
-     *       EmbeddedRecorder,
      *       ErrorHandling,
-     *       E.T.C.
+     *       Puckmanager,
+     *       .. .. ..
      */
 };
 

@@ -14,14 +14,19 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
+#include "SerialProtocoll.h"
+#include "TestEmbeddedRecorderStub.h"
+
 #include <thread>
 
 MainController::MainController()
-    :    m_receiver(new m_receiver())
+    :    m_receiver(new PulseMessageReceiverService())
     ,    m_messageInterpreterIsRunning(true)
+    ,    m_recorderIsPlaying(false)
 {
     m_chid = m_receiver->newChannel();
     m_messageInterpreter = std::thread(&MainController::messageInterpreter, this);
+    m_embeddedRecorder = new rec::EmbeddedRecorder(m_chid);
 }
 
 MainController::~MainController()
@@ -32,9 +37,33 @@ MainController::~MainController()
 void MainController::messageInterpreter()
 {
     while (m_messageInterpreterIsRunning) {
-        rcv::msg_t msg = m_receiver->receivePulseMessage();
-        // m_embeddedRecorder->writeValuesIntoBuffer(msg.code, msg.value);
-        // TODO: Interpret the message.
+
+        rcv::msg_t message = m_receiver->receivePulseMessage();
+
+        // Only write into the buffer, when the EmbeddedRecorder is not playing.
+        if (m_recorderIsPlaying == false) {
+            m_embeddedRecorder->writeMessageIntoBuffer(message);
+        }
+
+        switch (message.code) {
+
+            case REC_PLAY_STOP:
+                m_recorderIsPlaying = false;
+                break;
+
+            case REC_PLAY_START:
+                m_recorderIsPlaying = true;
+                break;
+
+            case TRANSM_IN_CODE :
+                message.value =  (*(TestEmbeddedRecorderStub*)message.value);
+                break;
+
+            default:
+                // TODO Error handling.
+                break;
+
+        }
     }
 }
 
