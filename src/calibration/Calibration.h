@@ -10,6 +10,8 @@
 
 #include <chrono>
 #include "DistanceEnum.h"
+#include "SortingSwitchService.h"
+#include "HeightMeasurementService.h"
 
 #define PORTB_ADDR 0x301
 
@@ -47,6 +49,8 @@ public:
 	 */
 	uint32_t getCalibration(DistanceSpeed::lb_distance distance, DistanceSpeed::speed_t speed);
 
+	void calibrateHeighMeasurement(void);
+
 	void manualCalibration(uint32_t hf, uint32_t hs, uint32_t sf, uint32_t ss, uint32_t of, uint32_t os, uint32_t ovf, uint32_t ovs);
 
 	double getFastToSlow(void);
@@ -67,6 +71,8 @@ private:
 
 	double fastToSlowFactor;
 	double slowToFastFactor;
+
+	HeightMeasurementService::CalibrationData hmCal; ///Calibration Data for height measurement
 };
 
 #endif /* CALIBRATION_H_ */

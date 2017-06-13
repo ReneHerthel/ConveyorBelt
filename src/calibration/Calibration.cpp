@@ -14,8 +14,9 @@
 #include "Logger.h"
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
-#include "SortingSwitchService.h"
 #include <thread>
+#include "HeightMeasurementService.h"
+#include "HeightMeasurementHal.h"
 
 using namespace chrono;
 
@@ -90,6 +91,19 @@ void Calibration::calibrate(void){
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
 }
+
+void calibrateHeighMeasurement(void){
+	HeightMeasurementHal hhal;
+	int16_t data = 0;
+
+	hhal.read(data);
+
+	hmCal.refHeight = data; //Height of the belt surface
+
+	//TODO Finish while puck drunter durch höchstes surfaceHeight
+
+}
+
 
 void Calibration::manualCalibration(uint32_t hf, uint32_t hs, uint32_t sf, uint32_t ss, uint32_t of, uint32_t os, uint32_t ovf, uint32_t ovs){
 	//heightMeasure[0] += ((long long int)hf);
