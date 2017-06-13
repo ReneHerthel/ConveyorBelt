@@ -39,23 +39,6 @@ public:
 	void unregisterObserver(DistanceTracker *dt);
 
 	/**
-	 * Used by Distance tracker to aquire the mm to time calibration data
-	 * stored here centrally
-	 * NOTE! Stop doesnt work as speed
-	 * @param speed the calibration data for the speed_t
-	 */
-	uint32_t getCalibrationData(DistanceSpeed::speed_t speed);
-
-
-	/**
-	 * Set the mm to time calibration
-	 * NOTE! Stop doesnt work as speed
-	 * @param mmToTime the factor used to determin the time
-	 * @param speed the calibration data for the speed_t
-	 */
-	void setCalibrationData(DistanceSpeed::speed_t speed, uint32_t mmToTime);
-
-	/**
 	 * Get an Instance of the DistanceObservable
 	 */
 	static DistanceObservable& getInstance(void);
@@ -66,8 +49,6 @@ private:
 
 	set<DistanceTracker*> dtlist_; 	    ///This list contains all DistanceTracker that are currently registered to the Observable
 	DistanceSpeed::speed_t currSpeed_;  ///Current speed of the belt
-	uint32_t mmToTimeFast_; 			///Multiply with this to conv the mm to time
-	uint32_t mmToTimeSlow_; 			///Multiply with this to conv the mm to time
 };
 
 #endif /* DISTANCEOBSERVABLE_H_ */

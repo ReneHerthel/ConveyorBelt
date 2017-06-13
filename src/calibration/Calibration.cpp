@@ -64,12 +64,12 @@ void Calibration::calibrate(void){
 		heightMeasure[i] = milliseconds(duration_cast<milliseconds>(system_clock::now() - last_lb));
 		sss.sortingSwitchOpen();
 		while(pollLB(LB_HEIGHT));
-		start = system_clock::now();
+		last_lb = system_clock::now();
 
 		while(!pollLB(LB_SWITCH));
 		sortingSwitch[i] = duration_cast<milliseconds>(system_clock::now()  - last_lb);
 		while(pollLB(LB_HEIGHT));
-		start = system_clock::now();
+		last_lb = system_clock::now();
 
 		while(!pollLB(LB_EXIT));
 		outlet[i] = duration_cast<milliseconds>(system_clock::now() - last_lb);
@@ -87,9 +87,36 @@ void Calibration::calibrate(void){
 	sss.sortingSwitchClose(); //Safety
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
-	slowToFastFactor = (double)overall[1].count() / (double)overall[0].count();
+	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
 }
+
+void Calibration::manualCalibration(uint32_t hf, uint32_t hs, uint32_t sf, uint32_t ss, uint32_t of, uint32_t os, uint32_t ovf, uint32_t ovs){
+	//heightMeasure[0] += ((long long int)hf);
+	std::chrono::milliseconds mhf(hf);
+	heightMeasure[0] = mhf;
+	std::chrono::milliseconds mhs(hs);
+	heightMeasure[1] = mhs;
+
+	std::chrono::milliseconds msf(sf);
+	sortingSwitch[0] = msf;
+	std::chrono::milliseconds mss(ss);
+	sortingSwitch[1] = mss;
+
+	std::chrono::milliseconds mos(os);
+	outlet[0] = mos;
+	std::chrono::milliseconds mof(of);
+	outlet[1] = mof;
+
+	std::chrono::milliseconds movf(ovf);
+	overall[0] = movf;
+	std::chrono::milliseconds movs(ovs);
+	overall[1] = movs;
+
+	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
+	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
+}
+
 
 
 Calibration& Calibration::getInstance(){
@@ -116,6 +143,15 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 
 }
 
+double Calibration::getFastToSlow(void){
+	return fastToSlowFactor;
+}
+
+double Calibration::getSlowToFast(void){
+	return slowToFastFactor;
+}
+
+
 bool Calibration::pollLB(sensor_t sensor){
 	return((in8(PORTB_ADDR) & sensor) == 0);
 }
@@ -123,9 +159,12 @@ bool Calibration::pollLB(sensor_t sensor){
 
 void Calibration::print(){
 	for(int i = 0; i < 2; i++){
-		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << "Overall" << overall[i].count() << "\n";
+		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << " Overall" << overall[i].count() << "\n";
+		std::cout << "Slow to Fast: " << slowToFastFactor << "Fast to Slow " << fastToSlowFactor << "\n";
 	}
 }
+
+
 
 Calibration::Calibration(){}
 Calibration::~Calibration(){}

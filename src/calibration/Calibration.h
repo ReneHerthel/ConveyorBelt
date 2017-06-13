@@ -8,7 +8,7 @@
 #ifndef CALIBRATION_H_
 #define CALIBRATION_H_
 
-#include <chrono>;
+#include <chrono>
 #include "DistanceEnum.h"
 
 #define PORTB_ADDR 0x301
@@ -47,20 +47,26 @@ public:
 	 */
 	uint32_t getCalibration(DistanceSpeed::lb_distance distance, DistanceSpeed::speed_t speed);
 
+	void manualCalibration(uint32_t hf, uint32_t hs, uint32_t sf, uint32_t ss, uint32_t of, uint32_t os, uint32_t ovf, uint32_t ovs);
+
+	double getFastToSlow(void);
+
+	double getSlowToFast(void);
+
 	void print(void);
 
 private:
 	Calibration();
 	~Calibration();
 
-	milliseconds overall[2];
-	milliseconds heightMeasure[2];
-	milliseconds sortingSwitch[2];
-	milliseconds outlet[2];
-	milliseconds inlet[2];
+	std::chrono::milliseconds overall[2];
+	std::chrono::milliseconds heightMeasure[2];
+	std::chrono::milliseconds sortingSwitch[2];
+	std::chrono::milliseconds outlet[2];
+	std::chrono::milliseconds inlet[2];
 
+	double fastToSlowFactor;
 	double slowToFastFactor;
-	double fastToSlowDivisor;
 };
 
 #endif /* CALIBRATION_H_ */
