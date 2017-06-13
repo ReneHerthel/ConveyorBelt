@@ -126,7 +126,7 @@ public:
 	struct MeasurementArea : public PuckState {
 		void earlyTimer();
 		void switchIn();
-		void type();
+		//void type(); 	-- makes problems
 	};
 
 	struct MeasurementTimer : public PuckState {
