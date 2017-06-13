@@ -15,6 +15,14 @@ PuckManager::PuckManager()
 	, nextPuckID(0)
 {}
 
+PuckManager::~PuckManager() {
+	std::list<PuckContext*>::iterator it = puckList.begin();
+	while(it != puckList.end()) {
+		delete *it;					// delete the puck from memory
+		it = puckList.erase(it);	// delete the puck from list
+	}
+}
+
 void PuckManager::addPuck(PuckContext *puck) {
 	LOG_SCOPE;
 	puck->setPuckID(nextPuckID++);

@@ -40,6 +40,7 @@ public:
 	};
 
 	PuckManager();
+	~PuckManager();
 
 	ManagerReturn process(PuckSignal::Signal signal);
 	void addPuck(PuckContext *puck);

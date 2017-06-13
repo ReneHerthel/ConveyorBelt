@@ -24,6 +24,7 @@ public:
 protected:
 	TEST(test1);
 	TEST(test2);
+	TEST(test3);
 	TEST_CASE_METHODS;
 private:
 	PuckManager *manager;
