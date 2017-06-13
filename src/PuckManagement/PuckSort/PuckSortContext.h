@@ -31,11 +31,13 @@ class PuckSortContext {
          *          false Puck shall be kept
          */
         bool process(PuckType signal);
+        void process(PuckReturn message);
 
         bool rampe1IsEmpty;
         bool rampe2IsEmpty;
         bool isOnMachine1;
         bool isOnMachine2;
+        bool returnValue;
 
     struct PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */

@@ -17,6 +17,7 @@
 PuckSortContext::PuckSortContext()
 : rampe1IsEmpty(true)
 , rampe2IsEmpty(true)
+, returnValue(false)
 {
 #if MACHINE
 	isOnMachine1 = false;
@@ -27,15 +28,27 @@ PuckSortContext::PuckSortContext()
 #endif
 }
 
+/* Decide between PuckType and SlideFull */
+
+/* PuckType */
 bool PuckSortContext::process(PuckType signal) {
+	LOG_SCOPE;
 #if FIFO_SORT
     /* Keep all pucks for now */
     return false;
 #else
-    /* Decide between PuckType and SlideFull */
-    	/* SlideFull */
-    	/* PuckType */
+
+    switch(signal) {
+
+
+    }
+    return false;
 #endif
+}
+
+/* SlideFull */
+void PuckSortContext::process(PuckReturn message) {
+
 }
 
 /* Define default transitions */
