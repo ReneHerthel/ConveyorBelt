@@ -1,13 +1,13 @@
 #include <iostream>
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
-#include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
-#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
+#include "TestPulseMessageWrapper.h"
+#include "TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 #include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
-//#include "FullSerialTest.h"
+#include "FullSerialTest.h"
 #include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
 #include "TestPuckManager.h"
@@ -36,7 +36,7 @@ int main() {
     //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
- /*
+
     // PulseMessageWrapper tests
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
@@ -60,12 +60,12 @@ int main() {
     //Calibration Test
     ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
 
-*/
+
 #if !machine
-    ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 0"));
-    ts.REG_TESTCASE(new TestPuckManager(2, "[PuckManager] BasicTests on Machine 0"));
+    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
+    ts.REG_TESTCASE(new TestPuckManager(11, "[PuckManager] BasicTests on Machine 0"));
 #else
-    ts.REG_TESTCASE(new TestPuckStateMachine(1, "[PuckStateMachine] BasicTests on Machine 1"));
+    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
