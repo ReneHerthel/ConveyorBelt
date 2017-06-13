@@ -1,5 +1,5 @@
                                                                          /*
- * Isr_pulse.cpp
+ * ISR.cpp
  *
  *  Created on: 27.04.2017 based on tutorium-example
  *      Author: abt674
@@ -11,7 +11,7 @@
 #include <sys/siginfo.h>
 #include "HWaccess.h"
 #include "Control.h"
-#include "ISR_Thread.h"
+#include "ISR.h"
 
 using namespace std;
 
@@ -74,8 +74,11 @@ void unregisterISR(void){
     out8(0x30F,0);
 }
 
-
-ISR_Thread::ISR_Thread(Control * control) {
+/*
+ * Creates the ISR-Channel
+ * @param [control] Control Object for Methodcalls
+ * */
+ISR::ISR(Control * control) {
     cout << "ctor: ISR_Thread" << endl;
     ctrl = control;
     if ((isrChannel = ChannelCreate(0)) == -1) {
@@ -88,25 +91,23 @@ ISR_Thread::ISR_Thread(Control * control) {
     	}
 
 }
-ISR_Thread::~ISR_Thread() {
+/*
+ * deconstructor
+ * */
+ISR::~ISR() {
     cout << "dtor: ISR_Thread" << endl;
 
 
 }
-void ISR_Thread::execute(){
+/*
+ * "main"-function, call this to start the ISR
+ * this function registers the ISR and determines the origin of an interrupt
+ * */
+void ISR::operator()(){
     // Init and Register ISR
     if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
         exit(EXIT_FAILURE);
-    }/*
-    //create a channel to receive pulses
-    if (( isrChannel = ChannelCreate(0)) == -1){
-        exit(EXIT_FAILURE);
     }
-    //connect isr to channel
-    if ((isrConnection = ConnectAttach(0, 0, isrChannel, 0, 0)) == -1){
-        exit(EXIT_FAILURE);
-    }
-   */
     // Register Interrupt Service Routine
     registerISR();
 
@@ -121,10 +122,6 @@ void ISR_Thread::execute(){
 
         //register zuordnen
         int diff = pulse.value.sival_int ^ portbc;
-
-        // Print received Pulse message Value
-        // cout << "Got Interrupt value: " << pulse.value.sival_int << " " << diff << endl;
-
         portbc =  pulse.value.sival_int;
 
 
