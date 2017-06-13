@@ -12,22 +12,25 @@
 
 #include <thread>
 
-
 #define MILLISECOND 1000000
 #define SECOND 1000
-
 
 class TimerService : public ITimer {
 private:
 	timer_t timerid;
 	char code;
-	int value;
 	int coid;
+	bool timerRunning;
+	bool timerCreated;
 	struct sigevent event;
 	struct itimerspec timer;
 public:
-	TimerService(int chid, char code, int value);
-	void setAlarm(milliseconds time);
+	TimerService(int chid, char code) throw(int);
+	~TimerService() throw(int);
+	void setAlarm(milliseconds time, int value) throw(int);
+	void stopAlarm() throw(int);
+	void resumeAlarm() throw(int);
+	milliseconds killAlarm() throw(int);
 };
 
 #endif /* SRC_TIMER_TIMERSERVICE_H_ */

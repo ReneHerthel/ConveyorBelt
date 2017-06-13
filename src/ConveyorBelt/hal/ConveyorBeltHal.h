@@ -18,7 +18,6 @@
 
 class ConveyorBeltHal {
 public:
-
 	/*
 	 * @brief Set the corresponding mask in the port.
 	 * @param A constant mask which is set in the corresponding bit.

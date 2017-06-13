@@ -19,7 +19,6 @@ protected:
     TEST(test1);
     TEST(test2);
     TEST(test3);
-protected:
     TEST_CASE_METHODS
 };
 

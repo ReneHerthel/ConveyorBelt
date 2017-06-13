@@ -37,7 +37,7 @@ public:
 	 * @brief Changes the state of the conveyor belt by using the ConveyorBeltStates.
 	 * @param The next state of the ConveyorBelt component.
 	 */
-	void ConveyorBeltChangeState(const ConveyorBeltState state);
+	void changeState(const ConveyorBeltState state);
 
 private:
 	ConveyorBeltHal* hal_;
