@@ -25,6 +25,7 @@ protected:
 	TEST(test1);
 	TEST(test2);
 	TEST(test3);
+	TEST(test4);
 	TEST_CASE_METHODS;
 private:
 	PuckManager *manager;
@@ -200,6 +201,18 @@ private:
 			// Puck 3 : Accept FAST
 			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr}
 	};
+
+	PuckSignal::Signal signalArrayWarningToError[3] {
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER}
+	};
+	PuckManager::ManagerReturn returnArrayWarningToError[3] {
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, true, PuckManager::ErrorSignal::PUCK_MOVED, false, nullptr}
+	};
+
 
 #else
 	PuckSignal::Signal signalArrayLongestPath[19] {

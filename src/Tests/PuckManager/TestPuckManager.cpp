@@ -15,6 +15,7 @@ SETUP(TestPuckManager) {
 	REG_TEST(test1, 1, "Test the longest path with one puck only");
 	REG_TEST(test2, 2, "Test the longest path with three pucks");
 	REG_TEST(test3, 3, "Test the longest path with late timer error with one puck only");
+	REG_TEST(test4, 4, "Test the Warning to Error handle");
 	return 1;
 }
 
@@ -150,4 +151,37 @@ TEST_IMPL(TestPuckManager, test3) {
 		manager = new PuckManager();
 	}
 	return TEST_PASSED;
+}
+TEST_IMPL(TestPuckManager, test4) {
+	LOG_SCOPE;
+	LOG_DEBUG << "-------------------TEST 4 ------------------\n";
+	for(uint32_t i = 0; i < sizeof(signalArrayWarningToError) / sizeof(PuckSignal::Signal); ++i) {
+			PuckManager::ManagerReturn returnVal = manager->process(signalArrayWarningToError[i]);
+			if(returnVal.speedSignal != returnArrayWarningToError[i].speedSignal) {
+				std::cout << "[TEST 4] SpeedSignal differs!" << std::endl;
+				return TEST_FAILED;
+			}
+
+			if((returnVal.actorFlag != returnArrayWarningToError[i].actorFlag && returnVal.actorSignal != returnArrayWarningToError[i].actorSignal) || returnVal.actorFlag != returnArrayWarningToError[i].actorFlag) {
+				std::cout << "[TEST 4] ActorSignal differs!" << std::endl;
+				return TEST_FAILED;
+			}
+
+			if((returnVal.errorFlag != returnArrayWarningToError[i].errorFlag && returnVal.errorSignal != returnArrayWarningToError[i].errorSignal) || returnVal.errorFlag != returnArrayWarningToError[i].errorFlag) {
+				std::cout << "[TEST 4] ErrorSignal differs! Should be: " + std::to_string(returnArrayWarningToError[i].errorSignal) + " but was: " + std::to_string(returnVal.errorSignal) << std::endl;
+				return TEST_FAILED;
+			}
+
+			if(returnVal.slideFullFlag != returnArrayWarningToError[i].slideFullFlag) {
+				std::cout << "[TEST 4] SlideFlag differs!" << std::endl;
+				return TEST_FAILED;
+			}
+
+			if(		(returnVal.puck != nullptr && returnArrayWarningToError[i].puck == nullptr) ||
+					(returnVal.puck == nullptr && returnArrayWarningToError[i].puck != nullptr)) {
+				std::cout << "[TEST 4] Puck pointer differs!" << std::endl;
+				return TEST_FAILED;
+			}
+		}
+		return TEST_PASSED;
 }
