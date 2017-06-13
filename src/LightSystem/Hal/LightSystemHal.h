@@ -51,6 +51,8 @@
 namespace HAL {
     class LightSystemHal: public BLightSystem {
         public:
+    		LightSystemHal() {};
+    		~LightSystemHal() {};
             void lightOn(Color color);
             void lightOff(Color color);
     };

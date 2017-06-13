@@ -8,6 +8,9 @@
 #ifndef Control_H_
 #define Control_H_
 
+#include "PulseMessageReceiverService.h"
+#include "PulseMessageSenderService.h"
+
 
 //Lightbarriers and Sensor
 #define LightBarrier_ENTRY  		0b0000000000000001
@@ -15,46 +18,63 @@
 #define SENSOR_HEIGHT 	            0b0000000000000100
 #define LightBarrier_SWITCH 		0b0000000000001000
 #define SENSOR_METAL 	            0b0000000000010000
-#define SWITCH_OPEN					0b0000000000100000
+#define SWITCH_OPEND				0b0000000000100000
 #define LightBarrier_RAMP 		    0b0000000001000000
 #define LightBarrier_EXIT		 	0b0000000010000000
 
 //Buttons
-#define BUTTON_START	            0b0001000000000000
-#define BUTTON_STOP			  	  	0b0010000000000000
-#define BUTTON_RESET				0b0100000000000000
-#define BUTTON_ESTOP				0b1000000000000000
+#define BUTTONSTART	            0b0001000000000000
+#define BUTTONSTOP			  	0b0010000000000000
+#define BUTTONRESET				0b0100000000000000
+#define BUTTONESTOP				0b1000000000000000
 
-
+	using namespace rcv;
 class Control {
 
+
 public:
+
+    /*
+     * @brief Constructor with a channel ID.
+     *
+     * @param [chid] The channel ID, where this object will make a connection to.
+     */
 	Control();
+	Control(const int chid);
+	
 	virtual ~Control();
 
-	void LightBarrier_ENTRY_IN();
-	void LightBarrier_ENTRY_OUT();
+	void lightBarrier_ENTRY_IN();
+	void lightBarrier_ENTRY_OUT();
 
-	void LightBarrier_HEIGHT_IN();
-	void LightBarrier_HEIGHT_OUT();
+	void lightBarrier_HEIGHT_IN();
+	void lightBarrier_HEIGHT_OUT();
 
-	void LightBarrier_SWITCH_IN();
-	void LightBarrier_SWITCH_OUT();
+	void lightBarrier_SWITCH_IN();
+	void lightBarrier_SWITCH_OUT();
 
-	void LightBarrier_RAMP_IN();
-	void LightBarrier_RAMP_OUT();
+	void lightBarrier_RAMP_IN();
+	void lightBarrier_RAMP_OUT();
 
-	void LightBarrier_EXIT_IN();
-	void LightBarrier_EXIT_OUT();
+	void lightBarrier_EXIT_IN();
+	void lightBarrier_EXIT_OUT();
 
-	void HEIGHT();
-	void METAL();
-	void SWITCH();
+	void height();
+	void metal();
+	void switchen();
 
-	void B_Start();
-	void B_STOP();
-	void B_EStop();
-	void B_Reset();
+	void b_Start();
+	void b_STOP();
+	void b_EStop();
+	void b_Reset();
+
+
+	private:
+    /*
+     * @brief The channel ID, where this object will make a connection to.
+     */
+	int chid_;
+	PulseMessageSenderService * sender;
 
 
 };
