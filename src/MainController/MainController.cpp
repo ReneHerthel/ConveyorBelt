@@ -41,19 +41,9 @@ void MainController::messageInterpreter()
         rcv::msg_t message = m_receiver->receivePulseMessage();
 
         // Only write into the buffer, when the EmbeddedRecorder is not playing.
-        if (m_recorderIsPlaying == false) {
-            m_embeddedRecorder->writeMessageIntoBuffer(message);
-        }
+        m_embeddedRecorder->writeMessageIntoBuffer(message);
 
         switch (message.code) {
-
-            case REC_PLAY_STOP:
-                m_recorderIsPlaying = false;
-                break;
-
-            case REC_PLAY_START:
-                m_recorderIsPlaying = true;
-                break;
 
             case TRANSM_IN_CODE :
                 message.value =  (*(TestEmbeddedRecorderStub*)message.value);
@@ -64,6 +54,8 @@ void MainController::messageInterpreter()
                 break;
 
         }
+
+        // TODO: Tell the other components.
     }
 }
 

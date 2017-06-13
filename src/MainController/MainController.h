@@ -66,11 +66,6 @@ private:
      */
     int m_chid;
 
-    /*
-     * @brief
-     */
-    bool m_recorderIsPlaying;
-
     /* TODO: Add a reference to:
      *       ErrorHandling,
      *       Puckmanager,
