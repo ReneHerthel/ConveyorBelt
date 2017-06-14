@@ -12,7 +12,10 @@
 #ifndef  PuckSortContext_INC
 #define  PuckSortContext_INC
 
+#include "Logger.h"
+#include "LogScope.h"
 #include "PuckSignal.h"
+#include "SerialProtocoll.h"
 
 #define MACHINE 0
 #define FIFO_SORT 0
@@ -33,11 +36,6 @@ class PuckSortContext {
         bool process(PuckType signal);
         void process(PuckReturn message);
 
-        bool rampe1IsEmpty;
-        bool rampe2IsEmpty;
-        bool isOnMachine1;
-        bool isOnMachine2;
-        bool returnValue;
 
     struct PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
@@ -49,12 +47,18 @@ class PuckSortContext {
         virtual void lowHeight();
         virtual void holeWithoutMetal();
         virtual void holeWithMetal();
-    };
+
+        bool rampe1IsEmpty;
+        bool rampe2IsEmpty;
+        bool isOnMachine1;
+        bool isOnMachine2;
+        bool returnValue;
+    } *statePtr;
 
     struct Start: public PuckSort {
         /* FIXME: Adapt state names to puck naming conventions */
         virtual void holeWithoutMetal();
-    };
+    } startState;
     struct GotHoleUpWoMetal: public PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
         virtual void holeWithoutMetal();

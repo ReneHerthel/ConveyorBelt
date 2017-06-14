@@ -15,17 +15,19 @@
 /* TODO: Process signals */
 
 PuckSortContext::PuckSortContext()
-: rampe1IsEmpty(true)
-, rampe2IsEmpty(true)
-, returnValue(false)
 {
+	LOG_SCOPE;
+	statePtr = &startState;
 #if MACHINE
 	isOnMachine1 = false;
 	isOnMachine2 = true;
 #else
-	isOnMachine1 = true;
-	isOnMachine2 = false;
+	statePtr->isOnMachine1 = true;
+	statePtr->isOnMachine2 = false;
 #endif
+	statePtr->rampe1IsEmpty = true;
+	statePtr->rampe2IsEmpty = true;
+	statePtr->returnValue = false;
 }
 
 /* Decide between PuckType and SlideFull */
@@ -37,11 +39,6 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
-
-    switch(signal) {
-
-
-    }
     return false;
 #endif
 }
@@ -90,9 +87,6 @@ void PuckSortContext::PuckSort::bitCode5() {
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-
-	LOG_SCOPE;
-
 	if (isOnMachine2) {
 		returnValue = true;
 	} else if (rampe2IsEmpty && isOnMachine1) {
@@ -132,11 +126,11 @@ void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = false;
 	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: \n" << returnValue;
-	new (this) GotTwoHoleUpMetal;
+	new (this) GotTwoHoleUpWoMetal;
 }
 
 /* Define transitions for GotTwoHoleUpWoMetal state */
-void PuckSortContext::GotTwoHoleUpWoMetal::holeWithoutMetal() {
+void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	LOG_SCOPE;
 	returnValue = false;
 	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: \n" << returnValue;
