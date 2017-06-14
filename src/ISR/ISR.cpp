@@ -97,13 +97,14 @@ ISR::ISR(Control * control) {
 ISR::~ISR() {
     cout << "dtor: ISR_Thread" << endl;
 
-
 }
 /*
  * "main"-function, call this to start the ISR
  * this function registers the ISR and determines the origin of an interrupt
  * */
 void ISR::operator()(){
+	bool running = true;
+
     // Init and Register ISR
     if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
         exit(EXIT_FAILURE);
@@ -125,16 +126,18 @@ void ISR::operator()(){
         portbc =  pulse.value.sival_int;
 
 
-        			if((diff & LightBarrier_ENTRY) == LightBarrier_ENTRY){
-        					if (lb_entry_active) {
-        						cout << "LightBarrier_entry_" << endl;
-        						ctrl->lightBarrier_ENTRY_IN();
-        						lb_entry_active = false;
-        					} else {
-        						lb_entry_active = true;
-        						ctrl->lightBarrier_ENTRY_OUT();
-        					}
-        			}
+        			if((diff & BUTTONESTOP) == BUTTONESTOP){
+
+    					if (button_estop_active) {
+    						cout << "button_estop" << endl;
+    						ctrl->b_EStop();
+    						button_estop_active = false;
+    						running = false;
+    					} else {
+    						button_estop_active = true;
+    					}
+					}
+
         			else if((diff & LightBarrier_HEIGHT) == LightBarrier_HEIGHT){
         					if (lb_height_active) {
         						cout << "LightBarrier_height" << endl;
@@ -209,16 +212,16 @@ void ISR::operator()(){
         					}
         			}
 
-    				else if ((diff & BUTTONESTOP) == BUTTONESTOP){
-
-        					if (button_estop_active) {
-        						cout << "button_estop" << endl;
-        						ctrl->b_EStop();
-        						button_estop_active = false;
-        					} else {
-        						button_estop_active = true;
-        					}
+    				else if ((diff & LightBarrier_ENTRY) == LightBarrier_ENTRY){
+    					if (lb_entry_active) {
+    						cout << "LightBarrier_entry_" << endl;
+    						ctrl->lightBarrier_ENTRY_IN();
+    						lb_entry_active = false;
+    					} else {
+    						lb_entry_active = true;
+    						ctrl->lightBarrier_ENTRY_OUT();
     					}
+    			}
 
     				else if ((diff & SENSOR_METAL) == SENSOR_METAL){
         			        if (sensor_metal_active) {
@@ -253,8 +256,9 @@ void ISR::operator()(){
         			}
 
 
-    }while(1);
+    }while(running);
 
+    cout << "Shutdown ISR..."<<endl;
     // Cleanup
     unregisterISR();
     //isr verbindung aufheben
@@ -265,8 +269,7 @@ void ISR::operator()(){
     if( ChannelDestroy(isrChannel) == -1 ){
         exit(EXIT_FAILURE);
     }
-
-
+    cout << "ISR detached and channel destroyed!" << endl;
 	}
 
 
