@@ -39,7 +39,7 @@ public:
 		PuckContext *puck;					// Null except on send Signal
 	};
 
-	PuckManager();
+	PuckManager(int chid);
 	~PuckManager();
 
 	ManagerReturn process(PuckSignal::Signal signal);
@@ -48,6 +48,7 @@ public:
 private:
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
+	int chid; /**< @brief ID for the pucks to give the timers*/
 };
 
 #endif /* PUCKMANAGER_H_ */

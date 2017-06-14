@@ -18,6 +18,8 @@
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
 
+#define CHID 1 //replace with right chid
+
 class TestPuckManager : public TestCase {
 public:
 	TestPuckManager(int id, std::string brief) : TestCase(id, brief) { };
@@ -32,23 +34,23 @@ private:
 
 #if !machine
 	PuckSignal::Signal signalArrayLongestPath[17] {
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER}
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER}
 	};
 
 	PuckManager::ManagerReturn returnArrayLongestPath[17] {
@@ -73,66 +75,66 @@ private:
 
 	PuckSignal::Signal signalArrayMultiplePucks[44] {
 			//Puck 1
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {1, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((1<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 3
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {1, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((1<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 3
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {2, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((2<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 3
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {2, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((2<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SWITCH_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER},
 			//Puck 2
-			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {1, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, {((1<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 3
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SLIDE_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SLIDE_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::STOP_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RESUME_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::OUTLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::SERIAL_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::RECEIVED_SER},
 			//Puck 3
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::SLIDE_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::SLIDE_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 
 
 	};
@@ -203,9 +205,9 @@ private:
 	};
 
 	PuckSignal::Signal signalArrayWarningToError[3] {
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, {0, PuckSignal::TimerType::EARLY_TIMER}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER}
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0},{((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0},{((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0},{((0<<16) | (int32_t)(PuckSignal::TimerType::EARLY_TIMER<<8))}, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER}
 	};
 	PuckManager::ManagerReturn returnArrayWarningToError[3] {
 			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},

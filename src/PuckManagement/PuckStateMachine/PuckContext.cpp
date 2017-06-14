@@ -13,17 +13,23 @@
 
 #include <new>
 
-PuckContext::PuckContext() {
+PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
 #else
 	LOG_DEBUG << "Using machine1\n";
 	statePtr = &transferState;
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
-	//startTimers();
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
+	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
 #endif
 }
 
@@ -137,6 +143,17 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 	return statePtr->returnValue;
 }
 
+void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
+	PuckSignal::TimerSignal ts;
+	ts.puckID = puckID;
+	ts.type = PuckSignal::TimerType::EARLY_TIMER;
+	shortDistance->startAlarm(ts.value,distance,SHORT_DELTA);
+	ts.type = PuckSignal::TimerType::LATE_TIMER;
+	wideDistance->startAlarm(ts.value,distance,WIDE_DELTA);
+}
+void PuckContext::PuckState::stopTimer(){
+	wideDistance->stopAlarm();
+}
 /*******************************************
  * SuperState
  */
@@ -284,6 +301,7 @@ void PuckContext::TransferTimer::inletIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferTimer]->[Inlet]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	new (this) Inlet;
 }
 /*******************************************/
@@ -297,7 +315,7 @@ void PuckContext::Inlet::inletOut() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Inlet]->[InletArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	//startTimers();
+	startTimers(DistanceSpeed::lb_distance::INLET_TO_HEIGHT);
 	new (this) InletArea;
 }
 /*******************************************/
@@ -329,6 +347,7 @@ void PuckContext::InletTimer::heightmeasurementIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InletTimer]->[Heightmeasurement]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::HEIGHT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	stopTimer();
 	new (this) Heightmeasurement;
 }
 /*******************************************/
@@ -341,7 +360,7 @@ void PuckContext::Heightmeasurement::heightmeasurementOut() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Heightmeasurement]->[MeasurementArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	//startTimers();
+	startTimers(DistanceSpeed::lb_distance::HEIGHT_TO_SWITCH);
 	new (this) MeasurementArea;
 }
 void PuckContext::Heightmeasurement::type() {
@@ -389,6 +408,7 @@ void PuckContext::MeasurementTimer::switchIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [MeasurementTimer]->[TypeKnown]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::EVALUATE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	new (this) TypeKnown;
 }
 
@@ -422,7 +442,7 @@ void PuckContext::TypeKnown::switchOpen() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TypeKnown]->[SwitchArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	//startTimers();
+	startTimers(DistanceSpeed::lb_distance::SWITCH_TO_OUTLET);
 	new (this) SwitchArea;
 }
 
@@ -431,7 +451,7 @@ void PuckContext::TypeKnown::slideIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TypeKnown]->[SlideArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	//startTimers();
+	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN); //TODO need right distance
 	new (this) SlideArea;
 }
 /*******************************************/
@@ -444,6 +464,7 @@ void PuckContext::SlideArea::slideOut() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SlideArea]->[dead]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	// dies here
 }
 
@@ -484,11 +505,13 @@ void PuckContext::SwitchTimer::outletIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	new (this) OutletArea;
 #else
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	stopTimer();
 	new (this) OutletArea;
 #endif
 }

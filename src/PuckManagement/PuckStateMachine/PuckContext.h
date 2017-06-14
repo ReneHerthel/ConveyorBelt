@@ -13,12 +13,21 @@
 #include "PuckSignal.h"
 #include <stdint.h>
 #include "SerialProtocoll.h"
+#include "DistanceTracker.h"
+#include "DistanceEnum.h"
 
 #define machine (0) // 0 or 1
-
+#define TIMERCODE 25 //TODO fill with right PulseCode
+#define SHORT_DELTA 0.85
+#define WIDE_DELTA 1.15
 class PuckContext {
+private:
+
+	DistanceTracker shortDistance;
+	DistanceTracker wideDistance;
+
 public:
-	PuckContext();
+	PuckContext(int chid);
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
@@ -77,7 +86,11 @@ public:
 		PuckSignal::PuckType puckType;
 
 		// Timer stuff
-		void startTimers();
+
+		DistanceTracker *shortDistance;
+		DistanceTracker *wideDistance;
+
+		void startTimers(DistanceSpeed::lb_distance distance);
 		void stopTimer();
 	} *statePtr;
 	/*******************************************/

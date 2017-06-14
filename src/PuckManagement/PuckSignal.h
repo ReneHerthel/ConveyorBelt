@@ -44,10 +44,13 @@ namespace PuckSignal {
 		LATE_TIMER
 	};
 
-	struct TimerSignal {
-		uint16_t puckID;
-		TimerType type;
-	} __attribute__((packed));
+	union TimerSignal {
+		struct {
+			uint16_t puckID;
+			TimerType type;
+		} __attribute__((packed));
+		int32_t value;
+	};
 
 	enum SignalType {
 		HEIGHT_SIGNAL,

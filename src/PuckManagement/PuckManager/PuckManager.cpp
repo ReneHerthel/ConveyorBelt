@@ -10,9 +10,10 @@
 #include "logger.h"
 #include "logscope.h"
 
-PuckManager::PuckManager()
+PuckManager::PuckManager(int chid)
 	: puckList()
 	, nextPuckID(0)
+	, chid(chid)
 {}
 
 PuckManager::~PuckManager() {
@@ -47,7 +48,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(	signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL &&
 		signal.interruptSignal == interrupts::interruptSignals::INLET_IN) {
 
-		addPuck(new PuckContext());
+		addPuck(new PuckContext(chid));
 
 		std::list<PuckContext*>::iterator it = puckList.begin();
 		do {

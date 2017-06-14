@@ -28,7 +28,7 @@ AFTER_TC(TestPuckManager) {
 }
 
 BEFORE(TestPuckManager) {
-	manager = new PuckManager();
+	manager = new PuckManager(CHID);
 	return 1;
 }
 
@@ -108,7 +108,7 @@ TEST_IMPL(TestPuckManager, test2) {
 TEST_IMPL(TestPuckManager, test3) {
 	LOG_SCOPE;
 	LOG_DEBUG << "-------------------TEST 3 ------------------\n";
-	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, {0, PuckSignal::TimerType::LATE_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
+	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, {((0<<16) | (int32_t)(PuckSignal::TimerType::LATE_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
 
 	for(uint32_t i = 1; i < (sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal)); i++) {
 		PuckManager::ManagerReturn returnVal;
@@ -148,7 +148,7 @@ TEST_IMPL(TestPuckManager, test3) {
 		}
 
 		delete manager;
-		manager = new PuckManager();
+		manager = new PuckManager(CHID);
 	}
 	return TEST_PASSED;
 }
