@@ -14,6 +14,7 @@
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
+#include "TestHeightMeasurement.h"
 
 
 using namespace std;

@@ -14,8 +14,9 @@
 #include "Logger.h"
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
-#include "SortingSwitchService.h"
 #include <thread>
+#include "HeightMeasurementService.h"
+#include "HeightMeasurementHal.h"
 
 using namespace chrono;
 
@@ -90,6 +91,35 @@ void Calibration::calibrate(void){
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
 }
+
+void  Calibration::calibrateHeighMeasurement(void){
+
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
+			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+			return;
+	}
+
+	HeightMeasurementHal hhal;
+	int16_t data = 0;
+
+	hhal.read(data);
+
+	hmCal.refHeight = data; //Belt height
+
+
+	hmCal.surfaceHeight = CALC_ABS_HEIGHT(data, SURFACE);
+	hmCal.holeHeight 	= CALC_ABS_HEIGHT(data, HOLE);
+	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
+	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
+	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
+
+
+}
+
+HeightMeasurementService::CalibrationData Calibration::getHmCalibration(void){
+	return hmCal;
+}
+
 
 void Calibration::manualCalibration(uint32_t hf, uint32_t hs, uint32_t sf, uint32_t ss, uint32_t of, uint32_t os, uint32_t ovf, uint32_t ovs){
 	//heightMeasure[0] += ((long long int)hf);
