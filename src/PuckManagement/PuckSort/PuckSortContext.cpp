@@ -39,10 +39,10 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
+	LOG_DEBUG << "process: Got " << signal.heightType.ID << endl;
     switch (signal.heightType.ID) {
-	LOG_DEBUG << "__FUNCTION__: Got " << signal.heightType.ID << endl;
     case NORMAL_ID:
-    	LOG_DEBUG << "__FUNCTION__: Got metal = " << signal.metal << endl;
+    	LOG_DEBUG << "process: Got metal = " << signal.metal << endl;
     	if (signal.metal) {
     	    	statePtr->holeWithMetal();
     	} else {
@@ -56,7 +56,7 @@ bool PuckSortContext::process(PuckType signal) {
     	statePtr->lowHeight();
     	break;
     case PATTERN_ID:
-    	LOG_DEBUG << "__FUNCTION__: Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
+    	LOG_DEBUG << "process: : Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
     	if (!signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
     		// 001
     		statePtr->bitCode1();
@@ -78,7 +78,7 @@ bool PuckSortContext::process(PuckType signal) {
     	}
     	break;
     default:
-    	LOG_DEBUG << "__FUNCTION__: Invalid" << endl;
+    	LOG_DEBUG << "process: Invalid" << endl;
     	statePtr->invalid();
     }
     return statePtr->returnValue;
@@ -113,7 +113,7 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
 	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::bitCode2() {
 	LOG_SCOPE;
@@ -126,7 +126,7 @@ void PuckSortContext::PuckSort::bitCode2() {
 		returnValue = false;
 	}
 
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::bitCode4() {
 	LOG_SCOPE;
@@ -139,12 +139,12 @@ void PuckSortContext::PuckSort::bitCode4() {
 		returnValue = false;
 	}
 
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
 	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
@@ -156,34 +156,34 @@ void PuckSortContext::PuckSort::flipped() {
 		returnValue = false;
 	}
 
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::lowHeight() {
 	LOG_SCOPE;
 	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
 	returnValue = true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
 	returnValue = true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 
 /* Define transitions for Start state */
 void PuckSortContext::Start::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = false;
-	LOG_DEBUG << "[Start]->[GotHoleUpWoMetal] Discard: \n" << returnValue;
+	LOG_DEBUG << "[Start]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpMetal;
 }
 
@@ -191,7 +191,7 @@ void PuckSortContext::Start::holeWithoutMetal() {
 void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = false;
-	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: \n" << returnValue;
+	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: " << returnValue << endl;
 	new (this) GotTwoHoleUpWoMetal;
 }
 
@@ -199,6 +199,6 @@ void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
 void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	LOG_SCOPE;
 	returnValue = false;
-	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: \n" << returnValue;
+	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpMetal;
 }
