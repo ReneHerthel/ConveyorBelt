@@ -8,7 +8,9 @@
 #ifndef Control_H_
 #define Control_H_
 
+#include "PulseMessageReceiverService.h"
 #include "PulseMessageSenderService.h"
+
 
 //Lightbarriers and Sensor
 #define LightBarrier_ENTRY  		0b0000000000000001
@@ -22,12 +24,13 @@
 
 //Buttons
 #define BUTTONSTART	            0b0001000000000000
-#define BUTTONSTOP			  	  	0b0010000000000000
+#define BUTTONSTOP			  	0b0010000000000000
 #define BUTTONRESET				0b0100000000000000
 #define BUTTONESTOP				0b1000000000000000
 
-
+	using namespace rcv;
 class Control {
+
 
 public:
 
@@ -71,10 +74,9 @@ public:
      * @brief The channel ID, where this object will make a connection to.
      */
 	int chid_;
-
 	PulseMessageSenderService * sender;
+
 
 };
 
 #endif /* Control_H_ */
-

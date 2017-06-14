@@ -20,12 +20,13 @@ private:
 	int8_t code_;
 	int chid_;
 	TimerService timer_;
-	int32_t lastValue_;
-	DistanceSpeed::speed_t currSpeed_;
 	bool stopped_;
-	uint32_t mmToTimeFast_;
-	uint32_t mmToTimeSlow_;
+	DistanceSpeed::speed_t currSpeed_;
+	int32_t lastValue_;
+	double fastToSlowFactor_;
+	double slowToFastFactor_;
 public:
+
 	/**
 	 *Send a Signal when the conveyor belt has covered a certain distance
 	 *@param chid The Channel the DistanceTracker will send a signal, when distance was covered
@@ -51,7 +52,7 @@ public:
 	 *@param distanceMm The distance in millimetres
 	 *@return -1 when setting the alarm failed
 	 */
-	int32_t startAlarm(int32_t value, uint32_t distanceMm);
+	int32_t startAlarm(int32_t value, DistanceSpeed::lb_distance distance, double delta);
 
 	/**
 	 *Stop the Alarm from this distance tracker

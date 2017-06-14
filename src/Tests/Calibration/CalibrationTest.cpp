@@ -23,8 +23,16 @@ BEFORE(CalibrationTest){return 1;}
 AFTER(CalibrationTest){return 1;}
 
 TEST_IMPL(CalibrationTest, Calibrate){
-	Calibration cal;
+	Calibration& cal = Calibration::getInstance();
+	cal.calibrateHeighMeasurement();
+	HeightMeasurementService::CalibrationData hmCal = cal.getHmCalibration();
+
+	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
+				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
+	std::cout.flush();
+
 	cal.calibrate();
+	cal.print();
 }
 
 
