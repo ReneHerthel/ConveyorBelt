@@ -35,7 +35,7 @@ class PuckSortContext {
          */
         bool process(PuckType signal);
         void process(PuckReturn message);
-
+        void process(Serial_n::ser_proto_msg message);
 
     struct PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
@@ -47,6 +47,7 @@ class PuckSortContext {
         virtual void lowHeight();
         virtual void holeWithoutMetal();
         virtual void holeWithMetal();
+        virtual void invalid();
 
         bool rampe1IsEmpty;
         bool rampe2IsEmpty;

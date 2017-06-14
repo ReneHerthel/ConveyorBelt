@@ -39,14 +39,75 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
-    return false;
+    switch (signal.heightType.ID) {
+	LOG_DEBUG << "__FUNCTION__: Got " << signal.heightType.ID << endl;
+    case NORMAL_ID:
+    	LOG_DEBUG << "__FUNCTION__: Got metal = " << signal.metal << endl;
+    	if (signal.metal) {
+    	    	statePtr->holeWithMetal();
+    	} else {
+    	    	statePtr->holeWithoutMetal();
+    	}
+    	break;
+    case FLIPPED_ID:
+    	statePtr->flipped();
+    	break;
+    case INVALID_ID:
+    	statePtr->lowHeight();
+    	break;
+    case PATTERN_ID:
+    	LOG_DEBUG << "__FUNCTION__: Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
+    	if (!signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
+    		// 001
+    		statePtr->bitCode1();
+    	}
+
+    	if (!signal.heightType.BIT2 && signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    		// 010
+    		statePtr->bitCode2();
+    	}
+
+    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    		// 100
+    		statePtr->bitCode4();
+    	}
+
+    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    	    // 101
+    	    statePtr->bitCode5();
+    	}
+    	break;
+    default:
+    	LOG_DEBUG << "__FUNCTION__: Invalid" << endl;
+    	statePtr->invalid();
+    }
+    return statePtr->returnValue;
 #endif
 }
 
 /* SlideFull */
 void PuckSortContext::process(PuckReturn message) {
-
+	if (SLIDE_FULL == message) {
+	#if MACHINE
+			statePtr->rampe2IsEmpty = false;
+	#else
+			statePtr->rampe1IsEmpty = false;
+	#endif
+		}
 }
+
+/* SLIDE_FULL_SER */
+void PuckSortContext::process(Serial_n::ser_proto_msg message) {
+	if (SLIDE_FULL_VAL == message) {
+#if MACHINE
+		/* FIXME: Probably unnecessary */
+		statePtr->rampe1IsEmpty = false;
+#else
+		statePtr->rampe2IsEmpty = false;
+#endif
+	}
+}
+
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
@@ -108,6 +169,11 @@ void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
+	LOG_SCOPE;
+	returnValue = true;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+}
+void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
 	returnValue = true;
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
