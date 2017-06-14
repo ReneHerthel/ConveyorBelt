@@ -92,16 +92,32 @@ void Calibration::calibrate(void){
 
 }
 
-void calibrateHeighMeasurement(void){
+void  Calibration::calibrateHeighMeasurement(void){
+
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
+			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+			return;
+	}
+
 	HeightMeasurementHal hhal;
 	int16_t data = 0;
 
 	hhal.read(data);
 
-	hmCal.refHeight = data; //Height of the belt surface
+	hmCal.refHeight = data; //Belt height
 
-	//TODO Finish while puck drunter durch höchstes surfaceHeight
 
+	hmCal.surfaceHeight = CALC_ABS_HEIGHT(data, SURFACE);
+	hmCal.holeHeight 	= CALC_ABS_HEIGHT(data, HOLE);
+	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
+	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
+	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
+
+
+}
+
+HeightMeasurementService::CalibrationData Calibration::getHmCalibration(void){
+	return hmCal;
 }
 
 
