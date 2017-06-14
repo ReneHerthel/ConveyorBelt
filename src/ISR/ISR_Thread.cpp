@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <sys/neutrino.h>
 #include <sys/siginfo.h>
-#include "ConveyorBelt-devel/src/HWaccess.h"
+#include "HWaccess.h"
 #include "Control.h"
 #include "ISR_Thread.h"
 
@@ -131,31 +131,31 @@ void ISR_Thread::execute(){
         			if((diff & LightBarrier_ENTRY) == LightBarrier_ENTRY){
         					if (lb_entry_active) {
         						cout << "LightBarrier_entry_" << endl;
-        						ctrl->LightBarrier_ENTRY_IN();
+        						ctrl->lightBarrier_ENTRY_IN();
         						lb_entry_active = false;
         					} else {
         						lb_entry_active = true;
-        						ctrl->LightBarrier_ENTRY_OUT();
+        						ctrl->lightBarrier_ENTRY_OUT();
         					}
         			}
         			else if((diff & LightBarrier_HEIGHT) == LightBarrier_HEIGHT){
         					if (lb_height_active) {
         						cout << "LightBarrier_height" << endl;
-        						ctrl->LightBarrier_HEIGHT_IN();
+        						ctrl->lightBarrier_HEIGHT_IN();
         						lb_height_active = false;
         					} else {
         						lb_height_active = true;
-        						ctrl->LightBarrier_HEIGHT_OUT();
+        						ctrl->lightBarrier_HEIGHT_OUT();
         					}
         			}
 
         			else  if((diff & LightBarrier_SWITCH) == LightBarrier_SWITCH){
         					if (lb_switch_active){
         						cout << "LightBarrier_switch" << endl;
-        						ctrl->LightBarrier_SWITCH_IN();
+        						ctrl->lightBarrier_SWITCH_IN();
         						lb_switch_active = false;
         					} else {
-        						ctrl->LightBarrier_SWITCH_OUT();
+        						ctrl->lightBarrier_SWITCH_OUT();
         						lb_switch_active = true;
         					}
         			}
@@ -163,10 +163,10 @@ void ISR_Thread::execute(){
         			else if((diff & LightBarrier_RAMP) == LightBarrier_RAMP){
         					if (lb_ramp_active) {
         						cout << "LightBarrier_ramp" << endl;
-        						ctrl->LightBarrier_RAMP_IN();
+        						ctrl->lightBarrier_RAMP_IN();
         						lb_ramp_active = false;
         					} else {
-        						ctrl->LightBarrier_RAMP_OUT();
+        						ctrl->lightBarrier_RAMP_OUT();
         						lb_ramp_active = true;
         					}
         			}
@@ -174,49 +174,49 @@ void ISR_Thread::execute(){
     				else if((diff & LightBarrier_EXIT) == LightBarrier_EXIT){
         					if (lb_exit_active) {
         						cout << "LightBarrier_exit" << endl;
-        						ctrl->LightBarrier_EXIT_IN();
+        						ctrl->lightBarrier_EXIT_IN();
         						lb_exit_active = false;
         					} else {
-        						ctrl->LightBarrier_EXIT_OUT();
+        						ctrl->lightBarrier_EXIT_OUT();
         						lb_exit_active = true;
         					}
     					}
 
-    				else if((diff & BUTTON_START) == BUTTON_START){
+    				else if((diff & BUTTONSTART) == BUTTONSTART){
         					if (button_start_active) {
         						cout << "button_start" << endl;
-        						ctrl->B_Start();
+        						ctrl->b_Start();
         						button_start_active = false;
         					} else {
         						button_start_active = true;
         					}
         			}
 
-    				else if((diff & BUTTON_STOP) == BUTTON_STOP){
+    				else if((diff & BUTTONSTOP) == BUTTONSTOP){
         					if (button_stop_active) {
         						cout << "button_stop" << endl;
-        						ctrl->B_STOP();
+        						ctrl->b_STOP();
         						button_stop_active = false;
         					} else {
         						button_stop_active = true;
         					}
         			}
 
-    				else if((diff & BUTTON_RESET) == BUTTON_RESET){
+    				else if((diff & BUTTONRESET) == BUTTONRESET){
         					if (button_reset_active) {
         						cout << "button_reset" << endl;
-        						ctrl->B_Reset();
+        						ctrl->b_Reset();
         						button_reset_active = false;
         					} else {
         						button_reset_active = true;
         					}
         			}
 
-    				else if ((diff & BUTTON_ESTOP) == BUTTON_ESTOP){
+    				else if ((diff & BUTTONESTOP) == BUTTONESTOP){
 
         					if (button_estop_active) {
         						cout << "button_estop" << endl;
-        						ctrl->B_EStop();
+        						ctrl->b_EStop();
         						button_estop_active = false;
         					} else {
         						button_estop_active = true;
@@ -226,7 +226,7 @@ void ISR_Thread::execute(){
     				else if ((diff & SENSOR_METAL) == SENSOR_METAL){
         			        if (sensor_metal_active) {
         			        	cout << "metal" << endl;
-        			        	ctrl->METAL();
+        			        	ctrl->metal();
         			        	sensor_metal_active = false;
         			        	} else {
         			        	cout << "no_metal" << endl;
@@ -237,17 +237,17 @@ void ISR_Thread::execute(){
     				else if ((diff & SENSOR_HEIGHT) == SENSOR_HEIGHT){
         					if (sensor_height_active) {
         						cout << "sensor_height" << endl;
-        						ctrl->HEIGHT();
+        						ctrl->height();
         						sensor_height_active = false;
         					} else {
         						sensor_height_active = true;
         					}
         			}
 
-    				else if ((diff & SWITCH_OPEN) == SWITCH_OPEN){
+    				else if ((diff & SWITCH_OPEND) == SWITCH_OPEND){
         					if (switch_open) {
         						cout << "switch is open" << endl;
-        						ctrl->SWITCH();
+        						ctrl->switchen();
         						switch_open = false;
         					} else {
         						cout << "switch is closed" << endl;

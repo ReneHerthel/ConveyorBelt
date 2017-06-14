@@ -19,6 +19,7 @@
 namespace HAL {
     class BLightSystem {
         public:
+    	    virtual ~BLightSystem() = 0;
             /**
              * @brief   Turn light on
              * @param   [in] color Specify by color which light to manipulate
@@ -31,6 +32,5 @@ namespace HAL {
             virtual void lightOff(Color color) = 0;
     };
 }
-
 
 #endif /* BLIGHTSYSTEM_H_ */

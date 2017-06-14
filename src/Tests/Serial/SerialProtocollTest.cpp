@@ -7,6 +7,8 @@
 #include "../../SerialPort/TopLevelProto/SerialProtocoll.h"
 #include "../../SerialPort/TopLevelProto/ITopLvlProtocoll.h"
 
+using namespace Serial_n;
+
 SETUP(SerialProtocollTest){
     REG_TEST(WrapObject, 1, "[SerialProtocol][SerialTestStub]Test to frame and deframe an object");
     REG_TEST(TestSimpleMessages, 2, "[SerialProtocol] Passing the simple messages");
@@ -30,13 +32,13 @@ TEST_IMPL(SerialProtocollTest, WrapObject){
 }
 
 TEST_IMPL(SerialProtocollTest, TestSimpleMessages){
-    msg list[] = {ACCEPT, STOP, RESUME, INVALID, RECEIVED};
+    ser_proto_msg list[] = {ACCEPT_SER, STOP_SER, RESUME_SER, INVALID_SER, RECEIVED_SER};
     void *buff;
     SerialProtocoll proto(SENDER); //does not really matter if sender or receiver for this test
     for(int i = 0; i < (sizeof(list) / sizeof(list[0])); i++){
-        msg resu;
+        ser_proto_msg resu;
         buff = proto.wrapInFrame(SER_IN, list[i]).obj;
-        resu = (msg) proto.convToPulse(buff).value;
+        resu = (ser_proto_msg) proto.convToPulse(buff).value;
         if(resu != list[i]){
             return TEST_FAILED;
         }

@@ -5,12 +5,6 @@
 #ifndef CONVEYORBELT_SERIAL_H
 #define CONVEYORBELT_SERIAL_H
 
-#define SERIAL_TIMEOUT_SIG ((uint8_t)65) //Just some random number
-#define SERIAL_POL_TIMEOUT 1000*10 //1000ms * 10 = 10sek
-
-#define SERIAL_POL_INTERVALL 1000*5 // 5sec
-#define SERIAL_SEND_POL ((uint8_t)75)
-
 #include "SerialReceiver.h"
 #include "SerialSender.h"
 #include "TopLevelProto/ITopLvlProtocoll.h"
@@ -20,6 +14,14 @@
 #include "IPulseMessageSender.h"
 #include "PulseMessageSenderService.h"
 #include <thread>
+
+
+#define SERIAL_TIMEOUT_SIG ((uint8_t)65) //Just some random number
+#define SERIAL_POL_TIMEOUT 1000 //10sek
+
+#define SERIAL_POL_INTERVALL 500 //5 Sec
+#define SERIAL_SEND_POL ((uint8_t)75)
+
 class Serial {
 public:
     /**
