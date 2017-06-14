@@ -100,7 +100,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 	}
 
 	HeightMeasurementHal hhal;
-	int16_t data = 0;
+	uint16_t data = 0;
 
 	hhal.read(data);
 

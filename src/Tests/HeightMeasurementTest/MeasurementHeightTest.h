@@ -14,19 +14,19 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef TESTHEIGHTMEASUREMENT_H_
-#define TESTHEIGHTMEASUREMENT_H_
+#ifndef MHT_TEST_H_
+#define MHT_TEST_H_
 
 #include "../TestFramework/TestCase.h"
 #include "../TestFramework/TestFramework.h"
 
-class TestHeightMeasurement : public TestCase
+class MeasurementHeightTest : public TestCase
 {
 public:
     /*
      * @brief
      */
-	  TestHeightMeasurement(int id, std::string brief) : TestCase(id, brief) { };
+	  MeasurementHeightTest(int id, std::string brief) : TestCase(id, brief) { };
 
 protected:
 	  /*

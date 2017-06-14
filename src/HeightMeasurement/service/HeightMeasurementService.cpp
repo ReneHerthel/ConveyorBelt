@@ -68,11 +68,11 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
-    uint16_t data = 0;             /*< The current measured data.*/
-    Signal state = START;         /*< The current state of the statemachine.*/
-    Signal oldState = state;      /*< The old state of the statemachine.*/
-    HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
-    int err = 0;                  /*< Return value of msgSend.*/
+    uint16_t data = 0;             	/*< The current measured data.*/
+    Signal state = START;         	/*< The current state of the statemachine.*/
+    Signal oldState = state;      	/*< The old state of the statemachine.*/
+    HeightMeasurementHal hal;     	/*< The hal object to access the HW.*/
+    int err = 0;                  		/*< Return value of msgSend.*/
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -103,7 +103,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
                 // TODO Error handling.
                 LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
             }
-            //LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+            LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
         }
         // Remember the current state as old state for the next loop.
         oldState = state;

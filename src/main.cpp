@@ -12,7 +12,7 @@
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
-#include "TestHeightMeasurement.h"
+#include "MeasurementHeightTest.h"
 
 using namespace std;
 
@@ -58,7 +58,7 @@ int main() {
     ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
 
     //Calibrate Heights
-    ts.REG_TESTCASE(new TestHeightMeasurement(10, "[Man Height Cal]"));
+    ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
