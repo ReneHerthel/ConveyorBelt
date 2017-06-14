@@ -33,7 +33,7 @@
 
 #define TEST_HEIGHT_HAL             (0)
 #define TEST_HEIGHT_STATEMACHINE    (0)
-#define TEST_HEIGHT_SERVICE         (0)
+#define TEST_HEIGHT_SERVICE         (1)
 #define SLEEP_TIME                  (1000)
 
 void TestHeightMeasurement::startTest() {
@@ -88,14 +88,8 @@ void TestHeightMeasurement::startTest() {
     HeightMeasurementService::CalibrationData cal;
 
     // THIS IS CALIBRATED BY HAND!
-    cal.delta         = 50;
-
-    cal.refHeight     = 4080;
-    cal.holeHeight    = 3630;
-    cal.highHeight    = 2945;  // 1 "tief""
-    cal.invalidHeight = 2830;
-    cal.lowHeight     = 2725;  // 0 "mitteltief
-    cal.surfaceHeight = 2590;
+    Calibration hmCal = Calibration::getInstance();
+    cal
 
     HeightMeasurementService service(receive_chid, send_chid, &cal);
 

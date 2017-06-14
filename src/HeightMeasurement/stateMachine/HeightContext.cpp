@@ -125,7 +125,7 @@ void HeightContext::process(Signal signal) {
     statePtr->entry();
 }
 
-void HeightContext::send(int coid, signal_t signal) { // Static method.
+void HeightContext::State::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
 
@@ -133,7 +133,7 @@ void HeightContext::send(int coid, signal_t signal) { // Static method.
 
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value);
 
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " highestHeight: " << (int)signal.highestHeight "\n";
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " highestHeight: " << (int)signal.highestHeight << "\n";
     LOG_DEBUG << "DUMMY MESSAGE\n";
 
     if (err < 0) {
@@ -169,7 +169,7 @@ void HeightContext::State::timeout() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -183,7 +183,7 @@ void HeightContext::State::start() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -232,7 +232,7 @@ void HeightContext::State::patternRead() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -297,7 +297,7 @@ void HeightContext::Measuring::invalid() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -364,7 +364,7 @@ void HeightContext::Surface::refHeight() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -401,7 +401,7 @@ void HeightContext::Top::entry() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
-        signal.OTHER = 0;
+        signal.highestHeight = 0;
         send(coid, signal);
         new (this) Idle;
     }
@@ -423,7 +423,7 @@ void HeightContext::Top::refHeight() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
-        signal.OTHER = 0;
+        signal.highestHeight = 0;
    		  send(coid, signal);
    		  new (this) Idle;
     }
@@ -498,7 +498,7 @@ void HeightContext::Flipped::entry() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }
@@ -515,7 +515,7 @@ void HeightContext::BitCoded::entry() {
     signal.BIT0 = pattern[0];
     signal.BIT1 = pattern[1];
     signal.BIT2 = pattern[2];
-    signal.OTHER = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }

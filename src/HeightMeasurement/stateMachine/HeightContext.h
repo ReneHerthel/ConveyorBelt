@@ -56,6 +56,8 @@ private:
         virtual void lowHeight();
         virtual void highHeight();
         virtual void entry();
+
+        void send(int coid, signal_t signal);
         unsigned int index;
         int coid;  // The channel, where the statemachine will send to.
         HeightMeasurementService *service;  // A pointer to the service class.
@@ -212,14 +214,6 @@ private:
      * @brief A reference to the current state of the state machine.
      */
     State state;
-
-    /*
-     * @brief Sends a pulse message over the connection ID.
-     *
-     * @param[coid] The connection ID.
-     * @param[signal] The signal, which should be sent.
-     */
-    static void send(int coid, signal_t signal);
 
     /*
      * @brief A pointer to the reference class to start & stop the measuring.
