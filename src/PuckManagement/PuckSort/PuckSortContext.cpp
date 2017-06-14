@@ -15,17 +15,19 @@
 /* TODO: Process signals */
 
 PuckSortContext::PuckSortContext()
-: rampe1IsEmpty(true)
-, rampe2IsEmpty(true)
-, returnValue(false)
 {
+	LOG_SCOPE;
+	statePtr = &startState;
 #if MACHINE
 	isOnMachine1 = false;
 	isOnMachine2 = true;
 #else
-	isOnMachine1 = true;
-	isOnMachine2 = false;
+	statePtr->isOnMachine1 = true;
+	statePtr->isOnMachine2 = false;
 #endif
+	statePtr->rampe1IsEmpty = true;
+	statePtr->rampe2IsEmpty = true;
+	statePtr->returnValue = false;
 }
 
 /* Decide between PuckType and SlideFull */
@@ -37,19 +39,75 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
+    switch (signal.heightType.ID) {
+	LOG_DEBUG << "__FUNCTION__: Got " << signal.heightType.ID << endl;
+    case NORMAL_ID:
+    	LOG_DEBUG << "__FUNCTION__: Got metal = " << signal.metal << endl;
+    	if (signal.metal) {
+    	    	statePtr->holeWithMetal();
+    	} else {
+    	    	statePtr->holeWithoutMetal();
+    	}
+    	break;
+    case FLIPPED_ID:
+    	statePtr->flipped();
+    	break;
+    case INVALID_ID:
+    	statePtr->lowHeight();
+    	break;
+    case PATTERN_ID:
+    	LOG_DEBUG << "__FUNCTION__: Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
+    	if (!signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
+    		// 001
+    		statePtr->bitCode1();
+    	}
 
-    switch(signal) {
+    	if (!signal.heightType.BIT2 && signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    		// 010
+    		statePtr->bitCode2();
+    	}
 
+    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    		// 100
+    		statePtr->bitCode4();
+    	}
 
+    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    	    // 101
+    	    statePtr->bitCode5();
+    	}
+    	break;
+    default:
+    	LOG_DEBUG << "__FUNCTION__: Invalid" << endl;
+    	statePtr->invalid();
     }
-    return false;
+    return statePtr->returnValue;
 #endif
 }
 
 /* SlideFull */
 void PuckSortContext::process(PuckReturn message) {
-
+	if (SLIDE_FULL == message) {
+	#if MACHINE
+			statePtr->rampe2IsEmpty = false;
+	#else
+			statePtr->rampe1IsEmpty = false;
+	#endif
+		}
 }
+
+/* SLIDE_FULL_SER */
+void PuckSortContext::process(Serial_n::ser_proto_msg message) {
+	if (SLIDE_FULL_VAL == message) {
+#if MACHINE
+		/* FIXME: Probably unnecessary */
+		statePtr->rampe1IsEmpty = false;
+#else
+		statePtr->rampe2IsEmpty = false;
+#endif
+	}
+}
+
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
@@ -90,9 +148,6 @@ void PuckSortContext::PuckSort::bitCode5() {
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-
-	LOG_SCOPE;
-
 	if (isOnMachine2) {
 		returnValue = true;
 	} else if (rampe2IsEmpty && isOnMachine1) {
@@ -118,6 +173,11 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 	returnValue = true;
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
 }
+void PuckSortContext::PuckSort::invalid() {
+	LOG_SCOPE;
+	returnValue = true;
+	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: \n" << returnValue;
+}
 
 /* Define transitions for Start state */
 void PuckSortContext::Start::holeWithoutMetal() {
@@ -132,11 +192,11 @@ void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = false;
 	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: \n" << returnValue;
-	new (this) GotTwoHoleUpMetal;
+	new (this) GotTwoHoleUpWoMetal;
 }
 
 /* Define transitions for GotTwoHoleUpWoMetal state */
-void PuckSortContext::GotTwoHoleUpWoMetal::holeWithoutMetal() {
+void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	LOG_SCOPE;
 	returnValue = false;
 	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: \n" << returnValue;
