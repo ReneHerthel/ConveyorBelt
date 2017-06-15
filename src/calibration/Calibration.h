@@ -79,6 +79,7 @@ private:
 	std::chrono::milliseconds sortingSwitch[2];
 	std::chrono::milliseconds outlet[2];
 	std::chrono::milliseconds inlet[2];
+	std::chrono::milliseconds inSwitch[2];
 
 	double fastToSlowFactor;
 	double slowToFastFactor;
