@@ -70,9 +70,6 @@ int main() {
     //Calibrate Heights
      ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
 
-    // PortA
-    ts.REG_TESTCASE(new TestPortA(12, "Test port a actors"));
-
 #if !machine
     ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
     ts.REG_TESTCASE(new TestPuckManager(11, "[PuckManager] BasicTests on Machine 0"));
@@ -81,6 +78,10 @@ int main() {
 #endif
 
     ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
+
+    // PortA
+    ts.REG_TESTCASE(new TestPortA(13, "Test port a actors"));
+
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//
