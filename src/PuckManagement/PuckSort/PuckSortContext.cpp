@@ -19,8 +19,8 @@ PuckSortContext::PuckSortContext()
 	LOG_SCOPE;
 	statePtr = &startState;
 #if MACHINE
-	isOnMachine1 = false;
-	isOnMachine2 = true;
+	statePtr->isOnMachine1 = false;
+	statePtr->isOnMachine2 = true;
 #else
 	statePtr->isOnMachine1 = true;
 	statePtr->isOnMachine2 = false;
@@ -72,7 +72,7 @@ bool PuckSortContext::process(PuckType signal) {
     		statePtr->bitCode4();
     	}
 
-    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
     	    // 101
     	    statePtr->bitCode5();
     	}
@@ -81,6 +81,7 @@ bool PuckSortContext::process(PuckType signal) {
     	LOG_DEBUG << "process: Invalid" << endl;
     	statePtr->invalid();
     }
+    LOG_DEBUG << "process: Return " << statePtr->returnValue << endl;
     return statePtr->returnValue;
 #endif
 }
@@ -107,12 +108,6 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 #endif
 	}
 }
-
-/// Reset state machine to start
-void PuckSortContext::reset() {
-	statePtr = &startState;
-}
-
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
@@ -165,11 +160,13 @@ void PuckSortContext::PuckSort::flipped() {
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
+	// FIXME: holeWithoutMetal is always sorted out
 	returnValue = true;
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
+	// FIXME: holeWithMetal is always sorted out
 	returnValue = true;
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }

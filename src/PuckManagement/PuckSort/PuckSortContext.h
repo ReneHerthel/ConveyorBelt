@@ -17,7 +17,7 @@
 #include "PuckSignal.h"
 #include "SerialProtocoll.h"
 
-#define MACHINE 0
+#define MACHINE 1
 #define FIFO_SORT 0
 
 using namespace PuckSignal;
@@ -36,7 +36,6 @@ class PuckSortContext {
         bool process(PuckType signal);
         void process(PuckReturn message);
         void process(Serial_n::ser_proto_msg message);
-        void reset();
 
     struct PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
