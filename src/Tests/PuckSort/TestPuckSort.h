@@ -21,30 +21,30 @@
 #include "SerialProtocoll.h"
 
 class TestPuckSort : public TestCase {
-public:
-	TestPuckSort(int id, std::string brief)
-	: TestCase(id, brief)
-	, context(nullptr)
-	{};
-protected:
-	TEST(test1);
-	TEST_CASE_METHODS;
-private:
-	PuckSortContext *context;
+	public:
+		TestPuckSort(int id, std::string brief)
+		: TestCase(id, brief)
+		, context(nullptr)
+		{};
+	protected:
+		TEST(test1);
+		TEST_CASE_METHODS;
+	private:
+		PuckSortContext *context;
 
-	// holeWithoutMetal > holeWithoutMetal > holeWithMetal
-	// TODO: Makeup sane signal initialization
-	PuckType signalArrayShortestPath[3] {
-		{ { NORMAL_ID }, 0, 0, 0 },
-		{ { NORMAL_ID }, 0, 0, 0 },
-		{ { NORMAL_ID }, 1, 0, 0 },
-	};
 
-	bool returnArrayShortestPath[3] {
-		false,
-		false,
-		false,
-	};
+		// holeWithoutMetal > holeWithoutMetal > holeWithMetal
+		// TODO: Makeup sane signal initialization
+		PuckType signalArrayShortestPath[3];
+
+		signal_t holeWithoutMetal;
+		signal_t holeWithMetal;
+
+		bool returnArrayShortestPath[3] {
+			false,
+			false,
+			false,
+		};
 };
 
 #endif /* TESTPUCKSORT_H_ */

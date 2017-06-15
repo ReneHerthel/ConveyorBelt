@@ -184,7 +184,7 @@ void PuckSortContext::Start::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = false;
 	LOG_DEBUG << "[Start]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
-	new (this) GotHoleUpMetal;
+	new (this) GotHoleUpWoMetal;
 }
 
 /* Define transitions for GotHoleUpWoMetal state */
