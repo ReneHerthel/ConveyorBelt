@@ -14,6 +14,9 @@
 #include "Control.h"
 
 #include "PulseMessageReceiverService.h"
+#include "PulseMessageSenderService.h"
+
+#include "Calibration.h"
 
 #include "LightSystemService.h"
 
@@ -35,13 +38,33 @@ TEST_IMPL(MachineOne, Calibrate){
 
 	//INIT MAIN CHANNEL
 	PulseMessageReceiverService mainChannel; ///Main communication channel
-	int mainChannelChid = mainChannel.newChannel(); ///Chid of main com
+	int mainChid = mainChannel.newChannel(); ///Chid of main com
 
 	//INIT ISR
-	Control isrCntrl(mainCom);
+	Control isrCntrl(mainChid);
 	ISR isr(isrCntrl);
 
 	//INIT LIGHTSYSTEM
+	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
+	int lightsystemChid = lightsystemChannel.newChannel();
+
+	LightSystemHal lsHal();
+	LightSystemController lightSystemCntrl(lightsystemChid, lsHal);
+	LightSystemService lightSystem(lightsystemChid);
+
+	//INIT CALIBRATION AND CALIBRATE
+	Calibration& calibration = Calibration::getInstance();
+	calibration.calibrateHeighMeasurement();
+	calibration.calibrate();
+
+	//INIT HEIGHTMEASUREMENT
+	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
+	int heightMChid = heightMChannelCreator.newChannel();
+	PulseMessageSenderService heightMChannel(heightMChid);
+
+	HeightMeasurementService service(heightMChid, mainChannelChid, calibration.getHmCalibration());
+
+
 
 }
 
