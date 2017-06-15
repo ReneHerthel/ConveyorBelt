@@ -504,7 +504,7 @@ void PuckContext::SwitchTimer::outletIn() {
 #if !machine
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
 	stopTimer();
 	new (this) OutletArea;
 #else
