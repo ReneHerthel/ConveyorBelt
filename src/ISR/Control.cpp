@@ -113,8 +113,8 @@ void Control::b_Reset() {
 void Control::switchen(){
 	auto newTimestamp = std::chrono::system_clock::now();
 	std::chrono::duration<double> elapsed_time = (newTimestamp-oldTimestamp);
-	cout << "elapsed_time" << elapsed_time.count() << endl;
 	if( elapsed_time.count() > SWITCH_ISR_DENY_TIME){
+	cout << "elapsed_time " << elapsed_time.count() << endl;
  	sender->sendPulseMessage(code, SWITCH_OPEN);
  	oldTimestamp = newTimestamp;
 	cout << "Control SWITCH-OPEN" << endl;

@@ -35,7 +35,7 @@
 #define BUTTONRESET              0b0100000000000000
 #define BUTTONESTOP              0b1000000000000000
 
-#define SWITCH_ISR_DENY_TIME	0.001
+#define SWITCH_ISR_DENY_TIME	0.1
 	using namespace rcv;
 
 class Control {
