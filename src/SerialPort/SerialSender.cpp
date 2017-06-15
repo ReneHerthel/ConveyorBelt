@@ -61,6 +61,7 @@ void SerialSender::checksum(uint16_t size, char* buff){
 int32_t SerialSender::sendSerial(uint16_t size, char* buff) {
     LOG_SCOPE
     err = write(out, buff, size+1);
+    tcdrain(out);
     if(err < 0){
         LOG_ERROR << "Serial write failed with err code: " << err << "\n";
         //TODO Serial error handling

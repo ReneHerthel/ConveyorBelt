@@ -126,12 +126,28 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 			case 4: signal = RECEIVED_SER; break;
 		}
 		pmsSer1.sendPulseMessage(SER_OUT, signal);
-		msg = pmrSer2.receivePulseMessage();
-
-		if((uint32_t)msg.value != (uint32_t)signal){
-			return TEST_FAILED;
-		}
 	}
+
+
+	for(int i = 1; i <= 4; i++){ //Test 4 Simple signals
+			switch(i){
+				case 1: signal = ACCEPT_SER; break;
+				case 2: signal = STOP_SER; break;
+				case 3: signal = RESUME_SER; break;
+				case 4: signal = RECEIVED_SER; break;
+			}
+			msg = pmrSer2.receivePulseMessage();
+
+			if((uint32_t)msg.value != (uint32_t)signal){
+				ser1.kill();
+				ser2.kill();
+
+				ser1_thread.join();
+				ser2_thread.join();
+
+				return TEST_FAILED;
+			}
+		}
 
 	//------------TEST SENDING AN OBJ-----------//
 	SerialTestStub testObj(10,20,0,40);
@@ -141,7 +157,7 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 
 	std::cout << "Rec Pulse of Obj \n";
 
-	SerialTestStub *recObj = ((SerialTestStub*)msg.value);
+
 
 	switch(msg.code){
 		case SER_IN:		cout << "SER_IN \n"; break;
@@ -161,12 +177,6 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 			default: 			cout << "UNKNOWN SHID \n"; break;
 	}
 
-	if(!(testObj == *recObj)){
-		testObj.print();
-		recObj->print();
-		std::cout << "TestFailed\n";
-		return TEST_FAILED;
-	}
 
 
 	ser1.kill();
@@ -174,9 +184,19 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 
 	ser1_thread.join();
 	ser2_thread.join();
-
-	return TEST_PASSED;
-
+	if(msg.code == TRANSM_IN){
+		SerialTestStub *recObj = ((SerialTestStub*)msg.value);
+		if(!(testObj == *recObj)){
+			testObj.print();
+			recObj->print();
+			std::cout << "TestFailed\n";
+			return TEST_FAILED;
+		} else {
+			return TEST_PASSED;
+		}
+	} else {
+		return TEST_FAILED;
+	}
 }
 
 //v UNUSED v//
