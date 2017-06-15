@@ -17,7 +17,7 @@
 #include "PuckSignal.h"
 #include "SerialProtocoll.h"
 
-#define MACHINE 0
+#define MACHINE 1
 #define FIFO_SORT 0
 
 using namespace PuckSignal;
@@ -44,7 +44,6 @@ class PuckSortContext {
         virtual void bitCode4();
         virtual void bitCode5();
         virtual void flipped();
-        virtual void lowHeight();
         virtual void holeWithoutMetal();
         virtual void holeWithMetal();
         virtual void invalid();
