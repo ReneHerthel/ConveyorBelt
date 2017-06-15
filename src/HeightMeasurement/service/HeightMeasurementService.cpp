@@ -36,7 +36,8 @@
 using namespace HeightMeasurement;
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
-    :    calibrationDataPtr(calibrationDataPtr)
+    :    timer(receive_chid, 0)
+    ,    calibrationDataPtr(calibrationDataPtr)
     ,    receive_chid(receive_chid)
 	, 	 measurementIsRunning(false)
 {
@@ -193,6 +194,14 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
 
 uint16_t HeightMeasurementService::getHighestHeight() {
     return highestHeight;
+}
+
+void HeightMeasurementService::startTimer() {
+	timer.setAlarm(3000, Signal::TIMEOUT);
+}
+
+void HeightMeasurementService::stopTimer() {
+	timer.stopAlarm();
 }
 
 /** @} */

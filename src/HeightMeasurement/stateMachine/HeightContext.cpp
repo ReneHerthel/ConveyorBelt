@@ -165,7 +165,7 @@ void HeightContext::State::timeout() {
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State timeout()\n";
     signal_t signal;
-    signal.ID = SignalID::TIMEOUT_ID;
+    signal.ID = SignalID::INVALID_ID;
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
@@ -258,6 +258,7 @@ HeightContext::Idle::Idle() {
 	LOG_SCOPE;
 	if (service != NULL) {
         service->stopMeasuring();
+        service->stopTimer();
     }
     index = 0;
 }
@@ -285,8 +286,8 @@ void HeightContext::Measuring::entry() {
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
     if (service != NULL) {
         service->startMeasuring();
+        service->startTimer();
     }
-    // TODO startTimer()
 }
 
 void HeightContext::Measuring::invalid() {

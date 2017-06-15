@@ -36,6 +36,8 @@
 
 #include "HeightContext.h"
 
+#include "TimerService.h"
+
 #include <stdint.h>
 #include <sys/siginfo.h>
 #include <sys/neutrino.h>
@@ -95,7 +97,12 @@ public:
      */
     uint16_t getHighestHeight();
 
+    void startTimer();
+
+    void stopTimer();
+
 private:
+    TimerService timer;
     /*
      * @brief the heighest measured height
      */
