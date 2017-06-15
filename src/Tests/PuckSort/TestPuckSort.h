@@ -43,14 +43,14 @@ class TestPuckSort : public TestCase {
 	private:
 		PuckSortContext *context;
 
-		signal_t bitCode1;
-		signal_t bitCode2;
-		signal_t bitCode4;
-		signal_t bitCode5;
-		signal_t flipped;
-		signal_t holeWithoutMetal;
-		signal_t holeWithMetal;
-		signal_t invalid;
+		HeightMeasurement::signal_t bitCode1;
+		HeightMeasurement::signal_t bitCode2;
+		HeightMeasurement::signal_t bitCode4;
+		HeightMeasurement::signal_t bitCode5;
+		HeightMeasurement::signal_t flipped;
+		HeightMeasurement::signal_t holeWithoutMetal;
+		HeightMeasurement::signal_t holeWithMetal;
+		HeightMeasurement::signal_t invalid;
 };
 
 #endif /* TESTPUCKSORT_H_ */

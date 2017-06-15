@@ -79,14 +79,14 @@ void unregisterISR(void) {
  * @param [control] Control Object for Methodcalls
  * */
 ISR::ISR(Control * control) {
-    cout << "ctor: ISR_Thread" << endl;
+    //cout << "ctor: ISR_Thread" << endl;
     ctrl = control;
 
     if ((isrChannel = ChannelCreate(0)) == -1) {
         exit(EXIT_FAILURE);
     }
 
-    cout<< "isrchannel " << isrChannel <<endl;
+    //cout<< "isrchannel " << isrChannel <<endl;
 
     if ((isrConnection = ConnectAttach(0, 0, isrChannel, 0, 0)) == -1) {
         exit(EXIT_FAILURE);
@@ -96,7 +96,7 @@ ISR::ISR(Control * control) {
  * deconstructor
  * */
 ISR::~ISR() {
-    cout << "dtor: ISR_Thread" << endl;
+    //cout << "dtor: ISR_Thread" << endl;
 }
 /*
  * "main"-function, call this to start the ISR
@@ -127,7 +127,7 @@ void ISR::operator()() {
 
         if((diff & BUTTONESTOP) == BUTTONESTOP) {
             if (button_estop_active) {
-                cout << "button_estop" << endl;
+                //cout << "button_estop" << endl;
                 ctrl->b_EStop();
                 button_estop_active = false;
                 running = false;
@@ -137,7 +137,7 @@ void ISR::operator()() {
         }
         else if((diff & LightBarrier_HEIGHT) == LightBarrier_HEIGHT) {
             if (lb_height_active) {
-                cout << "LightBarrier_height" << endl;
+                //cout << "LightBarrier_height" << endl;
                 ctrl->lightBarrier_HEIGHT_IN();
                 lb_height_active = false;
             } else {
@@ -147,7 +147,7 @@ void ISR::operator()() {
         }
         else  if((diff & LightBarrier_SWITCH) == LightBarrier_SWITCH) {
             if (lb_switch_active){
-                cout << "LightBarrier_switch" << endl;
+                //cout << "LightBarrier_switch" << endl;
                 ctrl->lightBarrier_SWITCH_IN();
                 lb_switch_active = false;
             } else {
@@ -157,7 +157,7 @@ void ISR::operator()() {
         }
         else if((diff & LightBarrier_RAMP) == LightBarrier_RAMP) {
             if (lb_ramp_active) {
-                cout << "LightBarrier_ramp" << endl;
+                //cout << "LightBarrier_ramp" << endl;
                 ctrl->lightBarrier_RAMP_IN();
                 lb_ramp_active = false;
             } else {
@@ -167,7 +167,7 @@ void ISR::operator()() {
         }
         else if((diff & LightBarrier_EXIT) == LightBarrier_EXIT) {
             if (lb_exit_active) {
-                cout << "LightBarrier_exit" << endl;
+                //cout << "LightBarrier_exit" << endl;
                 ctrl->lightBarrier_EXIT_IN();
                 lb_exit_active = false;
             } else {
@@ -177,7 +177,7 @@ void ISR::operator()() {
         }
         else if((diff & BUTTONSTART) == BUTTONSTART) {
             if (button_start_active) {
-                cout << "button_start" << endl;
+                //cout << "button_start" << endl;
                 ctrl->b_Start();
                 button_start_active = false;
             } else {
@@ -186,7 +186,7 @@ void ISR::operator()() {
         }
         else if((diff & BUTTONSTOP) == BUTTONSTOP) {
             if (button_stop_active) {
-                cout << "button_stop" << endl;
+                //cout << "button_stop" << endl;
                 ctrl->b_STOP();
                 button_stop_active = false;
             } else {
@@ -195,7 +195,7 @@ void ISR::operator()() {
         }
         else if((diff & BUTTONRESET) == BUTTONRESET) {
             if (button_reset_active) {
-                cout << "button_reset" << endl;
+                //cout << "button_reset" << endl;
                 ctrl->b_Reset();
                 button_reset_active = false;
             } else {
@@ -204,7 +204,7 @@ void ISR::operator()() {
         }
         else if ((diff & LightBarrier_ENTRY) == LightBarrier_ENTRY) {
             if (lb_entry_active) {
-                cout << "LightBarrier_entry_" << endl;
+                //cout << "LightBarrier_entry_" << endl;
                 ctrl->lightBarrier_ENTRY_IN();
                 lb_entry_active = false;
             } else {
@@ -214,17 +214,17 @@ void ISR::operator()() {
         }
         else if ((diff & SENSOR_METAL) == SENSOR_METAL) {
             if (sensor_metal_active) {
-                cout << "metal" << endl;
+                //cout << "metal" << endl;
                 ctrl->metal();
                 sensor_metal_active = false;
             } else {
-                cout << "no_metal" << endl;
+                //cout << "no_metal" << endl;
                 sensor_metal_active = true;
             }
         }
         else if ((diff & SENSOR_HEIGHT) == SENSOR_HEIGHT) {
             if (sensor_height_active) {
-                cout << "sensor_height" << endl;
+                //cout << "sensor_height" << endl;
                 ctrl->height();
                 sensor_height_active = false;
             } else {
@@ -233,18 +233,18 @@ void ISR::operator()() {
         }
         else if ((diff & SWITCH_OPEND) == SWITCH_OPEND) {
             if (switch_open) {
-                cout << "switch is open" << endl;
+                //cout << "switch is open" << endl;
                 ctrl->switchen();
                 switch_open = false;
             } else {
-                cout << "switch is closed" << endl;
+                //cout << "switch is closed" << endl;
                 switch_open = true;
             }
         }
 
     } while (running);
 
-    cout << "Shutdown ISR..."<<endl;
+    //cout << "Shutdown ISR..."<<endl;
 
     // Cleanup
     unregisterISR();
@@ -259,5 +259,5 @@ void ISR::operator()() {
         exit(EXIT_FAILURE);
     }
 
-    cout << "ISR detached and channel destroyed!" << endl;
+    //cout << "ISR detached and channel destroyed!" << endl;
   }

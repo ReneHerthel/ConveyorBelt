@@ -109,7 +109,7 @@ TEST_IMPL(MachineOne, programm_m1){
 				break; //Height
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
-			case 5: std::cout << "\n\n ISR \n";
+			case 5:
 				m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
 				m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
 				mr = puckManager.process(m_sig);
@@ -120,7 +120,8 @@ TEST_IMPL(MachineOne, programm_m1){
 				mr = puckManager.process(m_sig);
 				break;
 		}
-
+		std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
+		cout.flush();
 		switch(mr.speedSignal){
 			case PuckSignal::PuckSpeed::STOP:
 				cbs.changeState(ConveyorBeltState::STOP);
