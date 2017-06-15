@@ -112,7 +112,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
 	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
 	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
-
+	hmCal.delta = DELTA;
 
 }
 
