@@ -75,16 +75,6 @@ void HeightContext::process(Signal signal) {
             statePtr->start();
             break;
 
-        case WAIT:
-            LOG_DEBUG << "[HeightContext] process() Incoming signal: WAIT\n";
-            statePtr->wait();
-            return; // Skip entry action.
-
-        case RESUME:
-            LOG_DEBUG << "[HeightContext] process() Incoming signal: RESUME\n";
-            statePtr->resume();
-            return;	// Skip entry action.
-
         case HOLE_HEIGHT:
             LOG_DEBUG << "[HeightContext] process() Incoming signal: HOLE_HEIGHT\n";
             statePtr->holeHeight();

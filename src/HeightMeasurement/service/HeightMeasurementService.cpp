@@ -197,7 +197,7 @@ uint16_t HeightMeasurementService::getHighestHeight() {
 }
 
 void HeightMeasurementService::startTimer() {
-	timer.setAlarm(3000, Signal::TIMEOUT);
+	timer.setAlarm(ITimer::milliseconds(3000), Signal::TIMEOUT);
 }
 
 void HeightMeasurementService::stopTimer() {
