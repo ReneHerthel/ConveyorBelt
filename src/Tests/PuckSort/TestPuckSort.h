@@ -28,6 +28,7 @@ class TestPuckSort : public TestCase {
 		{};
 	protected:
 		TEST(test1);
+		TEST(test2);
 		TEST_CASE_METHODS;
 	private:
 		PuckSortContext *context;
@@ -37,14 +38,26 @@ class TestPuckSort : public TestCase {
 		// TODO: Makeup sane signal initialization
 		PuckType signalArrayShortestPath[3];
 
-		signal_t holeWithoutMetal;
-		signal_t holeWithMetal;
-
 		bool returnArrayShortestPath[3] {
 			false,
 			false,
 			false,
 		};
+
+		PuckType signalArrayAllSignals[8];
+
+		// Beginning from Start try all transitions
+        bool returnArrayAllSignalsStart[8] {
+        			true,
+        			true,
+        			true,
+        			true,
+        			true,
+        			true,
+        			true,
+        			false, // Changing into state GotHoleUpWoMetal
+        };
+
 };
 
 #endif /* TESTPUCKSORT_H_ */

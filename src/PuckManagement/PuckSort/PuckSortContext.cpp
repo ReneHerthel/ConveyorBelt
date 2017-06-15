@@ -53,7 +53,7 @@ bool PuckSortContext::process(PuckType signal) {
     	statePtr->flipped();
     	break;
     case INVALID_ID:
-    	statePtr->lowHeight();
+    	statePtr->invalid();
     	break;
     case PATTERN_ID:
     	LOG_DEBUG << "process: : Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
@@ -108,6 +108,11 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	}
 }
 
+/// Reset state machine to start
+void PuckSortContext::reset() {
+	statePtr = &startState;
+}
+
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
@@ -158,11 +163,6 @@ void PuckSortContext::PuckSort::flipped() {
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
-void PuckSortContext::PuckSort::lowHeight() {
-	LOG_SCOPE;
-	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
-	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
-}
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
 	returnValue = true;
@@ -175,7 +175,7 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	returnValue = true;
+	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 
