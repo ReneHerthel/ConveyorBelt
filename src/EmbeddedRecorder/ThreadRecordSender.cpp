@@ -44,7 +44,7 @@ void ThreadRecordSender::sendWholeBuffer()
      * to get the duration between records.
      */
     record_t start;
-    ret = m_buffer->readFromIndex(&start, 0);
+    int ret = m_buffer->readFromIndex(&start, 0);
     windUpClockAndSend(start, start.timestamp);
 
     int i = 0;
@@ -59,7 +59,7 @@ void ThreadRecordSender::sendWholeBuffer()
     // NOTE: The thread will be delete after the while loop.
 }
 
-void ThreadRecordSender::windUpClockAndSend(const record_t next, std::chrono::time_point<std::chrono::system_clock> start)
+void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_point<std::chrono::system_clock> start)
 {
     ITimer * timer = new TimerService(m_chid, next.code);
 

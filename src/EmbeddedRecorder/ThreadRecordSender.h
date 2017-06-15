@@ -63,7 +63,7 @@ namespace rec {
          * @brief Use the timer wrapper to wind up a clock and send messages,
          *        When its expired.
          */
-        void windUpClockAndSend(const record_t record, std::chrono::time_point<std::chrono::system_clock> start);
+        void windUpClockAndSend(record_t record, std::chrono::time_point<std::chrono::system_clock> start);
     };
 
 } /* namespace rec */

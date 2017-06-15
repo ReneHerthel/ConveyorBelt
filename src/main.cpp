@@ -18,6 +18,7 @@
 #include "MeasurementHeightTest.h"
 #include "MachineOne.h"
 #include "TestPortA.h"
+#include "TestEmbeddedRecorder.h"
 
 
 using namespace std;
@@ -81,6 +82,9 @@ int main() {
 
     // PortA
     ts.REG_TESTCASE(new TestPortA(13, "Test port a actors"));
+
+    // EmbeddedRecorder
+    ts.REG_TESTCASE(new TestEmbeddedRecorder(14, "Test play load and save"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
