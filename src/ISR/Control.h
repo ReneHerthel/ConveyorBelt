@@ -11,6 +11,14 @@
 #include "PulseMessageReceiverService.h"
 #include "PulseMessageSenderService.h"
 
+#include <iostream>
+#include <unistd.h>
+#include <thread>
+#include "HWaccess.h"
+#include "Signals.h"
+
+#include <iostream>
+#include <chrono>
 
 //Lightbarriers and Sensor
 #define LightBarrier_ENTRY  		0b0000000000000001
@@ -28,6 +36,7 @@
 #define BUTTONRESET				0b0100000000000000
 #define BUTTONESTOP				0b1000000000000000
 
+#define SWITCH_ISR_DENY_TIME	0.01
 	using namespace rcv;
 class Control {
 
@@ -75,7 +84,7 @@ public:
      */
 	int chid_;
 	PulseMessageSenderService * sender;
-
+	std::chrono::time_point<std::chrono::system_clock> oldTimestamp;
 
 };
 
