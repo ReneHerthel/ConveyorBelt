@@ -20,7 +20,6 @@
 #include "ILed.h"
 #include "LedHal.h"
 
-#include <iostream>
 #include <vector>
 
 class LedService : public ILed {
@@ -48,7 +47,7 @@ private:
 	/*
 	 * @brief A list with all led's.
 	 */
-	std::vector<LedHal*> halObjects_;
+	std::vector<LedHal*> m_leds;
 };
 
 #endif /* LEDSERVICE_H_ */
