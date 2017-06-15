@@ -14,23 +14,29 @@
 #include "Calibration.h"
 #include "logger.h"
 #include "logscope.h"
+#include "SortingSwichtControl.h"
+#include "SortingSwitchService.h"
 
 SETUP(DistanceTrackingTest){
 	REG_TEST(SimpleTest, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 	REG_TEST(ChangeSpeed, 2, "Create a distance tracker, start it, and change speed in the middle of the run");
 	REG_TEST(StopBelt, 3, "Create a distance tracker, start it, stop is, and resume it");
+	REG_TEST(SwitchDistanceTracker, 4, "Check if Switch open and closes correctly");
 };
 
 BEFORE_TC(DistanceTrackingTest){
 	Calibration& cal = Calibration::getInstance();
-	cal.manualCalibration(1000, 2000, 1, 1, 1, 1, 100, 200); //TIME 1000MS, fast twice as fast as slow
+	cal.manualCalibration(1000, 2000, 1000, 1000, 1000, 1000, 100, 200); //TIME 1000MS, fast twice as fast as slow
 	cal.print();
 	return 1;
 }
 
 AFTER_TC(DistanceTrackingTest){return 1;}
 
-BEFORE(DistanceTrackingTest){return 1;}
+BEFORE(DistanceTrackingTest){
+	SortingSwitchService sss;
+	sss.sortingSwitchClose();
+}
 
 AFTER(DistanceTrackingTest){return 1;}
 
@@ -169,6 +175,32 @@ TEST_IMPL(DistanceTrackingTest, StopBelt){
 		return TEST_FAILED;
 	}
 
+	return TEST_PASSED;
+}
+
+TEST_IMPL(DistanceTrackingTest, SwitchDistanceTracker){
+	DistanceObservable& distO = DistanceObservable::getInstance();
+	distO.updateSpeed(SLOW);
+
+	int chid;
+	rcv::msg_t msg;
+	rcv::PulseMessageReceiverService pmr;
+	chid = pmr.newChannel();
+
+	LOG_DEBUG << "Init ssc with chid "<< chid << "\n";
+
+	SortingSwichtControl ssc(chid);
+	ssc.open();
+	LOG_DEBUG << "Waiting for pulse \n";
+	pmr.receivePulseMessage();
+	LOG_DEBUG << "Received pulse \n";
+	ssc.close();
+
+	/*
+	SortingSwichtControl& cntrl = SortingSwichtControl::getInstance();
+	cntrl.close();
+	cntrl.open();
+	 */
 	return TEST_PASSED;
 }
 

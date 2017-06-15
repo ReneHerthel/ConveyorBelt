@@ -36,6 +36,7 @@ public:
 	 * @brief Disables the corresponding led.
 	 */
 	void clear();
+
 private:
 	int port_;
 	int pin_;

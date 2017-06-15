@@ -15,19 +15,23 @@
  */
 
 #include "SortingSwitchHal.h"
-#include "HWaccess.h"
 #include "HWdefines.h"
 
-SortingSwitchHal::SortingSwitchHal() {
+#include "PortA.h"
+
+SortingSwitchHal::SortingSwitchHal()
+{
 	// Nothing todo so far.
 }
 
-void SortingSwitchHal::set() {
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) | (1 << PIN_4)));
+void SortingSwitchHal::set()
+{
+    PortA::getInstance().bitSet(1 << PIN_4);
 }
 
-void SortingSwitchHal::clear() {
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) & ~(1 << PIN_4)));
+void SortingSwitchHal::clear()
+{
+	PortA::getInstance().bitClear(1 << PIN_4);
 }
 
 /** @} */
