@@ -17,6 +17,7 @@
 #include "CalibrationTest.h"
 #include "MeasurementHeightTest.h"
 #include "MachineOne.h"
+#include "TestPortA.h"
 
 
 using namespace std;
@@ -68,6 +69,9 @@ int main() {
 
     //Calibrate Heights
      ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
+
+    // PortA
+    ts.REG_TESTCASE(new TestPortA(12, "Test port a actors"));
 
 #if !machine
     ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
