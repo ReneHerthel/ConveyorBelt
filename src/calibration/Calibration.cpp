@@ -87,6 +87,9 @@ void Calibration::calibrate(void){
 	}
 	sss.sortingSwitchClose(); //Safety
 
+	inSwitch[0] = outlet[0]/3;
+	inSwitch[1] = outlet[1]/3;
+
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
@@ -112,7 +115,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
 	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
 	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
-
+	hmCal.delta = DELTA;
 
 }
 
@@ -169,6 +172,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case HEIGHT_TO_SWITCH:  return sortingSwitch[slowOrFast].count();
 		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
 		case OUT_TO_IN:			return inlet[slowOrFast].count();
+		case IN_SWITCH: 		return inSwitch[slowOrFast].count();
 	}
 
 }

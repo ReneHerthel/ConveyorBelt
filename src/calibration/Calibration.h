@@ -20,6 +20,7 @@
 #define LOGICAL_1	0.7257900
 #define LOGICAL_0	0.6584766
 #define INVALID		0.6862400
+#define DELTA		35
 
 #define CALC_ABS_HEIGHT(val, perc) ((int16_t)((double)val*perc));
 
@@ -78,6 +79,7 @@ private:
 	std::chrono::milliseconds sortingSwitch[2];
 	std::chrono::milliseconds outlet[2];
 	std::chrono::milliseconds inlet[2];
+	std::chrono::milliseconds inSwitch[2];
 
 	double fastToSlowFactor;
 	double slowToFastFactor;
