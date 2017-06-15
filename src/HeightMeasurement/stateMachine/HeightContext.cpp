@@ -255,7 +255,8 @@ void HeightContext::State::highHeight() {
 /// IDLE : STATE
 ///
 HeightContext::Idle::Idle() {
-    if (service != NULL) {
+	LOG_SCOPE;
+	if (service != NULL) {
         service->stopMeasuring();
     }
     index = 0;
@@ -279,7 +280,7 @@ void HeightContext::Idle::start() {
 /// MEASURING : STATE
 ///
 void HeightContext::Measuring::entry() {
-    //LOG_SCOPE;
+    LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
     if (service != NULL) {

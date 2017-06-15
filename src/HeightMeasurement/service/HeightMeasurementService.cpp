@@ -36,31 +36,44 @@
 using namespace HeightMeasurement;
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
-    :    stateMachine(new HeightContext(send_chid, this))
-    ,    calibrationDataPtr(calibrationDataPtr)
+    :    calibrationDataPtr(calibrationDataPtr)
     ,    receive_chid(receive_chid)
+	, 	 measurementIsRunning(false)
 {
+    LOG_SCOPE;
     // Set this to true, so the statemachine thread will run his superloop.
     statemachineIsRunning = true;
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
 
     highestHeight = USHRT_MAX;	// maximum value
+
+    stateMachine = new HeightContext(send_chid, this);
+    LOG_DEBUG << "[HeightMeasurementService] Constructor  measurementIsRunning \n" << measurementIsRunning << "\n";
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
+	statemachineIsRunning = false;
+	stateMachineThread.join();
     delete stateMachine;
 }
 
 void HeightMeasurementService::startMeasuring() {
-    // Set this true, so the measurement thread will run his superloop.
-    measurementIsRunning = true;
-    // Creates the thread for the measurement with the receive channel to send on it.
-    measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+	if(!measurementIsRunning) { // FIXME: This should not be tested. This is required by the state machine
+		LOG_DEBUG << "[HeightMeasurementService] startMeasuring() \n";
+		// Set this true, so the measurement thread will run his superloop.
+		measurementIsRunning = true;
+		// Creates the thread for the measurement with the receive channel to send on it.
+    	measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+	}
 }
 
 void HeightMeasurementService::stopMeasuring() {
-    measurementIsRunning = false;
+	LOG_DEBUG << "[HeightMeasurementService] measurementIsRunning: " << measurementIsRunning << "\n";
+	if(measurementIsRunning){
+	    measurementIsRunning = false;
+	    measurementThread.join();
+	}
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {
