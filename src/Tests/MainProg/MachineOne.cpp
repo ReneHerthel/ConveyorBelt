@@ -12,6 +12,7 @@
 
 #include "ISR.h"
 #include "Control.h"
+#include "Signals.h"
 
 #include "PulseMessageReceiverService.h"
 #include "PulseMessageSenderService.h"
@@ -27,6 +28,9 @@
 #include "PuckSignal.h"
 
 #include "LightSystemEnum.h"
+
+#include "ConveyorBeltService.h"
+#include "ConveyorBeltState.h"
 
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
@@ -54,6 +58,8 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread isr_th(ref(isr));
 
 
+	//Init CBS
+	ConveyorBeltService cbs;
 
 
 	//INIT CALIBRATION AND CALIBRATE
@@ -64,7 +70,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
 	calibration.calibrate();
-
+/*
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
 	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
@@ -75,7 +81,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
 	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
 	lightSystem->setWarningLevel(WARNING_OCCURED);
-
+*/
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
 	int heightMChid = heightMChannelCreator.newChannel();
@@ -86,20 +92,56 @@ TEST_IMPL(MachineOne, programm_m1){
 	HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
 
 	//INIT PUCK MNG
-	PuckManager puckMng(mainChid);
+	PuckManager puckManager(mainChid);
 
 	//TESTLOOP
 	rcv::msg_t event;
-
+	PuckManager::ManagerReturn mr;
+	PuckSignal::Signal m_sig;
 	while(1){
 		event = mainChannel.receivePulseMessage();
 		std::cout << "Got something \n";
 		switch(event.code){
-			case 0: std::cout << "\n\n Height \n"; break; //Height
+			case 0: std::cout << "\n\n Height \n";
+				m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
+				m_sig.heightSignal.value = event.value;
+				mr = puckManager.process(m_sig);
+				break; //Height
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
-			case 5: std::cout << "\n\n ISR \n";break; //ISR
+			case 5: std::cout << "\n\n ISR \n";
+				m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+				m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
+				mr = puckManager.process(m_sig);
+				break;
+			case 25:
+				m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
+				m_sig.timerSignal.value = event.value;
+				mr = puckManager.process(m_sig);
+				break;
 		}
+
+		switch(mr.speedSignal){
+			case PuckSignal::PuckSpeed::STOP:
+				cbs.changeState(ConveyorBeltState::STOP);
+				break;
+			case PuckSignal::PuckSpeed::SLOW:
+				cbs.changeState(ConveyorBeltState::RIGHTSLOW);
+				break;
+			case PuckSignal::PuckSpeed::FAST:
+				cbs.changeState(ConveyorBeltState::RIGHTFAST);
+				break;
+		}
+
+		/*if(mr.actorFlag){
+			switch(mr.actorSignal){
+				case
+
+
+			}
+		}*/
+
+
 		cout.flush();
 
 	}
