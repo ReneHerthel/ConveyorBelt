@@ -4,6 +4,7 @@
 #include "TimerService.h"
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
+#include "Calibration.h"
 
 DistanceTracker::DistanceTracker(int chid, int8_t code):
 	chid_(chid),
@@ -13,12 +14,11 @@ DistanceTracker::DistanceTracker(int chid, int8_t code):
 	currSpeed_(DistanceSpeed::STOP){
 
 	DistanceObservable& distO = DistanceObservable::getInstance();
-
-	//init conv data
-	mmToTimeFast_ = distO.getCalibrationData(DistanceSpeed::FAST);
-	mmToTimeSlow_ = distO.getCalibrationData(DistanceSpeed::SLOW);
-
 	distO.registerObserver(this); //register to observable
+
+	Calibration& cal = Calibration::getInstance();
+	fastToSlowFactor_ = cal.getFastToSlow();
+	slowToFastFactor_ = cal.getSlowToFast();
 }
 
 DistanceTracker::~DistanceTracker(){
@@ -40,14 +40,14 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 			case FAST:
 				remainingTime = timer_.killAlarm();
 				if(remainingTime > 0){
-					timer_.setAlarm(remainingTime/mmToTimeSlow_*mmToTimeFast_, lastValue_);
+					timer_.setAlarm((uint32_t)((double)remainingTime*slowToFastFactor_), lastValue_);
 				}
 				currSpeed_ = speed;
 				break;
 			case SLOW:
 				remainingTime = timer_.killAlarm();
 				if(remainingTime > 0){
-					timer_.setAlarm(remainingTime/mmToTimeFast_*mmToTimeSlow_, lastValue_);
+					timer_.setAlarm((uint32_t)((double)remainingTime*fastToSlowFactor_), lastValue_);
 				}
 				currSpeed_ = speed;
 				break;
@@ -59,19 +59,11 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 	}
 }
 
-int32_t DistanceTracker::startAlarm(int32_t value, uint32_t distanceMm){
+int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance distance, double delta){
+	Calibration& cal = Calibration::getInstance();
 	lastValue_ = value;
 	timer_.stopAlarm();
-	switch(currSpeed_){
-		case FAST:
-			timer_.setAlarm(distanceMm*mmToTimeFast_, lastValue_);
-			break;
-		case SLOW:
-			timer_.setAlarm(distanceMm*mmToTimeSlow_, lastValue_);
-			break;
-		case STOP:
-			break;
-	}
+	timer_.setAlarm(cal.getCalibration(distance, currSpeed_)*delta, value);
 }
 
 int32_t DistanceTracker::stopAlarm(){

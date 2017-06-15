@@ -22,6 +22,7 @@
 #define INVALID_VAL		0xFDDD
 #define TRANSM_VAL 		0xFEEE
 #define RECEIVED_VAL	0xEFEF
+#define SLIDE_FULL_VAL  0xFC77
 #define POL_VAL 		0xABCD
 #define NO_CON_VAL 		0xDBCA
 #define ERROR_VAL 		0xFABF
@@ -44,6 +45,7 @@ namespace Serial_n{
 		INVALID_SER = INVALID_VAL,   	/*!<IN/OUT The sending participant received Comands in the wrong order*/
 		TRANSM_SER  = TRANSM_VAL,		/*!<Used only between two serial endpoints to signal an transmission*/
 		RECEIVED_SER = RECEIVED_VAL, 	/*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
+		SLIDE_FULL_SER = SLIDE_FULL_VAL,/*!<IN: Signal Receiver that that the Sender's slide is full */
 		POL_SER = POL_VAL, 				/*!<Ping of life */
 		NO_CON_SER = NO_CON_VAL, 		/*!<Serial Disconnected, no POL */
 		ERROR_SER = ERROR_VAL,			/*!<Serial received something it can not handle, maybe Char loss */

@@ -104,7 +104,7 @@ void TimerService::resumeAlarm() throw(int) {
 
 }
 
-milliseconds TimerService::killAlarm() throw(int) {
+TimerService::milliseconds TimerService::killAlarm() throw(int) {
 	unsigned int mSec = 0;;
 	unsigned int seconds = 0;
 
