@@ -12,18 +12,12 @@
 #include "HWaccess.h"
 #include "Control.h"
 
-
-
-class ISR{
-
-
-    // Methoden deklarationen
-    public:
+class ISR {
+// Methoden deklarationen
+public:
 	 	ISR(Control * control); ///< Standard Konstruktor. Offentlich Aufrufbar.
-        virtual ~ISR();      ///< Standard Dekonstruktor.
-        void operator()();
+    virtual ~ISR();      ///< Standard Dekonstruktor.
+    void operator()();
 };
 
 #endif
-
-

@@ -16,12 +16,19 @@ SerialReceiver::SerialReceiver(char *path_):
     in = open(path.c_str(), O_RDWR | O_CREAT | O_BINARY);
     fcntl(in, F_SETFL, 0);
 
-    struct termios ts_in;
-    tcgetattr(in, &ts_in);
-    ts_in.c_lflag &= ~ICANON;
-    ts_in.c_cc[VTIME] = 10;
-    ts_in.c_cc[VFWD] = 0;
-    tcsetattr(in, TCSANOW, &ts_in);
+    fcntl(in, F_SETFL, 0);
+    struct termios ts;
+    tcflush(in, TCIOFLUSH);
+    tcgetattr(in, &ts);
+    cfsetispeed(&ts, B19200);
+    cfsetospeed(&ts, B19200);
+    ts.c_cflag &= ~CSIZE;
+    ts.c_cflag &= ~CSTOPB;
+    ts.c_cflag &= ~PARENB;
+    ts.c_cflag |= CS8;
+    ts.c_cflag |= CREAD;
+    ts.c_cflag |= CLOCAL;
+    tcsetattr(in, TCSANOW, &ts);
 }
 
 SerialReceiver::~SerialReceiver() {
@@ -33,6 +40,7 @@ int SerialReceiver::fail() {
 }
 
 char* SerialReceiver::receive() {
+	reset();
     LOG_SCOPE
 	char* msgBuff = new char[1000]; //TODO Move this size to the constructor
 	char headerBuff[FRAME_HEAD_BYTES];
