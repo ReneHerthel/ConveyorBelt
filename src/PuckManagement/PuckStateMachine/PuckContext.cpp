@@ -13,6 +13,23 @@
 
 #include <new>
 
+serialized PuckContext::serialize() {
+    serialized ser;
+    ser.size = sizeof(this);
+    ser.obj = new PuckContext{};
+
+    return ser;
+}
+
+bool PuckContext::deserialize(void* ser) {
+    PuckContext* tmp = (PuckContext*)ser;
+    //this->
+
+    // TODO alle member kopieren
+
+    return true;
+}
+
 PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
 #if !machine

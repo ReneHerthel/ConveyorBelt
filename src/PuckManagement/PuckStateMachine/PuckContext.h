@@ -15,18 +15,25 @@
 #include "SerialProtocoll.h"
 #include "DistanceTracker.h"
 #include "DistanceEnum.h"
+#include "ISerializable.h"
 
 #define machine (0) // 0 or 1
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.85
 #define WIDE_DELTA 1.15
-class PuckContext {
+class PuckContext : public ISerializable { // so wäre das im stub object
 private:
 
 	DistanceTracker shortDistance;
 	DistanceTracker wideDistance;
 
+
+
 public:
+
+	serialized serialize();
+	bool deserialize(void* ser);
+
 	PuckContext(int chid);
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
