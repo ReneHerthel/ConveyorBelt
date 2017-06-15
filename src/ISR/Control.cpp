@@ -5,13 +5,7 @@
  * Copyright   : none
  */
 
-#include <iostream>
-#include <unistd.h>
 #include "Control.h"
-#include <chrono>
-#include <thread>
-#include "HWaccess.h"
-#include "Signals.h"
 
 using namespace std;
 using namespace interrupts;
@@ -26,11 +20,11 @@ Control::Control() {
  *
  * @param [chid] channel id to receive the pulsemessage
  * */
-Control::Control(const int chid)
-    :    chid_(chid)
-    ,    sender(new PulseMessageSenderService(chid)) {
-    // Nothing todo so far.
-}
+Control::Control(const int chid):
+	chid_(chid),
+	sender(new PulseMessageSenderService(chid)),
+ 	oldTimestamp(std::chrono::system_clock::now())
+{}
 
 Control::~Control() {
     // Nothing todo so far.
@@ -116,7 +110,12 @@ void Control::b_Reset() {
     sender->sendPulseMessage(code, BUTTON_RESET);
     cout << "Control buttonReset" << endl;
 }
-void Control::switchen() {
-    sender->sendPulseMessage(code, SWITCH_OPEN);
-    cout << "Control SWITCH-OPEN" << endl;
+void Control::switchen(){
+	auto newTimestamp = std::chrono::system_clock::now();
+	std::chrono::duration<double> elapsed_time = (oldTimestamp-newTimestamp);
+	if( elapsed_time.count() > SWITCH_ISR_DENY_TIME){
+ 	sender->sendPulseMessage(code, SWITCH_OPEN);
+ 	oldTimestamp = newTimestamp;
+	cout << "Control SWITCH-OPEN" << endl;
+	}
 }

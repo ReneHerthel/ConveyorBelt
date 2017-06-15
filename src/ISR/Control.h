@@ -11,6 +11,15 @@
 #include "PulseMessageReceiverService.h"
 #include "PulseMessageSenderService.h"
 
+#include <iostream>
+#include <unistd.h>
+#include <thread>
+#include "HWaccess.h"
+#include "Signals.h"
+
+#include <iostream>
+#include <chrono>
+
 //Lightbarriers and Sensor
 #define LightBarrier_ENTRY       0b0000000000000001
 #define LightBarrier_HEIGHT      0b0000000000000010
@@ -26,7 +35,9 @@
 #define BUTTONRESET              0b0100000000000000
 #define BUTTONESTOP              0b1000000000000000
 
-using namespace rcv;
+#define SWITCH_ISR_DENY_TIME	0.01
+	using namespace rcv;
+class Control {
 
 class Control {
 public:
@@ -66,8 +77,10 @@ private:
     /*
      * @brief The channel ID, where this object will make a connection to.
      */
-    int chid_;
-    PulseMessageSenderService * sender;
+	int chid_;
+	PulseMessageSenderService * sender;
+	std::chrono::time_point<std::chrono::system_clock> oldTimestamp;
+
 };
 
 #endif /* Control_H_ */
