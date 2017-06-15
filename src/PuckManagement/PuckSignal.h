@@ -61,14 +61,14 @@ namespace PuckSignal {
 
 	struct Signal {
 		SignalType signalType;
-		signal_t heightSignal;
+		HeightMeasurement::signal_t heightSignal;
 		TimerSignal timerSignal;
 		interrupts::interruptSignals interruptSignal;
 		Serial_n::ser_proto_msg serialSignal;
 	};
 
 	struct PuckType {
-		signal_t heightType;
+		HeightMeasurement::signal_t heightType;
 		uint8_t metal;
 		uint16_t height1;
 		uint16_t height2;

@@ -14,6 +14,8 @@
 /* TODO: Get machine and ramp status */
 /* TODO: Process signals */
 
+using namespace HeightMeasurement;
+
 PuckSortContext::PuckSortContext()
 {
 	LOG_SCOPE;

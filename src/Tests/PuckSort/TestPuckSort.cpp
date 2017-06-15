@@ -28,12 +28,12 @@ AFTER_TC(TestPuckSort) {
 BEFORE(TestPuckSort) {
 	context = new PuckSortContext();
 
-	holeWithMetal.ID = SignalID::NORMAL_ID;
+	holeWithMetal.ID = HeightMeasurement::SignalID::NORMAL_ID;
 	holeWithMetal.BIT0 = 0;
 	holeWithMetal.BIT1 = 0;
 	holeWithMetal.BIT2 = 0;
 
-	holeWithoutMetal.ID = SignalID::NORMAL_ID;
+	holeWithoutMetal.ID = HeightMeasurement::SignalID::NORMAL_ID;
 	holeWithoutMetal.BIT0 = 0;
 	holeWithoutMetal.BIT1 = 0;
 	holeWithoutMetal.BIT2 = 0;

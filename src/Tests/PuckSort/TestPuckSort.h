@@ -37,8 +37,8 @@ class TestPuckSort : public TestCase {
 		// TODO: Makeup sane signal initialization
 		PuckType signalArrayShortestPath[3];
 
-		signal_t holeWithoutMetal;
-		signal_t holeWithMetal;
+		HeightMeasurement::signal_t holeWithoutMetal;
+		HeightMeasurement::signal_t holeWithMetal;
 
 		bool returnArrayShortestPath[3] {
 			false,

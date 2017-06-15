@@ -19,9 +19,17 @@
 #include "Calibration.h"
 
 #include "LightSystemService.h"
+#include "LightSystemHal.h"
+#include "LightSystemController.h"
+#include "BLightSystem.h"
+
+#include "PuckManager.h"
+#include "PuckSignal.h"
+
+#include "LightSystemEnum.h"
 
 SETUP(MachineOne){
-	REG_TEST(Calibrate, 1, "Just Create some distance trackers an let them run (no changes on the way)");
+	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
 
 BEFORE_TC(MachineOne){return 1;}
@@ -32,7 +40,7 @@ BEFORE(MachineOne){return 1;}
 
 AFTER(MachineOne){return 1;}
 
-TEST_IMPL(MachineOne, Calibrate){
+TEST_IMPL(MachineOne, programm_m1){
 
 	//----------INIT------------
 
@@ -42,29 +50,59 @@ TEST_IMPL(MachineOne, Calibrate){
 
 	//INIT ISR
 	Control isrCntrl(mainChid);
-	ISR isr(isrCntrl);
+	ISR isr(&isrCntrl);
+	std::thread isr_th(ref(isr));
 
-	//INIT LIGHTSYSTEM
-	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
-	int lightsystemChid = lightsystemChannel.newChannel();
 
-	LightSystemHal lsHal();
-	LightSystemController lightSystemCntrl(lightsystemChid, lsHal);
-	LightSystemService lightSystem(lightsystemChid);
+
 
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
+	std::cout << "start Hightcal" << "\n";
+	cout.flush();
 	calibration.calibrateHeighMeasurement();
+	std::cout << "start distancecal" << "\n";
+		cout.flush();
 	calibration.calibrate();
+
+	//INIT LIGHTSYSTEM
+	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
+	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
+
+	std::cout << "LightSystemChid" <<lightsystemChid << "\n";
+	cout.flush();
+	BLightSystem *lsHal = new LightSystemHal();
+	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
+	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
+	lightSystem->setWarningLevel(WARNING_OCCURED);
 
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
 	int heightMChid = heightMChannelCreator.newChannel();
 	PulseMessageSenderService heightMChannel(heightMChid);
 
-	HeightMeasurementService service(heightMChid, mainChannelChid, calibration.getHmCalibration());
+	HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
 
+	HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
 
+	//INIT PUCK MNG
+	PuckManager puckMng(mainChid);
+
+	//TESTLOOP
+	rcv::msg_t event;
+
+	while(1){
+		event = mainChannel.receivePulseMessage();
+		std::cout << "Got something \n";
+		switch(event.code){
+			case 0: std::cout << "\n\n Height \n"; break; //Height
+			case 2: std::cout << "\n\n Serial \n";break; //Serial
+			case 4: std::cout << "\n\n Serial \n";break; //Serial
+			case 5: std::cout << "\n\n ISR \n";break; //ISR
+		}
+		cout.flush();
+
+	}
 
 }
 

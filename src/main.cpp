@@ -16,6 +16,7 @@
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
 #include "MeasurementHeightTest.h"
+#include "MachineOne.h"
 
 
 using namespace std;
@@ -64,6 +65,9 @@ int main() {
 
     //Calibrate Heights
     ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
+
+    //Calibrate Heights
+     ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
 
 #if !machine
     ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
