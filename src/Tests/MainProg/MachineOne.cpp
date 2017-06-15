@@ -32,6 +32,8 @@
 #include "ConveyorBeltService.h"
 #include "ConveyorBeltState.h"
 
+#include "SortingSwichtControl.h"
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -94,6 +96,9 @@ TEST_IMPL(MachineOne, programm_m1){
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
 
+	//INIT Switch Cntrl
+	SortingSwichtControl sswitchCntrl(mainChid);
+
 	//TESTLOOP
 	rcv::msg_t event;
 	PuckManager::ManagerReturn mr;
@@ -119,6 +124,10 @@ TEST_IMPL(MachineOne, programm_m1){
 				m_sig.timerSignal.value = event.value;
 				mr = puckManager.process(m_sig);
 				break;
+			case 19:
+				sswitchCntrl.close();
+				break;
+
 		}
 		std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
 		cout.flush();
@@ -134,13 +143,13 @@ TEST_IMPL(MachineOne, programm_m1){
 				break;
 		}
 
-		/*if(mr.actorFlag){
+		if(mr.actorFlag){
 			switch(mr.actorSignal){
-				case
-
-
+				case PuckManager::OPEN_SWITCH :
+					sswitchCntrl.open();
+					break;
 			}
-		}*/
+		}
 
 
 		cout.flush();
