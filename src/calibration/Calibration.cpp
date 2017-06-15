@@ -87,9 +87,6 @@ void Calibration::calibrate(void){
 	}
 	sss.sortingSwitchClose(); //Safety
 
-	inSwitch[0] = outlet[0]/3;
-	inSwitch[1] = outlet[1]/3;
-
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
