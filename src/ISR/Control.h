@@ -40,7 +40,6 @@
 
 class Control {
 
-class Control {
 public:
     /*
      * @brief Constructor with a channel ID.
