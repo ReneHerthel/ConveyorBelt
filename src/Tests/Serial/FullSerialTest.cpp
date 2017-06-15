@@ -15,7 +15,7 @@ using namespace Serial_n;
 
 SETUP(FullSerialTest){
 	//REG_TEST(ConcurrentReceiver, 1, "[Serial]Send one msg (stop)");
-    REG_TEST(SimpleSerialMsg, 2, "[Serial]Construct an kill 2 serials");
+    REG_TEST(SimpleSerialMsg, 2, "[Serial]Send all signals once");
 }
 
 TEST_IMPL(FullSerialTest, ConcurrentReceiver){
@@ -112,6 +112,8 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	std::thread ser1_thread(ref(ser1));
 	std::thread ser2_thread(ref(ser2));
 
+
+	std::this_thread::sleep_for(std::chrono::seconds(10));
 
 	//------------TEST SIMPLE SIGNALS------------//
 	uint32_t signal;
