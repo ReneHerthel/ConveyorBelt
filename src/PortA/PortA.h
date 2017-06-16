@@ -49,6 +49,26 @@ public:
 
 private:
     /*
+     * @brief Hidden constructor.
+     */
+    PortA();
+
+    /*
+     * @brief Hidden copy constructor.
+     */
+    PortA(PortA const&);
+
+    /*
+     * @brief Hidden Assign operator.
+     */
+    PortA& operator=(PortA const&);
+
+    /*
+     * @brief Hidden destructor.
+     */
+    ~PortA();
+
+    /*
      * @brief The mutex, where the singleton locks.
      */
     std::mutex m_mutex;
