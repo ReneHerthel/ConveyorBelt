@@ -17,10 +17,10 @@
     <coordinates>
       <x>308</x>
       <y>98</y>
-      <w>105</w>
+      <w>126</w>
       <h>105</h>
     </coordinates>
-    <panel_attributes>holeWithoutMetal
+    <panel_attributes>HOLEWITHOUTMETAL
 /return(false)
 lt=-&gt;
 </panel_attributes>
@@ -62,28 +62,28 @@ lt=-&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>308</x>
-      <y>525</y>
-      <w>112</w>
-      <h>161</h>
+      <x>378</x>
+      <y>644</y>
+      <w>91</w>
+      <h>98</h>
     </coordinates>
-    <panel_attributes>( Kennung 2 ||
-Kennung 4 ||
-Keine Bohrung )
+    <panel_attributes>( BITCODE2 ||
+BITCODE4 ||
+FLIPPED )
 [isOnMachine2]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>110.0;10.0;110.0;100.0;10.0;100.0;10.0;210.0;140.0;210.0;140.0;10.0</additional_attributes>
+    <additional_attributes>10.0;30.0;10.0;70.0;110.0;70.0;110.0;10.0;80.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>294</x>
       <y>224</y>
-      <w>105</w>
+      <w>126</w>
       <h>84</h>
     </coordinates>
-    <panel_attributes>holeWithoutMetal
+    <panel_attributes>HOLEWITHOUTMETAL
 /return(false)
 lt=-&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -93,10 +93,10 @@ lt=-&gt;</panel_attributes>
     <coordinates>
       <x>294</x>
       <y>329</y>
-      <w>91</w>
+      <w>105</w>
       <h>91</h>
     </coordinates>
-    <panel_attributes>holeWithMetal
+    <panel_attributes>HOLEWITHMETAL
 /return(false)
 lt=-&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
@@ -117,52 +117,48 @@ lt=-&gt;</panel_attributes>
     <coordinates>
       <x>308</x>
       <y>0</y>
-      <w>77</w>
+      <w>21</w>
       <h>77</h>
     </coordinates>
-    <panel_attributes>[isRunning]
-lt=-&gt;
+    <panel_attributes>lt=-&gt;
 </panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>182</x>
-      <y>497</y>
+      <x>168</x>
+      <y>581</y>
       <w>210</w>
-      <h>98</h>
+      <h>70</h>
     </coordinates>
-    <panel_attributes>( Kennung 1 ||
-Kennung 5 ||
-Keine Bohrung ||
-Flache Werkstücke )
+    <panel_attributes>( BITCODE1 || BITCODE5 ||
+FLIPPED || INVALID )
 [rampe1IsEmpty &amp;&amp; isOnMachine1]
-/return(false)
+/return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>260.0;10.0;10.0;10.0;10.0;120.0;280.0;120.0;280.0;50.0</additional_attributes>
+    <additional_attributes>280.0;60.0;280.0;20.0;10.0;20.0;10.0;80.0;260.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>434</x>
-      <y>504</y>
-      <w>224</w>
-      <h>126</h>
+      <x>399</x>
+      <y>588</y>
+      <w>238</w>
+      <h>63</h>
     </coordinates>
-    <panel_attributes>( Kennung 2 ||
-Kennung 4 ||
-Keine Bohrung )
-[rampe2IsEmpty &amp;&amp; isOnMachine1]
+    <panel_attributes>( BITCODE2 || BITCODE4 ||
+FLIPPED )
+[!rampe2IsEmpty &amp;&amp; isOnMachine1]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;40.0;10.0;110.0;300.0;110.0;300.0;10.0;20.0;10.0</additional_attributes>
+    <additional_attributes>50.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>364</x>
-      <y>490</y>
+      <x>350</x>
+      <y>623</y>
       <w>84</w>
       <h>42</h>
     </coordinates>
@@ -175,10 +171,55 @@ symbol=substate</panel_attributes>
     <coordinates>
       <x>133</x>
       <y>0</y>
-      <w>343</w>
+      <w>504</w>
       <h>483</h>
     </coordinates>
     <panel_attributes>PuckSort</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>371</x>
+      <y>35</y>
+      <w>238</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>HOLEWITHMETAL
+[!rampe2IsEmpty &amp;&amp; isOnMachine1]
+/return(false)
+lt=-&gt;
+</panel_attributes>
+    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>371</x>
+      <y>161</y>
+      <w>238</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>HOLEWITHMETAL
+[!rampe2IsEmpty &amp;&amp; isOnMachine1]
+/return(false)
+lt=-&gt;
+</panel_attributes>
+    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>371</x>
+      <y>266</y>
+      <w>238</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>HOLEWITHOUTMETAL
+[!rampe2IsEmpty &amp;&amp; isOnMachine1]
+/return(false)
+lt=-&gt;
+</panel_attributes>
+    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
   </element>
 </diagram>
