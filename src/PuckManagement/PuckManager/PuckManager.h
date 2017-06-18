@@ -17,6 +17,7 @@ class PuckManager {
 public:
 	enum ActorSignal {
 		START_MEASUREMENT,
+		STOP_MEASUREMENT,
 		OPEN_SWITCH,
 		SEND_PUCK
 	};
