@@ -154,14 +154,7 @@ void HeightContext::State::stop() {
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] State stop()\n";
-    signal_t signal;
-    signal.ID = SignalID::INVALID_ID;
-    signal.BIT0 = 0;
-    signal.BIT1 = 0;
-    signal.BIT2 = 0;
-    signal.highestHeight = 0;
-    // send invalid signal
-    send(coid, signal);
+    // do nothing and restart heightMeasurement
     new (this) Idle;
 }
 
@@ -250,13 +243,6 @@ void HeightContext::Idle::start() {
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle start()\n";
     new (this) Measuring;
-}
-
-HeightContext::Idle::stop() {
-	//LOG_SCOPE;
-	//LOG_SET_LEVEL(DEBUG);
-	LOG_DEBUG << "[HeightContext] Idle stop()\n";
-	// don't do anything - measurement already stopped
 }
 
 ///
@@ -399,15 +385,15 @@ void HeightContext::Top::refHeight() {
     if (index == 0) {
         new (this) Flipped;
     } else if (index < MIN_BIT_SIZE) {
-    	  LOG_DEBUG << "[HeightContext] Top refHeight() index{" << index << "} < MIN_BIT_SIZE\n";
-    	  signal_t signal;
-    	  signal.ID = SignalID::INVALID_ID;
+    	LOG_DEBUG << "[HeightContext] Top refHeight() index{" << index << "} < MIN_BIT_SIZE\n";
+    	signal_t signal;
+    	signal.ID = SignalID::INVALID_ID;
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
         signal.highestHeight = 0;
-   		  send(coid, signal);
-   		  new (this) Idle;
+   		send(coid, signal);
+   		new (this) Idle;
     } else {
         new (this) BitCoded;
     }
