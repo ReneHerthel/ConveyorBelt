@@ -11,6 +11,8 @@
 
 #include "PuckSortContext.h"
 
+using namespace PuckSignal;
+
 PuckSortContext::PuckSortContext()
 {
 	LOG_SCOPE;

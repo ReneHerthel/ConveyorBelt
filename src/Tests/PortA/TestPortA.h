@@ -6,37 +6,36 @@
  */
 
 /**
- * @ingroup    wrapper
+ * @ingroup    test
  * @{
  *
- * @brief      Test Header of the PulseMessageWrapper.
+ * @brief      Test definition of the PortA as singleton
  *
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
-#ifndef TESTHEIGHTMEASUREMENT_H_
-#define TESTHEIGHTMEASUREMENT_H_
+#ifndef SRC_TESTS_PORTA_TESTPORTA_H_
+#define SRC_TESTS_PORTA_TESTPORTA_H_
 
 #include "../TestFramework/TestCase.h"
 #include "../TestFramework/TestFramework.h"
 
-class TestHeightMeasurement : public TestCase
+class TestPortA : public TestCase
 {
 public:
     /*
+     * @brief Constructor.
+     */
+    TestPortA(int id, std::string brief) : TestCase(id, brief) { };
+protected:
+    /*
      * @brief
      */
-	  TestHeightMeasurement(int id, std::string brief) : TestCase(id, brief) { };
-
-protected:
-	  /*
-	   * @brief The test for the normal Type.
-	   */
-	  TEST(ManualCalibration);
+    TEST(test1);
 
     // Must have.
     TEST_CASE_METHODS
 };
 
-#endif /* TESTHEIGHTMEASUREMENTSTATEMACHINE_H_ */
+#endif /* SRC_TESTS_PORTA_TESTPORTA_H_ */
 /** @} */

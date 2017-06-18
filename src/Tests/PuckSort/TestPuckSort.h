@@ -41,18 +41,10 @@ class TestPuckSort : public TestCase {
 		TEST(test1);
 		TEST(test2);
 		TEST(test3);
+		TEST(test4);
 		TEST_CASE_METHODS;
 	private:
 		PuckSortContext *context;
-
-		signal_t bitCode1;
-		signal_t bitCode2;
-		signal_t bitCode4;
-		signal_t bitCode5;
-		signal_t flipped;
-		signal_t holeWithoutMetal;
-		signal_t holeWithMetal;
-		signal_t invalid;
 };
 
 #endif /* TESTPUCKSORT_H_ */

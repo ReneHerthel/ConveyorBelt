@@ -14,6 +14,7 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
+#include "MeasurementHeightTest.h"
 #include "TestHeightMeasurement.h"
 #include "HeightMeasurementHal.h"
 #include "HeightContext.h"
@@ -22,49 +23,36 @@
 #include <sys/neutrino.h>
 #include <iostream>
 
-SETUP(TestHeightMeasurement) {
+SETUP(MeasurementHeightTest) {
     REG_TEST(ManualCalibration, 1, "Manual calibration of Puck heights");
     return 1;
 }
 
-BEFORE_TC(TestHeightMeasurement) {
+BEFORE_TC(MeasurementHeightTest) {
     // Empty.
     return 1;
 }
 
-AFTER_TC(TestHeightMeasurement) {
+AFTER_TC(MeasurementHeightTest) {
     // Empty.
     return 1;
 }
 
-BEFORE(TestHeightMeasurement) {
+BEFORE(MeasurementHeightTest) {
     // Empty.
     return 1;
 }
 
-AFTER(TestHeightMeasurement) {
+AFTER(MeasurementHeightTest) {
     // Empty.
     return 1;
 }
 
-TEST_IMPL(TestHeightMeasurement, ManualCalibration) {
+TEST_IMPL(MeasurementHeightTest, ManualCalibration) {
 	LOG_SCOPE
 
-	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-				LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
-				return TEST_FAILED;
-	}
-
-	HeightMeasurementHal hmh;
-	int16_t data;
-	char cntrl = 0;
-	std::cout << "Measure = 'm', Quit = 'q' \n";
-	do{
-		hmh.read(data);
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		std::cout << "\n Val: " << data << "\n";
-		std::cout.flush();
-	}while(cntrl != 'q');
+	TestHeightMeasurement thm;
+	thm.startTest();
 
     return TEST_FAILED;
 }

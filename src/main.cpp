@@ -11,11 +11,13 @@
 #include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
 #include "TestPuckManager.h"
-#include "TestPuckSort.h"
+//#include "TestPuckSort.h"
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
-#include "TestHeightMeasurement.h"
+#include "MeasurementHeightTest.h"
+#include "MachineOne.h"
+#include "TestPortA.h"
 
 
 using namespace std;
@@ -62,6 +64,11 @@ int main() {
     //Calibration Test
     ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
 
+    //Calibrate Heights
+    ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
+
+    //Calibrate Heights
+     ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
 
 #if !machine
     ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
@@ -71,6 +78,10 @@ int main() {
 #endif
 
     ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
+
+    // PortA
+    ts.REG_TESTCASE(new TestPortA(13, "Test port a actors"));
+
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
     //########################################//

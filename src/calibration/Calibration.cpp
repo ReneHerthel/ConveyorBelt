@@ -100,7 +100,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 	}
 
 	HeightMeasurementHal hhal;
-	int16_t data = 0;
+	uint16_t data = 0;
 
 	hhal.read(data);
 
@@ -112,7 +112,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
 	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
 	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
-
+	hmCal.delta = DELTA;
 
 }
 
@@ -169,6 +169,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case HEIGHT_TO_SWITCH:  return sortingSwitch[slowOrFast].count();
 		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
 		case OUT_TO_IN:			return inlet[slowOrFast].count();
+		case IN_SWITCH: 		return inSwitch[slowOrFast].count();
 	}
 
 }

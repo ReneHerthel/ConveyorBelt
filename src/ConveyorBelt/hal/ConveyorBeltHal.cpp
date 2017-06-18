@@ -18,13 +18,13 @@
 #include "HWdefines.h"
 #include "HWaccess.h"
 
-void ConveyorBeltHal::setMask(const int mask) {
+#include "PortA.h"
 
-	// First clear the the corresponding bits of the register.
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) & ~(ENGINE_REG_MASK)));
-
-	// Then set the new mask in the register.
-	out8(PORT_ADDR_A, (in8(PORT_ADDR_A) | mask));
+void ConveyorBeltHal::setMask(const uint8_t mask)
+{
+    PortA& portA = PortA::getInstance();
+    portA.bitClear(ENGINE_REG_MASK);
+	portA.bitSet(mask);
 }
 
 /** @} */
