@@ -72,7 +72,6 @@ private:
     	Idle();
         void entry();
         void start();
-        void stop();
     };
 
     /*
