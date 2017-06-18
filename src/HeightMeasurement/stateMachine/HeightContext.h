@@ -45,10 +45,8 @@ private:
      */
     struct State {
         virtual void invalid();
-        virtual void timeout();
         virtual void start();
-        virtual void wait();
-        virtual void resume();
+        virtual void stop();
         virtual void holeHeight();
         virtual void surfaceHeight();
         virtual void refHeight();
@@ -74,6 +72,7 @@ private:
     	Idle();
         void entry();
         void start();
+        void stop();
     };
 
     /*

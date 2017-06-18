@@ -44,7 +44,6 @@ namespace HeightMeasurement {
 	 */
 	enum SignalID {
 		INVALID_ID,
-		TIMEOUT_ID,
 		NORMAL_ID,
 		FLIPPED_ID,
 		PATTERN_ID,
@@ -63,10 +62,8 @@ namespace HeightMeasurement {
 		INVALID = 5,
 
 		PATTERN_READ,
-		TIMEOUT,
 		START,
-		WAIT,
-		RESUME,
+		STOP
 	};
 
 }
