@@ -23,7 +23,8 @@ namespace PuckSignal {
 		DELETE,
 		SEND,
 		EVALUATE,
-		HEIGHT,
+		START_HEIGHT,
+		STOP_HEIGHT,
 		SLIDE_FULL,
 		WARNING
 	};

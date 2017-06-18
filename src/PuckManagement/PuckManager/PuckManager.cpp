@@ -126,7 +126,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::OPEN_SWITCH;
 				break;
-			case PuckSignal::PuckReturn::HEIGHT:
+			case PuckSignal::PuckReturn::START_HEIGHT:
 				acceptCounter++;
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::START_MEASUREMENT;

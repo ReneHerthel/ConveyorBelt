@@ -58,6 +58,11 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 			statePtr->type();
 			if(statePtr->returnValue.puckReturn == PuckSignal::PuckReturn::ACCEPT) {
 				statePtr->puckType.heightType = signal.heightSignal;
+#if !machine
+				statePtr->puckType.height1 = signal.heightSignal.highestHeight;
+#else
+				statePtr->puckType.height2 = signal.heightSignal.highestHeight;
+#endif
 			}
 			break;
 
@@ -362,7 +367,7 @@ void PuckContext::InletArea::earlyTimer() {
 void PuckContext::InletTimer::heightmeasurementIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InletTimer]->[Heightmeasurement]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::HEIGHT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::START_HEIGHT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	stopTimer();
 	new (this) Heightmeasurement;
@@ -375,7 +380,7 @@ void PuckContext::InletTimer::heightmeasurementIn() {
 void PuckContext::Heightmeasurement::heightmeasurementOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Heightmeasurement]->[MeasurementArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::STOP_HEIGHT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	startTimers(DistanceSpeed::lb_distance::HEIGHT_TO_SWITCH);
 	new (this) MeasurementArea;
