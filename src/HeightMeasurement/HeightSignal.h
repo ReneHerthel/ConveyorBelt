@@ -62,8 +62,8 @@ namespace HeightMeasurement {
 		INVALID = 5,
 
 		PATTERN_READ,
-		TIMEOUT,
-		START
+		START,
+		STOP
 	};
 
 }

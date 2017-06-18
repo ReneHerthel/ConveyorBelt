@@ -65,9 +65,9 @@ void HeightContext::process(Signal signal) {
             statePtr->invalid();
             break;
 
-        case TIMEOUT:
+        case STOP:
             LOG_DEBUG << "[HeightContext] process() Incoming signal: TIMEOUT\n";
-            statePtr->timeout();
+            statePtr->stop();
             break;
 
         case START:
@@ -150,16 +150,17 @@ void HeightContext::State::invalid() {
     // Do nothing.
 }
 
-void HeightContext::State::timeout() {
+void HeightContext::State::stop() {
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] State timeout()\n";
+    LOG_DEBUG << "[HeightContext] State stop()\n";
     signal_t signal;
     signal.ID = SignalID::INVALID_ID;
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
     signal.highestHeight = 0;
+    // send invalid signal
     send(coid, signal);
     new (this) Idle;
 }
@@ -176,20 +177,6 @@ void HeightContext::State::start() {
     signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
-}
-
-void HeightContext::State::wait() {
-    //LOG_SCOPE;
-    //LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] State wait()\n";
-    // TODO stoptimer()
-}
-
-void HeightContext::State::resume() {
-    //LOG_SCOPE;
-    //LOG_SET_LEVEL(DEBUG);
-    LOG_DEBUG << "[HeightContext] State resume()\n";
-    // TODO resumeTimer()
 }
 
 void HeightContext::State::holeHeight() {
@@ -248,7 +235,6 @@ HeightContext::Idle::Idle() {
 	LOG_SCOPE;
 	if (service != NULL) {
         service->stopMeasuring();
-        service->stopTimer();
     }
     index = 0;
 }
@@ -257,7 +243,6 @@ void HeightContext::Idle::entry() {
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle entry()\n";
-    // TODO stopTimer()
 }
 
 void HeightContext::Idle::start() {
@@ -265,6 +250,13 @@ void HeightContext::Idle::start() {
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Idle start()\n";
     new (this) Measuring;
+}
+
+HeightContext::Idle::stop() {
+	//LOG_SCOPE;
+	//LOG_SET_LEVEL(DEBUG);
+	LOG_DEBUG << "[HeightContext] Idle stop()\n";
+	// don't do anything - measurement already stopped
 }
 
 ///
@@ -276,7 +268,6 @@ void HeightContext::Measuring::entry() {
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
     if (service != NULL) {
         service->startMeasuring();
-        service->startTimer();
     }
 }
 
@@ -387,8 +378,8 @@ void HeightContext::Top::entry() {
     LOG_DEBUG << "[HeightContext] Top entry()\n";
     // Check if the index is in the range of the min/max bit size.
     if (index > MAX_BIT_SIZE) {
-    	  LOG_DEBUG << "[HeightContext] Top entry() index{" << index << "} > MAX_BIT_SIZE\n";
-    	  signal_t signal;
+    	LOG_DEBUG << "[HeightContext] Top entry() index{" << index << "} > MAX_BIT_SIZE\n";
+    	signal_t signal;
         signal.ID = SignalID::INVALID_ID;
         signal.BIT0 = 0;
         signal.BIT1 = 0;
@@ -407,8 +398,7 @@ void HeightContext::Top::refHeight() {
     // Check the value of the index to make sure the next transition is correct.
     if (index == 0) {
         new (this) Flipped;
-    }
-    else if (index < MIN_BIT_SIZE) {
+    } else if (index < MIN_BIT_SIZE) {
     	  LOG_DEBUG << "[HeightContext] Top refHeight() index{" << index << "} < MIN_BIT_SIZE\n";
     	  signal_t signal;
     	  signal.ID = SignalID::INVALID_ID;
@@ -418,8 +408,7 @@ void HeightContext::Top::refHeight() {
         signal.highestHeight = 0;
    		  send(coid, signal);
    		  new (this) Idle;
-    }
-    else {
+    } else {
         new (this) BitCoded;
     }
 }

@@ -97,10 +97,6 @@ public:
      */
     uint16_t getHighestHeight();
 
-    void startTimer();
-
-    void stopTimer();
-
 private:
     TimerService timer;
     /*
