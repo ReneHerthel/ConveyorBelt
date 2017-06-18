@@ -32,6 +32,10 @@ bool PuckContext::deserialize(void* ser) {
 
 PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
+
+	// set invalid value for height signal - in case heightmeasurement gets stuck
+	statePtr->puckType.heightType.value = 0;
+
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
