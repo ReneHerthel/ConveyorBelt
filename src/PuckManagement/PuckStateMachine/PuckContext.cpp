@@ -503,10 +503,10 @@ void PuckContext::SwitchTimer::outletIn() {
 	LOG_SCOPE;
 #if !machine
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	stopTimer();
-	new (this) OutletArea;
+	new (this) InTransfer;
 #else
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
@@ -554,8 +554,8 @@ void PuckContext::InTransfer::serialStop() {
 void PuckContext::InTransfer::outletOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InTransfer]->[Transferred]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
 	new (this) Transferred;
 }
 /*******************************************/

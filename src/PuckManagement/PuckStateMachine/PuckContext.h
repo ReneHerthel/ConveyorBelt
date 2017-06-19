@@ -18,8 +18,8 @@
 
 #define machine (0) // 0 or 1
 #define TIMERCODE 25 //TODO fill with right PulseCode
-#define SHORT_DELTA 0.85
-#define WIDE_DELTA 1.15
+#define SHORT_DELTA 0.75
+#define WIDE_DELTA 1.25
 class PuckContext {
 private:
 

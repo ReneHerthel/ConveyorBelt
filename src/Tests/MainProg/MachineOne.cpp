@@ -54,12 +54,6 @@ TEST_IMPL(MachineOne, programm_m1){
 	PulseMessageReceiverService mainChannel; ///Main communication channel
 	int mainChid = mainChannel.newChannel(); ///Chid of main com
 
-	//INIT ISR
-	Control isrCntrl(mainChid);
-	ISR isr(&isrCntrl);
-	std::thread isr_th(ref(isr));
-
-
 	//Init CBS
 	ConveyorBeltService cbs;
 
@@ -72,6 +66,11 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
 	calibration.calibrate();
+
+	//INIT ISR
+	Control isrCntrl(mainChid);
+	ISR isr(&isrCntrl);
+	std::thread isr_th(ref(isr));
 /*
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
@@ -85,16 +84,16 @@ TEST_IMPL(MachineOne, programm_m1){
 	lightSystem->setWarningLevel(WARNING_OCCURED);
 */
 	//INIT HEIGHTMEASUREMENT
-	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
-	int heightMChid = heightMChannelCreator.newChannel();
-	PulseMessageSenderService heightMChannel(heightMChid);
+	//PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
+	//int heightMChid = heightMChannelCreator.newChannel();
+	//PulseMessageSenderService heightMChannel(heightMChid);
 
-	HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
+	//HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
 
-	HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
+	//HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
 
 	//INIT PUCK MNG
-	PuckManager puckManager(mainChid);
+	PuckManager *puckManager = new PuckManager(mainChid);
 
 	//INIT Switch Cntrl
 	SortingSwichtControl sswitchCntrl(mainChid);
@@ -110,25 +109,36 @@ TEST_IMPL(MachineOne, programm_m1){
 			case 0: std::cout << "\n\n Height \n";
 				m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
 				m_sig.heightSignal.value = event.value;
-				mr = puckManager.process(m_sig);
+				mr = puckManager->process(m_sig);
 				break; //Height
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5:
-				m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
-				m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
-				mr = puckManager.process(m_sig);
+				if(event.value == interrupts::BUTTON_RESET){
+					delete puckManager;
+					puckManager = new PuckManager(mainChid);
+				} else {
+					m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+					m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
+					mr = puckManager->process(m_sig);
+				}
 				break;
+
 			case 25:
 				m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
 				m_sig.timerSignal.value = event.value;
-				mr = puckManager.process(m_sig);
+				mr = puckManager->process(m_sig);
 				break;
 			case 19:
 				sswitchCntrl.close();
 				break;
 
 		}
+
+		if(mr.errorFlag){
+			cbs.changeState(ConveyorBeltState::STOP);
+		}
+		else{
 		std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
 		cout.flush();
 		switch(mr.speedSignal){
@@ -142,7 +152,7 @@ TEST_IMPL(MachineOne, programm_m1){
 				cbs.changeState(ConveyorBeltState::RIGHTFAST);
 				break;
 		}
-
+		}
 		if(mr.actorFlag){
 			switch(mr.actorSignal){
 				case PuckManager::OPEN_SWITCH :
