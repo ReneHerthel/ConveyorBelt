@@ -10,6 +10,22 @@
 #include "logger.h"
 #include "logscope.h"
 
+serialized PuckManager::serialize() {
+    serialized ser;
+    ser.size = 0;
+    ser.obj = nullptr;
+
+    return ser;
+}
+
+bool PuckManager::deserialize(void *ser) {
+    PuckSignal::PuckType type = *((PuckSignal::PuckType*)ser);
+    PuckContext *puck = new PuckContext(chid, type);
+    addPuck(puck);
+
+	return true;
+}
+
 PuckManager::PuckManager(int chid)
 	: puckList()
 	, nextPuckID(0)

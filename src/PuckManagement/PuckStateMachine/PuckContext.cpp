@@ -15,19 +15,38 @@
 
 serialized PuckContext::serialize() {
     serialized ser;
-    ser.size = sizeof(this);
-    //ser.obj = new PuckContext{};
+    ser.size = sizeof(PuckSignal::PuckType);
+    ser.obj = new PuckSignal::PuckType(statePtr->puckType);
 
     return ser;
 }
 
-bool PuckContext::deserialize(void* ser) {
-    PuckContext* tmp = (PuckContext*)ser;
-    //this->
+bool PuckContext::deserialize(void *ser) {
+    return false;
+}
 
-    // TODO alle member kopieren
+PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
+	LOG_SCOPE;
 
-    return true;
+#if !machine
+	LOG_DEBUG << "Using machine0\n";
+	statePtr = &inletState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
+#else
+	LOG_DEBUG << "Using machine1\n";
+	statePtr = &transferState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
+	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+#endif
+
+	// set invalid value for height signal - in case heightmeasurement gets stuck
+	statePtr->puckType = puckType;
 }
 
 PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
@@ -52,6 +71,9 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck
 	statePtr->puckType.heightType.value = 0;
+	statePtr->puckType.height1 = 0;
+	statePtr->puckType.height2 = 0;
+	statePtr->puckType.metal = false;
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {

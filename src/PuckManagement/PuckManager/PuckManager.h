@@ -13,7 +13,7 @@
 
 #include <list>
 
-class PuckManager {
+class PuckManager : public ISerializable {
 public:
 	enum ActorSignal {
 		START_MEASUREMENT,
@@ -40,13 +40,16 @@ public:
 		PuckContext *puck;					// Null except on send Signal
 	};
 
+	serialized serialize() override;
+	bool deserialize(void* ser) override;
+
 	PuckManager(int chid);
 	~PuckManager();
 
 	ManagerReturn process(PuckSignal::Signal signal);
-	void addPuck(PuckContext *puck);
 
 private:
+	void addPuck(PuckContext *puck);
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 	int chid; /**< @brief ID for the pucks to give the timers*/

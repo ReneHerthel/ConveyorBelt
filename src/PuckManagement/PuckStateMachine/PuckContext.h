@@ -32,10 +32,12 @@ private:
 
 public:
 
-	serialized serialize();
-	bool deserialize(void* ser);
+	serialized serialize() override;
+	bool deserialize(void* ser) override;
 
 	PuckContext(int chid);
+	PuckContext(int chid, PuckSignal::PuckType puckType);
+
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
