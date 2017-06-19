@@ -21,13 +21,13 @@ SETUP(TestPuckManager) {
 
 BEFORE_TC(TestPuckManager) {
 	//INIT CALIBRATION AND CALIBRATE
-	Calibration& calibration = Calibration::getInstance();
+	//Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
 	cout.flush();
-	calibration.calibrateHeighMeasurement();
+	//calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
-	calibration.calibrate();
+	//calibration.calibrate();
 	return 1;
 }
 
@@ -117,7 +117,7 @@ TEST_IMPL(TestPuckManager, test2) {
 TEST_IMPL(TestPuckManager, test3) {
 	LOG_SCOPE;
 	LOG_DEBUG << "-------------------TEST 3 ------------------\n";
-	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, {((0<<16) | (int32_t)(PuckSignal::TimerType::LATE_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
+	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::LATE_TIMER } }, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
 
 	for(uint32_t i = 1; i < (sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal)); i++) {
 		PuckManager::ManagerReturn returnVal;
