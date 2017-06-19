@@ -34,6 +34,9 @@
 
 #include "SortingSwichtControl.h"
 
+#include "DistanceObservable.h"
+#include "DistanceEnum.h"
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -58,6 +61,11 @@ TEST_IMPL(MachineOne, programm_m1){
 	ConveyorBeltService cbs;
 
 
+	//INIT ISR
+	Control isrCntrl(mainChid);
+	ISR isr(&isrCntrl);
+	std::thread isr_th(ref(isr));
+
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
@@ -67,10 +75,8 @@ TEST_IMPL(MachineOne, programm_m1){
 		cout.flush();
 	calibration.calibrate();
 
-	//INIT ISR
-	Control isrCntrl(mainChid);
-	ISR isr(&isrCntrl);
-	std::thread isr_th(ref(isr));
+	//INIT DistancObs
+	DistanceObservable &distO = DistanceObservable::getInstance();
 /*
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
@@ -144,12 +150,15 @@ TEST_IMPL(MachineOne, programm_m1){
 		switch(mr.speedSignal){
 			case PuckSignal::PuckSpeed::STOP:
 				cbs.changeState(ConveyorBeltState::STOP);
+				distO(DistanceSpeed::STOP);
 				break;
 			case PuckSignal::PuckSpeed::SLOW:
 				cbs.changeState(ConveyorBeltState::RIGHTSLOW);
+				distO(DistanceSpeed::SLOW);
 				break;
 			case PuckSignal::PuckSpeed::FAST:
 				cbs.changeState(ConveyorBeltState::RIGHTFAST);
+				distO(DistanceSpeed::FAST);
 				break;
 		}
 		}
