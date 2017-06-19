@@ -17,8 +17,86 @@
 #include <thread>
 #include "HeightMeasurementService.h"
 #include "HeightMeasurementHal.h"
+#include "PulseMessageReceiverService.h"
 
 using namespace chrono;
+
+/**
+ * Calibrate the light barrier distances
+ */
+void Calibration::calibrate(int mainChid){
+	ConveyorBeltService cbs;
+    SortingSwitchService sss;
+    rcv::PulseMessageReceiverService pmr(mainChid);
+
+	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
+			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+			return;
+	}
+
+	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
+
+	cbs.changeState(STOP);
+
+
+	//CENTER THE PUCK AND CALC TIME FOR RUNNING THROUGH A LB
+	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	cbs.changeState(RIGHTFAST);
+
+	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
+	auto lb_in = system_clock::now();
+	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
+	auto lb_out = system_clock::now();
+
+	milliseconds lb_throughput = duration_cast<milliseconds>(lb_out - lb_in);
+
+	cbs.changeState(LEFTFAST);
+	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
+	cbs.changeState(STOP);
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
+	for(int i = 0; i < 2; i++){
+		if(i == 0) 	cbs.changeState(RIGHTFAST);
+		else		cbs.changeState(RIGHTSLOW);
+
+		while(pmr.receivePulseMessage().value != interrupts::INLET_OUT);
+		auto start = system_clock::now();
+
+		auto last_lb = system_clock::now();
+
+		while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
+		heightMeasure[i] = milliseconds(duration_cast<milliseconds>(system_clock::now() - last_lb));
+		sss.sortingSwitchOpen();
+		while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
+		last_lb = system_clock::now();
+
+		while(pmr.receivePulseMessage().value != interrupts::SWITCH_IN);
+		sortingSwitch[i] = duration_cast<milliseconds>(system_clock::now()  - last_lb);
+		while(pmr.receivePulseMessage().value != interrupts::SWITCH_OUT);
+		last_lb = system_clock::now();
+
+		while(pmr.receivePulseMessage().value != interrupts::OUTLET_IN);
+		outlet[i] = duration_cast<milliseconds>(system_clock::now() - last_lb);
+		overall[i] = duration_cast<milliseconds>(system_clock::now() - start);
+
+		cbs.changeState(STOP);
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
+		cbs.changeState(LEFTFAST);
+		while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
+		sss.sortingSwitchClose();
+		while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
+		cbs.changeState(STOP);
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
+	}
+	sss.sortingSwitchClose(); //Safety
+
+	inSwitch[0] = outlet[0]/3;
+	inSwitch[1] = outlet[1]/3;
+
+	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
+	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
+}
 
 void Calibration::calibrate(void){
 	ConveyorBeltService cbs;
