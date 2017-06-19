@@ -51,10 +51,13 @@
 namespace HAL {
     class LightSystemHal: public BLightSystem {
         public:
-    		LightSystemHal() {};
+    		LightSystemHal();
     		~LightSystemHal() {};
             void lightOn(Color color);
             void lightOff(Color color);
+            bool checkIfPreviouslySetTo(Color color);
+        private:
+        	Color lastColor;
     };
 }
 

@@ -13,9 +13,19 @@
 #include "LightSystemHal.h"
 
 namespace HAL {
+	LightSystemHal::LightSystemHal()
+	: lastColor(ALL_COLORS)
+	{
+		out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
+		out8(PORTA_ADDR, 0);
+	}
+
     /* TODO: Merge methods lightOn and lightOff to reduce code duplication */
     void LightSystemHal::lightOn(Color color) {
         LOG_SCOPE;
+        /* Remember last color */
+        lastColor = color;
+
         unsigned char bitMask = 0;
         
         /* Prepare bitmask according to color */
@@ -39,11 +49,9 @@ namespace HAL {
         /* TODO: What is this for? */
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
-        /* Save old port value */
-    	unsigned char port_value = in8(PORTA_ADDR);
         /* Set requested bit */
-        LOG_DEBUG << "lightOn: Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask << endl;
-    	out8(PORTA_ADDR, (port_value | (1 << bitMask)));
+        LOG_DEBUG << "lightOn: Write to port " << PORTA_ADDR << " Set bitmask: " << bitMask << endl;
+    	out8(PORTA_ADDR, (1 << bitMask));
     }
 
     void LightSystemHal::lightOff(Color color) {
@@ -71,11 +79,13 @@ namespace HAL {
         /* TODO: What is this for? */
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
-        /* Save old port value */
-    	unsigned char port_value = in8(PORTA_ADDR);
         /* Clear requested bit */
-        LOG_DEBUG << "lightOff: Write to port " << PORTA_ADDR << " Value: " << port_value << " Clear bitmask: " << bitMask << endl;
-    	out8(PORTA_ADDR, (port_value & ~(1 << bitMask)));
+        LOG_DEBUG << "lightOff: Write to port " << in8(PORTA_ADDR) << " Clear bitmask: " << bitMask << endl;
+    	out8(PORTA_ADDR, ~(1 << bitMask));
     }
 
+    bool LightSystemHal::checkIfPreviouslySetTo(Color color) {
+    	LOG_SCOPE;
+    	return(lastColor == color);
+    }
 }
