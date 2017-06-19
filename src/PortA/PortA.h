@@ -17,8 +17,6 @@
 #ifndef SRC_PORTA_PORTA_H_
 #define SRC_PORTA_PORTA_H_
 
-#include "HWaccess.h"
-
 #include <mutex>
 #include <stdint.h>
 
