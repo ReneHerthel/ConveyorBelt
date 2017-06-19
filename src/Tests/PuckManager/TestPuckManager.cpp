@@ -20,14 +20,17 @@ SETUP(TestPuckManager) {
 }
 
 BEFORE_TC(TestPuckManager) {
+
+	chid = timerReceiver.newChannel();
+
 	//INIT CALIBRATION AND CALIBRATE
-	//Calibration& calibration = Calibration::getInstance();
+	Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
 	cout.flush();
-	//calibration.calibrateHeighMeasurement();
+	calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
-	//calibration.calibrate();
+	calibration.calibrate();
 	return 1;
 }
 
@@ -36,7 +39,7 @@ AFTER_TC(TestPuckManager) {
 }
 
 BEFORE(TestPuckManager) {
-	manager = new PuckManager(CHID);
+	manager = new PuckManager(chid);
 
 	return 1;
 }
@@ -157,7 +160,7 @@ TEST_IMPL(TestPuckManager, test3) {
 		}
 
 		delete manager;
-		manager = new PuckManager(CHID);
+		manager = new PuckManager(chid);
 	}
 	return TEST_PASSED;
 }

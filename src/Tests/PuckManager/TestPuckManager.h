@@ -20,8 +20,7 @@
 #include "Calibration.h"
 #include <stdint.h>
 #include <stdlib.h>
-
-#define CHID 1 //replace with right chid
+#include "PulseMessageReceiverService.h"
 
 class TestPuckManager : public TestCase {
 public:
@@ -32,6 +31,9 @@ protected:
 	TEST(test3);
 	TEST(test4);
 	TEST_CASE_METHODS;
+
+	rcv::PulseMessageReceiverService timerReceiver;
+	int chid;
 private:
 	PuckManager *manager;
 

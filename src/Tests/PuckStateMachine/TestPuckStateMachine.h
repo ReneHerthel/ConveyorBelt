@@ -17,9 +17,9 @@
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
 #include "Calibration.h"
+#include "PulseMessageReceiverService.h"
 
 
-#define CHID 1 //replace with right chid
 
 class TestPuckStateMachine : public TestCase {
 public:
@@ -29,6 +29,9 @@ protected:
 	TEST(test2);
 	TEST(test3);
 	TEST_CASE_METHODS;
+
+	rcv::PulseMessageReceiverService timerReceiver;
+	int chid;
 private:
 	PuckContext *context;
 	PuckSignal::TimerSignal earlyTimer = {

@@ -30,15 +30,15 @@ bool PuckContext::deserialize(void* ser) {
     return true;
 }
 
-PuckContext::PuckContext(int chid) /*: shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE)*/ {
+PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
 
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	//statePtr->shortDistance = &shortDistance;
-	//statePtr->wideDistance = &wideDistance;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
 
 #else
 	LOG_DEBUG << "Using machine1\n";
@@ -170,17 +170,17 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 }
 
 void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
-	/*
+
 	PuckSignal::TimerSignal ts;
-	ts.puckID = puckID;
-	ts.type = PuckSignal::TimerType::EARLY_TIMER;
+	ts.TimerInfo.puckID = puckID;
+	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
 	shortDistance->startAlarm(ts.value,distance,SHORT_DELTA);
-	ts.type = PuckSignal::TimerType::LATE_TIMER;
+	ts.TimerInfo.type = PuckSignal::TimerType::LATE_TIMER;
 	wideDistance->startAlarm(ts.value,distance,WIDE_DELTA);
-	*/
+
 }
 void PuckContext::PuckState::stopTimer(){
-	//wideDistance->stopAlarm();
+	wideDistance->stopAlarm();
 }
 /*******************************************
  * SuperState

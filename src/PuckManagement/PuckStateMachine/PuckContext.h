@@ -25,8 +25,8 @@
 class PuckContext : public ISerializable {
 private:
 
-	//DistanceTracker shortDistance;
-	//DistanceTracker wideDistance;
+	DistanceTracker shortDistance;
+	DistanceTracker wideDistance;
 
 
 
@@ -95,8 +95,8 @@ public:
 
 		// Timer stuff
 
-		//DistanceTracker *shortDistance;
-		//DistanceTracker *wideDistance;
+		DistanceTracker *shortDistance;
+		DistanceTracker *wideDistance;
 
 		void startTimers(DistanceSpeed::lb_distance distance);
 		void stopTimer();
