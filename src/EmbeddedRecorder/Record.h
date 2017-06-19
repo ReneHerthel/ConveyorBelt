@@ -17,7 +17,8 @@
 #ifndef SRC_EMBEDDEDRECORDER_RECORD_H_
 #define SRC_EMBEDDEDRECORDER_RECORD_H_
 
-#include "TestEmbeddedRecorderStub.h"
+//#include "TestEmbeddedRecorderStub.h"
+#include "ISerializable.h"
 
 #include <stdint.h>
 #include <chrono>
@@ -35,7 +36,8 @@ namespace rec {
         /* The value of the pulse message. */
         uint32_t value;
         // TODO: Replace this with the puck.
-        TestEmbeddedRecorderStub stub;
+        //TestEmbeddedRecorderStub stub;
+        serialize puck;
     } record_t;
 
 } /* namespace rec */

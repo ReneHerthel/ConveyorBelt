@@ -16,6 +16,8 @@
 
 #include "ThreadRecordSender.h"
 
+#include "ISerializable.h"
+
 #include "ITimer.h"
 #include "TimerService.h"
 
@@ -68,7 +70,14 @@ void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_poi
      * This must be cast into a pointer again after receiving this message.
      */
     if (next.code == TRANSM_IN_CODE) {
-        next.value = (int)new TestEmbeddedRecorderStub(next.stub);
+        // Serialize ser;
+        // PuckContext puck;
+        // if (puck.deserialize(ser.obj)) {
+        //     // TODO: Error handling.
+        // }
+        // next.value = (int)new PuckContext(puck);
+
+        // OLD: next.value = (int)new TestEmbeddedRecorderStub(next.stub);
     }
 
     auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start).count();
