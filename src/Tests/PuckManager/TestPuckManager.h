@@ -14,6 +14,8 @@
 #include "PuckContext.h"
 #include "PuckSignal.h"
 #include "PuckManager.h"
+#include "PuckSortContext.h"
+#include "TestPuckSort.h"
 #include "Signals.h"
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
@@ -21,6 +23,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "PulseMessageReceiverService.h"
+
 
 class TestPuckManager : public TestCase {
 public:
@@ -37,13 +40,14 @@ protected:
 private:
 	PuckManager *manager;
 
+
 #if !machine
 	PuckSignal::Signal signalArrayLongestPath[17] {
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {1}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::METAL_DETECT, Serial_n::ser_proto_msg::ACCEPT_SER},
@@ -88,12 +92,12 @@ private:
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {1}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
 			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, { .TimerInfo = { .puckID = 1, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {1}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 1
 			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
@@ -110,7 +114,7 @@ private:
 			//Puck 3
 			{PuckSignal::SignalType::TIMER_SIGNAL, {0}, { .TimerInfo = { .puckID = 2, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER},
-			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
+			{PuckSignal::SignalType::HEIGHT_SIGNAL, {0/*invalid*/}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::INLET_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_OUT, Serial_n::ser_proto_msg::ACCEPT_SER},
 			//Puck 2
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::SWITCH_OPEN, Serial_n::ser_proto_msg::ACCEPT_SER},

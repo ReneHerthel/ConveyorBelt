@@ -10,6 +10,7 @@
 
 #include "PuckSignal.h"
 #include "PuckContext.h"
+#include "PuckSortContext.h"
 
 #include <list>
 
@@ -53,6 +54,8 @@ private:
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 	int chid; /**< @brief ID for the pucks to give the timers*/
+
+	PuckSortContext sort;
 };
 
 #endif /* PUCKMANAGER_H_ */
