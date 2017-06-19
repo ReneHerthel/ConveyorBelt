@@ -140,7 +140,7 @@ private:
      * @param[*state] A pointer to the current state of the measuring.
      * @param[data] The current measured data from the hal.
      */
-    void dataInRange(Signal *state, uint16_t data);
+    void dataInRange(HeightMeasurement::Signal *state, uint16_t data);
 
     /*
      * @brief The superloop task of the statemachine-thread.
