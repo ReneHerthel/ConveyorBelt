@@ -135,6 +135,7 @@ void Calibration::calibrate(void){
 		else		cbs.changeState(RIGHTSLOW);
 
 		while(!pollLB(LB_ENTRY));
+
 		auto start = system_clock::now();
 
 		auto last_lb = system_clock::now();

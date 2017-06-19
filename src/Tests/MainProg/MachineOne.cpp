@@ -60,6 +60,10 @@ TEST_IMPL(MachineOne, programm_m1){
 	//Init CBS
 	ConveyorBeltService cbs;
 
+	//INIT ISR
+	Control isrCntrl(mainChid);
+	ISR isr(&isrCntrl);
+	std::thread isr_th(ref(isr));
 
 	//INIT ISR
 	Control isrCntrl(mainChid);

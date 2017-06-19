@@ -56,7 +56,7 @@ int main() {
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
 
     //TIMER TESTS
-    ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
+   // ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
 
     //DistanceTracking test
     ts.REG_TESTCASE(new DistanceTrackingTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
