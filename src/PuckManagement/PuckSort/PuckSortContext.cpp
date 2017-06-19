@@ -12,6 +12,7 @@
 #include "PuckSortContext.h"
 
 using namespace PuckSignal;
+using namespace HeightMeasurement;
 
 PuckSortContext::PuckSortContext()
 {
@@ -111,15 +112,21 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
+	if ( rampe1IsEmpty && isOnMachine1 ) {
+		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
+	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::bitCode2() {
 	LOG_SCOPE;
 
-	if (isOnMachine2) {
+	if ( rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = true;
-	} else if (!rampe2IsEmpty && isOnMachine1) {
+	} else if ( !rampe2IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -130,7 +137,7 @@ void PuckSortContext::PuckSort::bitCode2() {
 void PuckSortContext::PuckSort::bitCode4() {
 	LOG_SCOPE;
 
-	if (isOnMachine2) {
+	if ( rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = true;
 	} else if (!rampe2IsEmpty && isOnMachine1) {
 		returnValue = true;
@@ -142,12 +149,18 @@ void PuckSortContext::PuckSort::bitCode4() {
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
+	if ( rampe1IsEmpty && isOnMachine1 ) {
+		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
+	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if (isOnMachine2) {
+	if ( rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = true;
 	} else if (!rampe2IsEmpty && isOnMachine1) {
 		returnValue = true;
@@ -169,7 +182,13 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	returnValue = (rampe1IsEmpty && isOnMachine1) ? false : true;
+	if ( rampe1IsEmpty && isOnMachine1 ) {
+		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
+	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 
