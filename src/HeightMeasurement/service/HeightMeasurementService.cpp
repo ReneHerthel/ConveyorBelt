@@ -82,6 +82,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
+    highestHeight = USHRT_MAX;		// reset highest height
     uint16_t data = 0;             	/*< The current measured data.*/
     Signal state = START;         	/*< The current state of the statemachine.*/
     Signal oldState = state;      	/*< The old state of the statemachine.*/
