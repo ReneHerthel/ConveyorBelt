@@ -9,6 +9,7 @@
 
 SETUP(LightSystemTest){
     REG_TEST(test1, 1, "Test1 Brief");
+    return 1;
 };
 
 BEFORE_TC(LightSystemTest){

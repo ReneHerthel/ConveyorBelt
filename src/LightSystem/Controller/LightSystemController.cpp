@@ -30,7 +30,9 @@ LightSystemController::~LightSystemController() {
 	LOG_SCOPE;
 	isRunning = false;
 
-	/* Unblock control thread before join */
+	/*
+	 * Release control for shutdown and turn off light.
+	 */
 	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);
 	if(coid < 0) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */
@@ -39,7 +41,8 @@ LightSystemController::~LightSystemController() {
 
     /* FIXME: Discuss log message format */
 	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << endl;
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, LIGHT_SYSTEM_STOP);
+
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, CLEAR_ALL);
     if(err) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */
         LOG_ERROR << "Sending message failed" << endl;
@@ -59,8 +62,9 @@ int LightSystemController::task(){
 	LOG_SCOPE;
 	thread::id thread_id = this_thread::get_id();
 
+    /* FIXME: Move to PortA singleton */
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-		LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
+		LOG_ERROR << thread_id << ": Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;
 	}
 
@@ -68,27 +72,33 @@ int LightSystemController::task(){
 	while(isRunning) {
 		if (frequency == ALWAYS_OFF)
 		{
-            /* Switch off all lights in case color changes after
-             * entering this condition block */
+            /*
+             * Switch off all lights in case color changes after
+             * entering this condition block
+             */
+			LOG_DEBUG << thread_id << ": Turn off lights" << endl;
 			boundary->lightOff(ALL_COLORS);
 		} else {
-			boundary->lightOn(color);
+			if ( !boundary->checkIfPreviouslySetTo(color) ) {
+				LOG_DEBUG << thread_id << ": Set color to " << color << endl;
+				boundary->lightOn(color);
+			}
 		}
-		LOG_DEBUG << thread_id << ": Before wait 1" << endl;
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
-		LOG_DEBUG << thread_id << ": After wait 1" << endl;
-        /* Blinking is realized by turning off the lights in the second
-         * half of the period */
+        /*
+         * Blinking is realized by turning off the lights in the second
+         * half of the period
+         */
 		if(frequency == FAST_BLINKING || frequency == SLOW_BLINKING)
 		{
-            /* Switch off all lights in case color changes after
-             * entering this condition block */
+            /*
+             * Switch off all lights in case color changes after
+             * entering this condition block
+             */
 			boundary->lightOff(ALL_COLORS);
 		}
-		LOG_DEBUG << thread_id << ": Before wait 2" << endl;
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
-		LOG_DEBUG << thread_id << ": After wait 2" << endl;
-		LOG_DEBUG << thread_id << ": isRunning = " << isRunning << endl;
+		LOG_DEBUG << thread_id << ": isRunning = " << isRunning << " | frequency = " << frequency << " | color = " << color << endl;
 	}
 
 	return 0;
@@ -96,7 +106,7 @@ int LightSystemController::task(){
 
 int LightSystemController::control(int chid) {
 	LOG_SCOPE;
-    /** Last received message will be stored here */
+    /*! Last received message will be stored here */
 	struct _pulse pulse;
 	int err;
 	thread::id thread_id = this_thread::get_id();
@@ -125,8 +135,7 @@ int LightSystemController::control(int chid) {
 	            { RED, FAST_BLINKING }, // ERROR_OCCURED
 	            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
 	            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
-	            { ALL_COLORS, ALWAYS_OFF }, // CLEAR_ALL
-	            { ALL_COLORS, ALWAYS_OFF } // LIGHT_SYSTEM_STOP
+	            { ALL_COLORS, ALWAYS_OFF } // CLEAR_ALL
 	    };
 
 	    color = LightMessageMapping[warningLevel].color;

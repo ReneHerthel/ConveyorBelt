@@ -20,6 +20,7 @@
 #include <iostream>
 
 #define PAUSE_TIME 10
+/* FIXME: Why is this duplicated here? */
 #define LS_MODULE_ID 4
 #define PORTA_ADDR 0x300
 #define GREEN_SHIFT		5
