@@ -51,7 +51,7 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 				}
 				currSpeed_ = speed;
 				break;
-			case STOP:
+			case speed_t::STOP:
 				timer_.stopAlarm();
 				stopped_ = true;
 				break;
