@@ -31,6 +31,21 @@ BEFORE_TC(TestPuckManager) {
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
 	calibration.calibrate();
+
+
+	HeightMeasurement::signal_t hsignal;
+	hsignal.ID = HeightMeasurement::SignalID::NORMAL_ID;
+	hsignal.BIT0 = 0;
+	hsignal.BIT1 = 0;
+	hsignal.BIT2 = 0;
+	hsignal.highestHeight = 0;
+
+	std::cout << "normal signal is: " << hsignal.value << std::endl;
+
+	hsignal.ID = HeightMeasurement::SignalID::INVALID_ID;
+
+	std::cout << "invalid signal is: " << hsignal.value << std::endl;
+
 	return 1;
 }
 

@@ -9,7 +9,7 @@
  */
 
 #include "TestPuckSort.h"
-
+#include <iostream>
 using namespace std;
 using namespace HeightMeasurement;
 using namespace Serial_n;
@@ -59,7 +59,6 @@ TEST_IMPL(TestPuckSort, test1) {
     /* TODO: Refactor into function */
 	for ( uint8_t arrayIterator = 0; arrayIterator < sizeof(testSignals) / sizeof(PuckType); ++arrayIterator ) {
 		bool returnVal = context->process(testSignals[arrayIterator]);
-
 		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}

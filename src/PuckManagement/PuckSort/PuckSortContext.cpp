@@ -112,7 +112,7 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = false;
 	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = false;
@@ -149,7 +149,7 @@ void PuckSortContext::PuckSort::bitCode4() {
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = false;
 	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = false;
@@ -182,7 +182,7 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = false;
 	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
 		returnValue = false;
