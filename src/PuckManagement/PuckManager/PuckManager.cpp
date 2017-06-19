@@ -203,6 +203,10 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		// warning can be ignored
 	}
 
+	if(puckList.empty()) {
+		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+	}
+
 	// everything OK
 	return prioReturnVal;
 }
