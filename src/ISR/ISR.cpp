@@ -221,7 +221,7 @@ void ISR::operator()() {
                 //cout << "no_metal" << endl;
                 sensor_metal_active = true;
             }
-        }
+        }/*
         else if ((diff & SENSOR_HEIGHT) == SENSOR_HEIGHT) {
             if (sensor_height_active) {
                 //cout << "sensor_height" << endl;
@@ -230,7 +230,7 @@ void ISR::operator()() {
             } else {
                 sensor_height_active = true;
             }
-        }
+        }*/
         else if ((diff & SWITCH_OPEND) == SWITCH_OPEND) {
             if (switch_open) {
                 //cout << "switch is open" << endl;
