@@ -34,6 +34,9 @@
 
 #include "SortingSwichtControl.h"
 
+#include "DistanceObservable.h"
+#include "DistanceEnum.h"
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -57,6 +60,10 @@ TEST_IMPL(MachineOne, programm_m1){
 	//Init CBS
 	ConveyorBeltService cbs;
 
+	//INIT ISR
+	Control isrCntrl(mainChid);
+	ISR isr(&isrCntrl);
+	std::thread isr_th(ref(isr));
 
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
@@ -64,13 +71,11 @@ TEST_IMPL(MachineOne, programm_m1){
 	cout.flush();
 	calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
-		cout.flush();
-	calibration.calibrate();
+	cout.flush();
+	calibration.calibrate(mainChid);
 
-	//INIT ISR
-	Control isrCntrl(mainChid);
-	ISR isr(&isrCntrl);
-	std::thread isr_th(ref(isr));
+	//INIT DistanceObservable
+	DistanceObservable &distO = DistanceObservable::getInstance();
 /*
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
@@ -139,18 +144,21 @@ TEST_IMPL(MachineOne, programm_m1){
 			cbs.changeState(ConveyorBeltState::STOP);
 		}
 		else{
-		std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
-		cout.flush();
-		switch(mr.speedSignal){
-			case PuckSignal::PuckSpeed::STOP:
-				cbs.changeState(ConveyorBeltState::STOP);
-				break;
-			case PuckSignal::PuckSpeed::SLOW:
-				cbs.changeState(ConveyorBeltState::RIGHTSLOW);
-				break;
-			case PuckSignal::PuckSpeed::FAST:
-				cbs.changeState(ConveyorBeltState::RIGHTFAST);
-				break;
+			std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
+			cout.flush();
+			switch(mr.speedSignal){
+				case PuckSignal::PuckSpeed::STOP:
+					cbs.changeState(ConveyorBeltState::STOP);
+					distO.updateSpeed(DistanceSpeed::STOP);
+					break;
+				case PuckSignal::PuckSpeed::SLOW:
+					cbs.changeState(ConveyorBeltState::RIGHTSLOW);
+					distO.updateSpeed(DistanceSpeed::SLOW);
+					break;
+				case PuckSignal::PuckSpeed::FAST:
+					cbs.changeState(ConveyorBeltState::RIGHTFAST);
+					distO.updateSpeed(DistanceSpeed::FAST);
+					break;
 		}
 		}
 		if(mr.actorFlag){

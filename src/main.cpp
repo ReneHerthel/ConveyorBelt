@@ -2,7 +2,7 @@
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
 #include "TestPulseMessageWrapper.h"
-#include "TestHeightMeasurementStatemachine.h"
+//#include "TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 #include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
@@ -15,7 +15,7 @@
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
-#include "MeasurementHeightTest.h"
+//#include "MeasurementHeightTest.h"
 #include "MachineOne.h"
 #include "TestPortA.h"
 
@@ -56,7 +56,7 @@ int main() {
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
 
     //TIMER TESTS
-    ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
+   // ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
 
     //DistanceTracking test
     ts.REG_TESTCASE(new DistanceTrackingTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
@@ -65,7 +65,7 @@ int main() {
     ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
 
     //Calibrate Heights
-    ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
+    //ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
 
     //Calibrate Heights
      ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
