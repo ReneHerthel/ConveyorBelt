@@ -58,14 +58,17 @@ class PuckSortContext {
     struct Start: public PuckSort {
         /* FIXME: Adapt state names to puck naming conventions */
         virtual void holeWithoutMetal();
+        virtual void holeWithMetal();
     } startState;
     struct GotHoleUpWoMetal: public PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
+        virtual void holeWithoutMetal();
         virtual void holeWithoutMetal();
     };
     struct GotTwoHoleUpWoMetal: public PuckSort {
         /* FIXME: Adapt signal names to puck naming conventions */
         virtual void holeWithMetal();
+        virtual void holeWithoutMetal();
     };
     struct GotHoleUpMetal: public PuckSort {
     };

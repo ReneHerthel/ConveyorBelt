@@ -13,8 +13,21 @@
 
 #include <new>
 
-PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
+serialized PuckContext::serialize() {
+    serialized ser;
+    ser.size = sizeof(PuckSignal::PuckType);
+    ser.obj = new PuckSignal::PuckType(statePtr->puckType);
+
+    return ser;
+}
+
+bool PuckContext::deserialize(void *ser) {
+    return false;
+}
+
+PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
+
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
@@ -31,6 +44,36 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 
 	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
 #endif
+
+	// set invalid value for height signal - in case heightmeasurement gets stuck
+	statePtr->puckType = puckType;
+}
+
+PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
+	LOG_SCOPE;
+
+#if !machine
+	LOG_DEBUG << "Using machine0\n";
+	statePtr = &inletState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
+#else
+	LOG_DEBUG << "Using machine1\n";
+	statePtr = &transferState;
+	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	statePtr->shortDistance = &shortDistance;
+	statePtr->wideDistance = &wideDistance;
+
+	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+#endif
+
+	// set invalid value for height signal - in case heightmeasurement gets stuck
+	statePtr->puckType.heightType.value = 0;
+	statePtr->puckType.height1 = 0;
+	statePtr->puckType.height2 = 0;
+	statePtr->puckType.metal = false;
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
@@ -41,12 +84,17 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 			statePtr->type();
 			if(statePtr->returnValue.puckReturn == PuckSignal::PuckReturn::ACCEPT) {
 				statePtr->puckType.heightType = signal.heightSignal;
+#if !machine
+				statePtr->puckType.height1 = signal.heightSignal.highestHeight;
+#else
+				statePtr->puckType.height2 = signal.heightSignal.highestHeight;
+#endif
 			}
 			break;
 
 		case PuckSignal::SignalType::TIMER_SIGNAL:
 			LOG_DEBUG << "Signal is a timer signal\n";
-			switch(signal.timerSignal.type) {
+			switch(signal.timerSignal.TimerInfo.type) {
 				case PuckSignal::TimerType::EARLY_TIMER:
 					LOG_DEBUG << "Signal is early timer\n";
 					statePtr->earlyTimer();
@@ -144,12 +192,14 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 }
 
 void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
+
 	PuckSignal::TimerSignal ts;
-	ts.puckID = puckID;
-	ts.type = PuckSignal::TimerType::EARLY_TIMER;
+	ts.TimerInfo.puckID = puckID;
+	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
 	shortDistance->startAlarm(ts.value,distance,SHORT_DELTA);
-	ts.type = PuckSignal::TimerType::LATE_TIMER;
+	ts.TimerInfo.type = PuckSignal::TimerType::LATE_TIMER;
 	wideDistance->startAlarm(ts.value,distance,WIDE_DELTA);
+
 }
 void PuckContext::PuckState::stopTimer(){
 	wideDistance->stopAlarm();
@@ -345,7 +395,7 @@ void PuckContext::InletArea::earlyTimer() {
 void PuckContext::InletTimer::heightmeasurementIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InletTimer]->[Heightmeasurement]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::HEIGHT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::START_HEIGHT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	stopTimer();
 	new (this) Heightmeasurement;
@@ -358,7 +408,7 @@ void PuckContext::InletTimer::heightmeasurementIn() {
 void PuckContext::Heightmeasurement::heightmeasurementOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Heightmeasurement]->[MeasurementArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::STOP_HEIGHT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	startTimers(DistanceSpeed::lb_distance::HEIGHT_TO_SWITCH);
 	new (this) MeasurementArea;
@@ -368,7 +418,6 @@ void PuckContext::Heightmeasurement::type() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Heightmeasurement]->[Heightmeasurement]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	// todo: setType
 }
 /*******************************************/
 
@@ -501,19 +550,30 @@ void PuckContext::SwitchArea::earlyTimer() {
  */
 void PuckContext::SwitchTimer::outletIn() {
 	LOG_SCOPE;
-#if !machine
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	stopTimer();
-	new (this) InTransfer;
-#else
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+#if ONE_MACHINE_TESTING
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[InTransfer] JUST FOR TESTING WITHOUT SERIAL\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) InTransfer;
 	stopTimer();
-	new (this) OutletArea;
+#else
+
+	#if !machine
+		LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+		returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
+		returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+		stopTimer();
+		new (this) OutletArea;
+	#else
+		LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+		returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+		returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+		stopTimer();
+		new (this) OutletArea;
+	#endif
 #endif
+
+
 }
 /*******************************************/
 
@@ -553,10 +613,17 @@ void PuckContext::InTransfer::serialStop() {
 
 void PuckContext::InTransfer::outletOut() {
 	LOG_SCOPE;
+#if ONE_MACHINE_TESTING
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InTransfer]->[dead] JUST FOR TESTING WITHOUT SERIAL\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+
+#else
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InTransfer]->[Transferred]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
 	new (this) Transferred;
+#endif
 }
 /*******************************************/
 
