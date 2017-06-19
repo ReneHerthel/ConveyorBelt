@@ -13,6 +13,7 @@
 #include "SortingSwitchService.h"
 #include "HeightMeasurementService.h"
 #include "Signals.h"
+#include <string>
 
 #define PORTB_ADDR 0x301
 
@@ -49,6 +50,13 @@ public:
 	 * Calibrate the light barrier distances
 	 */
 	void calibrate(int mainChid);
+
+	/**
+	 * Save lb calibration to the disk
+	 */
+	bool saveToDisk(std::string path);
+
+	bool loadFromDisk(std::string path);
 
 	bool pollLB(sensor_t sensor);
 

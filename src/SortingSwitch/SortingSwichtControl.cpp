@@ -24,7 +24,7 @@ SortingSwichtControl::~SortingSwichtControl() {
 
 void SortingSwichtControl::open(void){
 	ssService.sortingSwitchOpen();
-	distTracker.startAlarm(0, DistanceSpeed::SWITCH_TO_OUTLET, 0.33); //Value doesnt matter, IN_SWITCH, no delta (100%)
+	distTracker.startAlarm(0, DistanceSpeed::IN_SWITCH, 1); //Value doesnt matter, IN_SWITCH, no delta (100%)
 }
 
 void SortingSwichtControl::close(void){

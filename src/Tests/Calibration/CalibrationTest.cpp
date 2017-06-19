@@ -36,13 +36,23 @@ TEST_IMPL(CalibrationTest, Calibrate){
 
 	Calibration& cal = Calibration::getInstance();
 	cal.calibrateHeighMeasurement();
+
+
+
 	HeightMeasurementService::CalibrationData hmCal = cal.getHmCalibration();
+
 
 	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
 				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
 	std::cout.flush();
 
 	cal.calibrate(chid);
+
+	//cal.manualCalibration(3000, 1500, 2000, 1000, 999, 500, 4000, 8000);
+
+	cal.print();
+	cal.saveToDisk("/Calibration.dat");
+	cal.loadFromDisk("/Calibration.dat");
 	cal.print();
 }
 

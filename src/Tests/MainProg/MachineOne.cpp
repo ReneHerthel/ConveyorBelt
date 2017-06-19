@@ -37,6 +37,8 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 
+#include <chrono>
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -65,19 +67,18 @@ TEST_IMPL(MachineOne, programm_m1){
 	ISR isr(&isrCntrl);
 	std::thread isr_th(ref(isr));
 
-	//INIT ISR
-	Control isrCntrl(mainChid);
-	ISR isr(&isrCntrl);
-	std::thread isr_th(ref(isr));
 
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
 	cout.flush();
 	calibration.calibrateHeighMeasurement();
-	std::cout << "start distancecal" << "\n";
-		cout.flush();
-	calibration.calibrate(mainChid);
+	std::cout << "load distancecal" << "\n";
+	cout.flush();
+	calibration.loadFromDisk("/Calibration.dat");
+	calibration.print();
+	cout.flush();
+	//calibration.calibrate(mainChid);
 
 	//INIT DistancObs
 	DistanceObservable &distO = DistanceObservable::getInstance();
@@ -115,6 +116,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	while(1){
 		event = mainChannel.receivePulseMessage();
 		std::cout << "Got something \n";
+
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n";
 				m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
@@ -128,13 +130,18 @@ TEST_IMPL(MachineOne, programm_m1){
 					delete puckManager;
 					puckManager = new PuckManager(mainChid);
 				} else {
-					m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
-					m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
-					mr = puckManager->process(m_sig);
+					if(event.value != interrupts::SWITCH_OUT){
+						m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+						m_sig.interruptSignal = (interrupts::interruptSignals) event.value;
+						mr = puckManager->process(m_sig);
+					}
 				}
 				break;
 
 			case 25:
+				timestamp = std::chrono::system_clock::now();
+				std::cout << "TIMER SIGNAL " <<  timestamp. << "\n";
+				std::cout.flush();
 				m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
 				m_sig.timerSignal.value = event.value;
 				mr = puckManager->process(m_sig);
@@ -145,25 +152,43 @@ TEST_IMPL(MachineOne, programm_m1){
 
 		}
 
+
 		if(mr.errorFlag){
 			cbs.changeState(ConveyorBeltState::STOP);
+			distO.updateSpeed(DistanceSpeed::STOP);
+			switch(mr.errorSignal){
+				case PuckManager::ErrorSignal::PUCK_LOST:
+					std::cout << "PUCK_LOST - Late Timer \n";
+					break;		// Late timer expired
+				case PuckManager::ErrorSignal::PUCK_MOVED:
+					std::cout << "PUCK_MOVED - Puck triggered light barrier before early timer \n";
+					break;		// Puck triggered light barrier before early timer expired
+				case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
+					std::cout << "UNEXPECTED_SIGNAL - Signal could not be processed \n";
+					break;	// Signal could not be processed
+				case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
+					std::cout << "MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered \n";
+					break;	// Shouldn't happen - multiple pucks were triggered
+				case PuckManager::ErrorSignal::MULTIPLE_WARNING:
+					std::cout << "MULTIPLE_WARNING \n";
+					break;
+			}
 		}
 		else{
-		std::cout << "ManagerReturn " << mr.actorFlag << "\n" << mr.errorFlag << "\n";
-		cout.flush();
-		switch(mr.speedSignal){
-			case PuckSignal::PuckSpeed::STOP:
-				cbs.changeState(ConveyorBeltState::STOP);
-				distO.updateSpeed(DistanceSpeed::STOP);
-				break;
-			case PuckSignal::PuckSpeed::SLOW:
-				cbs.changeState(ConveyorBeltState::RIGHTSLOW);
-				distO.updateSpeed(DistanceSpeed::SLOW);
-				break;
-			case PuckSignal::PuckSpeed::FAST:
-				cbs.changeState(ConveyorBeltState::RIGHTFAST);
-				distO.updateSpeed(DistanceSpeed::FAST);
-				break;
+			cout.flush();
+			switch(mr.speedSignal){
+				case PuckSignal::PuckSpeed::STOP:
+					cbs.changeState(ConveyorBeltState::STOP);
+					distO.updateSpeed(DistanceSpeed::STOP);
+					break;
+				case PuckSignal::PuckSpeed::SLOW:
+					cbs.changeState(ConveyorBeltState::RIGHTSLOW);
+					distO.updateSpeed(DistanceSpeed::SLOW);
+					break;
+				case PuckSignal::PuckSpeed::FAST:
+					cbs.changeState(ConveyorBeltState::RIGHTFAST);
+					distO.updateSpeed(DistanceSpeed::FAST);
+					break;
 		}
 		}
 		if(mr.actorFlag){
