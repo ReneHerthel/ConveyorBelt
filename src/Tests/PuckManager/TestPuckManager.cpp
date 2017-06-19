@@ -20,6 +20,14 @@ SETUP(TestPuckManager) {
 }
 
 BEFORE_TC(TestPuckManager) {
+	//INIT CALIBRATION AND CALIBRATE
+	Calibration& calibration = Calibration::getInstance();
+	std::cout << "start Hightcal" << "\n";
+	cout.flush();
+	calibration.calibrateHeighMeasurement();
+	std::cout << "start distancecal" << "\n";
+		cout.flush();
+	calibration.calibrate();
 	return 1;
 }
 
@@ -29,6 +37,7 @@ AFTER_TC(TestPuckManager) {
 
 BEFORE(TestPuckManager) {
 	manager = new PuckManager(CHID);
+
 	return 1;
 }
 

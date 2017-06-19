@@ -74,7 +74,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 			// check for puckID
 			uint16_t currentPuckID = (*it)->getPuckID();
-			if(currentPuckID == signal.timerSignal.puckID) {
+			if(currentPuckID == signal.timerSignal.TimerInfo.puckID) {
 				// pass the timer signal
 				PuckSignal::Return returnVal = (*it)->process(signal);
 

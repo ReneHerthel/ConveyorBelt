@@ -6,6 +6,9 @@
  */
 
 #include "TestPuckStateMachine.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 SETUP(TestPuckStateMachine) {
 	REG_TEST(test1, 1, "Test the longest path");
@@ -15,6 +18,10 @@ SETUP(TestPuckStateMachine) {
 }
 
 BEFORE_TC(TestPuckStateMachine) {
+	//INIT CALIBRATION AND CALIBRATE
+	/*Calibration& calibration = Calibration::getInstance();
+	calibration.calibrateHeighMeasurement();
+	calibration.calibrate();*/
 	return 1;
 }
 
@@ -46,7 +53,7 @@ TEST_IMPL(TestPuckStateMachine, test1) {
 }
 
 TEST_IMPL(TestPuckStateMachine, test2) {
-	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::LATE_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
+	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {0}, lateTimer, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
 
 	for(uint32_t i = 0; i < sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal); ++i) {
 		PuckSignal::Return returnVal;

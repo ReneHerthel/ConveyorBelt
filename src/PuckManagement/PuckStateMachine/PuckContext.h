@@ -18,15 +18,15 @@
 #include "ISerializable.h"
 
 #define machine (0) // 0 or 1
-#define ONE_MACHINE_TESTING 1
+#define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.85
 #define WIDE_DELTA 1.15
-class PuckContext : public ISerializable { // so wäre das im stub object
+class PuckContext : public ISerializable {
 private:
 
-	DistanceTracker shortDistance;
-	DistanceTracker wideDistance;
+	//DistanceTracker shortDistance;
+	//DistanceTracker wideDistance;
 
 
 
@@ -95,8 +95,8 @@ public:
 
 		// Timer stuff
 
-		DistanceTracker *shortDistance;
-		DistanceTracker *wideDistance;
+		//DistanceTracker *shortDistance;
+		//DistanceTracker *wideDistance;
 
 		void startTimers(DistanceSpeed::lb_distance distance);
 		void stopTimer();

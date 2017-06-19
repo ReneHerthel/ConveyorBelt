@@ -30,18 +30,15 @@ bool PuckContext::deserialize(void* ser) {
     return true;
 }
 
-PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
+PuckContext::PuckContext(int chid) /*: shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE)*/ {
 	LOG_SCOPE;
-
-	// set invalid value for height signal - in case heightmeasurement gets stuck
-	statePtr->puckType.heightType.value = 0;
 
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	statePtr->shortDistance = &shortDistance;
-	statePtr->wideDistance = &wideDistance;
+	//statePtr->shortDistance = &shortDistance;
+	//statePtr->wideDistance = &wideDistance;
 
 #else
 	LOG_DEBUG << "Using machine1\n";
@@ -52,6 +49,9 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 
 	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
 #endif
+
+	// set invalid value for height signal - in case heightmeasurement gets stuck
+	statePtr->puckType.heightType.value = 0;
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
@@ -72,7 +72,7 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 
 		case PuckSignal::SignalType::TIMER_SIGNAL:
 			LOG_DEBUG << "Signal is a timer signal\n";
-			switch(signal.timerSignal.type) {
+			switch(signal.timerSignal.TimerInfo.type) {
 				case PuckSignal::TimerType::EARLY_TIMER:
 					LOG_DEBUG << "Signal is early timer\n";
 					statePtr->earlyTimer();
@@ -170,15 +170,17 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 }
 
 void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
+	/*
 	PuckSignal::TimerSignal ts;
 	ts.puckID = puckID;
 	ts.type = PuckSignal::TimerType::EARLY_TIMER;
 	shortDistance->startAlarm(ts.value,distance,SHORT_DELTA);
 	ts.type = PuckSignal::TimerType::LATE_TIMER;
 	wideDistance->startAlarm(ts.value,distance,WIDE_DELTA);
+	*/
 }
 void PuckContext::PuckState::stopTimer(){
-	wideDistance->stopAlarm();
+	//wideDistance->stopAlarm();
 }
 /*******************************************
  * SuperState
@@ -394,7 +396,6 @@ void PuckContext::Heightmeasurement::type() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [Heightmeasurement]->[Heightmeasurement]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	// todo: setType
 }
 /*******************************************/
 
