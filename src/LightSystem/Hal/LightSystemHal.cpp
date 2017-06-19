@@ -19,7 +19,7 @@ namespace HAL {
     void LightSystemHal::lightOn(Color color) {
         LOG_SCOPE;
         unsigned char bitMask = 0;
-        
+
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
@@ -38,11 +38,11 @@ namespace HAL {
 				/* Invalid value, do nothing */
 				;
         }
-        /* TODO: What is this for? */
-    	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
+
+    	  //out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Save old port value */
-    	unsigned char port_value = in8(PORTA_ADDR);
+    	  unsigned char port_value = in8(PORTA_ADDR);
         /* Set requested bit */
         LOG_DEBUG << "lightOn: Write to port " << PORTA_ADDR << " Value: " << port_value << " Set bitmask: " << bitMask << endl;
         //out8(PORTA_ADDR, (port_value | (1 << bitMask)));
@@ -72,8 +72,8 @@ namespace HAL {
 				/* Invalid value, do nothing */
 				;
 		}
-        /* TODO: What is this for? */
-    	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
+
+    	//out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Save old port value */
     	unsigned char port_value = in8(PORTA_ADDR);
