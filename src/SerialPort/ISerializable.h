@@ -31,6 +31,8 @@ public:
      * @return if the deserialization worked
      */
     virtual bool deserialize(void *ser) = 0; //TODO This makes funny problems
+
+    virtual ~ISerializable(){};
 };
 
 
