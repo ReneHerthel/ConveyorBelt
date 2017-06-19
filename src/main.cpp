@@ -2,7 +2,7 @@
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
 #include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
-#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
+//#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 #include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
@@ -38,7 +38,7 @@ int main() {
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
     // HeightMeasurement tests
-    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
+   // ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
 
     // LightSystem tests
     ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
@@ -58,7 +58,7 @@ int main() {
     ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
 
     //Calibrate Heights
-    ts.REG_TESTCASE(new TestHeightMeasurement(10, "[Man Height Cal]"));
+    //ts.REG_TESTCASE(new TestHeightMeasurement(10, "[Man Height Cal]"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

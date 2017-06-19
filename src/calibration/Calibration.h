@@ -12,6 +12,7 @@
 #include "DistanceEnum.h"
 #include "SortingSwitchService.h"
 #include "HeightMeasurementService.h"
+#include "Signals.h"
 
 #define PORTB_ADDR 0x301
 
@@ -43,6 +44,11 @@ public:
 	 * Calibrate the light barrier distances
 	 */
 	void calibrate(void);
+
+	/**
+	 * Calibrate the light barrier distances
+	 */
+	void calibrate(int mainChid);
 
 	bool pollLB(sensor_t sensor);
 
