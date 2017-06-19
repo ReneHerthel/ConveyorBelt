@@ -22,7 +22,6 @@
 #define PAUSE_TIME 10
 /* FIXME: Why is this duplicated here? */
 #define LS_MODULE_ID 4
-#define PORTA_ADDR 0x300
 #define GREEN_SHIFT		5
 #define YELLOW_SHIFT	6
 #define RED_SHIFT		7
@@ -31,12 +30,24 @@
 
 class LightSystemTest : public TestCase{
 public:
-    LightSystemTest(int id, std::string brief): TestCase(id, brief){};
+    LightSystemTest(int id, std::string brief)
+	: TestCase(id, brief)
+	, boundary(nullptr)
+    , controller(nullptr)
+    , lightSystem(nullptr)
+    {};
 protected:
     TEST(test1);
+    TEST(test2);
+    TEST(test3);
 
 protected:
     TEST_CASE_METHODS
+
+private:
+    LightSystemHal* boundary;
+    LightSystemController* controller;
+    LightSystemService* lightSystem;
 };
 
 #endif /* LIGHTSYSTEMTEST_H_ */
