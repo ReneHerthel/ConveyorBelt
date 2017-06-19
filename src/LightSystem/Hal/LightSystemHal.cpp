@@ -14,10 +14,11 @@
 
 namespace HAL {
 	LightSystemHal::LightSystemHal()
-	: lastColor(ALL_COLORS)
-	{
+	: lastColor(ALL_COLORS) {};
+
+	LightSystemHal::~LightSystemHal() {
 		out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
-		out8(PORTA_ADDR, 0);
+		PortA::getInstance().bitClear(ALL_SHIFT);
 	}
 
     /* TODO: Merge methods lightOn and lightOff to reduce code duplication */
@@ -46,12 +47,12 @@ namespace HAL {
 				/* Invalid value, do nothing */
 				;
         }
-        /* TODO: What is this for? */
+        /* FIXME: Move to PortA singleton */
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Set requested bit */
-        LOG_DEBUG << "lightOn: Write to port " << PORTA_ADDR << " Set bitmask: " << bitMask << endl;
-    	out8(PORTA_ADDR, (1 << bitMask));
+        LOG_DEBUG << "lightOn: Set bitmask: " << bitMask << endl;
+        PortA::getInstance().bitSet(1 << bitMask);
     }
 
     void LightSystemHal::lightOff(Color color) {
@@ -80,12 +81,12 @@ namespace HAL {
     	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Clear requested bit */
-        LOG_DEBUG << "lightOff: Write to port " << in8(PORTA_ADDR) << " Clear bitmask: " << bitMask << endl;
-    	out8(PORTA_ADDR, ~(1 << bitMask));
+        LOG_DEBUG << "lightOff: Clear bitmask: " << bitMask << endl;
+        PortA::getInstance().bitClear(1 << bitMask);
     }
 
-    bool LightSystemHal::checkIfPreviouslySetTo(Color color) {
+    bool LightSystemHal::checkIfPreviouslySetTo(Color newColor) {
     	LOG_SCOPE;
-    	return(lastColor == color);
+    	return(lastColor == newColor);
     }
 }

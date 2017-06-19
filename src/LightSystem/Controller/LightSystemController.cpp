@@ -50,8 +50,6 @@ LightSystemController::~LightSystemController() {
     LOG_DEBUG << "Stopped threads" << endl;
 	LOG_DEBUG << "Wait for control to join" << endl;
 	controlThread->join();
-	/* Give taskThread a second to turn off lights */
-	this_thread::sleep_for(chrono::seconds(2));
 	LOG_DEBUG << "Wait for task to join" << endl;
 	taskThread->join();
     delete controlThread;
@@ -64,6 +62,7 @@ int LightSystemController::task(){
 	LOG_SCOPE;
 	thread::id thread_id = this_thread::get_id();
 
+    /* FIXME: Move to PortA singleton */
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 		LOG_ERROR << thread_id << ": Can't get Hardware access, therefore can't do anything." << std::endl;
 		return EXIT_FAILURE;

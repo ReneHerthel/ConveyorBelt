@@ -45,6 +45,8 @@
  */
 class HeightContext;
 
+using namespace HeightMeasurement;
+
 class HeightMeasurementService {
 public:
     /*
@@ -84,7 +86,19 @@ public:
      */
     void stopMeasuring();
 
+    /*
+     * @brief Get the highest measured height from the measuring thread.
+     *
+     * @return returns the highest height (->lowest value).
+     */
+    uint16_t getHighestHeight();
+
 private:
+    /*
+     * @brief the heighest measured height
+     */
+    uint16_t highestHeight;
+
     /*
      * @brief A pointer to the statemachine object.
      */

@@ -1,14 +1,24 @@
 #include <iostream>
 #include "TestFramework/TestFramework.h"
 #include "Tests/TestExample.h"
-#include "Tests/PulseMessageWrapper/TestPulseMessageWrapper.h"
-#include "Tests/HeightMeasurementStatemachine/TestHeightMeasurementStatemachine.h"
+#include "TestPulseMessageWrapper.h"
+#include "TestHeightMeasurementStatemachine.h"
 #include "TestFramework/TestSuite.h"
 #include "LightSystemTest.h"
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
 #include "FullSerialTest.h"
+#include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
+#include "TestPuckManager.h"
+#include "TestPuckSort.h"
+#include "TimerTest.h"
+#include "DistanceTrackingTest.h"
+#include "CalibrationTest.h"
+#include "MeasurementHeightTest.h"
+#include "MachineOne.h"
+#include "TestPortA.h"
+
 
 using namespace std;
 
@@ -30,6 +40,7 @@ int main() {
     //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
+
     // PulseMessageWrapper tests
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
@@ -43,6 +54,33 @@ int main() {
     ts.REG_TESTCASE(new TestSerial(4, "[Serial] Basic Tests for Serial"));
     ts.REG_TESTCASE(new SerialProtocollTest(5, "[SerialProtocoll] Test for the toplvl prot"));
     ts.REG_TESTCASE(new FullSerialTest(6, "[Serial] Full Serial test"));
+
+    //TIMER TESTS
+    ts.REG_TESTCASE(new TimerTest(7, "[TimerService] Test timer accuracy and methods"));
+
+    //DistanceTracking test
+    ts.REG_TESTCASE(new DistanceTrackingTest(8, "[DistanceTracker][DistanceObservable] DistanceTracking test"));
+
+    //Calibration Test
+    ts.REG_TESTCASE(new CalibrationTest(9, "[Caibration]"));
+
+    //Calibrate Heights
+    ts.REG_TESTCASE(new MeasurementHeightTest(10, "[Man Height Cal]"));
+
+    //Calibrate Heights
+     ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
+
+#if !machine
+    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
+    ts.REG_TESTCASE(new TestPuckManager(11, "[PuckManager] BasicTests on Machine 0"));
+#else
+    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 1"));
+#endif
+
+    ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
+
+    // PortA
+    ts.REG_TESTCASE(new TestPortA(13, "Test port a actors"));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//

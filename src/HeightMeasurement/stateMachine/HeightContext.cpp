@@ -25,13 +25,14 @@
 
 #include <iostream>
 
+using namespace HeightMeasurement;
+
 HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
     :    statePtr(&state)
     ,    service(service)
 {
-
-  LOG_SCOPE;
-  //LOG_SET_LEVEL(DEBUG)
+    LOG_SCOPE;
+    //LOG_SET_LEVEL(DEBUG)
     // All states needs to know the service class.
     state.service = service;
 
@@ -124,19 +125,20 @@ void HeightContext::process(Signal signal) {
     statePtr->entry();
 }
 
-void HeightContext::send(int coid, signal_t signal) { // Static method.
+void HeightContext::State::send(int coid, signal_t signal) { // Static method.
     //LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
 
-    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, (int)signal.value); // TODO: Fix the magic-numbers.
-    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << "\n";
+	signal.highestHeight = service->getHighestHeight();
 
-    //std::cout << "HEX: " << std::hex << (int)signal.value << std::endl;
+    int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, signal.value);
+
+    LOG_DEBUG << "[HeightContext] send() coid: " << coid << " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << " highestHeight: " << (int)signal.highestHeight << "\n";
     LOG_DEBUG << "DUMMY MESSAGE\n";
 
     if (err < 0) {
         // TODO Error handling.
-    	  //LOG_SET_LEVEL(DEBUG);
+    	//LOG_SET_LEVEL(DEBUG);
         LOG_DEBUG << "[HeightContext] send() MsgSendPulse_r failed with: " << err << "\n";
     }
 }
@@ -167,6 +169,7 @@ void HeightContext::State::timeout() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -180,6 +183,7 @@ void HeightContext::State::start() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -228,6 +232,7 @@ void HeightContext::State::patternRead() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -250,7 +255,8 @@ void HeightContext::State::highHeight() {
 /// IDLE : STATE
 ///
 HeightContext::Idle::Idle() {
-    if (service != NULL) {
+	LOG_SCOPE;
+	if (service != NULL) {
         service->stopMeasuring();
     }
     index = 0;
@@ -274,7 +280,7 @@ void HeightContext::Idle::start() {
 /// MEASURING : STATE
 ///
 void HeightContext::Measuring::entry() {
-    //LOG_SCOPE;
+    LOG_SCOPE;
     //LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightContext] Measuring entry()\n";
     if (service != NULL) {
@@ -292,6 +298,7 @@ void HeightContext::Measuring::invalid() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -358,6 +365,7 @@ void HeightContext::Surface::refHeight() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     new (this) Idle;
 }
@@ -394,6 +402,7 @@ void HeightContext::Top::entry() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
+        signal.highestHeight = 0;
         send(coid, signal);
         new (this) Idle;
     }
@@ -415,6 +424,7 @@ void HeightContext::Top::refHeight() {
         signal.BIT0 = 0;
         signal.BIT1 = 0;
         signal.BIT2 = 0;
+        signal.highestHeight = 0;
    		  send(coid, signal);
    		  new (this) Idle;
     }
@@ -489,6 +499,7 @@ void HeightContext::Flipped::entry() {
     signal.BIT0 = 0;
     signal.BIT1 = 0;
     signal.BIT2 = 0;
+    signal.highestHeight = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }
@@ -505,6 +516,7 @@ void HeightContext::BitCoded::entry() {
     signal.BIT0 = pattern[0];
     signal.BIT1 = pattern[1];
     signal.BIT2 = pattern[2];
+    signal.highestHeight = 0;
     send(coid, signal);
     patternRead();  // Calls the super-method.
 }
