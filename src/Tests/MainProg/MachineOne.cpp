@@ -73,7 +73,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
-	calibration.calibrate();
+	calibration.calibrate(mainChid);
 
 	//INIT DistancObs
 	DistanceObservable &distO = DistanceObservable::getInstance();
@@ -150,15 +150,15 @@ TEST_IMPL(MachineOne, programm_m1){
 		switch(mr.speedSignal){
 			case PuckSignal::PuckSpeed::STOP:
 				cbs.changeState(ConveyorBeltState::STOP);
-				distO(DistanceSpeed::STOP);
+				distO.updateSpeed(DistanceSpeed::STOP);
 				break;
 			case PuckSignal::PuckSpeed::SLOW:
 				cbs.changeState(ConveyorBeltState::RIGHTSLOW);
-				distO(DistanceSpeed::SLOW);
+				distO.updateSpeed(DistanceSpeed::SLOW);
 				break;
 			case PuckSignal::PuckSpeed::FAST:
 				cbs.changeState(ConveyorBeltState::RIGHTFAST);
-				distO(DistanceSpeed::FAST);
+				distO.updateSpeed(DistanceSpeed::FAST);
 				break;
 		}
 		}

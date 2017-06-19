@@ -90,7 +90,7 @@ void Calibration::calibrate(int mainChid){
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 	sss.sortingSwitchClose(); //Safety
-
+	while(pmr.receivePulseMessage().value != interrupts::INLET_OUT);
 	inSwitch[0] = outlet[0]/3;
 	inSwitch[1] = outlet[1]/3;
 
