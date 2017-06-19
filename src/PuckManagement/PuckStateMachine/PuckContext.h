@@ -18,6 +18,7 @@
 #include "ISerializable.h"
 
 #define machine (0) // 0 or 1
+#define ONE_MACHINE_TESTING 1
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.85
 #define WIDE_DELTA 1.15

@@ -16,7 +16,7 @@
 serialized PuckContext::serialize() {
     serialized ser;
     ser.size = sizeof(this);
-    ser.obj = new PuckContext{};
+    //ser.obj = new PuckContext{};
 
     return ser;
 }
@@ -527,19 +527,30 @@ void PuckContext::SwitchArea::earlyTimer() {
  */
 void PuckContext::SwitchTimer::outletIn() {
 	LOG_SCOPE;
-#if !machine
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
-	stopTimer();
-	new (this) OutletArea;
-#else
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+#if ONE_MACHINE_TESTING
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[InTransfer] JUST FOR TESTING WITHOUT SERIAL\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) InTransfer;
 	stopTimer();
-	new (this) OutletArea;
+#else
+
+	#if !machine
+		LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+		returnValue.puckReturn = PuckSignal::PuckReturn::SEND;
+		returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+		stopTimer();
+		new (this) OutletArea;
+	#else
+		LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[OutletArea]\n";
+		returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+		returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+		stopTimer();
+		new (this) OutletArea;
+	#endif
 #endif
+
+
 }
 /*******************************************/
 
@@ -579,10 +590,17 @@ void PuckContext::InTransfer::serialStop() {
 
 void PuckContext::InTransfer::outletOut() {
 	LOG_SCOPE;
+#if ONE_MACHINE_TESTING
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InTransfer]->[dead] JUST FOR TESTING WITHOUT SERIAL\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+
+#else
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [InTransfer]->[Transferred]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	new (this) Transferred;
+#endif
 }
 /*******************************************/
 
