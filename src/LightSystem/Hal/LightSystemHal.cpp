@@ -17,7 +17,6 @@ namespace HAL {
 	: lastColor(ALL_COLORS) {};
 
 	LightSystemHal::~LightSystemHal() {
-		out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 		PortA::getInstance().bitClear(ALL_SHIFT);
 	}
 
@@ -28,7 +27,7 @@ namespace HAL {
         lastColor = color;
 
         unsigned char bitMask = 0;
-        
+
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
@@ -47,8 +46,6 @@ namespace HAL {
 				/* Invalid value, do nothing */
 				;
         }
-        /* FIXME: Move to PortA singleton */
-    	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Set requested bit */
         LOG_DEBUG << "lightOn: Set bitmask: " << bitMask << endl;
@@ -77,8 +74,6 @@ namespace HAL {
 				/* Invalid value, do nothing */
 				;
 		}
-        /* TODO: What is this for? */
-    	out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
 
         /* Clear requested bit */
         LOG_DEBUG << "lightOff: Clear bitmask: " << bitMask << endl;
