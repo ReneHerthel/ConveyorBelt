@@ -172,12 +172,24 @@ void PuckSortContext::PuckSort::flipped() {
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	returnValue = true;
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
+		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
+	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	returnValue = true;
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
+		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
+	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::invalid() {
