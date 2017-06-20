@@ -32,7 +32,6 @@ public:
 	ActorHandler(
 			      ConveyorBeltService * conveyorBeltService,
                   HeightMeasurementService * heightMeasurementService,
-                  Serial * serial,
                   SortingSwichtControl * sortingSwichtControl
                 );
 
@@ -58,11 +57,6 @@ private:
 	 * @brief A reference to the HeightMeasurement component.
 	 */
     HeightMeasurementService * m_heightMeasurementService;
-
-	/*
-	 * @brief A reference to the Serial-Interface component.
-	 */
-    Serial * m_serial;
 
 	/*
 	 * @brief A reference to the SortingSwitchtControll component.
