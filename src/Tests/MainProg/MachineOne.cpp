@@ -115,7 +115,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	PuckSignal::Signal m_sig;
 	while(1){
 		event = mainChannel.receivePulseMessage();
-		std::cout << "Got something \n";
+
 
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n";
@@ -126,6 +126,8 @@ TEST_IMPL(MachineOne, programm_m1){
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5:
+				std::cout << "ISR Signal \n";
+				std::cout.flush();
 				if(event.value == interrupts::BUTTON_RESET){
 					delete puckManager;
 					puckManager = new PuckManager(mainChid);
@@ -139,8 +141,7 @@ TEST_IMPL(MachineOne, programm_m1){
 				break;
 
 			case 25:
-				timestamp = std::chrono::system_clock::now();
-				std::cout << "TIMER SIGNAL " <<  timestamp. << "\n";
+				std::cout << "TIMER Signal \n";
 				std::cout.flush();
 				m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
 				m_sig.timerSignal.value = event.value;

@@ -5,6 +5,7 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 #include "Calibration.h"
+#include <iostream>
 
 DistanceTracker::DistanceTracker(int chid, int8_t code):
 	chid_(chid),
@@ -63,7 +64,13 @@ int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance di
 	Calibration& cal = Calibration::getInstance();
 	lastValue_ = value;
 	timer_.stopAlarm();
-	timer_.setAlarm(cal.getCalibration(distance, currSpeed_)*delta, value);
+	ITimer::milliseconds time = (ITimer::milliseconds)((double)cal.getCalibration(distance, currSpeed_)*delta);
+	if(time <= 0){
+		std::cout << "DISTANCE TRACKER, trying to use 0 as time value \n";
+	} else {
+		std::cout << "DISTANCE TRACKER Set timer with: " << time << "ms \n";
+		timer_.setAlarm(time, value);
+	}
 }
 
 int32_t DistanceTracker::stopAlarm(){

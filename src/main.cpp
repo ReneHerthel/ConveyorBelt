@@ -8,9 +8,9 @@
 #include "Tests/Serial/TestSerial.h"
 #include "Tests/Serial/SerialProtocollTest.h"
 #include "FullSerialTest.h"
-#include "TestPuckStateMachine.h"
+//#include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
-#include "TestPuckManager.h"
+//#include "TestPuckManager.h"
 //#include "TestPuckSort.h"
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
@@ -72,8 +72,8 @@ int main() {
      ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
 
 #if !machine
-    ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 0"));
-    ts.REG_TESTCASE(new TestPuckManager(13, "[PuckManager] BasicTests on Machine 0"));
+    //ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 0"));
+    //ts.REG_TESTCASE(new TestPuckManager(13, "[PuckManager] BasicTests on Machine 0"));
 #else
     ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
