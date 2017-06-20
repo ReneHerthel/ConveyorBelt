@@ -30,6 +30,8 @@ namespace HAL {
              * @param   [in] color Specify by color which light to manipulate
              */
             virtual void lightOff(Color color) = 0;
+
+            virtual bool checkIfPreviouslySetTo(Color color) = 0;
     };
 }
 

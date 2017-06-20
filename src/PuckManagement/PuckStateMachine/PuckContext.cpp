@@ -105,6 +105,7 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 					break;
 				default:
 					LOG_DEBUG << "Unknown signal\n";
+					statePtr->returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 			}
 			break;
 
@@ -157,6 +158,7 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 					break;
 				default:
 					LOG_DEBUG << "Unknown signal\n";
+					statePtr->returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 			}
 			break;
 
@@ -181,11 +183,13 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 					break;
 				default:
 					LOG_DEBUG << "Unknown signal\n";
+					statePtr->returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 			}
 			break;
 
 		default:
 			LOG_DEBUG << "Unknown signal\n";
+			statePtr->returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 	}
 
 	return statePtr->returnValue;

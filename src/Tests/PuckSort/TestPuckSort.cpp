@@ -9,8 +9,10 @@
  */
 
 #include "TestPuckSort.h"
-
+#include <iostream>
 using namespace std;
+using namespace HeightMeasurement;
+using namespace Serial_n;
 
 SETUP(TestPuckSort) {
 	REG_TEST(test1, 1, "Test shortest path");
@@ -41,13 +43,13 @@ AFTER(TestPuckSort) {
 
 TEST_IMPL(TestPuckSort, test1) {
 	// holeWithoutMetal > holeWithoutMetal > holeWithMetal
-	bool returnArrayShortestPath[3] {
+	bool expectedResults[3] {
 		false,
 		false,
 		false,
 	};
 
-	PuckType signalArrayShortestPath[3] = {
+	PuckType testSignals[3] = {
 			TESTSIGNAL_HOLEWITHOUTMETAL,
 			TESTSIGNAL_HOLEWITHOUTMETAL,
 			TESTSIGNAL_HOLEWITHMETAL,
@@ -55,10 +57,9 @@ TEST_IMPL(TestPuckSort, test1) {
 
 
     /* TODO: Refactor into function */
-	for ( uint8_t arrayIterator = 0; arrayIterator < sizeof(signalArrayShortestPath) / sizeof(PuckType); ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayShortestPath[arrayIterator]);
-
-		if ( returnVal != returnArrayShortestPath[arrayIterator] ) {
+	for ( uint8_t arrayIterator = 0; arrayIterator < sizeof(testSignals) / sizeof(PuckType); ++arrayIterator ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}
@@ -66,7 +67,7 @@ TEST_IMPL(TestPuckSort, test1) {
 }
 
 TEST_IMPL(TestPuckSort, test2) {
-	PuckType signalArrayAllSignals[8] = {
+	PuckType testSignals[8] = {
 			TESTSIGNAL_BITCODE1,
 			TESTSIGNAL_BITCODE2,
 			TESTSIGNAL_BITCODE4,
@@ -78,7 +79,7 @@ TEST_IMPL(TestPuckSort, test2) {
 	};
 
 	// Beginning from Start try all transitions
-    bool returnArrayAllSignalsStart[8] {
+    bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
 		true,   // Kill bitCode1
@@ -103,9 +104,9 @@ TEST_IMPL(TestPuckSort, test2) {
     };
 
     /* TODO: Refactor into function */
-	for ( uint8_t arrayIterator = 0; arrayIterator < sizeof(signalArrayAllSignals) / sizeof(PuckType); ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayAllSignals[arrayIterator]);
-		if ( returnVal != returnArrayAllSignalsStart[arrayIterator] ) {
+	for ( uint8_t arrayIterator = 0; arrayIterator < sizeof(testSignals) / sizeof(PuckType); ++arrayIterator ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}
@@ -113,7 +114,7 @@ TEST_IMPL(TestPuckSort, test2) {
 }
 
 TEST_IMPL(TestPuckSort, test3) {
-	PuckType testSignalArray[8] = {
+	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHMETAL,
         TESTSIGNAL_BITCODE4,
         TESTSIGNAL_BITCODE4,
@@ -124,7 +125,7 @@ TEST_IMPL(TestPuckSort, test3) {
         TESTSIGNAL_INVALID,
 	};
 
-    bool returnArray[8] {
+    bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
         false,
@@ -150,9 +151,9 @@ TEST_IMPL(TestPuckSort, test3) {
 #endif
     };
     /* TODO: Refactor into function */
-	for ( uint8_t arrayIterator = 0; arrayIterator < 3; ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayAllSignals[arrayIterator]);
-		if ( returnVal != returnArrayAllSignalsStart[arrayIterator] ) {
+	for ( uint8_t arrayIterator = 0; arrayIterator < 4; ++arrayIterator ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}
@@ -168,8 +169,8 @@ TEST_IMPL(TestPuckSort, test3) {
 
     /* TODO: Refactor into function */
 	for ( uint8_t arrayIterator = 4; arrayIterator < 8; ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayAllSignals[arrayIterator]);
-		if ( returnVal != returnArrayAllSignalsStart[arrayIterator] ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}
@@ -177,7 +178,8 @@ TEST_IMPL(TestPuckSort, test3) {
 }
 
 TEST_IMPL(TestPuckSort, test4) {
-	PuckType testSignalArray[8] = {
+	LOG_SCOPE;
+	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHOUTMETAL,
         TESTSIGNAL_BITCODE1,
         TESTSIGNAL_BITCODE2,
@@ -188,7 +190,7 @@ TEST_IMPL(TestPuckSort, test4) {
         TESTSIGNAL_HOLEWITHOUTMETAL,
 	};
 
-    bool returnArray[8] {
+    bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
         false,
@@ -214,9 +216,9 @@ TEST_IMPL(TestPuckSort, test4) {
 #endif
     };
     /* TODO: Refactor into function */
-	for ( uint8_t arrayIterator = 0; arrayIterator < 3; ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayAllSignals[arrayIterator]);
-		if ( returnVal != returnArrayAllSignalsStart[arrayIterator] ) {
+	for ( uint8_t arrayIterator = 0; arrayIterator < 4; ++arrayIterator ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}
@@ -231,9 +233,10 @@ TEST_IMPL(TestPuckSort, test4) {
 #endif
 
     /* TODO: Refactor into function */
+    LOG_DEBUG << "Continue" << endl;
 	for ( uint8_t arrayIterator = 4; arrayIterator < 8; ++arrayIterator ) {
-		bool returnVal = context->process(signalArrayAllSignals[arrayIterator]);
-		if ( returnVal != returnArrayAllSignalsStart[arrayIterator] ) {
+		bool returnVal = context->process(testSignals[arrayIterator]);
+		if ( returnVal != expectedResults[arrayIterator] ) {
 			return TEST_FAILED;
 		}
 	}

@@ -18,6 +18,17 @@
 #include "HWdefines.h"
 #include "HWaccess.h"
 
+PortA::PortA()
+{
+    out8(CTRL_REG_GROUP0, DEFAULT_PORTS_SETTINGS);
+}
+
+PortA::~PortA()
+{
+	// Just to be sure.
+    m_mutex.unlock();
+}
+
 PortA& PortA::getInstance()
 {
     static PortA instance;
