@@ -23,7 +23,8 @@ namespace PuckSignal {
 		DELETE,
 		SEND,
 		EVALUATE,
-		HEIGHT,
+		START_HEIGHT,
+		STOP_HEIGHT,
 		SLIDE_FULL,
 		WARNING
 	};
@@ -45,10 +46,10 @@ namespace PuckSignal {
 	};
 
 	union TimerSignal {
-		struct {
+		struct TIMER_INFO {
 			uint16_t puckID;
 			TimerType type;
-		} __attribute__((packed));
+		} TimerInfo __attribute__((packed));
 		int32_t value;
 	};
 

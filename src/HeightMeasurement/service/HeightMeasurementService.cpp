@@ -36,7 +36,8 @@
 using namespace HeightMeasurement;
 
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
-    :    calibrationDataPtr(calibrationDataPtr)
+    :    timer(receive_chid, 0)
+    ,    calibrationDataPtr(calibrationDataPtr)
     ,    receive_chid(receive_chid)
 	, 	 measurementIsRunning(false)
 {
@@ -81,6 +82,7 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
+    highestHeight = USHRT_MAX;		// reset highest height
     uint16_t data = 0;             	/*< The current measured data.*/
     Signal state = START;         	/*< The current state of the statemachine.*/
     Signal oldState = state;      	/*< The old state of the statemachine.*/
@@ -101,6 +103,8 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * channel, where the statemachine is listening and will do the next
      * transition.
      */
+    uint16_t dataWindow[WINDOW_SIZE] = {0};
+    uint32_t writePos = 0;
     while (measurementIsRunning) {
     	  hal.read(data);
     	  dataInRange(&state, data);
@@ -109,22 +113,38 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
             highestHeight = data;
         }
 
-        // But send only a message if there is a new state.
-        if (state != oldState) {
-            err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
-            if (err < 0) {
-                // TODO Error handling.
-                LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
-            }
-            LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+        dataWindow[writePos++] = data;
+        writePos %= WINDOW_SIZE;
+
+        bool valid = true;
+
+        // Filter
+        for (int i = 0; i < WINDOW_SIZE - 1; i++) {
+        	Signal temp1;
+        	Signal temp2;
+        	dataInRange(&temp1, dataWindow[i]);
+        	dataInRange(&temp2, dataWindow[i + 1]);
+        	if(temp1 != temp2) valid = false;
         }
-        // Remember the current state as old state for the next loop.
-        oldState = state;
+
+        if(valid) {
+			// But send only a message if there is a new state.
+			if (state != oldState) {
+				err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
+				if (err < 0) {
+					// TODO Error handling.
+					LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
+				}
+				LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+			}
+			// Remember the current state as old state for the next loop.
+			oldState = state;
+        }
     }
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
 }
 
-void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
+void HeightMeasurementService::dataInRange(Signal *state, uint16_t data) {
     if (RANGE(data, REF_HEIGHT_VAL)) {
         *state = REF_HEIGHT;
     }

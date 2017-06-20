@@ -20,6 +20,32 @@ SETUP(TestPuckManager) {
 }
 
 BEFORE_TC(TestPuckManager) {
+
+	chid = timerReceiver.newChannel();
+
+	//INIT CALIBRATION AND CALIBRATE
+	Calibration& calibration = Calibration::getInstance();
+	std::cout << "start Hightcal" << "\n";
+	cout.flush();
+	calibration.calibrateHeighMeasurement();
+	std::cout << "start distancecal" << "\n";
+		cout.flush();
+	calibration.calibrate();
+
+
+	HeightMeasurement::signal_t hsignal;
+	hsignal.ID = HeightMeasurement::SignalID::NORMAL_ID;
+	hsignal.BIT0 = 0;
+	hsignal.BIT1 = 0;
+	hsignal.BIT2 = 0;
+	hsignal.highestHeight = 0;
+
+	std::cout << "normal signal is: " << hsignal.value << std::endl;
+
+	hsignal.ID = HeightMeasurement::SignalID::INVALID_ID;
+
+	std::cout << "invalid signal is: " << hsignal.value << std::endl;
+
 	return 1;
 }
 
@@ -28,7 +54,8 @@ AFTER_TC(TestPuckManager) {
 }
 
 BEFORE(TestPuckManager) {
-	manager = new PuckManager(CHID);
+	manager = new PuckManager(chid);
+
 	return 1;
 }
 
@@ -108,7 +135,7 @@ TEST_IMPL(TestPuckManager, test2) {
 TEST_IMPL(TestPuckManager, test3) {
 	LOG_SCOPE;
 	LOG_DEBUG << "-------------------TEST 3 ------------------\n";
-	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, {((0<<16) | (int32_t)(PuckSignal::TimerType::LATE_TIMER<<8))}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
+	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {{0}}, { .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::LATE_TIMER } }, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
 
 	for(uint32_t i = 1; i < (sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal)); i++) {
 		PuckManager::ManagerReturn returnVal;
@@ -148,7 +175,7 @@ TEST_IMPL(TestPuckManager, test3) {
 		}
 
 		delete manager;
-		manager = new PuckManager(CHID);
+		manager = new PuckManager(chid);
 	}
 	return TEST_PASSED;
 }

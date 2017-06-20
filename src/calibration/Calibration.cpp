@@ -31,7 +31,7 @@ void Calibration::calibrate(void){
 
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
-	cbs.changeState(STOP);
+	cbs.changeState(ConveyorBeltState::STOP);
 
 
 	//CENTER THE PUCK AND CALC TIME FOR RUNNING THROUGH A LB
@@ -48,7 +48,7 @@ void Calibration::calibrate(void){
 
 	cbs.changeState(LEFTFAST);
 	while(!pollLB(LB_ENTRY));
-	cbs.changeState(STOP);
+	cbs.changeState(ConveyorBeltState::STOP);
 
 	for(int i = 0; i < 2; i++){
 		while(!pollLB(LB_ENTRY));
@@ -76,13 +76,13 @@ void Calibration::calibrate(void){
 		outlet[i] = duration_cast<milliseconds>(system_clock::now() - last_lb);
 		overall[i] = duration_cast<milliseconds>(system_clock::now() - start);
 
-		cbs.changeState(STOP);
+		cbs.changeState(ConveyorBeltState::STOP);
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		cbs.changeState(LEFTFAST);
 		while(!pollLB(LB_HEIGHT));
 		sss.sortingSwitchClose();
 		while(!pollLB(LB_ENTRY));
-		cbs.changeState(STOP);
+		cbs.changeState(ConveyorBeltState::STOP);
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 	sss.sortingSwitchClose(); //Safety

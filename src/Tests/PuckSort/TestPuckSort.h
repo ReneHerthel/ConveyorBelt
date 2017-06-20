@@ -20,6 +20,17 @@
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
 
+#define TESTSIGNAL_BITCODE1 		{ signal_t { {SignalID::PATTERN_ID, 1, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE2 		{ signal_t { {SignalID::PATTERN_ID, 0, 1, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE4 		{ signal_t { {SignalID::PATTERN_ID, 0, 0, 1} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE5 		{ signal_t { {SignalID::PATTERN_ID, 1, 0, 1} }, 0, 0, 0 }
+#define TESTSIGNAL_FLIPPED  		{ signal_t { {SignalID::FLIPPED_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_HOLEWITHMETAL    { signal_t { { SignalID::NORMAL_ID, 1, 0, 0} }, 1, 0, 0 }
+#define TESTSIGNAL_INVALID			{ signal_t { {SignalID::INVALID_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_HOLEWITHOUTMETAL { signal_t { { SignalID::NORMAL_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_SLIDEFULL_OWN    PuckSignal::SLIDE_FULL
+#define TESTSIGNAL_SLIDEFULL_OTHER  ser_proto_msg::SLIDE_FULL_SER
+
 class TestPuckSort : public TestCase {
 	public:
 		TestPuckSort(int id, std::string brief)
@@ -28,23 +39,12 @@ class TestPuckSort : public TestCase {
 		{};
 	protected:
 		TEST(test1);
+		TEST(test2);
+		TEST(test3);
+		TEST(test4);
 		TEST_CASE_METHODS;
 	private:
 		PuckSortContext *context;
-
-
-		// holeWithoutMetal > holeWithoutMetal > holeWithMetal
-		// TODO: Makeup sane signal initialization
-		PuckType signalArrayShortestPath[3];
-
-		HeightMeasurement::signal_t holeWithoutMetal;
-		HeightMeasurement::signal_t holeWithMetal;
-
-		bool returnArrayShortestPath[3] {
-			false,
-			false,
-			false,
-		};
 };
 
 #endif /* TESTPUCKSORT_H_ */

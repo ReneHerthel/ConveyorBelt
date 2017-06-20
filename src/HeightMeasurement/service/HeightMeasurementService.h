@@ -30,9 +30,13 @@
 #define LOW_HEIGHT_VAL (calibrationDataPtr->lowHeight)
 #define HIGH_HEIGHT_VAL (calibrationDataPtr->highHeight)
 #define INVALID_HEIGHT_VAL (calibrationDataPtr->invalidHeight)
+
+#define WINDOW_SIZE 20
 /** @} */
 
 #include "HeightContext.h"
+
+#include "TimerService.h"
 
 #include <stdint.h>
 #include <sys/siginfo.h>
@@ -94,6 +98,7 @@ public:
     uint16_t getHighestHeight();
 
 private:
+    TimerService timer;
     /*
      * @brief the heighest measured height
      */
@@ -135,7 +140,7 @@ private:
      * @param[*state] A pointer to the current state of the measuring.
      * @param[data] The current measured data from the hal.
      */
-    void dataInRange(Signal *state, int16_t data);
+    void dataInRange(HeightMeasurement::Signal *state, uint16_t data);
 
     /*
      * @brief The superloop task of the statemachine-thread.
