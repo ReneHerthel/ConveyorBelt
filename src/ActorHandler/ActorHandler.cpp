@@ -14,6 +14,8 @@
  * @author     Rene Herthel <rene.herthel@haw-hamburg.de>
  */
 
+#include "ActorHandler.h"
+
 ActorHandler::ActorHandler ( ConveyorBeltService * conveyorBeltService,
                              HeightMeasurementService * heightMeasurementService,
                              SortingSwichtControl * sortingSwichtControl )
