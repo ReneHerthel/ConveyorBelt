@@ -16,9 +16,9 @@
 
 #include "ActorHandler.h"
 
-ActorHandler::ActorHandler ( ConveyorBeltService * conveyorBeltService,
-                             HeightMeasurementService * heightMeasurementService,
-                             SortingSwichtControl * sortingSwichtControl )
+ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
+                             HeightMeasurementService &heightMeasurementService,
+                             SortingSwichtControl &sortingSwichtControl )
     :    m_conveyorBeltService(conveyorBeltService)
     ,    m_heightMeasurementService(heightMeasurementService)
     ,    m_sortingSwitchControl(sortingSwichtControl)
@@ -33,22 +33,22 @@ ActorHandler::~ActorHandler()
     delete m_sortingSwitchControl;
 }
 
-void ActorHandler::demultiplex(PuckManager::ManagerReturn * manager)
+void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
-    if (manager->actorFlag == 1) {
+    if (manager.actorFlag == 1) {
 
-        switch (manager->actorSignal) {
+        switch (manager.actorSignal) {
 
             case PuckManager::OPEN_SWITCH:
-                m_sortingSwitchControl->open();
+                m_sortingSwitchControl.open();
                 break;
 
             case PuckManager::START_MEASUREMENT:
-                m_heightMeasurementService->startMeasuring();
+                m_heightMeasurementService.startMeasuring();
                 break;
 
             case PuckManager::STOP_MEASUREMENT:
-                m_heightMeasurementService->stopMeasuring();
+                m_heightMeasurementService.stopMeasuring();
                 break;
 
             default:

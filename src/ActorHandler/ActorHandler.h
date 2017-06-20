@@ -30,9 +30,9 @@ public:
      * @brief Constructor with references to the components.
      */
     ActorHandler(
-                  ConveyorBeltService * conveyorBeltService,
-                  HeightMeasurementService * heightMeasurementService,
-                  SortingSwichtControl * sortingSwichtControl
+                  ConveyorBeltService &conveyorBeltService,
+                  HeightMeasurementService &heightMeasurementService,
+                  SortingSwichtControl &sortingSwichtControl
                 );
 
     /*
@@ -45,23 +45,23 @@ public:
      *
      * @param[manager] The Puck manager, which contains all needed informations.
      */
-    void demultiplex(PuckManager::ManagerReturn * manager);
+    void demultiplex(PuckManager::ManagerReturn &manager);
 
 private:
     /*
      * @brief A reference to the ConveyorBelt component.
      */
-    ConveyorBeltService * m_conveyorBeltService;
+    ConveyorBeltService &m_conveyorBeltService;
 
     /*
      * @brief A reference to the HeightMeasurement component.
      */
-    HeightMeasurementService * m_heightMeasurementService;
+    HeightMeasurementService &m_heightMeasurementService;
 
     /*
      * @brief A reference to the SortingSwitchtControll component.
      */
-    SortingSwichtControl * m_sortingSwitchControl;
+    SortingSwichtControl &m_sortingSwitchControl;
 };
 
 #endif /* SRC_ACTORHANDLER_ACTORHANDLER_H_ */
