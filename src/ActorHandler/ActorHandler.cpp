@@ -16,12 +16,9 @@
 
 ActorHandler::ActorHandler ( ConveyorBeltService * conveyorBeltService,
                              HeightMeasurementService * heightMeasurementService,
-                             Serial * serial,
                              SortingSwichtControl * sortingSwichtControl )
-
     :    m_conveyorBeltService(conveyorBeltService)
     ,    m_heightMeasurementService(heightMeasurementService)
-    ,    m_serial(serial)
     ,    m_sortingSwitchControl(sortingSwichtControl)
 {
     // Nothing todo so far.
@@ -31,24 +28,33 @@ ActorHandler::~ActorHandler()
 {
 	delete m_conveyorBeltService;
 	delete m_heightMeasurementService;
-	delete m_serial;
 	delete m_sortingSwitchControl;
 }
 
 void ActorHandler::demultiplex(PuckManager::ManagerReturn * manager)
 {
-	if (manager->errorFlag) {
+	if (manager->actorFlag != 1) {
 
-	}
+        switch (manager->actorSignal) {
 
-	if (manager->actorFlag) {
+            case PuckManager::OPEN_SWITCH:
+                m_sortingSwitchControl->open();
+                break;
 
-	}
-    switch (manager->actorSignal) {
+            case PuckManager::START_MEASUREMENT:
+                m_heightMeasurementService->startMeasuring();
+        	    break;
 
-        case PuckManager::OPEN_SWITCH:
-            break;
-    }
+            case PuckManager::STOP_MEASUREMENT:
+                m_heightMeasurementService->stopMeasuring();
+        	    break;
+
+            default:
+        	    // Nothing todo so far.
+        	    break;
+        }
+
+	} /* if */
 }
 
 /** @} */
