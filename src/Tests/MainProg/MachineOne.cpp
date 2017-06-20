@@ -37,6 +37,8 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 
+#include "ActorHandler.h"
+
 #include <chrono>
 
 SETUP(MachineOne){
@@ -82,32 +84,35 @@ TEST_IMPL(MachineOne, programm_m1){
 
 	//INIT DistancObs
 	DistanceObservable &distO = DistanceObservable::getInstance();
-/*
+
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
 	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
 
-	std::cout << "LightSystemChid" <<lightsystemChid << "\n";
+	/*std::cout << "LightSystemChid" <<lightsystemChid << "\n";
 	cout.flush();
 	BLightSystem *lsHal = new LightSystemHal();
 	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
 	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
 	lightSystem->setWarningLevel(WARNING_OCCURED);
-*/
+	*/
+
 	//INIT HEIGHTMEASUREMENT
-	//PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
-	//int heightMChid = heightMChannelCreator.newChannel();
-	//PulseMessageSenderService heightMChannel(heightMChid);
+	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
+	int heightMChid = heightMChannelCreator.newChannel();
+	PulseMessageSenderService heightMChannel(heightMChid);
 
-	//HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
+	HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
 
-	//HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
+	HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
 
 	//INIT PUCK MNG
 	PuckManager *puckManager = new PuckManager(mainChid);
 
 	//INIT Switch Cntrl
 	SortingSwichtControl sswitchCntrl(mainChid);
+
+	ActorHandler actorHandler(&cbs, &hmservice, &sswitchCntrl);
 
 	//TESTLOOP
 	rcv::msg_t event;
@@ -190,8 +195,13 @@ TEST_IMPL(MachineOne, programm_m1){
 					cbs.changeState(ConveyorBeltState::RIGHTFAST);
 					distO.updateSpeed(DistanceSpeed::FAST);
 					break;
+			}
 		}
-		}
+
+
+		actorHandler.demultiplex(&mr);
+
+		/*
 		if(mr.actorFlag){
 			switch(mr.actorSignal){
 				case PuckManager::OPEN_SWITCH :
@@ -199,7 +209,7 @@ TEST_IMPL(MachineOne, programm_m1){
 					break;
 			}
 		}
-
+		*/
 
 		cout.flush();
 

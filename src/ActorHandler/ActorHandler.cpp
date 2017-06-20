@@ -27,15 +27,11 @@ ActorHandler::ActorHandler ( ConveyorBeltService * conveyorBeltService,
 }
 
 ActorHandler::~ActorHandler()
-{
-	delete m_conveyorBeltService;
-	delete m_heightMeasurementService;
-	delete m_sortingSwitchControl;
-}
+{}
 
 void ActorHandler::demultiplex(PuckManager::ManagerReturn * manager)
 {
-	if (manager->actorFlag != 1) {
+	if (manager->actorFlag) {
 
         switch (manager->actorSignal) {
 
