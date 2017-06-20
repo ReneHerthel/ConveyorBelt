@@ -1,12 +1,17 @@
 /*!
- * @file PuckSortContext.cpp
- * @brief
+ *    \file  PuckSortContext.cpp
+ *   \brief  Implements the PuckSort state machine
  *
- * @author Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
- * @internal
- * Created 06/09/2017 05:11:22 PM
- * Copyright  Copyright (c) 2017 Stephan Jänecke
+ *  Decides if the given puck will be discarded or not. Pucks of the
+ *  sequence defined in the specialized states will be passed on. There
+ *  are standard actions defined in the super state performed on other
+ *  pucks and pucks out of sequence.
  *
+ *  \author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *  \internal
+ *       Created:  06/20/2017
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  */
 
 #include "PuckSortContext.h"
@@ -160,35 +165,35 @@ void PuckSortContext::PuckSort::bitCode5() {
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if ( rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = true;
-	} else if (!rampe2IsEmpty && isOnMachine1) {
-		returnValue = true;
-	} else {
+	if ( !rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = false;
+	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = false;
+	} else {
+		returnValue = true;
 	}
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( !rampe2IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( !rampe2IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
@@ -211,16 +216,6 @@ void PuckSortContext::Start::holeWithoutMetal() {
 	LOG_DEBUG << "[Start]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpWoMetal;
 }
-void PuckSortContext::Start::holeWithMetal() {
-    /* holeWithMetal out of order */
-	LOG_SCOPE;
-	if (!rampe2IsEmpty && isOnMachine1) {
-		returnValue = false;
-	} else {
-		returnValue = true;
-	}
-	LOG_DEBUG << "[Start]->[Start] Discard: " << returnValue << endl;
-}
 
 /* Define transitions for GotHoleUpWoMetal state */
 void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
@@ -229,16 +224,6 @@ void PuckSortContext::GotHoleUpWoMetal::holeWithoutMetal() {
 	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: " << returnValue << endl;
 	new (this) GotTwoHoleUpWoMetal;
 }
-void PuckSortContext::GotHoleUpWoMetal::holeWithMetal() {
-    /* holeWithMetal out of order */
-	LOG_SCOPE;
-	if (!rampe2IsEmpty && isOnMachine1) {
-		returnValue = false;
-	} else {
-		returnValue = true;
-	}
-	LOG_DEBUG << "[GotHoleUpWoMetal]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
-}
 
 /* Define transitions for GotTwoHoleUpWoMetal state */
 void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
@@ -246,14 +231,4 @@ void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	returnValue = false;
 	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpMetal;
-}
-void PuckSortContext::GotTwoHoleUpWoMetal::holeWithoutMetal() {
-    /* holeWithoutMetal out of order */
-	LOG_SCOPE;
-	if (!rampe2IsEmpty && isOnMachine1) {
-		returnValue = false;
-	} else {
-		returnValue = true;
-	}
-	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotTwoHoleUpWoMetal] Discard: " << returnValue << endl;
 }
