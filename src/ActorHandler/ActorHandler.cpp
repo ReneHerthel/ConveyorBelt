@@ -17,10 +17,10 @@
 #include "ActorHandler.h"
 
 ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
-                             HeightMeasurementController &HeightMeasurementController,
+							 HeightService &heightService,
                              SortingSwichtControl &sortingSwichtControl )
     :    m_conveyorBeltService(conveyorBeltService)
-    ,    m_heightMeasurementService(HeightMeasurementController)
+    ,    m_heightService(heightService)
     ,    m_sortingSwitchControl(sortingSwichtControl)
 {
     // Nothing todo so far.
@@ -65,11 +65,11 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
                 break;
 
             case PuckManager::START_MEASUREMENT:
-                m_heightMeasurementService.startMeasuring();
+            	m_heightService.startMeasuring();
                 break;
 
             case PuckManager::STOP_MEASUREMENT:
-                m_heightMeasurementService.stopMeasuring();
+            	m_heightService.stopMeasuring();
                 break;
 
             default:
