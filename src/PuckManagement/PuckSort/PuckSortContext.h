@@ -7,7 +7,8 @@
  *  \internal
  *       Created:  06/09/2017
  * Last modified:  06/21/2017
- *     Copyright:  Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
+ *     MIT License
  */
 
 #ifndef  PuckSortContext_INC
@@ -20,7 +21,7 @@
 
 /* FIXME: Move to global header */
 #define MACHINE 1
-#define FIFO_SORT 0
+#define FIFO_SORT 0 /*!< \brief If set, disables sort algorithm and let all pucks pass */
 
 using namespace PuckSignal;
 

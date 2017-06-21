@@ -7,12 +7,16 @@
  *  are standard actions defined in the super state performed on other
  *  pucks and pucks out of sequence.
  *
+ *  When FIFO_SORT is set, no sorting will happen and all pucks will be
+ *  passed.
+ *
  *  \author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  *
  *  \internal
  *       Created:  06/09/2017
  * Last modified:  06/21/2017
- *     Copyright:  Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
+ *     MIT License
  */
 
 #include "PuckSortContext.h"
