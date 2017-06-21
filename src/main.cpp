@@ -18,6 +18,7 @@
 #include "MeasurementHeightTest.h"
 #include "MachineOne.h"
 #include "TestPortA.h"
+#include "TestErrorHandler.h"
 
 
 using namespace std;
@@ -81,6 +82,9 @@ int main() {
 
     // PortA
     ts.REG_TESTCASE(new TestPortA(15, "Test port a actors"));
+
+    // ErrorHandler
+    ts.REG_TESTCASE(new TestErrorHandler(16, "test error handler "));
 
     //########################################//
     //##THIS STARTS THE TESTS, DO NOT TOUCH ##//
