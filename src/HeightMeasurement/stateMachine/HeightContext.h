@@ -21,7 +21,6 @@
 
 #include "HeightSignal.h"
 #include "HeightMeasurementService.h"
-#include "HeightSignal.h"
 
 #include <functional>
 #include <vector>
@@ -45,10 +44,8 @@ private:
      */
     struct State {
         virtual void invalid();
-        virtual void timeout();
         virtual void start();
-        virtual void wait();
-        virtual void resume();
+        virtual void stop();
         virtual void holeHeight();
         virtual void surfaceHeight();
         virtual void refHeight();
@@ -235,7 +232,7 @@ public:
      * @brief Inteprets the given signal and invoke the corresponding function.
      * @param [signal] The signal for the next transition.
      */
-    void process(Signal signal);
+    void process(HeightMeasurement::Signal signal);
 };
 
 #endif /* HEIGHTCONTEXT_H_ */
