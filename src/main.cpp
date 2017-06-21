@@ -77,7 +77,7 @@ int main() {
     ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
 
-    ts.REG_TESTCASE(new TestPuckSort(14, "[PuckSort] Test state machine"));
+    ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
 
     // PortA
     ts.REG_TESTCASE(new TestPortA(15, "Test port a actors"));
