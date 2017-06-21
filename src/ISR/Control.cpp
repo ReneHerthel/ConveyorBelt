@@ -5,13 +5,8 @@
  * Copyright   : none
  */
 
-#include <iostream>
-#include <unistd.h>
 #include "Control.h"
-#include <chrono>
-#include <thread>
-#include "HWaccess.h"
-#include "Signals.h"
+
 
 using namespace std;
 using namespace interrupts;
@@ -28,7 +23,8 @@ Control::Control() {
  * */
 Control::Control(const int chid)
     :    chid_(chid)
-    ,    sender(new PulseMessageSenderService(chid)) {
+    ,    sender(new PulseMessageSenderService(chid))
+	,	 oldTimestamp(std::chrono::system_clock::now())	{
     // Nothing todo so far.
 }
 
