@@ -15,12 +15,13 @@
 #include "SerialProtocoll.h"
 #include "HeightSignal.h"
 #include "PuckContext.h"
+#include "ActorHandler.h"
 
 //include the error handler
 
 class SignalDistributer {
 public:
-	SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl); //TODO add error handler
+	SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler); //TODO add error handler
 	virtual ~SignalDistributer();
 
 	void process(rcv::msg_t msg);
@@ -33,6 +34,7 @@ private:
 
 	PuckManager *puckManager_;
 	SortingSwichtControl *ssCntrl_;
+	ActorHandler *actorHandler_;
 };
 
 #endif /* SIGNALDISTRIBUTER_H_ */

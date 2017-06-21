@@ -34,6 +34,7 @@
 #include "ActorHandler.h"
 
 #include "SignalDistributer.h"
+#include "SortingSwichtControl.h"
 
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
@@ -61,7 +62,8 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread isr_th(ref(isr));
 
 
-
+	//INIT CBS
+	ConveyorBeltService cbs;
 
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
@@ -73,7 +75,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	calibration.loadFromDisk("/Calibration.dat");
 
 	//INIT LIGHTSYSTEM
-	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
+	/*PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
 	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
 
 	std::cout << "LightSystemChid" <<lightsystemChid << "\n";
@@ -81,7 +83,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	BLightSystem *lsHal = new LightSystemHal();
 	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
 	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
-	lightSystem->setWarningLevel(WARNING_OCCURED);
+	lightSystem->setWarningLevel(WARNING_OCCURED);*/
 
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
@@ -90,12 +92,17 @@ TEST_IMPL(MachineOne, programm_m1){
 	HeightMeasurementController hmController(heightMChid, mainChid, &calData);
 	HeightService heightService(heightMChid);
 
+	//INIT SWITCH CONTROL
+	SortingSwichtControl ssCntrl(mainChid);
 
-	//INIT SIGNAL DISTRIBUTER
-	SignalDistributer signalDistributer(&puckManager, &ssCntrl);
+	//Init actor handler
+	ActorHandler actorHandler(cbs, heightService, ssCntrl);
 
 	//INIT PUCK MNG
-	PuckManager puckMng(mainChid);
+	PuckManager puckManager(mainChid);
+
+	//INIT SIGNAL DISTRIBUTER
+	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler);
 
 	//TESTLOOP
 	rcv::msg_t event;
@@ -112,7 +119,7 @@ TEST_IMPL(MachineOne, programm_m1){
 		cout.flush();
 
 
-
+		signalDistributer.process(event);
 	}
 
 }

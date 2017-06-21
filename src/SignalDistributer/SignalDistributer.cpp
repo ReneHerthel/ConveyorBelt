@@ -8,10 +8,13 @@
 #include "SignalDistributer.h"
 #include "CodeDefinition.h"
 #include "Logger.h"
+#include "Logscope.h"
+#include "PuckManager.h"
 
-SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl):
+SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler):
 	 puckManager_(puckManager)
-	,ssCntrl_(ssCntrl_)
+	,ssCntrl_(ssCntrl)
+	,actorHandler_(actorHandler)
 {}
 
 SignalDistributer::~SignalDistributer() {}
@@ -19,6 +22,9 @@ SignalDistributer::~SignalDistributer() {}
 using namespace CodeDefinition;
 
 void SignalDistributer::process(rcv::msg_t msg){
+	HeightMeasurement::signal_t height_;
+	PuckSignal::TimerSignal timer;
+
 	switch(msg.code){
 		case ISR :
 			interrupt((interrupts::interruptSignals)msg.value);
@@ -28,13 +34,15 @@ void SignalDistributer::process(rcv::msg_t msg){
 			break;
 		case TRANSM_IN :
 			//puckManager_->deserialize() TODO FIX THE SERIALIZATION
-			LOG_ERROR << "[SignalDistributer] Transm_in not implemented \n";
+			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
 			break;
 		case PUCK_TIMER :
-			timerForPuck({.value = msg.value}); //Ewww
+			timer.value = msg.value;
+			timerForPuck(timer);
 			break;
 		case HEIGHT_MEASUREMENT :
-			height({.value = msg.value});
+			height_.value = msg.value;
+			height(height_);
 			break;
 		case SORTING_SWITCH:
 			ssCntrl_->close();
@@ -65,11 +73,23 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 }
 
 void SignalDistributer::height(HeightMeasurement::signal_t signal){
+	PuckManager::ManagerReturn mng_r;
 	PuckSignal::Signal m_sig;
 	m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
 	m_sig.heightSignal = signal;
-	puckManager_->process(m_sig);
+	mng_r = puckManager_->process(m_sig);
+	actorHandler_->demultiplex(mng_r);
 }
+
+void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
+	PuckManager::ManagerReturn mng_r;
+	PuckSignal::Signal m_sig;
+	m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
+	m_sig.timerSignal = signal;
+	mng_r = puckManager_->process(m_sig);
+	actorHandler_->demultiplex(mng_r);
+}
+
 
 void SignalDistributer::serial(Serial_n::ser_proto_msg){
 	//TODO Implement
