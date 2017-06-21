@@ -56,7 +56,8 @@ public:
 
     void height();
     void metal();
-    void switchen();
+    void switchopen();
+    void switchclosed();
 
     void b_Start();
     void b_STOP();
