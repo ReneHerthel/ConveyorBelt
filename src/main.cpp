@@ -45,7 +45,7 @@ int main() {
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
     // HeightMeasurement tests
-    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
+   // ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
 
     // LightSystem tests
     ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
@@ -77,7 +77,7 @@ int main() {
     ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
 
-    ts.REG_TESTCASE(new TestPuckSort(14, "[PuckSort] Test state machine"));
+    ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
 
     // PortA
     ts.REG_TESTCASE(new TestPortA(15, "Test port a actors"));
