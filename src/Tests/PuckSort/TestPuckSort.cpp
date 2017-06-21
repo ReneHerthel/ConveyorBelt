@@ -1,11 +1,17 @@
 /*!
- * @file TestPuckSort.cpp
- * @brief
+ *   \file TestPuckSort.cpp
+ *   \brief  Tests the PuckSort state machine
  *
- * @author Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
- * @internal
- * Created 06/14/2017 06:28:22 PM
- * Copyright  Copyright (c) 2017 Stephan Jänecke
+ *   See the test declarations for descriptions of the various tests.
+ *   The test signals and expected conditionals are defined in every test.
+ *
+ *  \author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
+ *
+ *  \internal
+ *       Created:  06/14/2017
+ * Last modified:  06/21/2017
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
+ *     MIT License
  */
 
 #include "TestPuckSort.h"
@@ -42,13 +48,14 @@ AFTER(TestPuckSort) {
 }
 
 TEST_IMPL(TestPuckSort, test1) {
-	// holeWithoutMetal > holeWithoutMetal > holeWithMetal
+    /*! \brief Define expected conditionals expected from state machine */
 	bool expectedResults[3] {
 		false,
 		false,
 		false,
 	};
 
+    /*! \brief Define signals to feed into state machine */
 	PuckType testSignals[3] = {
 			TESTSIGNAL_HOLEWITHOUTMETAL,
 			TESTSIGNAL_HOLEWITHOUTMETAL,
@@ -67,6 +74,7 @@ TEST_IMPL(TestPuckSort, test1) {
 }
 
 TEST_IMPL(TestPuckSort, test2) {
+    /*! \brief Define signals to feed into state machine */
 	PuckType testSignals[8] = {
 			TESTSIGNAL_BITCODE1,
 			TESTSIGNAL_BITCODE2,
@@ -78,7 +86,8 @@ TEST_IMPL(TestPuckSort, test2) {
 			TESTSIGNAL_HOLEWITHOUTMETAL,
 	};
 
-	// Beginning from Start try all transitions
+    /*! \brief Define expected conditionals expected from state machine
+     * depending on machine */
     bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
@@ -114,6 +123,7 @@ TEST_IMPL(TestPuckSort, test2) {
 }
 
 TEST_IMPL(TestPuckSort, test3) {
+    /*! \brief Define signals to feed into state machine */
 	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHMETAL,
         TESTSIGNAL_BITCODE4,
@@ -125,6 +135,8 @@ TEST_IMPL(TestPuckSort, test3) {
         TESTSIGNAL_INVALID,
 	};
 
+    /*! \brief Define expected conditionals expected from state machine
+     * depending on machine */
     bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
@@ -179,6 +191,7 @@ TEST_IMPL(TestPuckSort, test3) {
 
 TEST_IMPL(TestPuckSort, test4) {
 	LOG_SCOPE;
+    /*! \brief Define signals to feed into state machine */
 	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHOUTMETAL,
         TESTSIGNAL_BITCODE1,
@@ -190,6 +203,8 @@ TEST_IMPL(TestPuckSort, test4) {
         TESTSIGNAL_HOLEWITHOUTMETAL,
 	};
 
+    /*! \brief Define expected conditionals expected from state machine
+     * depending on machine */
     bool expectedResults[8] {
 #if !MACHINE
     	// Machine 1 from Start
