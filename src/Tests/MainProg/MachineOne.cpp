@@ -33,6 +33,7 @@
 
 #include "ActorHandler.h"
 
+#include "SignalDistributer.h"
 
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
@@ -89,6 +90,9 @@ TEST_IMPL(MachineOne, programm_m1){
 	HeightMeasurementController hmController(heightMChid, mainChid, &calData);
 	HeightService heightService(heightMChid);
 
+
+	//INIT SIGNAL DISTRIBUTER
+	SignalDistributer signalDistributer(&puckManager, &ssCntrl);
 
 	//INIT PUCK MNG
 	PuckManager puckMng(mainChid);
