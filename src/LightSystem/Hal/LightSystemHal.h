@@ -25,13 +25,13 @@
 #include <chrono>
 
 /** Change green light */
-#define GREEN_SHIFT		5
+#define GREEN_MASK (1 << 5)
 /** Change yellow light */
-#define YELLOW_SHIFT	6
+#define YELLOW_MASK	(1 << 6)
 /** Change red light */
-#define RED_SHIFT		7
+#define RED_MASK (1 << 7)
 /** Change all light */
-#define ALL_SHIFT		(GREEN_SHIFT | YELLOW_SHIFT | RED_SHIFT)
+#define ALL_MASK (GREEN_MASK|YELLOW_MASK|RED_MASK)
 
 /* TODO: Move Port_ADDRS to global header */
 #define PORTA_ADDR 0x300
