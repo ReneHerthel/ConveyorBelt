@@ -6,6 +6,13 @@
  */
 
 #include "TestPuckStateMachine.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include <iostream>
+#include "Logger.h"
+#include "LogScope.h"
 
 SETUP(TestPuckStateMachine) {
 	REG_TEST(test1, 1, "Test the longest path");
@@ -15,6 +22,12 @@ SETUP(TestPuckStateMachine) {
 }
 
 BEFORE_TC(TestPuckStateMachine) {
+	chid = timerReceiver.newChannel();
+
+	//INIT CALIBRATION AND CALIBRATE
+	Calibration& calibration = Calibration::getInstance();
+	calibration.calibrateHeighMeasurement();
+	calibration.calibrate();
 	return 1;
 }
 
@@ -24,7 +37,7 @@ AFTER_TC(TestPuckStateMachine) {
 
 BEFORE(TestPuckStateMachine) {
 	uint16_t puckID = 1;
-	context = new PuckContext(CHID);
+	context = new PuckContext(chid);
 	context->setPuckID(puckID);
 	return 1;
 }
@@ -35,6 +48,8 @@ AFTER(TestPuckStateMachine) {
 }
 
 TEST_IMPL(TestPuckStateMachine, test1) {
+	LOG_SCOPE;
+	LOG_DEBUG << "-------------------TEST 1 ------------------\n";
 	for(uint32_t i = 0; i < sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal); ++i) {
 		PuckSignal::Return returnVal = context->process(signalArrayLongestPath[i]);
 		if(		returnVal.puckReturn != returnArrayLongestPath[i].puckReturn ||
@@ -46,7 +61,9 @@ TEST_IMPL(TestPuckStateMachine, test1) {
 }
 
 TEST_IMPL(TestPuckStateMachine, test2) {
-	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {0}, {0, PuckSignal::TimerType::LATE_TIMER}, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
+	LOG_SCOPE;
+	LOG_DEBUG << "-------------------TEST 2 ------------------\n";
+	PuckSignal::Signal errorSignal = {PuckSignal::SignalType::TIMER_SIGNAL, {0}, lateTimer, interrupts::interruptSignals::INLET_IN, Serial_n::ser_proto_msg::ACCEPT_SER};
 
 	for(uint32_t i = 0; i < sizeof(signalArrayLongestPath) / sizeof(PuckSignal::Signal); ++i) {
 		PuckSignal::Return returnVal;
@@ -66,13 +83,15 @@ TEST_IMPL(TestPuckStateMachine, test2) {
 
 		uint16_t ID = context->getPuckID();
 		delete context;
-		context = new PuckContext(CHID);
+		context = new PuckContext(chid);
 		context->setPuckID(ID);
 	}
 	return TEST_PASSED;
 }
 
 TEST_IMPL(TestPuckStateMachine, test3) {
+	LOG_SCOPE;
+	LOG_DEBUG << "-------------------TEST 3 ------------------\n";
 	PuckSignal::Return returnVal;
 	for(uint32_t j = 0; j < 2; ++j) {
 		uint32_t i;
@@ -91,7 +110,7 @@ TEST_IMPL(TestPuckStateMachine, test3) {
 
 		uint16_t ID = context->getPuckID();
 		delete context;
-		context = new PuckContext(CHID);
+		context = new PuckContext(chid);
 		context->setPuckID(ID);
 	}
 	return TEST_PASSED;
