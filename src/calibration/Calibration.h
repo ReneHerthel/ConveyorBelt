@@ -12,6 +12,7 @@
 #include "DistanceEnum.h"
 #include "SortingSwitchService.h"
 #include "HeightMeasurementService.h"
+#include "Signals.h"
 
 #define PORTB_ADDR 0x301
 
@@ -20,6 +21,7 @@
 #define LOGICAL_1	0.7257900
 #define LOGICAL_0	0.6584766
 #define INVALID		0.6862400
+#define DELTA		35
 
 #define CALC_ABS_HEIGHT(val, perc) ((int16_t)((double)val*perc));
 
@@ -42,6 +44,11 @@ public:
 	 * Calibrate the light barrier distances
 	 */
 	void calibrate(void);
+
+	/**
+	 * Calibrate the light barrier distances
+	 */
+	void calibrate(int mainChid);
 
 	bool pollLB(sensor_t sensor);
 
@@ -78,6 +85,7 @@ private:
 	std::chrono::milliseconds sortingSwitch[2];
 	std::chrono::milliseconds outlet[2];
 	std::chrono::milliseconds inlet[2];
+	std::chrono::milliseconds inSwitch[2];
 
 	double fastToSlowFactor;
 	double slowToFastFactor;
