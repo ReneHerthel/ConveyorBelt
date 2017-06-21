@@ -25,13 +25,12 @@ public:
 
 	void process(rcv::msg_t msg);
 
+private:
 	void interrupt(interrupts::interruptSignals signal);
 	void height(HeightMeasurement::signal_t signal);
 	void serial(Serial_n::ser_proto_msg);
-	void timerForPuck();
-	void timerForSwitch();
+	void timerForPuck(PuckSignal::TimerSignal signal);
 
-private:
 	PuckManager *puckManager_;
 	SortingSwichtControl *ssCntrl_;
 };
