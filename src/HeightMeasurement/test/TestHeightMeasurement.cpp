@@ -21,7 +21,7 @@
 #include "HeightMeasurementHal.h"
 #include "HeightContext.h"
 #include "ConveyorBeltService.h"
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "HWdefines.h"
 #include "HeightSignal.h"
 #include "Calibration.h"
@@ -90,7 +90,7 @@ void TestHeightMeasurement::startTest() {
 
     LOG_DEBUG << "[TestHeightMeasurement] startTest() send_chid: " << send_chid << " receive_chid: " << receive_chid << " coid: " << coid << "\n";
 
-    HeightMeasurementService::CalibrationData cal;
+    HeightMeasurementController::CalibrationData cal;
 
     ConveyorBeltService cbs;
     // THIS IS CALIBRATED BY HAND!
@@ -108,7 +108,7 @@ void TestHeightMeasurement::startTest() {
     cal.highHeight = 2937;
 #endif
     cal.delta = 35;
-    HeightMeasurementService service(receive_chid, send_chid, &cal);
+    HeightMeasurementController service(receive_chid, send_chid, &cal);
     cbs.changeState(RIGHTFAST);
     while(1) {
         while(!hmCal.pollLB(Calibration::LB_HEIGHT));
