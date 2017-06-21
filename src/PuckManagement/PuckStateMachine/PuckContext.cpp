@@ -42,7 +42,7 @@ PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistanc
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;
 
-	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+	statePtr->startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
 #endif
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck
@@ -66,7 +66,7 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;
 
-	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+	statePtr->startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
 #endif
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck

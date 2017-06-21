@@ -17,7 +17,7 @@
 #include "DistanceEnum.h"
 #include "ISerializable.h"
 
-#define machine (1) // 0 or 1
+#define machine (0) // 0 or 1
 #define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9

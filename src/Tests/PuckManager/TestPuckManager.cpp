@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "LogScope.h"
 
+#if !machine
 SETUP(TestPuckManager) {
 	REG_TEST(test1, 1, "Test the longest path with one puck only");
 	REG_TEST(test2, 2, "Test the longest path with three pucks");
@@ -212,3 +213,4 @@ TEST_IMPL(TestPuckManager, test4) {
 		}
 		return TEST_PASSED;
 }
+#endif
