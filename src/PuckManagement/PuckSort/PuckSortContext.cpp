@@ -10,7 +10,8 @@
  *  \author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  *
  *  \internal
- *       Created:  06/20/2017
+ *       Created:  06/09/2017
+ * Last modified:  06/21/2017
  *     Copyright:  Copyright (c) 2017 Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  */
 
@@ -117,12 +118,12 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
@@ -154,23 +155,23 @@ void PuckSortContext::PuckSort::bitCode4() {
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
@@ -199,12 +200,12 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine1 ) {
-		returnValue = false;
-	} else if ( !rampe2IsEmpty && isOnMachine2 ) {
-		returnValue = false;
-	} else {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
+	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+		returnValue = true;
+	} else {
+		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 }
