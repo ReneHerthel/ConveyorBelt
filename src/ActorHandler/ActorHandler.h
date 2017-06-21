@@ -18,7 +18,7 @@
 #define SRC_ACTORHANDLER_ACTORHANDLER_H_
 
 #include "ConveyorBeltService.h"
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "Serial.h"
 #include "SortingSwichtControl.h"
 #include "PuckManager.h"
@@ -33,7 +33,7 @@ public:
      */
     ActorHandler(
                   ConveyorBeltService &conveyorBeltService,
-                  HeightMeasurementService &heightMeasurementService,
+                  HeightMeasurementController &HeightMeasurementController,
                   SortingSwichtControl &sortingSwichtControl
                 );
 
@@ -58,7 +58,7 @@ private:
     /*
      * @brief A reference to the HeightMeasurement component.
      */
-    HeightMeasurementService &m_heightMeasurementService;
+    HeightMeasurementController &m_heightMeasurementService;
 
     /*
      * @brief A reference to the SortingSwitchtControll component.

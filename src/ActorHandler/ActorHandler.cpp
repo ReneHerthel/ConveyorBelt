@@ -17,10 +17,10 @@
 #include "ActorHandler.h"
 
 ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
-                             HeightMeasurementService &heightMeasurementService,
+                             HeightMeasurementController &HeightMeasurementController,
                              SortingSwichtControl &sortingSwichtControl )
     :    m_conveyorBeltService(conveyorBeltService)
-    ,    m_heightMeasurementService(heightMeasurementService)
+    ,    m_heightMeasurementService(HeightMeasurementController)
     ,    m_sortingSwitchControl(sortingSwichtControl)
 {
     // Nothing todo so far.

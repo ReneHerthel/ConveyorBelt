@@ -25,6 +25,7 @@
 #include "HWdefines.h"
 #include "HeightSignal.h"
 #include "Calibration.h"
+#include "HeightService.h"
 
 #include "Logger.h"
 #include "LogScope.h"
@@ -109,16 +110,14 @@ void TestHeightMeasurement::startTest() {
 #endif
     cal.delta = 35;
     HeightMeasurementController service(receive_chid, send_chid, &cal);
+    HeightService msg(receive_chid);
     cbs.changeState(RIGHTFAST);
     while(1) {
         while(!hmCal.pollLB(Calibration::LB_HEIGHT));
         cbs.changeState(RIGHTSLOW);
 		// We need to send a start signal first, so the measuring will begin.
-		int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, START);
+        msg.startMeasuring();
 
-		if (err < 0) {
-			  LOG_DEBUG << "[TestHeightMeasurement] startTest() Sending START signal failed with: " << err << "\n";
-		}
 
 		// Structure that describes a pulse.
 		struct _pulse pulse;
@@ -128,7 +127,7 @@ void TestHeightMeasurement::startTest() {
         LOG_DEBUG << "[TestHeightMeasurement] startTest() Blocked on MsgReceivePulse_r()\n";
         // Returns 0 on success and a negative value on error.
 
-        err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
+        int err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
 
         // Do error handling, if there occurs an error.
         if (err < 0) {
@@ -143,8 +142,9 @@ void TestHeightMeasurement::startTest() {
 
         std::cout.flush();
         LOG_DEBUG << "[TestHeightMeasurement] startTest() Received pulse message: SignalID - " << (int)signal.ID << ", Pattern - " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << ", Highest Height " <<(int)signal.highestHeight << "\n";
+        while(hmCal.pollLB(Calibration::LB_HEIGHT));
+        msg.stopMeasuring();
         cbs.changeState(RIGHTFAST);
-        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
 
