@@ -81,9 +81,9 @@ TEST_IMPL(MachineOne, programm_m1){
 	int heightMChid = heightMChannelCreator.newChannel();
 	PulseMessageSenderService heightMChannel(heightMChid);
 
-	HeightMeasurementService::CalibrationData calData = calibration.getHmCalibration();
+	HeightMeasurementController::CalibrationData calData = calibration.getHmCalibration();
 
-	HeightMeasurementService hmservice(heightMChid, mainChid, &calData);
+	HeightMeasurementController hmservice(heightMChid, mainChid, &calData);
 
 	//INIT PUCK MNG
 	PuckManager puckMng(mainChid);

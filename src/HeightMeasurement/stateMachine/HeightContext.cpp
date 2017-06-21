@@ -27,7 +27,7 @@
 
 using namespace HeightMeasurement;
 
-HeightContext::HeightContext(int send_chid, HeightMeasurementService *service)
+HeightContext::HeightContext(int send_chid, HeightMeasurementController *service)
     :    statePtr(&state)
     ,    service(service)
 {

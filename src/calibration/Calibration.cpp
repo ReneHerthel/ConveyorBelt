@@ -15,7 +15,7 @@
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
 #include <thread>
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "HeightMeasurementHal.h"
 #include "PulseMessageReceiverService.h"
 
@@ -194,7 +194,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 
 }
 
-HeightMeasurementService::CalibrationData Calibration::getHmCalibration(void){
+HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
 	return hmCal;
 }
 
