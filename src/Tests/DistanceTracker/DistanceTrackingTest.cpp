@@ -159,7 +159,7 @@ TEST_IMPL(DistanceTrackingTest, StopBelt){
 	tr1.startAlarm(value, INLET_TO_HEIGHT, 1);
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
-	distO.updateSpeed(STOP);
+	distO.updateSpeed(DistanceSpeed::STOP);
 	std::this_thread::sleep_for(std::chrono::milliseconds(500)); //After 500ms passed, change speed
 	distO.updateSpeed(SLOW);
 
