@@ -116,7 +116,23 @@ void Control::b_Reset() {
     sender->sendPulseMessage(code, BUTTON_RESET);
     cout << "Control buttonReset" << endl;
 }
-void Control::switchen() {
-    sender->sendPulseMessage(code, SWITCH_OPEN);
-    cout << "Control SWITCH-OPEN" << endl;
+void Control::switchopen() {
+auto newTimestamp = std::chrono::system_clock::now();
+	std::chrono::duration<double> elapsed_time = (newTimestamp-oldTimestamp);
+	cout << "elapsed_time" << elapsed_time.count() << endl;
+	if( elapsed_time.count() > SWITCH_ISR_DENY_TIME){
+ 	sender->sendPulseMessage(code, SWITCH_OPEN);
+ 	oldTimestamp = newTimestamp;
+	cout << "Control SWITCH-OPEN" << endl;
+	}
+}
+void Control::switchclosed() {
+auto newTimestamp = std::chrono::system_clock::now();
+	std::chrono::duration<double> elapsed_time = (newTimestamp-oldTimestamp);
+	cout << "elapsed_time" << elapsed_time.count() << endl;
+	if( elapsed_time.count() > SWITCH_ISR_DENY_TIME){
+ 	sender->sendPulseMessage(code, SWITCH_CLOSED);
+ 	oldTimestamp = newTimestamp;
+	cout << "Control SWITCH-CLOSED" << endl;
+	}
 }
