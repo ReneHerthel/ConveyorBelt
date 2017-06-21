@@ -20,7 +20,8 @@ public:
 		START_MEASUREMENT,
 		STOP_MEASUREMENT,
 		OPEN_SWITCH,
-		SEND_PUCK
+		SEND_PUCK,
+		RECEIVED_PUCK
 	};
 
 	enum ErrorSignal {

@@ -157,6 +157,11 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_PUCK;
 				break;
+			case PuckSignal::PuckReturn::RECEIVED:
+				acceptCounter++;
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::RECEIVED_PUCK;
+				break;
 			case PuckSignal::PuckReturn::EVALUATE:
 				acceptCounter++;
 				if(!sort.process((*it)->getType())) {

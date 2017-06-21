@@ -353,7 +353,7 @@ void PuckContext::TransferArea::earlyTimer() {
 void PuckContext::TransferTimer::inletIn() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferTimer]->[Inlet]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckReturn = PuckSignal::PuckReturn::RECEIVED;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	stopTimer();
 	new (this) Inlet;
