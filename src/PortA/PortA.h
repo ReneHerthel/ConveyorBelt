@@ -17,6 +17,18 @@
 #ifndef SRC_PORTA_PORTA_H_
 #define SRC_PORTA_PORTA_H_
 
+/** TODO: Explain purpose */
+#define CTRL_REG_GROUP0     0x303
+/*
+ * PORT A : OUTPUT
+ * PORT B : INPUT
+ * PORT C Lo : OUTPUT
+ * PORT C Hi : INPUT
+ * Mode Select : 00
+ */
+/** TODO: Explain purpose */
+#define DEFAULT_PORTS_SETTINGS 0x8A
+
 #include <mutex>
 #include <stdint.h>
 
@@ -66,7 +78,7 @@ private:
     /*
      * @brief Hidden destructor.
      */
-    ~PortA();
+    ~PortA(){};
 
     /*
      * @brief The mutex, where the singleton locks.
