@@ -558,8 +558,8 @@ void PuckContext::SwitchTimer::outletIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[InTransfer] JUST FOR TESTING WITHOUT SERIAL\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
-	new (this) InTransfer;
 	stopTimer();
+	new (this) InTransfer;
 #else
 
 	#if !machine
