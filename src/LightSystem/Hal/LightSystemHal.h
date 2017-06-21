@@ -16,6 +16,7 @@
 #include "Logger.h"
 #include "LogScope.h"
 #include "LightSystemEnum.h"
+#include "PortA.h"
 #include <iostream>
 #include <hw/inout.h>
 #include <sys/neutrino.h>
@@ -51,10 +52,13 @@
 namespace HAL {
     class LightSystemHal: public BLightSystem {
         public:
-    		LightSystemHal() {};
-    		~LightSystemHal() {};
+    		LightSystemHal();
+    		~LightSystemHal();
             void lightOn(Color color);
             void lightOff(Color color);
+            bool checkIfPreviouslySetTo(Color newColor);
+        private:
+        	Color lastColor;
     };
 }
 

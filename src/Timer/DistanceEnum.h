@@ -28,7 +28,8 @@ namespace DistanceSpeed{
 		INLET_TO_HEIGHT,
 		HEIGHT_TO_SWITCH,
 		SWITCH_TO_OUTLET,
-		OUT_TO_IN			///Note that this is an aprox, make delta big
+		OUT_TO_IN,		///Note that this is an aprox, make delta big
+		IN_SWITCH
 	};
 };
 

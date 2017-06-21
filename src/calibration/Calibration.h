@@ -20,6 +20,7 @@
 #define LOGICAL_1	0.7257900
 #define LOGICAL_0	0.6584766
 #define INVALID		0.6862400
+#define DELTA		35
 
 #define CALC_ABS_HEIGHT(val, perc) ((int16_t)((double)val*perc));
 
@@ -30,10 +31,10 @@ public:
 	enum sensor_t : uint8_t {
 		LB_ENTRY  	   =0b00000001,
 		LB_HEIGHT  	   =0b00000010,
-		SENSOR_HEIGHT  =0b00000100,
+		SSENSOR_HEIGHT  =0b00000100,
 		LB_SWITCH 	   =0b00001000,
-		SENSOR_METAL   =0b00010000,
-		SWITCH_OPEND   =0b00100000,
+		SSSENSOR_METAL   =0b00010000,
+		SSWITCH_OPEND   =0b00100000,
 		LB_RAMP 	   =0b01000000,
 		LB_EXIT		   =0b10000000
 	};
@@ -78,6 +79,7 @@ private:
 	std::chrono::milliseconds sortingSwitch[2];
 	std::chrono::milliseconds outlet[2];
 	std::chrono::milliseconds inlet[2];
+	std::chrono::milliseconds inSwitch[2];
 
 	double fastToSlowFactor;
 	double slowToFastFactor;

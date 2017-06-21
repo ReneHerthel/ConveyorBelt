@@ -8,10 +8,9 @@
 #ifndef TIMER_ITIMER_H_
 #define TIMER_ITIMER_H_
 
-typedef unsigned int milliseconds;
-
 class ITimer {
 public:
+	typedef unsigned int milliseconds;
 	virtual void setAlarm(milliseconds time, int value) = 0;
 	virtual void stopAlarm() = 0;
 	virtual void resumeAlarm() = 0;
