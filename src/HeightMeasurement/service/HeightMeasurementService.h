@@ -30,9 +30,13 @@
 #define LOW_HEIGHT_VAL (calibrationDataPtr->lowHeight)
 #define HIGH_HEIGHT_VAL (calibrationDataPtr->highHeight)
 #define INVALID_HEIGHT_VAL (calibrationDataPtr->invalidHeight)
+
+#define WINDOW_SIZE 20
 /** @} */
 
 #include "HeightContext.h"
+
+#include "TimerService.h"
 
 #include <stdint.h>
 #include <sys/siginfo.h>
@@ -44,6 +48,8 @@
  * @brief Fast forwarding the HeightContext class.
  */
 class HeightContext;
+
+using namespace HeightMeasurement;
 
 class HeightMeasurementService {
 public:
@@ -84,7 +90,20 @@ public:
      */
     void stopMeasuring();
 
+    /*
+     * @brief Get the highest measured height from the measuring thread.
+     *
+     * @return returns the highest height (->lowest value).
+     */
+    uint16_t getHighestHeight();
+
 private:
+    TimerService timer;
+    /*
+     * @brief the heighest measured height
+     */
+    uint16_t highestHeight;
+
     /*
      * @brief A pointer to the statemachine object.
      */
@@ -121,7 +140,7 @@ private:
      * @param[*state] A pointer to the current state of the measuring.
      * @param[data] The current measured data from the hal.
      */
-    void dataInRange(Signal *state, int16_t data);
+    void dataInRange(HeightMeasurement::Signal *state, uint16_t data);
 
     /*
      * @brief The superloop task of the statemachine-thread.

@@ -52,8 +52,8 @@ class LightSystemController {
 		~LightSystemController();
     private:
 		volatile bool isRunning; /**< @brief Control variable to start or stop both threads */
-		Frequency frequency; /** Control variable to pass blinking frequency to taskThread */
-		Color color; /** Control variable to pass light color to taskThread */
+		volatile Frequency frequency; /** Control variable to pass blinking frequency to taskThread */
+		volatile Color color; /** Control variable to pass light color to taskThread */
 		int chid; /** Channel ID */
         BLightSystem* boundary; /** Hardware abstraction object */
         /* TODO: Ask @pareigis if lights have to blink independently */

@@ -37,7 +37,7 @@
  */
 #define WAIT_TIME         10
 
-void HeightMeasurementHal::read(int16_t &data) {
+void HeightMeasurementHal::read(uint16_t &data) {
     // Send an opcode to start the conversion.
     out8(PORT_ADDR_AIO + HEIGHT_MEASUREMENT_OFFSET_LOW_BYTE, HEIGHT_MEASUREMENT_START_CODE);
 

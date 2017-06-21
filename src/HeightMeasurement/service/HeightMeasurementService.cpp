@@ -23,6 +23,7 @@
 
 #include <chrono>
 #include <algorithm>
+#include <climits>
 
 /*
  * @brief Macros to check if the measured data is in range of the corresponding state.
@@ -32,30 +33,48 @@
  */
 #define RANGE(DATA, CAL)    (((DATA - DELTA_VAL) < CAL) && ((DATA + DELTA_VAL) > CAL))
 
+using namespace HeightMeasurement;
+
 HeightMeasurementService::HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr)
-    :    stateMachine(new HeightContext(send_chid, this))
+    :    timer(receive_chid, 0)
     ,    calibrationDataPtr(calibrationDataPtr)
     ,    receive_chid(receive_chid)
+	, 	 measurementIsRunning(false)
 {
+    LOG_SCOPE;
     // Set this to true, so the statemachine thread will run his superloop.
     statemachineIsRunning = true;
     // Creates the thread for the statemachine with the receive channel to listen on it.
     stateMachineThread = std::thread(&HeightMeasurementService::stateMachineTask, this, receive_chid);
+
+    highestHeight = USHRT_MAX;	// maximum value
+
+    stateMachine = new HeightContext(send_chid, this);
+    LOG_DEBUG << "[HeightMeasurementService] Constructor  measurementIsRunning \n" << measurementIsRunning << "\n";
 }
 
 HeightMeasurementService::~HeightMeasurementService() {
+	statemachineIsRunning = false;
+	stateMachineThread.join();
     delete stateMachine;
 }
 
 void HeightMeasurementService::startMeasuring() {
-    // Set this true, so the measurement thread will run his suoperloop.
-    measurementIsRunning = true;
-    // Creates the thread for the measurement with the receive channel to send on it.
-    measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+	if(!measurementIsRunning) { // FIXME: This should not be tested. This is required by the state machine
+		LOG_DEBUG << "[HeightMeasurementService] startMeasuring() \n";
+		// Set this true, so the measurement thread will run his superloop.
+		measurementIsRunning = true;
+		// Creates the thread for the measurement with the receive channel to send on it.
+    	measurementThread = std::thread(&HeightMeasurementService::measuringTask, this, receive_chid);
+	}
 }
 
 void HeightMeasurementService::stopMeasuring() {
-    measurementIsRunning = false;
+	LOG_DEBUG << "[HeightMeasurementService] measurementIsRunning: " << measurementIsRunning << "\n";
+	if(measurementIsRunning){
+	    measurementIsRunning = false;
+	    measurementThread.join();
+	}
 }
 
 void HeightMeasurementService::measuringTask(int receive_chid) {
@@ -63,11 +82,12 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
     LOG_SET_LEVEL(DEBUG);
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Thread started\n";
 
-    int16_t data = 0;             /*< The current measured data.*/
-    Signal state = START;         /*< The current state of the statemachine.*/
-    Signal oldState = state;      /*< The old state of the statemachine.*/
-    HeightMeasurementHal hal;     /*< The hal object to access the HW.*/
-    int err = 0;                  /*< Return value of msgSend.*/
+    highestHeight = USHRT_MAX;		// reset highest height
+    uint16_t data = 0;             	/*< The current measured data.*/
+    Signal state = START;         	/*< The current state of the statemachine.*/
+    Signal oldState = state;      	/*< The old state of the statemachine.*/
+    HeightMeasurementHal hal;     	/*< The hal object to access the HW.*/
+    int err = 0;                  		/*< Return value of msgSend.*/
 
     // Connect to the receive channel for sending pulse-messages on it.
     int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, receive_chid, 0, 0);
@@ -83,33 +103,48 @@ void HeightMeasurementService::measuringTask(int receive_chid) {
      * channel, where the statemachine is listening and will do the next
      * transition.
      */
+    uint16_t dataWindow[WINDOW_SIZE] = {0};
+    uint32_t writePos = 0;
     while (measurementIsRunning) {
+    	  hal.read(data);
+    	  dataInRange(&state, data);
 
-    	hal.read(data);
-
-    	dataInRange(&state, data);
-
-
-        // But send only a message if there is a new state.
-        if (state != oldState) {
-            err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
-
-            if (err < 0) {
-                // TODO Error handling.
-                LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
-            }
-
-            //LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+        if (data < highestHeight) {	// get the highest height (lowest value)
+            highestHeight = data;
         }
 
-        // Remember the current state as old state for the next loop.
-        oldState = state;
-    }
+        dataWindow[writePos++] = data;
+        writePos %= WINDOW_SIZE;
 
+        bool valid = true;
+
+        // Filter
+        for (int i = 0; i < WINDOW_SIZE - 1; i++) {
+        	Signal temp1;
+        	Signal temp2;
+        	dataInRange(&temp1, dataWindow[i]);
+        	dataInRange(&temp2, dataWindow[i + 1]);
+        	if(temp1 != temp2) valid = false;
+        }
+
+        if(valid) {
+			// But send only a message if there is a new state.
+			if (state != oldState) {
+				err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, state);
+				if (err < 0) {
+					// TODO Error handling.
+					LOG_DEBUG << "[HeightMeasurementService] measuringTask() MsgSendPulse_r failed.\n";
+				}
+				LOG_DEBUG << "[HeightMeasurementService] send measuring signal: " << state << "\n";
+			}
+			// Remember the current state as old state for the next loop.
+			oldState = state;
+        }
+    }
     LOG_DEBUG << "[HeightMeasurementService] measuringTask() Leaves superloop\n";
 }
 
-void HeightMeasurementService::dataInRange(Signal *state, int16_t data) {
+void HeightMeasurementService::dataInRange(Signal *state, uint16_t data) {
     if (RANGE(data, REF_HEIGHT_VAL)) {
         *state = REF_HEIGHT;
     }
@@ -156,6 +191,10 @@ void HeightMeasurementService::stateMachineTask(int receive_chid) {
     }
 
     LOG_DEBUG << "[HeightMeasurementService] stateMachineTask() Leaves superloop\n";
+}
+
+uint16_t HeightMeasurementService::getHighestHeight() {
+    return highestHeight;
 }
 
 /** @} */

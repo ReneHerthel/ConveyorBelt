@@ -21,7 +21,6 @@
 
 #include "HeightSignal.h"
 #include "HeightMeasurementService.h"
-#include "HeightSignal.h"
 
 #include <functional>
 #include <vector>
@@ -36,6 +35,8 @@
 
 class HeightMeasurementService;
 
+using namespace HeightMeasurement;
+
 class HeightContext {
 private:
     /*
@@ -43,10 +44,8 @@ private:
      */
     struct State {
         virtual void invalid();
-        virtual void timeout();
         virtual void start();
-        virtual void wait();
-        virtual void resume();
+        virtual void stop();
         virtual void holeHeight();
         virtual void surfaceHeight();
         virtual void refHeight();
@@ -54,6 +53,8 @@ private:
         virtual void lowHeight();
         virtual void highHeight();
         virtual void entry();
+
+        void send(int coid, signal_t signal);
         unsigned int index;
         int coid;  // The channel, where the statemachine will send to.
         HeightMeasurementService *service;  // A pointer to the service class.
@@ -212,14 +213,6 @@ private:
     State state;
 
     /*
-     * @brief Sends a pulse message over the connection ID.
-     *
-     * @param[coid] The connection ID.
-     * @param[signal] The signal, which should be sent.
-     */
-    static void send(int coid, signal_t signal);
-
-    /*
      * @brief A pointer to the reference class to start & stop the measuring.
      */
     HeightMeasurementService *service;
@@ -239,7 +232,7 @@ public:
      * @brief Inteprets the given signal and invoke the corresponding function.
      * @param [signal] The signal for the next transition.
      */
-    void process(Signal signal);
+    void process(HeightMeasurement::Signal signal);
 };
 
 #endif /* HEIGHTCONTEXT_H_ */

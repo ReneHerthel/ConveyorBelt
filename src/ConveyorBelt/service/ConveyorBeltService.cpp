@@ -29,15 +29,14 @@ ConveyorBeltService::ConveyorBeltService()
 	}
 }
 
-ConveyorBeltService::~ConveyorBeltService() {
-	// Nothing todo so far.
+ConveyorBeltService::~ConveyorBeltService()
+{
 	delete hal_;
 }
 
-void ConveyorBeltService::changeState(const ConveyorBeltState state) {
-
-	// Initialize a new mask with zero.
-	int mask = 0;
+void ConveyorBeltService::changeState(const ConveyorBeltState state)
+{
+	uint8_t mask = 0;
 
 	/* Switch between the different states of the conveyor belt.
 	 * Then set the mask with the corresponding pin information.
@@ -65,7 +64,6 @@ void ConveyorBeltService::changeState(const ConveyorBeltState state) {
 			break;
 	}
 
-	// Set the bit mask in the hal.
 	hal_->setMask(mask);
 }
 
