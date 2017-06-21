@@ -37,21 +37,21 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 	}
 	if(currSpeed_ != speed){
 		switch(speed){
-			case FAST:
+			case DistanceSpeed::FAST:
 				remainingTime = timer_.killAlarm();
 				if(remainingTime > 0){
 					timer_.setAlarm((uint32_t)((double)remainingTime*slowToFastFactor_), lastValue_);
 				}
 				currSpeed_ = speed;
 				break;
-			case SLOW:
+			case DistanceSpeed::SLOW:
 				remainingTime = timer_.killAlarm();
 				if(remainingTime > 0){
 					timer_.setAlarm((uint32_t)((double)remainingTime*fastToSlowFactor_), lastValue_);
 				}
 				currSpeed_ = speed;
 				break;
-			case STOP:
+			case DistanceSpeed::STOP:
 				timer_.stopAlarm();
 				stopped_ = true;
 				break;
