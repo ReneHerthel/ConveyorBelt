@@ -22,6 +22,8 @@
 #include "Serial.h"
 #include "SortingSwichtControl.h"
 #include "PuckManager.h"
+#include "DistanceObservable.h"
+#include "DistanceEnum.h"
 
 class ActorHandler
 {
