@@ -18,7 +18,7 @@
 #include "SerialProtocoll.h"
 
 #define MACHINE 1
-#define FIFO_SORT 0
+#define FIFO_SORT 1
 
 using namespace PuckSignal;
 

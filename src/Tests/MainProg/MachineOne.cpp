@@ -131,7 +131,25 @@ TEST_IMPL(MachineOne, programm_m1){
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5:
-				std::cout << "ISR Signal \n";
+				std::cout << "ISR Signal: ";
+				switch(event.value){
+					case interrupts::INLET_IN : std::cout << " INLET_IN\n"; break;
+					case interrupts::INLET_OUT : std::cout << " INLET_OUT\n"; break;
+					case interrupts::HEIGHTMEASUREMENT_IN : std::cout << " HEIGHTMEASUREMENT_IN\n"; break;
+					case interrupts::HEIGHTMEASUREMENT_OUT : std::cout << " HEIGHTMEASUREMENT_OUT\n"; break;
+					case interrupts::SWITCH_IN : std::cout << " SWITCH_IN\n"; break;
+					case interrupts::SWITCH_OUT : std::cout << " SWITCH_OUT\n"; break;
+					case interrupts::METAL_DETECT : std::cout << " METAL_DETECT\n"; break;
+					case interrupts::SWITCH_OPEN : std::cout << " SWITCH_OPEN\n"; break;
+					case interrupts::SLIDE_IN : std::cout << " SLIDE_IN\n"; break;
+					case interrupts::SLIDE_OUT : std::cout << " SLIDE_OUT\n"; break;
+					case interrupts::OUTLET_IN : std::cout << " OUTLET_IN\n"; break;
+					case interrupts::OUTLET_OUT : std::cout << " OUTLET_OUT\n"; break;
+					case interrupts::BUTTON_START : std::cout << " BUTTON_START\n"; break;
+					case interrupts::BUTTON_STOP : std::cout << " BUTTON_STOP\n"; break;
+					case interrupts::BUTTON_RESET : std::cout << " BUTTON_RESET\n"; break;
+					case interrupts::BUTTON_ESTOP : std::cout << " BUTTON_ESTOP \n"; break;
+				}
 				std::cout.flush();
 				if(event.value == interrupts::BUTTON_RESET){
 					delete puckManager;
