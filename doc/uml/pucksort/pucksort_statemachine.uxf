@@ -111,29 +111,28 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>147</x>
+      <x>196</x>
       <y>574</y>
-      <w>231</w>
+      <w>182</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>( BITCODE1 || BITCODE5 ||
-FLIPPED || INVALID ||
-HOLEWITHOUTMETAL || HOLEWITHMETAL )
-[!rampe1IsEmpty &amp;&amp; isOnMachine1]
-/return(false)
+FLIPPED || INVALID )
+[rampe1IsEmpty &amp;&amp; isOnMachine1]
+/return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>310.0;70.0;310.0;20.0;10.0;20.0;10.0;90.0;290.0;90.0</additional_attributes>
+    <additional_attributes>240.0;70.0;240.0;20.0;10.0;20.0;10.0;90.0;220.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>399</x>
       <y>588</y>
-      <w>217</w>
+      <w>315</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>( BITCODE2 || BITCODE4 ||
-FLIPPED )
+FLIPPED || HOLEWITHOUTMETAL || HOLEWITHMETAL )
 [!rampe2IsEmpty &amp;&amp; isOnMachine1]
 /return(true)
 lt=-&gt;</panel_attributes>
@@ -156,7 +155,7 @@ symbol=substate</panel_attributes>
     <coordinates>
       <x>133</x>
       <y>0</y>
-      <w>504</w>
+      <w>329</w>
       <h>483</h>
     </coordinates>
     <panel_attributes>PuckSort</panel_attributes>
@@ -165,79 +164,18 @@ symbol=substate</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>371</x>
-      <y>35</y>
-      <w>217</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>HOLEWITHMETAL
-[!rampe2IsEmpty &amp;&amp; isOnMachine1]
-/return(false)
-lt=-&gt;
-</panel_attributes>
-    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>371</x>
-      <y>161</y>
-      <w>217</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>HOLEWITHMETAL
-[!rampe2IsEmpty &amp;&amp; isOnMachine1]
-/return(false)
-lt=-&gt;
-</panel_attributes>
-    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>371</x>
-      <y>266</y>
-      <w>217</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>HOLEWITHOUTMETAL
-[!rampe2IsEmpty &amp;&amp; isOnMachine1]
-/return(false)
-lt=-&gt;
-</panel_attributes>
-    <additional_attributes>40.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>133</x>
+      <x>112</x>
       <y>644</y>
-      <w>238</w>
+      <w>259</w>
       <h>91</h>
     </coordinates>
-    <panel_attributes>( BITCODE1 || BITCODE5 || INVALID
-HOLEWITHOUTMETAL || HOLEWITHMETAL )
-[!rampe2IsEmpty &amp;&amp;
-isOnMachine2]
-/return(false)
-lt=-&gt;</panel_attributes>
-    <additional_attributes>310.0;10.0;10.0;10.0;10.0;110.0;320.0;110.0;320.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>378</x>
-      <y>644</y>
-      <w>112</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>( BITCODE2 ||
-BITCODE4 ||
-FLIPPED )
+    <panel_attributes>( BITCODE1 || BITCODE2 || BITCODE4 || 
+BITCODE5 || FLIPPED || HOLEWITHOUTMETAL ||
+HOLEWITHMETAL || INVALID )
 [rampe2IsEmpty &amp;&amp;
 isOnMachine2]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;70.0;140.0;70.0;140.0;10.0;80.0;10.0</additional_attributes>
+    <additional_attributes>340.0;10.0;10.0;10.0;10.0;110.0;350.0;110.0;350.0;30.0</additional_attributes>
   </element>
 </diagram>
