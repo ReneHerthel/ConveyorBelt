@@ -10,6 +10,22 @@
 #include "logger.h"
 #include "logscope.h"
 
+serialized PuckManager::serialize() {
+    serialized ser;
+    ser.size = 0;
+    ser.obj = nullptr;
+
+    return ser;
+}
+
+bool PuckManager::deserialize(void *ser) {
+    PuckSignal::PuckType type = *((PuckSignal::PuckType*)ser);
+    PuckContext *puck = new PuckContext(chid, type);
+    addPuck(puck);
+
+	return true;
+}
+
 PuckManager::PuckManager(int chid)
 	: puckList()
 	, nextPuckID(0)
@@ -51,12 +67,12 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		addPuck(new PuckContext(chid));
 
 		std::list<PuckContext*>::iterator it = puckList.begin();
-		do {
+		while(it != puckList.end()) {
 			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
 				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
 			}
 			it++;
-		} while(it != puckList.end());
+		}
 
 		return prioReturnVal;
 	}
@@ -64,17 +80,24 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	// signal can be passed for speed prio -> every puck should return deny
 #endif
 
+	if(puckList.empty()) {
+		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+		prioReturnVal.errorFlag = true;
+		prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+		return prioReturnVal;
+	}
+
 	// Pass the timer signal to the given puckID
 	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
 		std::list<PuckContext*>::iterator it = puckList.begin();
-		do {
+		while(it != puckList.end()) {
 			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
 				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
 			}
 
 			// check for puckID
 			uint16_t currentPuckID = (*it)->getPuckID();
-			if(currentPuckID == signal.timerSignal.puckID) {
+			if(currentPuckID == signal.timerSignal.TimerInfo.puckID) {
 				// pass the timer signal
 				PuckSignal::Return returnVal = (*it)->process(signal);
 
@@ -91,14 +114,28 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			}
 
 			it++;
-		} while (it != puckList.end());
+		}
+
+		return prioReturnVal;
+	}
+
+	if(signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL && signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER) {
+		sort.process(signal.serialSignal);
+
+		std::list<PuckContext*>::iterator it = puckList.begin();
+		while(it != puckList.end()) {
+			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
+				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
+			}
+			it++;
+		}
 
 		return prioReturnVal;
 	}
 
 	// check the signal for every puck in the list
 	std::list<PuckContext*>::iterator it = puckList.begin();
-	do {
+	while(it != puckList.end()) {
 		PuckSignal::Return returnVal = (*it)->process(signal);
 
 		if(returnVal.puckSpeed > prioReturnVal.speedSignal) { // Check for speed prio
@@ -120,19 +157,33 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_PUCK;
 				break;
+			case PuckSignal::PuckReturn::RECEIVED:
+				acceptCounter++;
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::RECEIVED_PUCK;
+				break;
 			case PuckSignal::PuckReturn::EVALUATE:
 				acceptCounter++;
-				// todo: sort
-				prioReturnVal.actorFlag = true;
-				prioReturnVal.actorSignal = ActorSignal::OPEN_SWITCH;
+				if(!sort.process((*it)->getType())) {
+					prioReturnVal.actorFlag = true;
+					prioReturnVal.actorSignal = ActorSignal::OPEN_SWITCH;
+				}
 				break;
-			case PuckSignal::PuckReturn::HEIGHT:
+			case PuckSignal::PuckReturn::START_HEIGHT:
 				acceptCounter++;
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::START_MEASUREMENT;
 				break;
+			case PuckSignal::PuckReturn::STOP_HEIGHT:
+				acceptCounter++;
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::STOP_MEASUREMENT;
+				break;
 			case PuckSignal::PuckReturn::SLIDE_FULL:
 				acceptCounter++;
+
+				sort.process(returnVal.puckReturn);
+
 				prioReturnVal.slideFullFlag = true;
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
@@ -157,7 +208,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				returnVal.puckReturn != PuckSignal::PuckReturn::SLIDE_FULL) {
 			++it;
 		}
-	} while ( it != puckList.end());
+	}
 
 	if(!prioReturnVal.errorFlag) {
 		if(acceptCounter > 1 || acceptCounter < 0) {
@@ -180,6 +231,10 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 
 		// warning can be ignored
+	}
+
+	if(puckList.empty()) {
+		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
 	}
 
 	// everything OK
