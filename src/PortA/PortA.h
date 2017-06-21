@@ -78,7 +78,7 @@ private:
     /*
      * @brief Hidden destructor.
      */
-    ~PortA(){};
+    ~PortA();
 
     /*
      * @brief The mutex, where the singleton locks.
