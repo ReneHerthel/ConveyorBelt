@@ -69,10 +69,12 @@ void Serial::operator()() {
             case SER_OUT:
                 ser =  proto.wrapInFrame(SER_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
+                delete (char*)ser.obj;
                 break;
             case TRANSM_OUT:
                 ser =  proto.wrapInFrame(TRANSM_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
+                delete (char*)ser.obj;
                 break;
             default:
                 LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
