@@ -43,6 +43,7 @@ TEST_IMPL(CalibrationTest, Calibrate){
 	std::cout.flush();
 
 	cal.calibrate(chid);
+	cal.saveToDisk("/Calibration.dat");
 	cal.print();
 }
 

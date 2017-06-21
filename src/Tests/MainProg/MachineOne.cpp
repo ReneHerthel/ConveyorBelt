@@ -28,6 +28,12 @@
 
 #include "LightSystemEnum.h"
 
+#include "HeightMeasurementController.h"
+#include "HeightService.h"
+
+#include "ActorHandler.h"
+
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -62,8 +68,8 @@ TEST_IMPL(MachineOne, programm_m1){
 	cout.flush();
 	calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
-		cout.flush();
-	calibration.calibrate();
+	cout.flush();
+	calibration.loadFromDisk("/Calibration.dat");
 
 	//INIT LIGHTSYSTEM
 	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
@@ -79,11 +85,10 @@ TEST_IMPL(MachineOne, programm_m1){
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
 	int heightMChid = heightMChannelCreator.newChannel();
-	PulseMessageSenderService heightMChannel(heightMChid);
-
 	HeightMeasurementController::CalibrationData calData = calibration.getHmCalibration();
+	HeightMeasurementController hmController(heightMChid, mainChid, &calData);
+	HeightService heightService(heightMChid);
 
-	HeightMeasurementController hmservice(heightMChid, mainChid, &calData);
 
 	//INIT PUCK MNG
 	PuckManager puckMng(mainChid);
@@ -101,6 +106,8 @@ TEST_IMPL(MachineOne, programm_m1){
 			case 5: std::cout << "\n\n ISR \n";break; //ISR
 		}
 		cout.flush();
+
+
 
 	}
 
