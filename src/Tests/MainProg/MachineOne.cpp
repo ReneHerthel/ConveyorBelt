@@ -73,6 +73,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	PulseMessageSenderService pmsSer1(pmsSer1Chid);
 
 	//Init Sender & Receiver
+	char ser1_path[] = "/dev/ser1";
 	SerialSender senderSer1(ser1_path);
 	SerialReceiver receiverSer1(ser1_path);
 
@@ -121,7 +122,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	SortingSwichtControl ssCntrl(mainChid);
 
 	//Init actor handler
-	ActorHandler actorHandler(cbs, heightService, ssCntrl);
+	ActorHandler actorHandler(cbs, heightService, ssCntrl, serialService);
 
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);

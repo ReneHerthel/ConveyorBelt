@@ -29,27 +29,27 @@ void SignalDistributer::process(rcv::msg_t msg){
 	LOG_SCOPE;
 
 	switch(msg.code){
-		case ISR :
+		case CodeDefinition::ISR :
 			interrupt((interrupts::interruptSignals)msg.value);
 			break;
-		case SER_IN :
+		case CodeDefinition::SER_IN :
 			serial((Serial_n::ser_proto_msg)msg.value);
 			break;
-		case TRANSM_IN :
+		case CodeDefinition::TRANSM_IN :
 			PuckManager::ManagerReturn mng_r;
 			mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
 			actorHandler_->demultiplex(mng_r);
 			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
 			break;
-		case PUCK_TIMER :
+		case CodeDefinition::PUCK_TIMER :
 			timer.value = msg.value;
 			timerForPuck(timer);
 			break;
-		case HEIGHT_MEASUREMENT :
+		case CodeDefinition::HEIGHT_MEASUREMENT :
 			height_.value = msg.value;
 			height(height_);
 			break;
-		case SORTING_SWITCH:
+		case CodeDefinition::SORTING_SWITCH:
 			ssCntrl_->close();
 			break;
 	}

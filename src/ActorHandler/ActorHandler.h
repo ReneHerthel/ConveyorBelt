@@ -35,7 +35,8 @@ public:
     ActorHandler(
                   ConveyorBeltService &conveyorBeltService,
                   HeightService &heightService,
-                  SortingSwichtControl &sortingSwichtControl
+                  SortingSwichtControl &sortingSwichtControl,
+                  SerialService &serialService
                 );
 
     /*

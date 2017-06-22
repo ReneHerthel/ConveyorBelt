@@ -24,7 +24,7 @@ PuckManager::~PuckManager() {
 	}
 }
 
-ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
+PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
 	ManagerReturn ret;
 	ret.actorFlag = true;
 	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;

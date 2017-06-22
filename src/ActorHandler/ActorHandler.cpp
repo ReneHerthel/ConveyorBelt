@@ -87,7 +87,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::RECEIVED_SER);
             	break;
             case PuckManager::ACCEPTED_PUCK:
-            	m_serialService.sendMsg(Serial_n::ser_proto_msg::RECEIVED_SER);
+            	m_serialService.sendMsg(Serial_n::ser_proto_msg::ACCEPT_SER);
             	break;
             default:
                 // Nothing todo so far.
