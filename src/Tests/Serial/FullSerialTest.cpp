@@ -11,6 +11,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <thread>
+#include "PuckSignal.h"
+#include "HeightSignal.h"
 
 using namespace Serial_n;
 
@@ -154,7 +156,14 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 		}
 
 	//------------TEST SENDING AN OBJ-----------//
-	SerialTestStub testObj(10,20,0,40);
+	//SerialTestStub testObj(10,20,0,40);
+	HeightMeasurement::signal_t hsig;
+	hsig.value = 5;
+	PuckSignal::PuckType testObj;
+	testObj.data.height1 = 1000;
+	testObj.data.height1 = 2000;
+	testObj.data.heightType = hsig;
+	testObj.data.metal = 1;
 
 	//pmsSer1.sendPulseMessage(TRANSM_OUT, (int)&testObj);
 	serialService.sendObj(&testObj);
@@ -190,10 +199,8 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	ser1_thread.join();
 	ser2_thread.join();
 	if(msg.code == TRANSM_IN){
-		SerialTestStub *recObj = ((SerialTestStub*)msg.value);
+		PuckSignal::PuckType *recObj = ((PuckSignal::PuckType*)msg.value);
 		if(!(testObj == *recObj)){
-			testObj.print();
-			recObj->print();
 			std::cout << "TestFailed\n";
 			return TEST_FAILED;
 		} else {

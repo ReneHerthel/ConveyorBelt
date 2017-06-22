@@ -22,7 +22,7 @@
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
 #define WIDE_DELTA 1.25
-class PuckContext : public ISerializable {
+class PuckContext {
 private:
 
 	DistanceTracker shortDistance;
@@ -31,10 +31,6 @@ private:
 
 
 public:
-
-	serialized serialize() override;
-	bool deserialize(void* ser) override;
-
 	PuckContext(int chid);
 	PuckContext(int chid, PuckSignal::PuckType puckType);
 
@@ -70,7 +66,7 @@ public:
 		virtual void heightmeasurementOut();
 
 		virtual void switchIn();
-		virtual void switchOpen();
+		virtual void switchOut();
 
 		virtual void slideIn();
 		virtual void slideOut();
@@ -166,7 +162,7 @@ public:
 	};
 
 	struct TypeKnown : public PuckState {
-		void switchOpen();
+		void switchOut();
 		void slideIn();
 	};
 	/*******************************************/
