@@ -28,7 +28,7 @@ BEFORE_TC(TestPuckManager) {
 	Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
 	cout.flush();
-	calibration.calibrateHeighMeasurement();
+	//calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
 		cout.flush();
 	calibration.calibrate();

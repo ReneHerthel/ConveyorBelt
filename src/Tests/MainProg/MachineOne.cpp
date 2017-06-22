@@ -36,6 +36,8 @@
 #include "SignalDistributer.h"
 #include "SortingSwichtControl.h"
 
+#include <thread>
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -62,6 +64,35 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread isr_th(ref(isr));
 
 
+	//INIT Serial
+	//Init PMR
+	rcv::PulseMessageReceiverService pmrSer1;
+	int pmrSer1Chid = pmrSer1.newChannel();
+
+	//Init PMS
+	rcv::PulseMessageReceiverService pmsChannelCreatorSer1;
+	int pmsSer1Chid = pmsChannelCreatorSer1.newChannel();
+	PulseMessageSenderService pmsSer1(pmsSer1Chid);
+
+	//Init Sender & Receiver
+	char ser1_path[] = "/dev/ser1";
+	SerialSender senderSer1(ser1_path);
+	SerialReceiver receiverSer1(ser1_path);
+
+	//Init Protocol
+	SerialProtocoll protoSer1(SENDER);
+
+	//Init Serial
+	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, mainChid);
+
+
+	//Init SerialService
+	SerialService serialService(pmsSer1Chid);
+
+	std::thread ser1_thread(ref(ser1));
+
+
+
 	//INIT CBS
 	ConveyorBeltService cbs;
 
@@ -69,7 +100,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	Calibration& calibration = Calibration::getInstance();
 	std::cout << "start Hightcal" << "\n";
 	cout.flush();
-	calibration.calibrateHeighMeasurement();
+	//calibration.calibrateHeighMeasurement();
 	std::cout << "start distancecal" << "\n";
 	cout.flush();
 	calibration.loadFromDisk("/Calibration.dat");
@@ -96,7 +127,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	SortingSwichtControl ssCntrl(mainChid);
 
 	//Init actor handler
-	ActorHandler actorHandler(cbs, heightService, ssCntrl);
+	ActorHandler actorHandler(cbs, heightService, ssCntrl, serialService);
 
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
@@ -118,6 +149,12 @@ TEST_IMPL(MachineOne, programm_m1){
 		}
 		cout.flush();
 
+
+		if(event.value == interrupts::BUTTON_RESET){
+			cbs.changeState(ConveyorBeltState::STOP);
+			std::cout << "\n\n RESET \n";
+			puckManager = PuckManager(mainChid);
+		}
 
 		signalDistributer.process(event);
 	}

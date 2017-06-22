@@ -30,11 +30,16 @@ void Calibration::calibrate(int mainChid){
 	ConveyorBeltService cbs;
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
+    HeightMeasurementHal hal;
+    uint16_t data;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 			return;
 	}
+
+	hal.read(data);
+	hmCal.refHeight = data;
 
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
@@ -48,6 +53,10 @@ void Calibration::calibrate(int mainChid){
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
+
+	hal.read(data);
+	hmCal.surfaceHeight = data;
+
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
 
@@ -98,6 +107,8 @@ void Calibration::calibrate(int mainChid){
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
+
+	calibrateHeighMeasurement();
 }
 
 
@@ -108,7 +119,7 @@ bool  Calibration::saveToDisk(std::string path){
 			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
 			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
 	}
-
+	file << hmCal.delta << " " << hmCal.highHeight << " " << hmCal.holeHeight << " " << hmCal.invalidHeight << " " << hmCal.lowHeight << " " << hmCal.refHeight << " " << hmCal.surfaceHeight;
 }
 
 bool  Calibration::loadFromDisk(std::string path){
@@ -134,7 +145,7 @@ bool  Calibration::loadFromDisk(std::string path){
 		slowToFastFactor    = slowToFastFactor_in;
 		fastToSlowFactor 	= fastToSlowFactor_in;
 	}
-
+	file >> hmCal.delta >> hmCal.highHeight >> hmCal.holeHeight >> hmCal.invalidHeight >> hmCal.lowHeight >> hmCal.refHeight >> hmCal.surfaceHeight;
 }
 
 
@@ -157,7 +168,6 @@ void Calibration::calibrate(void){
 	while(!pollLB(LB_ENTRY));
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-
 	while(!pollLB(LB_HEIGHT));
 	auto lb_in = system_clock::now();
 	while(pollLB(LB_HEIGHT));
@@ -207,6 +217,13 @@ void Calibration::calibrate(void){
 	}
 	sss.sortingSwitchClose(); //Safety
 
+
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
+
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
@@ -214,26 +231,15 @@ void Calibration::calibrate(void){
 
 void  Calibration::calibrateHeighMeasurement(void){
 
-	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
-			return;
-	}
+	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight; /*!< Height of Puck */
+	puckHeight /= SURFACE;
 
-	HeightMeasurementHal hhal;
-	uint16_t data = 0;
+	hmCal.holeHeight = hmCal.refHeight - ((uint16_t)(puckHeight * HOLE));
+	hmCal.highHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_1));
+	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
+	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
 
-	hhal.read(data);
-
-	hmCal.refHeight = data; //Belt height
-
-
-	hmCal.surfaceHeight = CALC_ABS_HEIGHT(data, SURFACE);
-	hmCal.holeHeight 	= CALC_ABS_HEIGHT(data, HOLE);
-	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
-	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
-	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
 	hmCal.delta = DELTA;
-
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
@@ -290,6 +296,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
 		case OUT_TO_IN:			return inlet[slowOrFast].count();
 		case IN_SWITCH: 		return inSwitch[slowOrFast].count();
+		case SLIDE:				return slide[slowOrFast].count();
 	}
 
 }

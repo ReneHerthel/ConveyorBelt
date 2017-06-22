@@ -19,6 +19,25 @@
 
 //include the error handler
 
+#define DEBUG_MNG_RE(mr) \
+				switch(mr.errorSignal){ 									\
+						case PuckManager::ErrorSignal::PUCK_LOST:			\
+							std::cout << "PUCK_LOST - Late Timer \n";		\
+							break;											\
+						case PuckManager::ErrorSignal::PUCK_MOVED:			\
+							std::cout << "PUCK_MOVED - Puck triggered light barrier before early timer \n"; \
+							break;																			\
+						case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:									\
+							std::cout << "UNEXPECTED_SIGNAL - Signal could not be processed \n";			\
+							break;																			\
+						case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:										\
+							std::cout << "MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered \n"; \
+							break;											\
+						case PuckManager::ErrorSignal::MULTIPLE_WARNING:	\
+							std::cout << "MULTIPLE_WARNING \n";				\
+							break;											\
+				}
+
 class SignalDistributer {
 public:
 	SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler); //TODO add error handler
@@ -29,7 +48,7 @@ public:
 private:
 	void interrupt(interrupts::interruptSignals signal);
 	void height(HeightMeasurement::signal_t signal);
-	void serial(Serial_n::ser_proto_msg);
+	void serial(Serial_n::ser_proto_msg signal);
 	void timerForPuck(PuckSignal::TimerSignal signal);
 
 	PuckManager *puckManager_;
