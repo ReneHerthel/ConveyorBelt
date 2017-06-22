@@ -25,22 +25,24 @@
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
 
+using namespace PuckSignal;
+
 /*! \brief Define signal for binary 1 encoded puck */
-#define TESTSIGNAL_BITCODE1 		{ signal_t { {SignalID::PATTERN_ID, 1, 0, 0} }, 0, 0, 0 } 
+#define TESTSIGNAL_BITCODE1 		{ { PuckType::Data { signal_t { {SignalID::PATTERN_ID, 1, 0, 0} }, 0, 0, 0 } } }
 /*! \brief Define signal for binary 2 encoded puck */
-#define TESTSIGNAL_BITCODE2 		{ signal_t { {SignalID::PATTERN_ID, 0, 1, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE2 		{ { PuckType::Data { signal_t { {SignalID::PATTERN_ID, 0, 1, 0} }, 0, 0, 0 } } }
 /*! \brief Define signal for binary 4 encoded puck */
-#define TESTSIGNAL_BITCODE4 		{ signal_t { {SignalID::PATTERN_ID, 0, 0, 1} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE4 		{ { PuckType::Data { signal_t { {SignalID::PATTERN_ID, 0, 0, 1} }, 0, 0, 0 } } }
 /*! \brief Define signal for binary 5 encoded puck */
-#define TESTSIGNAL_BITCODE5 		{ signal_t { {SignalID::PATTERN_ID, 1, 0, 1} }, 0, 0, 0 }
+#define TESTSIGNAL_BITCODE5 		{ { PuckType::Data { signal_t { {SignalID::PATTERN_ID, 1, 0, 1} }, 0, 0, 0 } } }
 /*! \brief Define signal for flipped puck */
-#define TESTSIGNAL_FLIPPED  		{ signal_t { {SignalID::FLIPPED_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_FLIPPED  		{ { PuckType::Data { signal_t { {SignalID::FLIPPED_ID, 0, 0, 0} }, 0, 0, 0 } } }
 /*! \brief Define signal for puck with metal. Notice the set metal bit. */
-#define TESTSIGNAL_HOLEWITHMETAL    { signal_t { { SignalID::NORMAL_ID, 1, 0, 0} }, 1, 0, 0 }
+#define TESTSIGNAL_HOLEWITHMETAL    { { PuckType::Data { signal_t { { SignalID::NORMAL_ID, 1, 0, 0} }, 1, 0, 0 } } }
 /*! \brief Define signal for invalid puck */
-#define TESTSIGNAL_INVALID			{ signal_t { {SignalID::INVALID_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_INVALID			{ { PuckType::Data { signal_t { {SignalID::INVALID_ID, 0, 0, 0} }, 0, 0, 0 } } }
 /*! \brief Define signal for normal puck without metal */
-#define TESTSIGNAL_HOLEWITHOUTMETAL { signal_t { { SignalID::NORMAL_ID, 0, 0, 0} }, 0, 0, 0 }
+#define TESTSIGNAL_HOLEWITHOUTMETAL { { PuckType::Data { signal_t { { SignalID::NORMAL_ID, 0, 0, 0} }, 0, 0, 0 } } }
 /*! \brief Define signal for slide full message from local puck */
 #define TESTSIGNAL_SLIDEFULL_OWN    PuckSignal::SLIDE_FULL
 /*! \brief Define signal for slide full message from remote puck */
