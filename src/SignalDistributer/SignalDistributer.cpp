@@ -36,7 +36,9 @@ void SignalDistributer::process(rcv::msg_t msg){
 			serial((Serial_n::ser_proto_msg)msg.value);
 			break;
 		case TRANSM_IN :
-			puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
+			PuckManager::ManagerReturn mng_r;
+			mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
+			actorHandler_->demultiplex(mng_r);
 			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
 			break;
 		case PUCK_TIMER :
