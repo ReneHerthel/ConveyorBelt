@@ -24,6 +24,7 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 #include "HeightService.h"
+#include "SerialService.h"
 
 class ActorHandler
 {
@@ -64,6 +65,8 @@ private:
      * @brief A reference to the SortingSwitchtControll component.
      */
     SortingSwichtControl &m_sortingSwitchControl;
+
+    SerialService &m_serialService;
 };
 
 #endif /* SRC_ACTORHANDLER_ACTORHANDLER_H_ */
