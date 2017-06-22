@@ -90,8 +90,8 @@ TEST_IMPL(TestPuckManager, test1) {
 			return TEST_FAILED;
 		}
 
-		if(		(returnVal.puck != nullptr && returnArrayLongestPath[i].puck == nullptr) ||
-				(returnVal.puck == nullptr && returnArrayLongestPath[i].puck != nullptr)) {
+		if(		(returnVal.puckType != nullptr && returnArrayLongestPath[i].puckType == nullptr) ||
+				(returnVal.puckType == nullptr && returnArrayLongestPath[i].puckType != nullptr)) {
 			std::cout << "[TEST 1] Puck pointer differs!" << std::endl;
 			return TEST_FAILED;
 		}
@@ -124,8 +124,8 @@ TEST_IMPL(TestPuckManager, test2) {
 			return TEST_FAILED;
 		}
 
-		if(		(returnVal.puck != nullptr && returnArrayMultiplePucks[i].puck == nullptr) ||
-				(returnVal.puck == nullptr && returnArrayMultiplePucks[i].puck != nullptr)) {
+		if(		(returnVal.puckType != nullptr && returnArrayMultiplePucks[i].puckType == nullptr) ||
+				(returnVal.puckType == nullptr && returnArrayMultiplePucks[i].puckType != nullptr)) {
 			std::cout << "[TEST 2] Puck pointer differs!" << std::endl;
 			return TEST_FAILED;
 		}
@@ -162,8 +162,8 @@ TEST_IMPL(TestPuckManager, test3) {
 				return TEST_FAILED;
 			}
 
-			if(		(returnVal.puck != nullptr && returnArrayLongestPath[j].puck == nullptr) ||
-					(returnVal.puck == nullptr && returnArrayLongestPath[j].puck != nullptr)) {
+			if(		(returnVal.puckType != nullptr && returnArrayLongestPath[j].puckType == nullptr) ||
+					(returnVal.puckType == nullptr && returnArrayLongestPath[j].puckType != nullptr)) {
 				std::cout << "[TEST 3] Puck pointer differs!" << std::endl;
 				return TEST_FAILED;
 			}
@@ -205,8 +205,8 @@ TEST_IMPL(TestPuckManager, test4) {
 				return TEST_FAILED;
 			}
 
-			if(		(returnVal.puck != nullptr && returnArrayWarningToError[i].puck == nullptr) ||
-					(returnVal.puck == nullptr && returnArrayWarningToError[i].puck != nullptr)) {
+			if(		(returnVal.puckType != nullptr && returnArrayWarningToError[i].puckType == nullptr) ||
+					(returnVal.puckType == nullptr && returnArrayWarningToError[i].puckType != nullptr)) {
 				std::cout << "[TEST 4] Puck pointer differs!" << std::endl;
 				return TEST_FAILED;
 			}

@@ -14,7 +14,7 @@
 
 #include <list>
 
-class PuckManager : public ISerializable {
+class PuckManager {
 public:
 	enum ActorSignal {
 		START_MEASUREMENT,
@@ -39,16 +39,16 @@ public:
 		bool errorFlag;
 		ErrorSignal errorSignal;
 		bool slideFullFlag;
-		PuckContext *puck;					// Null except on send Signal
+		PuckSignal::PuckType *puckType;					// Null except on send Signal
 	};
 
-	serialized serialize() override;
-	bool deserialize(void* ser) override;
 
 	PuckManager(int chid);
 	~PuckManager();
 
 	ManagerReturn process(PuckSignal::Signal signal);
+
+	void newPuck(PuckSignal::PuckType type);
 
 private:
 	void addPuck(PuckContext *puck);
