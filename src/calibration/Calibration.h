@@ -22,7 +22,7 @@
 #define HOLE		 8.0
 #define LOGICAL_1	22.0
 #define LOGICAL_0	23.0
-#define INVALID		20.0
+#define INVALID		21.0
 
 #define DELTA		35
 

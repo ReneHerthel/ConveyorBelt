@@ -231,13 +231,13 @@ void Calibration::calibrate(void){
 
 void  Calibration::calibrateHeighMeasurement(void){
 
-	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight;
+	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight; /*!< Height of Puck */
 	puckHeight /= SURFACE;
 
-	hmCal.holeHeight = ((uint16_t)(puckHeight * HOLE)) + hmCal.surfaceHeight;
-	hmCal.highHeight = ((uint16_t)(puckHeight * LOGICAL_1)) + hmCal.surfaceHeight;
-	hmCal.lowHeight = ((uint16_t)(puckHeight * LOGICAL_0)) + hmCal.surfaceHeight;
-	hmCal.invalidHeight = ((uint16_t)(puckHeight * INVALID)) + hmCal.surfaceHeight;
+	hmCal.holeHeight = hmCal.refHeight - ((uint16_t)(puckHeight * HOLE));
+	hmCal.highHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_1));
+	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
+	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
 
 	hmCal.delta = DELTA;
 }
