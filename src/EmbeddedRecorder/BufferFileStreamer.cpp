@@ -56,6 +56,7 @@ void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
         auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start.timestamp).count();
         auto sec = std::chrono::duration_cast<std::chrono::seconds>(next.timestamp - start.timestamp).count();
         file  << "[" << (int)sec << "::" << (int)milsec << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
+        index++;
     }
 
     /*
