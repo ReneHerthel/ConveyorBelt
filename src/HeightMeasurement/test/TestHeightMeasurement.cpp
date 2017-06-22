@@ -97,7 +97,7 @@ void TestHeightMeasurement::startTest() {
     // THIS IS CALIBRATED BY HAND!
 
     Calibration& hmCal = Calibration::getInstance();
-    hmCal.calibrateHeighMeasurement();
+    //hmCal.calibrateHeighMeasurement();
 #if CALIBRATION
     cal = hmCal.getHmCalibration();
 #else
