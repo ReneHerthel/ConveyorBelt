@@ -78,11 +78,11 @@ int LightSystemController::task(){
              */
 			LOG_DEBUG << thread_id << ": Turn off lights" << endl;
 			boundary->lightOff(ALL_COLORS);
+		} else if ( ( frequency == ALWAYS_ON ) & boundary->checkIfPreviouslySetTo(color) ) {
+			/* Do nothing */
 		} else {
-			if ( !boundary->checkIfPreviouslySetTo(color) ) {
-				LOG_DEBUG << thread_id << ": Set color to " << color << endl;
-				boundary->lightOn(color);
-			}
+			LOG_DEBUG << thread_id << ": Set color to " << color << endl;
+			boundary->lightOn(color);
 		}
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
         /*

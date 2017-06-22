@@ -5,11 +5,14 @@
 #include "FullSerialTest.h"
 #include "SerialTestStub.h"
 #include "SerialProtocoll.h"
+#include "SerialService.h"
 #include "Logger.h"
 #include "Logscope.h"
 #include <iostream>
 #include <stdlib.h>
 #include <thread>
+#include "PuckSignal.h"
+#include "HeightSignal.h"
 
 using namespace Serial_n;
 
@@ -85,6 +88,8 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, pmrSer1Chid);
 
 
+	//Init SerialService
+	SerialService serialService(pmsSer1Chid);
 
 
 
@@ -113,7 +118,7 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	std::thread ser2_thread(ref(ser2));
 
 
-	std::this_thread::sleep_for(std::chrono::seconds(10));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	//------------TEST SIMPLE SIGNALS------------//
 	uint32_t signal;
@@ -125,7 +130,8 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 			case 3: signal = RESUME_SER; break;
 			case 4: signal = RECEIVED_SER; break;
 		}
-		pmsSer1.sendPulseMessage(SER_OUT, signal);
+		//pmsSer1.sendPulseMessage(SER_OUT, signal);
+		serialService.sendMsg((Serial_n::ser_proto_msg)signal);
 	}
 
 
@@ -150,9 +156,17 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 		}
 
 	//------------TEST SENDING AN OBJ-----------//
-	SerialTestStub testObj(10,20,0,40);
+	//SerialTestStub testObj(10,20,0,40);
+	HeightMeasurement::signal_t hsig;
+	hsig.value = 5;
+	PuckSignal::PuckType testObj;
+	testObj.data.height1 = 1000;
+	testObj.data.height1 = 2000;
+	testObj.data.heightType = hsig;
+	testObj.data.metal = 1;
 
-	pmsSer1.sendPulseMessage(TRANSM_OUT, (int)&testObj);
+	//pmsSer1.sendPulseMessage(TRANSM_OUT, (int)&testObj);
+	serialService.sendObj(&testObj);
 	msg = pmrSer2.receivePulseMessage();
 
 	std::cout << "Rec Pulse of Obj \n";
@@ -185,10 +199,8 @@ TEST_IMPL(FullSerialTest, SimpleSerialMsg){
 	ser1_thread.join();
 	ser2_thread.join();
 	if(msg.code == TRANSM_IN){
-		SerialTestStub *recObj = ((SerialTestStub*)msg.value);
+		PuckSignal::PuckType *recObj = ((PuckSignal::PuckType*)msg.value);
 		if(!(testObj == *recObj)){
-			testObj.print();
-			recObj->print();
 			std::cout << "TestFailed\n";
 			return TEST_FAILED;
 		} else {

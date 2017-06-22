@@ -10,8 +10,8 @@
 #include "FullSerialTest.h"
 #include "TestPuckStateMachine.h"
 #include "Logger/Logger.h"
-#include "TestPuckManager.h"
-#include "TestPuckSort.h"
+//#include "TestPuckManager.h"
+//#include "TestPuckSort.h"
 #include "TimerTest.h"
 #include "DistanceTrackingTest.h"
 #include "CalibrationTest.h"
@@ -46,7 +46,7 @@ int main() {
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
 
     // HeightMeasurement tests
-    ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"));
+   // ts.REG_TESTCASE(new TestHeightMeasurementStatemachine(2, "Make transitions through the statemachine of every type of puck"))
 
     // LightSystem tests
     ts.REG_TESTCASE(new LightSystemTest(3, "LightSystem: Level: Operating"));
@@ -72,16 +72,16 @@ int main() {
      ts.REG_TESTCASE(new MachineOne(11, "MAIN PROGRAMM 1 ONE MACHINE1"));
 
 #if !machine
-    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 0"));
-    ts.REG_TESTCASE(new TestPuckManager(11, "[PuckManager] BasicTests on Machine 0"));
+   // ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 0"));
+   // ts.REG_TESTCASE(new TestPuckManager(13, "[PuckManager] BasicTests on Machine 0"));
 #else
-    ts.REG_TESTCASE(new TestPuckStateMachine(10, "[PuckStateMachine] BasicTests on Machine 1"));
+   // ts.REG_TESTCASE(new TestPuckStateMachine(12, "[PuckStateMachine] BasicTests on Machine 1"));
 #endif
 
-    ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
+   // ts.REG_TESTCASE(new TestPuckSort(12, "[PuckSort] Test state machine"));
 
     // PortA
-    ts.REG_TESTCASE(new TestPortA(13, "Test port a actors"));
+    ts.REG_TESTCASE(new TestPortA(15, "Test port a actors"));
 
     // EmbeddedRecorder
     ts.REG_TESTCASE(new TestEmbeddedRecorder(14, "Test play load and save"));

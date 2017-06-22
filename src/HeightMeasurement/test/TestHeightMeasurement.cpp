@@ -21,10 +21,11 @@
 #include "HeightMeasurementHal.h"
 #include "HeightContext.h"
 #include "ConveyorBeltService.h"
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "HWdefines.h"
 #include "HeightSignal.h"
 #include "Calibration.h"
+#include "HeightService.h"
 
 #include "Logger.h"
 #include "LogScope.h"
@@ -36,6 +37,7 @@
 #define TEST_HEIGHT_HAL             (0)
 #define TEST_HEIGHT_STATEMACHINE    (0)
 #define TEST_HEIGHT_SERVICE         (1)
+#define CALIBRATION					(1)
 #define SLEEP_TIME                  (1000)
 
 void TestHeightMeasurement::startTest() {
@@ -43,9 +45,11 @@ void TestHeightMeasurement::startTest() {
     LOG_SET_LEVEL(DEBUG);
 
 #if TEST_HEIGHT_HAL
+    ConveyorBeltService cbs;
+    cbs.changeState(ConveyorBeltState::STOP);
     LOG_DEBUG << "[TestHeightMeasurement] startTest() Testing Hal start\n";
     HeightMeasurementHal hal;
-    int16_t data = 0;
+    uint16_t data = 0;
     hal.read(data);
     LOG_DEBUG << "[TestHeightMeasurement] startTest() Hal data: " << (int)data << "\n";
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
@@ -87,27 +91,33 @@ void TestHeightMeasurement::startTest() {
 
     LOG_DEBUG << "[TestHeightMeasurement] startTest() send_chid: " << send_chid << " receive_chid: " << receive_chid << " coid: " << coid << "\n";
 
-    HeightMeasurementService::CalibrationData cal;
+    HeightMeasurementController::CalibrationData cal;
 
-    // THIS IS CALIBRATED BY HAND!
-    Calibration& hmCal = Calibration::getInstance();
-    hmCal.calibrateHeighMeasurement();
     ConveyorBeltService cbs;
-    cbs.changeState(RIGHTSLOW);
+    // THIS IS CALIBRATED BY HAND!
 
+    Calibration& hmCal = Calibration::getInstance();
+    //hmCal.calibrateHeighMeasurement();
+#if CALIBRATION
     cal = hmCal.getHmCalibration();
+#else
+    cal.refHeight = 4067;
+    cal.surfaceHeight = 2557;
+    cal.holeHeight = 3578;
+    cal.invalidHeight = 2805;
+    cal.lowHeight = 2689;
+    cal.highHeight = 2937;
+#endif
     cal.delta = 35;
-
-    HeightMeasurementService service(receive_chid, send_chid, &cal);
-
+    HeightMeasurementController service(receive_chid, send_chid, &cal);
+    HeightService msg(receive_chid);
+    cbs.changeState(RIGHTFAST);
     while(1) {
         while(!hmCal.pollLB(Calibration::LB_HEIGHT));
+        cbs.changeState(RIGHTSLOW);
 		// We need to send a start signal first, so the measuring will begin.
-		int err = MsgSendPulse_r(coid, sched_get_priority_min(0), 0, START);
+        msg.startMeasuring();
 
-		if (err < 0) {
-			  LOG_DEBUG << "[TestHeightMeasurement] startTest() Sending START signal failed with: " << err << "\n";
-		}
 
 		// Structure that describes a pulse.
 		struct _pulse pulse;
@@ -117,7 +127,7 @@ void TestHeightMeasurement::startTest() {
         LOG_DEBUG << "[TestHeightMeasurement] startTest() Blocked on MsgReceivePulse_r()\n";
         // Returns 0 on success and a negative value on error.
 
-        err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
+        int err = MsgReceivePulse_r(send_chid, &pulse, sizeof(_pulse), NULL);
 
         // Do error handling, if there occurs an error.
         if (err < 0) {
@@ -130,7 +140,11 @@ void TestHeightMeasurement::startTest() {
 
         std::cout<<"[TEST] COUT: "<< " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << ", Highest Height " << std::to_string(signal.highestHeight) <<std::endl;
 
+        std::cout.flush();
         LOG_DEBUG << "[TestHeightMeasurement] startTest() Received pulse message: SignalID - " << (int)signal.ID << ", Pattern - " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << ", Highest Height " <<(int)signal.highestHeight << "\n";
+        while(hmCal.pollLB(Calibration::LB_HEIGHT));
+        msg.stopMeasuring();
+        cbs.changeState(RIGHTFAST);
     }
     LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
 

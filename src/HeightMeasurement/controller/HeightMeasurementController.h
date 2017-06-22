@@ -16,8 +16,8 @@
  * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>
  */
 
-#ifndef HEIGHTMEASUREMENTSERVICE_H_
-#define HEIGHTMEASUREMENTSERVICE_H_
+#ifndef HEIGHTMEASUREMENTCONTROLLER_H_
+#define HEIGHTMEASUREMENTCONTROLLER_H_
 
 /*
  * @brief Access macros for the calibrationDataPtr.
@@ -30,9 +30,13 @@
 #define LOW_HEIGHT_VAL (calibrationDataPtr->lowHeight)
 #define HIGH_HEIGHT_VAL (calibrationDataPtr->highHeight)
 #define INVALID_HEIGHT_VAL (calibrationDataPtr->invalidHeight)
+
+#define WINDOW_SIZE 20
 /** @} */
 
 #include "HeightContext.h"
+
+#include "TimerService.h"
 
 #include <stdint.h>
 #include <sys/siginfo.h>
@@ -47,7 +51,7 @@ class HeightContext;
 
 using namespace HeightMeasurement;
 
-class HeightMeasurementService {
+class HeightMeasurementController {
 public:
     /*
      * @brief The calibration data, which is initialized at the begining once.
@@ -69,12 +73,12 @@ public:
      * @param[send_chid] The channel id for the sending channel.
      * @param[*calibrationDataPtr] A pointer to the calibrated data.
      */
-    HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
+    HeightMeasurementController(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
 
     /*
      * @brief The default virtual destructor.
      */
-    virtual ~HeightMeasurementService();
+    virtual ~HeightMeasurementController();
 
     /*
      * @brief Starts the measuring thread, by creating a new thread.
@@ -94,6 +98,7 @@ public:
     uint16_t getHighestHeight();
 
 private:
+    TimerService timer;
     /*
      * @brief the heighest measured height
      */
@@ -135,7 +140,7 @@ private:
      * @param[*state] A pointer to the current state of the measuring.
      * @param[data] The current measured data from the hal.
      */
-    void dataInRange(Signal *state, int16_t data);
+    void dataInRange(HeightMeasurement::Signal *state, uint16_t data);
 
     /*
      * @brief The superloop task of the statemachine-thread.

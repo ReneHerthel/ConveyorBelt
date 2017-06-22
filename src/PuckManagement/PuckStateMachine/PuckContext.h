@@ -15,19 +15,25 @@
 #include "SerialProtocoll.h"
 #include "DistanceTracker.h"
 #include "DistanceEnum.h"
+#include "ISerializable.h"
 
 #define machine (0) // 0 or 1
+#define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
-#define SHORT_DELTA 0.85
-#define WIDE_DELTA 1.15
+#define SHORT_DELTA 0.9
+#define WIDE_DELTA 1.25
 class PuckContext {
 private:
 
 	DistanceTracker shortDistance;
 	DistanceTracker wideDistance;
 
+
+
 public:
 	PuckContext(int chid);
+	PuckContext(int chid, PuckSignal::PuckType puckType);
+
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
 	// Getter for Puckmanager
@@ -60,7 +66,7 @@ public:
 		virtual void heightmeasurementOut();
 
 		virtual void switchIn();
-		virtual void switchOpen();
+		virtual void switchOut();
 
 		virtual void slideIn();
 		virtual void slideOut();
@@ -156,7 +162,7 @@ public:
 	};
 
 	struct TypeKnown : public PuckState {
-		void switchOpen();
+		void switchOut();
 		void slideIn();
 	};
 	/*******************************************/

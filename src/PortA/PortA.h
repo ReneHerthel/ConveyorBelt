@@ -17,6 +17,18 @@
 #ifndef SRC_PORTA_PORTA_H_
 #define SRC_PORTA_PORTA_H_
 
+/** TODO: Explain purpose */
+#define CTRL_REG_GROUP0     0x303
+/*
+ * PORT A : OUTPUT
+ * PORT B : INPUT
+ * PORT C Lo : OUTPUT
+ * PORT C Hi : INPUT
+ * Mode Select : 00
+ */
+/** TODO: Explain purpose */
+#define DEFAULT_PORTS_SETTINGS 0x8A
+
 #include <mutex>
 #include <stdint.h>
 
@@ -48,6 +60,26 @@ public:
     int bitRead(uint8_t bit);
 
 private:
+    /*
+     * @brief Hidden constructor, which set the default port settings.
+     */
+    PortA();
+
+    /*
+     * @brief Hidden copy constructor.
+     */
+    PortA(PortA const&);
+
+    /*
+     * @brief Hidden Assign operator.
+     */
+    PortA& operator=(PortA const&);
+
+    /*
+     * @brief Hidden destructor.
+     */
+    ~PortA();
+
     /*
      * @brief The mutex, where the singleton locks.
      */

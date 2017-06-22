@@ -20,8 +20,7 @@
 #define HEIGHTCONTEXT_H_
 
 #include "HeightSignal.h"
-#include "HeightMeasurementService.h"
-#include "HeightSignal.h"
+#include "HeightMeasurementController.h"
 
 #include <functional>
 #include <vector>
@@ -34,7 +33,7 @@
 #define MIN_BIT_SIZE 3
 /** @} */
 
-class HeightMeasurementService;
+class HeightMeasurementController;
 
 using namespace HeightMeasurement;
 
@@ -45,10 +44,8 @@ private:
      */
     struct State {
         virtual void invalid();
-        virtual void timeout();
         virtual void start();
-        virtual void wait();
-        virtual void resume();
+        virtual void stop();
         virtual void holeHeight();
         virtual void surfaceHeight();
         virtual void refHeight();
@@ -60,7 +57,7 @@ private:
         void send(int coid, signal_t signal);
         unsigned int index;
         int coid;  // The channel, where the statemachine will send to.
-        HeightMeasurementService *service;  // A pointer to the service class.
+        HeightMeasurementController *service;  // A pointer to the service class.
     } *statePtr;
 
     /*
@@ -218,7 +215,7 @@ private:
     /*
      * @brief A pointer to the reference class to start & stop the measuring.
      */
-    HeightMeasurementService *service;
+    HeightMeasurementController *service;
 
     /*
      * @brief The connection ID of the send channel ID.
@@ -229,13 +226,13 @@ public:
     /*
      * @brief The constructor with the ID of the send channel.
      */
-    HeightContext(int send_chid, HeightMeasurementService *service);
+    HeightContext(int send_chid, HeightMeasurementController *service);
 
     /*
      * @brief Inteprets the given signal and invoke the corresponding function.
      * @param [signal] The signal for the next transition.
      */
-    void process(Signal signal);
+    void process(HeightMeasurement::Signal signal);
 };
 
 #endif /* HEIGHTCONTEXT_H_ */
