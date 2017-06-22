@@ -36,6 +36,8 @@
 #include "SignalDistributer.h"
 #include "SortingSwichtControl.h"
 
+#include <thread>
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -86,6 +88,9 @@ TEST_IMPL(MachineOne, programm_m1){
 
 	//Init SerialService
 	SerialService serialService(pmsSer1Chid);
+
+	std::thread ser1_thread(ref(ser1));
+
 
 
 	//INIT CBS
