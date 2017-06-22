@@ -15,9 +15,11 @@
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
 #include <thread>
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "HeightMeasurementHal.h"
 #include "PulseMessageReceiverService.h"
+#include <iostream>
+#include <fstream>
 
 using namespace chrono;
 
@@ -82,7 +84,7 @@ void Calibration::calibrate(int mainChid){
 
 		cbs.changeState(ConveyorBeltState::STOP);
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
-		cbs.changeState(ConveyorBeltState::LEFTFAST);
+		cbs.changeState(LEFTFAST);
 		while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 		sss.sortingSwitchClose();
 		while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
@@ -90,13 +92,52 @@ void Calibration::calibrate(int mainChid){
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 	sss.sortingSwitchClose(); //Safety
-
-	inSwitch[0] = outlet[0]/3;
-	inSwitch[1] = outlet[1]/3;
+	while(pmr.receivePulseMessage().value != interrupts::INLET_OUT);
+	inSwitch[0] = milliseconds((int)((double)outlet[0].count()/2.5)); //TODO make readable
+	inSwitch[1] = milliseconds((int)((double)outlet[1].count()/2.5));
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 }
+
+
+bool  Calibration::saveToDisk(std::string path){
+	std::ofstream file(path);
+	for(int i = 0; i < 2; i++){
+		file << overall[i].count() << " " << heightMeasure[i].count() << " " << sortingSwitch[i].count()
+			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
+			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
+	}
+
+}
+
+bool  Calibration::loadFromDisk(std::string path){
+	std::ifstream file(path);
+	uint32_t overall_in;
+	uint32_t heightMeasure_in;
+	uint32_t sortingSwitch_in;
+	uint32_t outlet_in;
+	uint32_t inlet_in;
+	uint32_t inSwitch_in;
+	double slowToFastFactor_in;
+	double fastToSlowFactor_in;
+
+	for(int i = 0; i < 2; i++){
+		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in
+			 >> slowToFastFactor_in >> fastToSlowFactor_in;
+		overall[i] 			= milliseconds(overall_in);
+		heightMeasure[i] 	= milliseconds(heightMeasure_in);
+		sortingSwitch[i] 	= milliseconds(sortingSwitch_in);
+		outlet[i] 			= milliseconds(outlet_in);
+		inlet[i] 			= milliseconds(inlet_in);
+		inSwitch[i] 		= milliseconds(inSwitch_in);
+		slowToFastFactor    = slowToFastFactor_in;
+		fastToSlowFactor 	= fastToSlowFactor_in;
+	}
+
+}
+
+
 
 void Calibration::calibrate(void){
 	ConveyorBeltService cbs;
@@ -135,6 +176,7 @@ void Calibration::calibrate(void){
 		else		cbs.changeState(RIGHTSLOW);
 
 		while(!pollLB(LB_ENTRY));
+
 		auto start = system_clock::now();
 
 		auto last_lb = system_clock::now();
@@ -194,7 +236,7 @@ void  Calibration::calibrateHeighMeasurement(void){
 
 }
 
-HeightMeasurementService::CalibrationData Calibration::getHmCalibration(void){
+HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
 	return hmCal;
 }
 
@@ -268,8 +310,8 @@ bool Calibration::pollLB(sensor_t sensor){
 
 void Calibration::print(){
 	for(int i = 0; i < 2; i++){
-		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << " Overall" << overall[i].count() << "\n";
-		std::cout << "Slow to Fast: " << slowToFastFactor << "Fast to Slow " << fastToSlowFactor << "\n";
+		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << " Overall " << overall[i].count() << "\n";
+		std::cout << " Slow to Fast: " << slowToFastFactor << " Fast to Slow " << fastToSlowFactor << "\n";
 	}
 }
 

@@ -17,63 +17,64 @@
 #include "ActorHandler.h"
 
 ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
-                             HeightMeasurementService &heightMeasurementService,
+							 HeightService &heightService,
                              SortingSwichtControl &sortingSwichtControl )
     :    m_conveyorBeltService(conveyorBeltService)
-    ,    m_heightMeasurementService(heightMeasurementService)
+    ,    m_heightService(heightService)
     ,    m_sortingSwitchControl(sortingSwichtControl)
 {
     // Nothing todo so far.
 }
 
 ActorHandler::~ActorHandler()
-{
-    delete m_conveyorBeltService;
-    delete m_heightMeasurementService;
-    delete m_sortingSwitchControl;
-}
+{}
 
 void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
-    if (manager.actorFlag == 1) {
+	LOG_SCOPE
+	DistanceObservable &distO = DistanceObservable::getInstance();
+	switch (manager.speedSignal) {
 
-    	DistanceObservable &distO = DistanceObservable::getInstance();
+	    case PuckSignal::PuckSpeed::STOP:
+	    	m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+	    	distO.updateSpeed(DistanceSpeed::STOP);
+	    	LOG_DEBUG << "[ActorHandler] STOPPED \n";
+	    	break;
 
-    	switch (manager.speedSignal) {
+	    case PuckSignal::PuckSpeed::SLOW:
+            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
+            distO.updateSpeed(DistanceSpeed::SLOW);
+            LOG_DEBUG << "[ActorHandler] SLOW \n";
+            break;
 
-    	    case PuckSignal::PuckSpeed::STOP:
-    	    	m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
-    	    	distO.updateSpeed(DistanceSpeed::STOP);
-    	    	break;
+	    case PuckSignal::PuckSpeed::FAST:
+	    	m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
+	    	distO.updateSpeed(DistanceSpeed::FAST);
+	    	LOG_DEBUG << "[ActorHandler] FAST \n";
+	    	break;
 
-    	    case PuckSignal::PuckSpeed::SLOW:
-                m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
-                distO.updateSpeed(DistanceSpeed::SLOW);
-                break;
+	    default:
+	    	// Nothing todo so far.
+	    	break;
 
-    	    case PuckSignal::PuckSpeed::FAST:
-    	    	m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
-    	    	distO.updateSpeed(DistanceSpeed::FAST);
-    	    	break;
+	}
 
-    	    default:
-    	    	// Nothing todo so far.
-    	    	break;
-
-    	}
-
+    if (manager.actorFlag) {
         switch (manager.actorSignal) {
 
             case PuckManager::OPEN_SWITCH:
+            	LOG_DEBUG << "[ActorHandler] OPEN SWITCH \n";
                 m_sortingSwitchControl.open();
                 break;
 
             case PuckManager::START_MEASUREMENT:
-                m_heightMeasurementService.startMeasuring();
+            	LOG_DEBUG << "[ActorHandler] START HEIGHT MEASURE \n";
+            	m_heightService.startMeasuring();
                 break;
 
             case PuckManager::STOP_MEASUREMENT:
-                m_heightMeasurementService.stopMeasuring();
+            	LOG_DEBUG << "[ActorHandler] STOP HEIGHT MEASURE \n";
+            	m_heightService.stopMeasuring();
                 break;
 
             default:
