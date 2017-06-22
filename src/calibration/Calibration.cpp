@@ -15,9 +15,11 @@
 #include "ConveyorBeltState.h"
 #include "ConveyorBeltService.h"
 #include <thread>
-#include "HeightMeasurementService.h"
+#include "HeightMeasurementController.h"
 #include "HeightMeasurementHal.h"
 #include "PulseMessageReceiverService.h"
+#include <iostream>
+#include <fstream>
 
 using namespace chrono;
 
@@ -28,11 +30,16 @@ void Calibration::calibrate(int mainChid){
 	ConveyorBeltService cbs;
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
+    HeightMeasurementHal hal;
+    uint16_t data;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 			return;
 	}
+
+	hal.read(data);
+	hmCal.refHeight = data;
 
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
@@ -46,6 +53,10 @@ void Calibration::calibrate(int mainChid){
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
+
+	hal.read(data);
+	hmCal.surfaceHeight = data;
+
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
 
@@ -82,7 +93,7 @@ void Calibration::calibrate(int mainChid){
 
 		cbs.changeState(ConveyorBeltState::STOP);
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
-		cbs.changeState(ConveyorBeltState::LEFTFAST);
+		cbs.changeState(LEFTFAST);
 		while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 		sss.sortingSwitchClose();
 		while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
@@ -90,13 +101,54 @@ void Calibration::calibrate(int mainChid){
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 	sss.sortingSwitchClose(); //Safety
-
-	inSwitch[0] = outlet[0]/3;
-	inSwitch[1] = outlet[1]/3;
+	while(pmr.receivePulseMessage().value != interrupts::INLET_OUT);
+	inSwitch[0] = milliseconds((int)((double)outlet[0].count()/2.5)); //TODO make readable
+	inSwitch[1] = milliseconds((int)((double)outlet[1].count()/2.5));
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
+
+	calibrateHeighMeasurement();
 }
+
+
+bool  Calibration::saveToDisk(std::string path){
+	std::ofstream file(path);
+	for(int i = 0; i < 2; i++){
+		file << overall[i].count() << " " << heightMeasure[i].count() << " " << sortingSwitch[i].count()
+			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
+			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
+	}
+	file << hmCal.delta << " " << hmCal.highHeight << " " << hmCal.holeHeight << " " << hmCal.invalidHeight << " " << hmCal.lowHeight << " " << hmCal.refHeight << " " << hmCal.surfaceHeight;
+}
+
+bool  Calibration::loadFromDisk(std::string path){
+	std::ifstream file(path);
+	uint32_t overall_in;
+	uint32_t heightMeasure_in;
+	uint32_t sortingSwitch_in;
+	uint32_t outlet_in;
+	uint32_t inlet_in;
+	uint32_t inSwitch_in;
+	double slowToFastFactor_in;
+	double fastToSlowFactor_in;
+
+	for(int i = 0; i < 2; i++){
+		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in
+			 >> slowToFastFactor_in >> fastToSlowFactor_in;
+		overall[i] 			= milliseconds(overall_in);
+		heightMeasure[i] 	= milliseconds(heightMeasure_in);
+		sortingSwitch[i] 	= milliseconds(sortingSwitch_in);
+		outlet[i] 			= milliseconds(outlet_in);
+		inlet[i] 			= milliseconds(inlet_in);
+		inSwitch[i] 		= milliseconds(inSwitch_in);
+		slowToFastFactor    = slowToFastFactor_in;
+		fastToSlowFactor 	= fastToSlowFactor_in;
+	}
+	file >> hmCal.delta >> hmCal.highHeight >> hmCal.holeHeight >> hmCal.invalidHeight >> hmCal.lowHeight >> hmCal.refHeight >> hmCal.surfaceHeight;
+}
+
+
 
 void Calibration::calibrate(void){
 	ConveyorBeltService cbs;
@@ -135,6 +187,7 @@ void Calibration::calibrate(void){
 		else		cbs.changeState(RIGHTSLOW);
 
 		while(!pollLB(LB_ENTRY));
+
 		auto start = system_clock::now();
 
 		auto last_lb = system_clock::now();
@@ -172,29 +225,18 @@ void Calibration::calibrate(void){
 
 void  Calibration::calibrateHeighMeasurement(void){
 
-	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
-			return;
-	}
+	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight;
+	puckHeight /= SURFACE;
 
-	HeightMeasurementHal hhal;
-	uint16_t data = 0;
+	hmCal.holeHeight = ((uint16_t)(puckHeight * HOLE)) + hmCal.surfaceHeight;
+	hmCal.highHeight = ((uint16_t)(puckHeight * LOGICAL_1)) + hmCal.surfaceHeight;
+	hmCal.lowHeight = ((uint16_t)(puckHeight * LOGICAL_0)) + hmCal.surfaceHeight;
+	hmCal.invalidHeight = ((uint16_t)(puckHeight * INVALID)) + hmCal.surfaceHeight;
 
-	hhal.read(data);
-
-	hmCal.refHeight = data; //Belt height
-
-
-	hmCal.surfaceHeight = CALC_ABS_HEIGHT(data, SURFACE);
-	hmCal.holeHeight 	= CALC_ABS_HEIGHT(data, HOLE);
-	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
-	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
-	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
 	hmCal.delta = DELTA;
-
 }
 
-HeightMeasurementService::CalibrationData Calibration::getHmCalibration(void){
+HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
 	return hmCal;
 }
 
@@ -268,8 +310,8 @@ bool Calibration::pollLB(sensor_t sensor){
 
 void Calibration::print(){
 	for(int i = 0; i < 2; i++){
-		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << " Overall" << overall[i].count() << "\n";
-		std::cout << "Slow to Fast: " << slowToFastFactor << "Fast to Slow " << fastToSlowFactor << "\n";
+		std::cout << "Height: " << heightMeasure[i].count() << " Sort: " << sortingSwitch[i].count() << " Out: " << outlet[i].count() << " In: " << inlet[i].count() << " Overall " << overall[i].count() << "\n";
+		std::cout << " Slow to Fast: " << slowToFastFactor << " Fast to Slow " << fastToSlowFactor << "\n";
 	}
 }
 

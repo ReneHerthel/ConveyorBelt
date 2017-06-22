@@ -118,7 +118,7 @@ void ISR::operator()() {
 				//running = true;
 				ctrl->b_EStop();
 			} else {
-				cout << "button_estop_released: " << endl;
+				//cout << "button_estop_released: " << endl;
 				//running = false;
 			}
 		}
@@ -126,7 +126,7 @@ void ISR::operator()() {
 				if ((portbc & LightBarrier_HEIGHT) == LightBarrier_HEIGHT) {
 					ctrl->lightBarrier_HEIGHT_OUT();
 				} else {
-					cout << "LightBarrier_height" << endl;
+					//cout << "LightBarrier_height" << endl;
 					ctrl->lightBarrier_HEIGHT_IN();
 				}
 		}
@@ -134,7 +134,7 @@ void ISR::operator()() {
 				if ((portbc &LightBarrier_SWITCH) == LightBarrier_SWITCH){
 					ctrl->lightBarrier_SWITCH_OUT();
 				} else {
-					cout << "LightBarrier_switch" << endl;
+					//cout << "LightBarrier_switch" << endl;
 					ctrl->lightBarrier_SWITCH_IN();
 				}
 		}
@@ -142,59 +142,59 @@ void ISR::operator()() {
 				if ((portbc &LightBarrier_RAMP) == LightBarrier_RAMP) {
 					ctrl->lightBarrier_RAMP_OUT();
 				} else {
-					cout << "LightBarrier_ramp" << endl;
+					//cout << "LightBarrier_ramp" << endl;
 					ctrl->lightBarrier_RAMP_IN();
 				}
 		}
 		else if((diff & LightBarrier_EXIT) == LightBarrier_EXIT){
 				if ((portbc & LightBarrier_EXIT) == LightBarrier_EXIT ) {
-					cout << "LightBarrier_exit_OUT" << endl;
+					//cout << "LightBarrier_exit_OUT" << endl;
 					ctrl->lightBarrier_EXIT_OUT();
 				} else {
-					cout << "LightBarrier_exit_IN" << endl;
+					//cout << "LightBarrier_exit_IN" << endl;
 					ctrl->lightBarrier_EXIT_IN();
 				}
 			}
 		else if((diff & BUTTONSTART) == BUTTONSTART){
 				if ((portbc & BUTTONSTART) == BUTTONSTART) {
-					cout << "button_start_pressed" << endl;
+					//cout << "button_start_pressed" << endl;
 					ctrl->b_Start();
 				} else {
-					cout << "button_start_released" << endl;
+					//cout << "button_start_released" << endl;
 				}
 		}
 		else if((diff & BUTTONSTOP) == BUTTONSTOP){
 				if ((portbc &BUTTONSTOP) == BUTTONSTOP) {
-					cout << "button_stop_pressed" << endl;
+					//cout << "button_stop_pressed" << endl;
 					ctrl->b_STOP();
 				} else {
-					cout << "button_stop_released" << endl;
+					//cout << "button_stop_released" << endl;
 				}
 		}
 		else if((diff & BUTTONRESET) == BUTTONRESET){
 				if ((portbc &BUTTONRESET) == BUTTONRESET) {
-					cout << "button_reset_pressed" << endl;
+					//cout << "button_reset_pressed" << endl;
 					ctrl->b_Reset();
 				} else {
-					cout << "button_reset_released" << endl;
+					//cout << "button_reset_released" << endl;
 
 				}
 		}
 		else if ((diff & LightBarrier_ENTRY) == LightBarrier_ENTRY){
 			if ((portbc & LightBarrier_ENTRY) == LightBarrier_ENTRY) {
-				cout << "LightBarrier_entry_OUT " << endl;
+				//cout << "LightBarrier_entry_OUT " << endl;
 				ctrl->lightBarrier_ENTRY_OUT();
 			} else {
-				cout << "LightBarrier_entry_IN " << endl;
+				//cout << "LightBarrier_entry_IN " << endl;
 				ctrl->lightBarrier_ENTRY_IN();
 			}
 	}
 		else if ((diff & SENSOR_METAL) == SENSOR_METAL){
 		        if ((portbc & SENSOR_METAL) == SENSOR_METAL) {
-		        	cout << "metal_in" << endl;
+		        	//cout << "metal_in" << endl;
 	        		ctrl->metal();
 		        	} else {
-		        		cout << "metal_isOutofSensor" << endl;
+		        		//cout << "metal_isOutofSensor" << endl;
 		        }
 		}
 		/*else if ((diff & SENSOR_HEIGHT) == SENSOR_HEIGHT){
@@ -208,10 +208,10 @@ void ISR::operator()() {
 		}*/
 		else if ((diff & SWITCH_OPEND) == SWITCH_OPEND){
 				if ((portbc & SWITCH_OPEND) == SWITCH_OPEND) {
-					cout << "openSwitch " << endl;
+					//cout << "openSwitch " << endl;
 					ctrl->switchopen();
 				} else {
-					cout << "closeSwitch" << endl;
+					//cout << "closeSwitch" << endl;
 					ctrl->switchclosed();
 				}
 		}

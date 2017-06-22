@@ -24,6 +24,7 @@ DistanceTracker::DistanceTracker(int chid, int8_t code):
 DistanceTracker::~DistanceTracker(){
 	DistanceObservable& distO = DistanceObservable::getInstance();
 	distO.unregisterObserver(this); //register to observable
+	timer_.stopAlarm();
 }
 
 
