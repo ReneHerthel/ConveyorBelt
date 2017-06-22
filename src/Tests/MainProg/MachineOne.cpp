@@ -62,6 +62,31 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread isr_th(ref(isr));
 
 
+	//INIT Serial
+	//Init PMR
+	rcv::PulseMessageReceiverService pmrSer1;
+	int pmrSer1Chid = pmrSer1.newChannel();
+
+	//Init PMS
+	rcv::PulseMessageReceiverService pmsChannelCreatorSer1;
+	int pmsSer1Chid = pmsChannelCreatorSer1.newChannel();
+	PulseMessageSenderService pmsSer1(pmsSer1Chid);
+
+	//Init Sender & Receiver
+	SerialSender senderSer1(ser1_path);
+	SerialReceiver receiverSer1(ser1_path);
+
+	//Init Protocol
+	SerialProtocoll protoSer1(SENDER);
+
+	//Init Serial
+	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, pmrSer1Chid);
+
+
+	//Init SerialService
+	SerialService serialService(pmsSer1Chid);
+
+
 	//INIT CBS
 	ConveyorBeltService cbs;
 
