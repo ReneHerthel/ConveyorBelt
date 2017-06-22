@@ -42,15 +42,31 @@ void BufferFileStreamer::importBufferBinary(RecordBuffer * buffer)
 void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
 {
     ofstream file ("/records.txt");
-    record_t record;
+
+    record_t start;
+    buffer->readFromIndex(&start, 0);
+    auto smilsec = std::chrono::duration_cast<std::chrono::milliseconds>(start.timestamp - start.timestamp).count();
+    auto ssec = std::chrono::duration_cast<std::chrono::seconds>(start.timestamp - start.timestamp).count();
+    file  << "[" << (int)ssec << "::" << (int)smilsec << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
+
+    record_t next;
     int index = 0;
 
+    while (buffer->readFromIndex(&next, index) >= 0) {
+        auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start.timestamp).count();
+        auto sec = std::chrono::duration_cast<std::chrono::seconds>(next.timestamp - start.timestamp).count();
+        file  << "[" << (int)sec << "::" << (int)milsec << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
+    }
+
+    /*
     do {
         if (file.is_open()) {
+            //file  << "seconds[" << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
             //file << "Time[" << (int)record.timestamp.tv_sec << "::" << (int)record.timestamp.tv_nsec << "] code[" << (int)record.code << "] value[" << (int)record.value << "].\n";
         	  index++;
         }
-    } while (buffer->readFromIndex(&record, index) >= 0);
+    } while (buffer->readFromIndex(&next, index) >= 0);
+    */
 
     file.close();
 }
