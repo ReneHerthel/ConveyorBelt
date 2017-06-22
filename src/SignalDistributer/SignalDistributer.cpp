@@ -65,7 +65,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 		case HEIGHTMEASUREMENT_OUT:
 		case SWITCH_IN	 		  :
 		case METAL_DETECT	 	  :
-		case SWITCH_OPEN	 	  :
+		case SWITCH_OUT	 	  :
 		case SLIDE_IN	 		  :
 		case SLIDE_OUT	 		  :
 		case OUTLET_IN	 		  :
@@ -79,6 +79,8 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 }
 
 void SignalDistributer::height(HeightMeasurement::signal_t signal){
+	std::cout<<"[TEST] COUT: "<< " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << ", Highest Height " << std::to_string(signal.highestHeight) <<std::endl;
+
 	LOG_SCOPE;
 	PuckManager::ManagerReturn mng_r;
 	PuckSignal::Signal m_sig;
