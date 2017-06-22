@@ -26,7 +26,7 @@ BEFORE_TC(TestPuckStateMachine) {
 
 	//INIT CALIBRATION AND CALIBRATE
 	Calibration& calibration = Calibration::getInstance();
-	calibration.calibrateHeighMeasurement();
+	//calibration.calibrateHeighMeasurement();
 	calibration.calibrate();
 	return 1;
 }

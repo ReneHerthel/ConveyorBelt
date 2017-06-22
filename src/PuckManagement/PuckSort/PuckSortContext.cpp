@@ -49,11 +49,11 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
-	LOG_DEBUG << "process: Got " << signal.heightType.ID << endl;
-    switch (signal.heightType.ID) {
+	LOG_DEBUG << "process: Got " << signal.data.heightType.ID << endl;
+    switch (signal.data.heightType.ID) {
     case NORMAL_ID:
-    	LOG_DEBUG << "process: Got metal = " << signal.metal << endl;
-    	if (signal.metal) {
+    	LOG_DEBUG << "process: Got metal = " << signal.data.metal << endl;
+    	if (signal.data.metal) {
     	    	statePtr->holeWithMetal();
     	} else {
     	    	statePtr->holeWithoutMetal();
@@ -66,23 +66,23 @@ bool PuckSortContext::process(PuckType signal) {
     	statePtr->invalid();
     	break;
     case PATTERN_ID:
-    	LOG_DEBUG << "process: : Got pattern " << signal.heightType.BIT2 << signal.heightType.BIT1 << signal.heightType.BIT0 << endl;
-    	if (!signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
+    	LOG_DEBUG << "process: : Got pattern " << signal.data.heightType.BIT2 << signal.data.heightType.BIT1 << signal.data.heightType.BIT0 << endl;
+    	if (!signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && signal.data.heightType.BIT0) {
     		// 001
     		statePtr->bitCode1();
     	}
 
-    	if (!signal.heightType.BIT2 && signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    	if (!signal.data.heightType.BIT2 && signal.data.heightType.BIT1 && !signal.data.heightType.BIT0) {
     		// 010
     		statePtr->bitCode2();
     	}
 
-    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && !signal.heightType.BIT0) {
+    	if (signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && !signal.data.heightType.BIT0) {
     		// 100
     		statePtr->bitCode4();
     	}
 
-    	if (signal.heightType.BIT2 && !signal.heightType.BIT1 && signal.heightType.BIT0) {
+    	if (signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && signal.data.heightType.BIT0) {
     	    // 101
     	    statePtr->bitCode5();
     	}
