@@ -70,7 +70,7 @@ public:
 		virtual void heightmeasurementOut();
 
 		virtual void switchIn();
-		virtual void switchOpen();
+		virtual void switchOut();
 
 		virtual void slideIn();
 		virtual void slideOut();
@@ -166,7 +166,7 @@ public:
 	};
 
 	struct TypeKnown : public PuckState {
-		void switchOpen();
+		void switchOut();
 		void slideIn();
 	};
 	/*******************************************/
