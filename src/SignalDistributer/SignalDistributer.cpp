@@ -104,7 +104,14 @@ void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
 }
 
 
-void SignalDistributer::serial(Serial_n::ser_proto_msg){
-	//TODO Implement
+void SignalDistributer::serial(Serial_n::ser_proto_msg signal){
+	LOG_SCOPE;
+	PuckManager::ManagerReturn mng_r;
+	PuckSignal::Signal sig;
+	sig.signalType = PuckSignal::SERIAL_SIGNAL;
+	sig.serialSignal = signal;
+	mng_r = puckManager_->process(sig);
+	DEBUG_MNG_RE(mng_r)
+	actorHandler_->demultiplex(mng_r);
 }
 
