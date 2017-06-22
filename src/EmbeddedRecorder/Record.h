@@ -35,9 +35,8 @@ namespace rec {
         std::chrono::time_point<std::chrono::system_clock> timestamp;
         /* The value of the pulse message. */
         uint32_t value;
-        // TODO: Replace this with the puck.
-        //TestEmbeddedRecorderStub stub;
-        serialize puck;
+        /* The serialized puck object */
+        serialized puck;
     } record_t;
 
 } /* namespace rec */

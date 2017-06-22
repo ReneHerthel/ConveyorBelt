@@ -18,6 +18,7 @@
 //#include "TestEmbeddedRecorderStub.h"
 #include "SerialProtocoll.h"
 #include "IPulseMessageReceiver.h"
+#include "PuckSignal.h"
 
 #include <chrono>
 #include <iostream>
@@ -51,13 +52,8 @@ int EmbeddedRecorder::writeMessageIntoBuffer(const rcv::msg_t message)
     record.code = message.code;
 
     if (record.code == TRANSM_IN_CODE) {
-        // TODO: Serialize puck.
-        //PuckContext puck = *((PuckContext*)message.value);
-        //record.puck = puck.serialize();
-
-    	  //TestEmbeddedRecorderStub stub = *((TestEmbeddedRecorderStub*)message.value);
-        //record.stub = stub;
-        //record.stub.print();
+        PuckSignal::PuckType puck = *((PuckSignal::PuckType*)message.value);
+        record.puck = puck.serialize();
     }
 
     record.value = message.value;

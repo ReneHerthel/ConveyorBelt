@@ -24,7 +24,10 @@
 #include "TestEmbeddedRecorderStub.h"
 #include "SerialProtocoll.h"
 
+#include "PuckSignal.h"
+
 #include <chrono>
+#include <iostream>
 
 namespace rec {
 
@@ -65,19 +68,16 @@ void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_poi
 {
     ITimer * timer = new TimerService(m_chid, next.code);
 
-    /* Check if there was a puck (TODO) inside the record.
-     * Cast the pointer of the puck (TODO) into an integer value.
-     * This must be cast into a pointer again after receiving this message.
-     */
     if (next.code == TRANSM_IN_CODE) {
-        // Serialize ser;
-        // PuckContext puck;
-        // if (puck.deserialize(ser.obj)) {
-        //     // TODO: Error handling.
-        // }
-        // next.value = (int)new PuckContext(puck);
 
-        // OLD: next.value = (int)new TestEmbeddedRecorderStub(next.stub);
+        PuckSignal::PuckType * puck = new PuckSignal::PuckType();
+
+        if (!puck->deserialize(next.puck)) {
+            // TODO: Error handling.
+            std::cout << "[ThreadRecordSender] windUpClockAndSend() deserialize failed." << std::endl;
+        }
+
+        next.value = (int)puck;
     }
 
     auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start).count();
