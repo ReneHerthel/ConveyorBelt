@@ -22,8 +22,10 @@
 #include "IPulseMessageReceiver.h"
 #include "PulseMessageReceiverService.h"
 
-#include "TestEmbeddedRecorderStub.h"
+//#include "TestEmbeddedRecorderStub.h"
+#include "PuckSignal.h"
 #include "SerialProtocoll.h"
+
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -56,23 +58,18 @@ AFTER(TestEmbeddedRecorder) {
 TEST_IMPL(TestEmbeddedRecorder, test1)
 {
     rcv::IPulseMessageReceiver* receiver = new rcv::PulseMessageReceiverService();
-
     int chid = receiver->newChannel();
-
-    std::cout << "test chid " << chid << std::endl;
-
     rec::IEmbeddedRecorder * recorder = new rec::EmbeddedRecorder(chid);
-
     rcv::msg_t message;
-
     int size = 64; // Make sure the buffer size is equals in RecordBuffer.h.
-
     int ret_code;
 
-    std::cout << "TEST - write messages into buffer" << std::endl;
+    PuckSignal::PuckType * puck = new PuckType();
 
     for (int i = 0; i < size; i++) {
-    	message.value = (int)new TestEmbeddedRecorderStub(i);
+      puck.data.height1 = i;
+      puck.data.height2 = i+1;
+    	message.value = (int)puck;
     	message.code = TRANSM_IN_CODE;
     	ret_code = recorder->writeMessageIntoBuffer(message);
     	std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -80,6 +77,8 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
 
     std::cout << "[TestEmbeddedRecorder] save" << std::endl;
     recorder->saveRecordedData();
+    std::cout << "[TestEmbeddedRecorder] allocate new buffer" << std::endl;
+    recorder->newBuffer();
     std::cout << "[TestEmbeddedRecorder] load" << std::endl;
     recorder->loadRecordedData();
     std::cout << "[TestEmbeddedRecorder] play" << std::endl;
@@ -95,10 +94,12 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     for (int i = 0; i < size-1; i++) {
         msg = receiver->receivePulseMessage();
         std::cout << "[TestEmbeddedRecorder] received message at " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count() << " milliseconds" << std::endl;
-        (*(TestEmbeddedRecorderStub*)msg.value).print();
+        SignalType::PuckType puck = (*(SignalType::PuckType*)msg.value);
+        std::cout << "[TestEmbeddedRecorder] puck values: " << (int)puck.data.height1 << " & " << (int)puck.data.height2 << std::endl;
         amountOfReceived++;
     }
 
+    /*
     int ret_code2;
 
     recorder->newBuffer();
@@ -110,8 +111,9 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     }
 
     recorder->showRecordedData();
+    */
 
-    if (ret_code >= 0 && ret_code2 >= 0 && amountOfReceived == size) {
+    if (ret_code >= 0 && amountOfReceived == size) {
         return TEST_PASSED;
     }
 
