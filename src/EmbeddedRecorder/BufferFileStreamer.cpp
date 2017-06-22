@@ -47,7 +47,7 @@ void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
     buffer->readFromIndex(&start, 0);
     auto smilsec = std::chrono::duration_cast<std::chrono::milliseconds>(start.timestamp - start.timestamp).count();
     auto ssec = std::chrono::duration_cast<std::chrono::seconds>(start.timestamp - start.timestamp).count();
-    file  << "[" << (int)ssec << "::" << (int)smilsec << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
+    file  << "[" << (int)ssec << "::" << (int)smilsec << "]\t| code[" << (int)start.code << "]\t| value[" << (int)start.value << "]\n";
 
     record_t next;
     int index = 0;
