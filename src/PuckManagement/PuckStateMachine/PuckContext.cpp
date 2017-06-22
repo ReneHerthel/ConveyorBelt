@@ -136,9 +136,9 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 					LOG_DEBUG << "Signal is switch_in\n";
 					statePtr->switchIn();
 					break;
-				case interrupts::interruptSignals::SWITCH_OPEN:
-					LOG_DEBUG << "Signal is switch_open\n";
-					statePtr->switchOpen();
+				case interrupts::interruptSignals::SWITCH_OUT:
+					LOG_DEBUG << "Signal is switch_out\n";
+					statePtr->switchOut();
 					break;
 				case interrupts::interruptSignals::SLIDE_IN:
 					LOG_DEBUG << "Signal is slide_in\n";
@@ -243,7 +243,7 @@ void PuckContext::PuckState::switchIn() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
 }
 
-void PuckContext::PuckState::switchOpen() {
+void PuckContext::PuckState::switchOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [PuckState]->[PuckState]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DENY;
@@ -490,7 +490,7 @@ void PuckContext::MetalType::switchIn() {
 /*******************************************
  * TypeKnown
  */
-void PuckContext::TypeKnown::switchOpen() {
+void PuckContext::TypeKnown::switchOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TypeKnown]->[SwitchArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
@@ -558,8 +558,8 @@ void PuckContext::SwitchTimer::outletIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchTimer]->[InTransfer] JUST FOR TESTING WITHOUT SERIAL\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
-	new (this) InTransfer;
 	stopTimer();
+	new (this) InTransfer;
 #else
 
 	#if !machine
