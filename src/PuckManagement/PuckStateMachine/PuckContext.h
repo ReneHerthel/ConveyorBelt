@@ -18,11 +18,11 @@
 #include "ISerializable.h"
 
 #define machine (0) // 0 or 1
-#define ONE_MACHINE_TESTING 1
+#define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
 #define WIDE_DELTA 1.25
-class PuckContext : public ISerializable {
+class PuckContext {
 private:
 
 	DistanceTracker shortDistance;
@@ -31,10 +31,6 @@ private:
 
 
 public:
-
-	serialized serialize() override;
-	bool deserialize(void* ser) override;
-
 	PuckContext(int chid);
 	PuckContext(int chid, PuckSignal::PuckType puckType);
 

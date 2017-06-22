@@ -13,18 +13,6 @@
 
 #include <new>
 
-serialized PuckContext::serialize() {
-    serialized ser;
-    ser.size = sizeof(PuckSignal::PuckType);
-    ser.obj = new PuckSignal::PuckType(statePtr->puckType);
-
-    return ser;
-}
-
-bool PuckContext::deserialize(void *ser) {
-    return false;
-}
-
 PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
 
@@ -70,10 +58,10 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 #endif
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck
-	statePtr->puckType.heightType.value = 0;
-	statePtr->puckType.height1 = 0;
-	statePtr->puckType.height2 = 0;
-	statePtr->puckType.metal = false;
+	statePtr->puckType.data.heightType.value = 0;
+	statePtr->puckType.data.height1 = 0;
+	statePtr->puckType.data.height2 = 0;
+	statePtr->puckType.data.metal = false;
 }
 
 PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
@@ -83,11 +71,11 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 			LOG_DEBUG << "Signal is a height signal\n";
 			statePtr->type();
 			if(statePtr->returnValue.puckReturn == PuckSignal::PuckReturn::ACCEPT) {
-				statePtr->puckType.heightType = signal.heightSignal;
+				statePtr->puckType.data.heightType = signal.heightSignal;
 #if !machine
-				statePtr->puckType.height1 = signal.heightSignal.highestHeight;
+				statePtr->puckType.data.height1 = signal.heightSignal.highestHeight;
 #else
-				statePtr->puckType.height2 = signal.heightSignal.highestHeight;
+				statePtr->puckType.data.height2 = signal.heightSignal.highestHeight;
 #endif
 			}
 			break;
@@ -470,7 +458,7 @@ void PuckContext::MeasurementTimer::metalDetect() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [MeasurementTimer]->[MetalType]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	puckType.metal = 1;
+	puckType.data.metal = 1;
 	new (this) MetalType;
 }
 /*******************************************/

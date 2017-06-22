@@ -10,22 +10,6 @@
 #include "logger.h"
 #include "logscope.h"
 
-serialized PuckManager::serialize() {
-    serialized ser;
-    ser.size = 0;
-    ser.obj = nullptr;
-
-    return ser;
-}
-
-bool PuckManager::deserialize(void *ser) {
-    PuckSignal::PuckType type = *((PuckSignal::PuckType*)ser);
-    PuckContext *puck = new PuckContext(chid, type);
-    addPuck(puck);
-
-	return true;
-}
-
 PuckManager::PuckManager(int chid)
 	: puckList()
 	, nextPuckID(0)
@@ -38,6 +22,10 @@ PuckManager::~PuckManager() {
 		delete *it;					// delete the puck from memory
 		it = puckList.erase(it);	// delete the puck from list
 	}
+}
+
+void PuckManager::newPuck(PuckSignal::PuckType type) {
+	addPuck(new PuckContext(chid, type));
 }
 
 void PuckManager::addPuck(PuckContext *puck) {
@@ -54,7 +42,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.actorFlag = false;
 	prioReturnVal.errorFlag = false;
 	prioReturnVal.slideFullFlag = false;
-	prioReturnVal.puck = nullptr;
+	prioReturnVal.puckType = nullptr;
 
 	int32_t acceptCounter = 0; // count all accepted signals
 	int32_t warningCounter = 0; // count all warnings
@@ -153,7 +141,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				break;
 			case PuckSignal::PuckReturn::SEND:
 				acceptCounter++;
-				prioReturnVal.puck = (*it);
+				prioReturnVal.puckType = new PuckSignal::PuckType((*it)->getType());
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_PUCK;
 				break;
