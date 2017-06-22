@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "Logscope.h"
 #include "PuckManager.h"
+#include "PuckSignal.h"
 
 SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler):
 	 puckManager_(puckManager)
@@ -35,7 +36,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 			serial((Serial_n::ser_proto_msg)msg.value);
 			break;
 		case TRANSM_IN :
-			//puckManager_->deserialize() TODO FIX THE SERIALIZATION
+			puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
 			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
 			break;
 		case PUCK_TIMER :
