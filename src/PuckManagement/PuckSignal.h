@@ -11,6 +11,8 @@
 #include "HeightSignal.h"
 #include "SerialProtocoll.h"
 #include "Signals.h"
+#include "ISerializable.h"
+#include <string.h>
 
 #include <stdint.h>
 
@@ -69,11 +71,31 @@ namespace PuckSignal {
 		Serial_n::ser_proto_msg serialSignal;
 	};
 
-	struct PuckType {
-		HeightMeasurement::signal_t heightType;
-		uint8_t metal;
-		uint16_t height1;
-		uint16_t height2;
+	// The serialized data
+	struct PuckType : public ISerializable {
+		struct Data {
+			HeightMeasurement::signal_t heightType;
+			uint8_t metal;
+			uint16_t height1;
+			uint16_t height2;
+		} data;
+
+		serialized serialize() override {
+			serialized ser;
+			ser.size = sizeof(data);
+			ser.obj = new Data(data);
+			return ser;
+		}
+
+		bool deserialize(void* ser) override {
+			if(ser == nullptr) return false;
+			data = *((Data*)ser);
+			return true;
+		}
+
+		bool operator==(PuckType const &type) {
+			return !memcmp(&data, &type.data, sizeof(data));
+		}
 	};
 }
 

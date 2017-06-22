@@ -35,16 +35,23 @@ TEST_IMPL(CalibrationTest, Calibrate){
 	std::thread isr_thread(ref(isr));
 
 	Calibration& cal = Calibration::getInstance();
-	cal.calibrateHeighMeasurement();
-	HeightMeasurementController::CalibrationData hmCal = cal.getHmCalibration();
+	//cal.calibrateHeighMeasurement();
 
+	cal.calibrate(chid);
+
+	HeightMeasurementController::CalibrationData hmCal = cal.getHmCalibration();
 	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
 				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
 	std::cout.flush();
 
-	cal.calibrate(chid);
 	cal.saveToDisk("/Calibration.dat");
 	cal.print();
+	cal.loadFromDisk("/Calibration.dat");
+
+	hmCal = cal.getHmCalibration();
+	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
+				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
+
 }
 
 

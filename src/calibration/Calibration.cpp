@@ -30,11 +30,16 @@ void Calibration::calibrate(int mainChid){
 	ConveyorBeltService cbs;
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
+    HeightMeasurementHal hal;
+    uint16_t data;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 			return;
 	}
+
+	hal.read(data);
+	hmCal.refHeight = data;
 
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
@@ -48,6 +53,10 @@ void Calibration::calibrate(int mainChid){
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
+
+	hal.read(data);
+	hmCal.surfaceHeight = data;
+
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
 
@@ -98,6 +107,8 @@ void Calibration::calibrate(int mainChid){
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
+
+	calibrateHeighMeasurement();
 }
 
 
@@ -108,7 +119,7 @@ bool  Calibration::saveToDisk(std::string path){
 			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
 			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
 	}
-
+	file << hmCal.delta << " " << hmCal.highHeight << " " << hmCal.holeHeight << " " << hmCal.invalidHeight << " " << hmCal.lowHeight << " " << hmCal.refHeight << " " << hmCal.surfaceHeight;
 }
 
 bool  Calibration::loadFromDisk(std::string path){
@@ -134,7 +145,7 @@ bool  Calibration::loadFromDisk(std::string path){
 		slowToFastFactor    = slowToFastFactor_in;
 		fastToSlowFactor 	= fastToSlowFactor_in;
 	}
-
+	file >> hmCal.delta >> hmCal.highHeight >> hmCal.holeHeight >> hmCal.invalidHeight >> hmCal.lowHeight >> hmCal.refHeight >> hmCal.surfaceHeight;
 }
 
 
@@ -214,26 +225,15 @@ void Calibration::calibrate(void){
 
 void  Calibration::calibrateHeighMeasurement(void){
 
-	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
-			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
-			return;
-	}
+	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight;
+	puckHeight /= SURFACE;
 
-	HeightMeasurementHal hhal;
-	uint16_t data = 0;
+	hmCal.holeHeight = ((uint16_t)(puckHeight * HOLE)) + hmCal.surfaceHeight;
+	hmCal.highHeight = ((uint16_t)(puckHeight * LOGICAL_1)) + hmCal.surfaceHeight;
+	hmCal.lowHeight = ((uint16_t)(puckHeight * LOGICAL_0)) + hmCal.surfaceHeight;
+	hmCal.invalidHeight = ((uint16_t)(puckHeight * INVALID)) + hmCal.surfaceHeight;
 
-	hhal.read(data);
-
-	hmCal.refHeight = data; //Belt height
-
-
-	hmCal.surfaceHeight = CALC_ABS_HEIGHT(data, SURFACE);
-	hmCal.holeHeight 	= CALC_ABS_HEIGHT(data, HOLE);
-	hmCal.highHeight	= CALC_ABS_HEIGHT(data, LOGICAL_1);
-	hmCal.lowHeight		= CALC_ABS_HEIGHT(data, LOGICAL_0);
-	hmCal.invalidHeight = CALC_ABS_HEIGHT(data, INVALID);
 	hmCal.delta = DELTA;
-
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){

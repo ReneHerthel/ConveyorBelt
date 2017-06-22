@@ -14,14 +14,15 @@
 
 #include <list>
 
-class PuckManager : public ISerializable {
+class PuckManager {
 public:
 	enum ActorSignal {
 		START_MEASUREMENT,
 		STOP_MEASUREMENT,
 		OPEN_SWITCH,
 		SEND_PUCK,
-		RECEIVED_PUCK
+		RECEIVED_PUCK,
+		ACCEPTED_PUCK
 	};
 
 	enum ErrorSignal {
@@ -39,19 +40,19 @@ public:
 		bool errorFlag;
 		ErrorSignal errorSignal;
 		bool slideFullFlag;
-		PuckContext *puck;					// Null except on send Signal
+		PuckSignal::PuckType *puckType;					// Null except on send Signal
 	};
 
-	serialized serialize() override;
-	bool deserialize(void* ser) override;
 
 	PuckManager(int chid);
 	~PuckManager();
 
 	ManagerReturn process(PuckSignal::Signal signal);
 
+	void newPuck(PuckSignal::PuckType type);
+
 private:
-	void addPuck(PuckContext *puck);
+	ManagerReturn addPuck(PuckContext *puck);
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 	int chid; /**< @brief ID for the pucks to give the timers*/
