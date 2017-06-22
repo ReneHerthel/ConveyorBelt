@@ -52,8 +52,8 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
         DistanceObservable &distO = DistanceObservable::getInstance();
         distO.updateSpeed(DistanceSpeed::STOP);
-        m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 
+        m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 
         switch (manager.errorSignal) {
 
