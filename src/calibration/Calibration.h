@@ -19,10 +19,10 @@
 
 // in millimeters
 #define SURFACE 	25.0
-#define HOLE		 8.0
-#define LOGICAL_1	22.0
-#define LOGICAL_0	23.0
-#define INVALID		21.0
+#define HOLE		 7.3
+#define LOGICAL_1	18.5
+#define LOGICAL_0	21.5
+#define INVALID		20.75
 
 #define DELTA		35
 
