@@ -28,6 +28,12 @@
 
 #define CALC_ABS_HEIGHT(val, perc) ((int16_t)((double)val*perc));
 
+#define INLET_CAL_SLOW 1500 //Measured 1.8, for seftys sake make it slower
+#define INLET_CAL_FAST 500  //Unmeasured, educated gues
+
+#define SLIDE_TIMER_FAST 5000 //5 seconds, (un)educated guess
+#define SLIDE_TIMER_SLOW 10000 //5 seconds, (un)educated guess
+
 using namespace std::chrono;
 
 class Calibration {
@@ -90,12 +96,14 @@ private:
 
 	void calibrateHeighMeasurement(void);
 
-	std::chrono::milliseconds overall[2];
-	std::chrono::milliseconds heightMeasure[2];
-	std::chrono::milliseconds sortingSwitch[2];
-	std::chrono::milliseconds outlet[2];
-	std::chrono::milliseconds inlet[2];
-	std::chrono::milliseconds inSwitch[2];
+	//v slow and fast, distances between lightbarriers (lb) in ms, lb_out to lb_in time v//
+	std::chrono::milliseconds overall[2]; 		///Overall distance from inlet to outlet
+	std::chrono::milliseconds heightMeasure[2];	///Distance from inlet to height Measurement lb
+	std::chrono::milliseconds sortingSwitch[2];	///From height Measurement to the switch
+	std::chrono::milliseconds outlet[2];		///from switch to outlet
+	std::chrono::milliseconds inlet[2];			///from outlet to inlet on machine 2
+	std::chrono::milliseconds inSwitch[2];		///Unused
+	std::chrono::milliseconds slide[2]; 		///Slide timer
 
 	double fastToSlowFactor;
 	double slowToFastFactor;

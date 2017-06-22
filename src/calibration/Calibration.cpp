@@ -168,7 +168,6 @@ void Calibration::calibrate(void){
 	while(!pollLB(LB_ENTRY));
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-
 	while(!pollLB(LB_HEIGHT));
 	auto lb_in = system_clock::now();
 	while(pollLB(LB_HEIGHT));
@@ -217,6 +216,13 @@ void Calibration::calibrate(void){
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 	sss.sortingSwitchClose(); //Safety
+
+
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
@@ -290,6 +296,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
 		case OUT_TO_IN:			return inlet[slowOrFast].count();
 		case IN_SWITCH: 		return inSwitch[slowOrFast].count();
+		case SLIDE:				return slide[slowOrFast].count();
 	}
 
 }
