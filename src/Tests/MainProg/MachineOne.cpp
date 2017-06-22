@@ -83,7 +83,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	SerialProtocoll protoSer1(SENDER);
 
 	//Init Serial
-	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, pmrSer1Chid);
+	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, mainChid);
 
 
 	//Init SerialService
