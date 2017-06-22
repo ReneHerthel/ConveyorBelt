@@ -30,24 +30,39 @@
 #include <chrono>
 
 SETUP(TestErrorHandler) {
-	REG_TEST(test1, 1, "Test the flow of error handler");
-	return 1;
+    REG_TEST(test1, 1, "Test the flow of error handler");
+    return 1;
 }
 
-BEFORE_TC(TestErrorHandler) { return 1; }
-AFTER_TC(TestErrorHandler) { return 1; }
-BEFORE(TestErrorHandler) { return 1; }
-AFTER(TestErrorHandler) { return 1; }
+BEFORE_TC(TestErrorHandler) {
+    // Nothing todo fo far.
+    return 1;
+}
+
+AFTER_TC(TestErrorHandler) {
+    // Nothing todo fo far.
+    return 1;
+}
+
+BEFORE(TestErrorHandler) {
+    // Nothing todo fo far.
+    return 1;
+}
+
+AFTER(TestErrorHandler) {
+    // Nothing todo fo far.
+    return 1;
+}
 
 TEST_IMPL(TestErrorHandler, test1) {
     std::cout << "[TestErrorHandler] started" << std::endl;
     int chid = ChannelCreate_r(0);
 
-	// Request priviledges for the current thread to access hardware
-	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
-		LOG_DEBUG << "Can't get Hardware access, therefore can't do anything." << std::endl;
-		return EXIT_FAILURE;
-	}
+    // Request priviledges for the current thread to access hardware
+    if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1){
+        LOG_DEBUG << "Can't get Hardware access, therefore can't do anything." << std::endl;
+        return EXIT_FAILURE;
+    }
 
     ConveyorBeltService *cbs = new ConveyorBeltService();
     LightSystemHal * hal = new LightSystemHal();
@@ -60,30 +75,30 @@ TEST_IMPL(TestErrorHandler, test1) {
     m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
 
     // random puckmanager with nonsense chid
-    PuckManager * puckManager = new PuckManager(1);
+    PuckManager * puckManager = new PuckManager(chid);
 
     // random but needed managerReturn
     PuckManager::ManagerReturn manager;
     manager = puckManager->process(m_sig);
-    this_thread::sleep_for(chrono::seconds(2));
+    this_thread::sleep_for(chrono::seconds(1));
 
-	if (!errorHandler->hasError()) {
-		errorHandler->demultiplex(manager);
-	}
+    if (!errorHandler->hasError()) {
+        errorHandler->demultiplex(manager);
+    }
 
-	this_thread::sleep_for(chrono::seconds(2));
+    this_thread::sleep_for(chrono::seconds(1));
 
     rcv::msg_t message;
 
     message.code = 5;
     message.value = interrupts::BUTTON_RESET;
-	errorHandler->handleMessage(message);
-	this_thread::sleep_for(chrono::seconds(2));
+    errorHandler->handleMessage(message);
+    this_thread::sleep_for(chrono::seconds(2));
 
     message.code = 5;
     message.value = interrupts::BUTTON_START;
     errorHandler->handleMessage(message);
-    this_thread::sleep_for(chrono::seconds(2));
+    this_thread::sleep_for(chrono::seconds(1));
 
     if (!errorHandler->hasError()) {
         return TEST_PASSED;
