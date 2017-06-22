@@ -17,11 +17,13 @@
 #include "ActorHandler.h"
 
 ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
-               HeightService &heightService,
-                             SortingSwichtControl &sortingSwichtControl )
+							 HeightService &heightService,
+                             SortingSwichtControl &sortingSwichtControl,
+                             SerialService &serialService)
     :    m_conveyorBeltService(conveyorBeltService)
     ,    m_heightService(heightService)
     ,    m_sortingSwitchControl(sortingSwichtControl)
+	, 	 m_serialService(serialService)
 {
     // Nothing todo so far.
 }
@@ -78,7 +80,12 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
                 LOG_DEBUG << "[ActorHandler] STOP HEIGHT MEASURE \n";
                 m_heightService.stopMeasuring();
                 break;
-
+            case PuckManager::SEND_PUCK:
+            	m_serialService.sendObj(manager.puckType);
+            	break;
+            case PuckManager::RECEIVED_PUCK:
+            	m_serialService.sendMsg(Serial_n::ser_proto_msg::RECEIVED_SER);
+            	break;
             default:
                 // Nothing todo so far.
                 break;
