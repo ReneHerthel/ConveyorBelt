@@ -21,7 +21,8 @@ public:
 		STOP_MEASUREMENT,
 		OPEN_SWITCH,
 		SEND_PUCK,
-		RECEIVED_PUCK
+		RECEIVED_PUCK,
+		ACCEPTED_PUCK
 	};
 
 	enum ErrorSignal {
@@ -51,7 +52,7 @@ public:
 	void newPuck(PuckSignal::PuckType type);
 
 private:
-	void addPuck(PuckContext *puck);
+	ManagerReturn addPuck(PuckContext *puck);
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 	int chid; /**< @brief ID for the pucks to give the timers*/
