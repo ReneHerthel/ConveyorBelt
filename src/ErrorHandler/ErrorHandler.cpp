@@ -43,45 +43,46 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
-    if (manager.errorFlag) {
+    if (!manager.errorFlag) {
+        return; // Do not do anything without a errorFlag.
+    }
 
-        m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
-        m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
+    m_hasError = true;
 
-        m_hasError = true;
+    m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+    m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 
-        DistanceObservable &distO = DistanceObservable::getInstance();
-        distO.updateSpeed(DistanceSpeed::STOP);
+    DistanceObservable &distO = DistanceObservable::getInstance();
+    distO.updateSpeed(DistanceSpeed::STOP);
 
-        m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+    m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 
-        switch (manager.errorSignal) {
+    switch (manager.errorSignal) {
 
-            case PuckManager::ErrorSignal::PUCK_LOST:
-                cout << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
-                break;
+        case PuckManager::ErrorSignal::PUCK_LOST:
+            cout << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
+            break;
 
-            case PuckManager::ErrorSignal::PUCK_MOVED:
-                cout << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
-                break;
+        case PuckManager::ErrorSignal::PUCK_MOVED:
+            cout << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
+            break;
 
-            case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
-                cout << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
-                break;
+        case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
+            cout << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
+            break;
 
-            case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
-                cout << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
-                break;
+        case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
+            cout << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
+            break;
 
-            case PuckManager::ErrorSignal::MULTIPLE_WARNING:
-                cout << "[ErrorHandler] MULTIPLE_WARNING" << endl;
-                break;
+        case PuckManager::ErrorSignal::MULTIPLE_WARNING:
+            cout << "[ErrorHandler] MULTIPLE_WARNING" << endl;
+            break;
 
-          default:
-              // Nothing todo so far.
-              break;
-        }
-    } /* if */
+        default:
+            // Nothing todo so far.
+            break;
+    }
 }
 
 bool ErrorHandler::hasError()
@@ -91,34 +92,40 @@ bool ErrorHandler::hasError()
 
 void ErrorHandler::handleMessage(rcv::msg_t message)
 {
-    if (message.code == 5) { // 5 is hardcoded in the ISR
+    bool buttonReset = false;
+    bool buttonStart = false;
 
-        switch(message.value) {
+    if (message.code != 5) { // 5 is hardcoded in the ISR.
+        return; // Do not do anything without code 5!
+    }
 
-            case interrupts::BUTTON_RESET:
-                cout << "[ErrorHandler] BUTTON_RESET pressed" << endl;
-                if (m_hasError) {
-                    m_resetPressed = true;
-                    m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
-                    m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
-                }
-                break;
+    switch(message.value) {
 
-            case interrupts::BUTTON_START:
-                cout << "[ErrorHandler] BUTTON_START pressed" << endl;
-                if (m_resetPressed) {
-                    m_hasError = false;
-                    m_resetPressed = false;
-                    m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
-                    m_lightSystemService->setWarningLevel(Level::OPERATING);
-                }
-                break;
+        case interrupts::BUTTON_RESET:
+            buttonReset = true;
+            break;
 
-            default:
-                // Nothing todo so far.
-                break;
-        }
-    } /* if */
+        case interrupts::BUTTON_START:
+            buttonStart = true;
+            break;
+
+        default:
+            // Nothing todo so far.
+            break;
+    }
+
+    if (buttonReset && m_hasError) {
+        m_resetPressed = true;
+        m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+        m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
+    }
+
+    if (buttonStart && m_hasError && m_resetPressed) { // Only go further when reset was pressed before.
+        m_resetPressed = false;
+        m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+        m_lightSystemService->setWarningLevel(Level::OPERATING);
+        m_hasError = false;
+    }
 }
 
 /** @} */
