@@ -55,8 +55,9 @@ using namespace interrupts;
 void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 	LOG_SCOPE;
 	PuckSignal::Signal m_sig;
+	PuckManager::ManagerReturn mng_r;
 	m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
-	m_sig.interruptSignal = signal;
+	m_sig.interruptSignal = (interrupts::interruptSignals) signal;
 	switch(signal){
 		case INLET_IN	 		  :
 		case INLET_OUT	 		  :
@@ -69,7 +70,9 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 		case SLIDE_OUT	 		  :
 		case OUTLET_IN	 		  :
 		case OUTLET_OUT           :
-			puckManager_->process(m_sig);
+			mng_r = puckManager_->process(m_sig);
+			DEBUG_MNG_RE(mng_r)
+			actorHandler_->demultiplex(mng_r);
 			break;
 			//TODO give the buttons to the error handle
 	}
@@ -82,6 +85,7 @@ void SignalDistributer::height(HeightMeasurement::signal_t signal){
 	m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
 	m_sig.heightSignal = signal;
 	mng_r = puckManager_->process(m_sig);
+	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
 }
 
@@ -92,6 +96,7 @@ void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
 	m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
 	m_sig.timerSignal = signal;
 	mng_r = puckManager_->process(m_sig);
+	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
 }
 
