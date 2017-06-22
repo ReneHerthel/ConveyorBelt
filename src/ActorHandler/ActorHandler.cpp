@@ -31,22 +31,26 @@ ActorHandler::~ActorHandler()
 
 void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
+	LOG_SCOPE
 	DistanceObservable &distO = DistanceObservable::getInstance();
 	switch (manager.speedSignal) {
 
 	    case PuckSignal::PuckSpeed::STOP:
 	    	m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 	    	distO.updateSpeed(DistanceSpeed::STOP);
+	    	LOG_DEBUG << "[ActorHandler] STOPPED \n";
 	    	break;
 
 	    case PuckSignal::PuckSpeed::SLOW:
             m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
             distO.updateSpeed(DistanceSpeed::SLOW);
+            LOG_DEBUG << "[ActorHandler] SLOW \n";
             break;
 
 	    case PuckSignal::PuckSpeed::FAST:
 	    	m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
 	    	distO.updateSpeed(DistanceSpeed::FAST);
+	    	LOG_DEBUG << "[ActorHandler] FAST \n";
 	    	break;
 
 	    default:
@@ -59,14 +63,17 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
         switch (manager.actorSignal) {
 
             case PuckManager::OPEN_SWITCH:
+            	LOG_DEBUG << "[ActorHandler] OPEN SWITCH \n";
                 m_sortingSwitchControl.open();
                 break;
 
             case PuckManager::START_MEASUREMENT:
+            	LOG_DEBUG << "[ActorHandler] START HEIGHT MEASURE \n";
             	m_heightService.startMeasuring();
                 break;
 
             case PuckManager::STOP_MEASUREMENT:
+            	LOG_DEBUG << "[ActorHandler] STOP HEIGHT MEASURE \n";
             	m_heightService.stopMeasuring();
                 break;
 

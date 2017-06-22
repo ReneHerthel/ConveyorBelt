@@ -25,6 +25,8 @@ void SignalDistributer::process(rcv::msg_t msg){
 	HeightMeasurement::signal_t height_;
 	PuckSignal::TimerSignal timer;
 
+	LOG_SCOPE;
+
 	switch(msg.code){
 		case ISR :
 			interrupt((interrupts::interruptSignals)msg.value);
@@ -51,6 +53,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 }
 using namespace interrupts;
 void SignalDistributer::interrupt(interrupts::interruptSignals signal){
+	LOG_SCOPE;
 	PuckSignal::Signal m_sig;
 	m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
 	m_sig.interruptSignal = signal;
@@ -73,6 +76,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 }
 
 void SignalDistributer::height(HeightMeasurement::signal_t signal){
+	LOG_SCOPE;
 	PuckManager::ManagerReturn mng_r;
 	PuckSignal::Signal m_sig;
 	m_sig.signalType = PuckSignal::SignalType::HEIGHT_SIGNAL;
@@ -82,6 +86,7 @@ void SignalDistributer::height(HeightMeasurement::signal_t signal){
 }
 
 void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
+	LOG_SCOPE;
 	PuckManager::ManagerReturn mng_r;
 	PuckSignal::Signal m_sig;
 	m_sig.signalType = PuckSignal::SignalType::TIMER_SIGNAL;
