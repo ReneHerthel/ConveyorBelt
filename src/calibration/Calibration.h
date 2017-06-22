@@ -28,7 +28,7 @@
 
 #define CALC_ABS_HEIGHT(val, perc) ((int16_t)((double)val*perc));
 
-#define INLET_CAL_SLOW 1500 //Measured 1.8, for seftys sake make it slower
+#define INLET_CAL_SLOW 1550 //Measured 1.8, for seftys sake make it slower
 #define INLET_CAL_FAST 500  //Unmeasured, educated gues
 
 #define SLIDE_TIMER_FAST 5000 //5 seconds, (un)educated guess
