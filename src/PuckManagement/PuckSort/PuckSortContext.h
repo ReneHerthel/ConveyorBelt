@@ -21,7 +21,7 @@
 
 /* FIXME: Move to global header */
 #define MACHINE 1
-#define FIFO_SORT 0 /*!< \brief If set, disables sort algorithm and let all pucks pass */
+#define FIFO_SORT 1 /*!< \brief If set, disables sort algorithm and let all pucks pass */
 
 using namespace PuckSignal;
 

@@ -119,6 +119,12 @@ TEST_IMPL(MachineOne, programm_m1){
 		cout.flush();
 
 
+		if(event.value == interrupts::BUTTON_RESET){
+			cbs.changeState(ConveyorBeltState::STOP);
+			std::cout << "\n\n RESET \n";
+			puckManager = PuckManager(mainChid);
+		}
+
 		signalDistributer.process(event);
 	}
 
