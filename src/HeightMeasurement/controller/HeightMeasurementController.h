@@ -16,8 +16,8 @@
  * @author     Jonas Fuhrmann <jonas.fuhrmann@haw-hamburg.de>
  */
 
-#ifndef HEIGHTMEASUREMENTSERVICE_H_
-#define HEIGHTMEASUREMENTSERVICE_H_
+#ifndef HEIGHTMEASUREMENTCONTROLLER_H_
+#define HEIGHTMEASUREMENTCONTROLLER_H_
 
 /*
  * @brief Access macros for the calibrationDataPtr.
@@ -51,7 +51,7 @@ class HeightContext;
 
 using namespace HeightMeasurement;
 
-class HeightMeasurementService {
+class HeightMeasurementController {
 public:
     /*
      * @brief The calibration data, which is initialized at the begining once.
@@ -73,12 +73,12 @@ public:
      * @param[send_chid] The channel id for the sending channel.
      * @param[*calibrationDataPtr] A pointer to the calibrated data.
      */
-    HeightMeasurementService(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
+    HeightMeasurementController(int receive_chid, int send_chid, CalibrationData *calibrationDataPtr);
 
     /*
      * @brief The default virtual destructor.
      */
-    virtual ~HeightMeasurementService();
+    virtual ~HeightMeasurementController();
 
     /*
      * @brief Starts the measuring thread, by creating a new thread.
