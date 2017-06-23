@@ -80,6 +80,7 @@ namespace PuckSignal {
 
 	// The serialized data
 	struct PuckType : public ISerializable {
+		PuckType(){};
         /*!  
          *  \brief Put input data into data member
          *  \argument [in] other Data to file
