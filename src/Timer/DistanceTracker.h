@@ -21,6 +21,7 @@ private:
 	int chid_;
 	TimerService timer_;
 	bool stopped_;
+	bool manStopped_; ///Distance tracker has been stopped from the outside
 	DistanceSpeed::speed_t currSpeed_;
 	int32_t lastValue_;
 	double fastToSlowFactor_;
