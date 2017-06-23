@@ -74,6 +74,8 @@ class LightSystemController {
 
         thread* controlThread;
         thread* taskThread;
+
+	    static const LightMessage* LightMessageMapping;
 };
 
 #endif
