@@ -49,41 +49,44 @@ bool PuckSortContext::process(PuckType signal) {
     /* Keep all pucks for now */
     return false;
 #else
-	LOG_DEBUG << "process: Got " << signal.data.heightType.ID << endl;
     switch (signal.data.heightType.ID) {
     case NORMAL_ID:
-    	LOG_DEBUG << "process: Got metal = " << signal.data.metal << endl;
+    	LOG_DEBUG << "process: Got metal = " <<  int(signal.data.metal) << endl;
     	if (signal.data.metal) {
+    			LOG_DEBUG << "process: Got METAL" << endl;
     	    	statePtr->holeWithMetal();
     	} else {
+			LOG_DEBUG << "process: Got NORMAL" << endl;
     	    	statePtr->holeWithoutMetal();
     	}
     	break;
     case FLIPPED_ID:
+		LOG_DEBUG << "process: Got FLIPPED" << endl;
     	statePtr->flipped();
     	break;
-    case INVALID_ID:
-    	statePtr->invalid();
-    	break;
     case PATTERN_ID:
-    	LOG_DEBUG << "process: : Got pattern " << signal.data.heightType.BIT2 << signal.data.heightType.BIT1 << signal.data.heightType.BIT0 << endl;
+    	LOG_DEBUG << "process: Got pattern " << int(signal.data.heightType.BIT2) << int(signal.data.heightType.BIT1) << int(signal.data.heightType.BIT0) << endl;
     	if (!signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && signal.data.heightType.BIT0) {
     		// 001
+    		LOG_DEBUG << "process: Got BITCODE1" << endl;
     		statePtr->bitCode1();
     	}
 
     	if (!signal.data.heightType.BIT2 && signal.data.heightType.BIT1 && !signal.data.heightType.BIT0) {
     		// 010
+    		LOG_DEBUG << "process: Got BITCODE2" << endl;
     		statePtr->bitCode2();
     	}
 
     	if (signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && !signal.data.heightType.BIT0) {
     		// 100
+    		LOG_DEBUG << "process: Got BITCODE4" << endl;
     		statePtr->bitCode4();
     	}
 
     	if (signal.data.heightType.BIT2 && !signal.data.heightType.BIT1 && signal.data.heightType.BIT0) {
     	    // 101
+    		LOG_DEBUG << "process: Got BITCODE5" << endl;
     	    statePtr->bitCode5();
     	}
     	break;
