@@ -24,8 +24,12 @@ PuckManager::~PuckManager() {
 	}
 }
 
-void PuckManager::newPuck(PuckSignal::PuckType type) {
+PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
+	ManagerReturn ret;
+	ret.actorFlag = true;
+	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;
 	addPuck(new PuckContext(chid, type));
+	return ret;
 }
 
 void PuckManager::addPuck(PuckContext *puck) {

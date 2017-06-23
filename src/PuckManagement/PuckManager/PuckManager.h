@@ -21,7 +21,8 @@ public:
 		STOP_MEASUREMENT,
 		OPEN_SWITCH,
 		SEND_PUCK,
-		RECEIVED_PUCK
+		RECEIVED_PUCK,
+		ACCEPTED_PUCK
 	};
 
 	enum ErrorSignal {
@@ -48,7 +49,7 @@ public:
 
 	ManagerReturn process(PuckSignal::Signal signal);
 
-	void newPuck(PuckSignal::PuckType type);
+	ManagerReturn newPuck(PuckSignal::PuckType type);
 
 private:
 	void addPuck(PuckContext *puck);

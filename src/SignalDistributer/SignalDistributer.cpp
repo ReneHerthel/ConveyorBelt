@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "Logscope.h"
 #include "PuckManager.h"
+#include "PuckSignal.h"
 
 SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler):
 	 puckManager_(puckManager)
@@ -28,25 +29,27 @@ void SignalDistributer::process(rcv::msg_t msg){
 	LOG_SCOPE;
 
 	switch(msg.code){
-		case ISR :
+		case CodeDefinition::ISR :
 			interrupt((interrupts::interruptSignals)msg.value);
 			break;
-		case SER_IN :
+		case CodeDefinition::SER_IN :
 			serial((Serial_n::ser_proto_msg)msg.value);
 			break;
-		case TRANSM_IN :
-			//puckManager_->deserialize() TODO FIX THE SERIALIZATION
+		case CodeDefinition::TRANSM_IN :
+			PuckManager::ManagerReturn mng_r;
+			mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
+			actorHandler_->demultiplex(mng_r);
 			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
 			break;
-		case PUCK_TIMER :
+		case CodeDefinition::PUCK_TIMER :
 			timer.value = msg.value;
 			timerForPuck(timer);
 			break;
-		case HEIGHT_MEASUREMENT :
+		case CodeDefinition::HEIGHT_MEASUREMENT :
 			height_.value = msg.value;
 			height(height_);
 			break;
-		case SORTING_SWITCH:
+		case CodeDefinition::SORTING_SWITCH:
 			ssCntrl_->close();
 			break;
 	}
@@ -65,7 +68,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 		case HEIGHTMEASUREMENT_OUT:
 		case SWITCH_IN	 		  :
 		case METAL_DETECT	 	  :
-		case SWITCH_OPEN	 	  :
+		case SWITCH_OUT	 	  :
 		case SLIDE_IN	 		  :
 		case SLIDE_OUT	 		  :
 		case OUTLET_IN	 		  :
@@ -79,6 +82,8 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 }
 
 void SignalDistributer::height(HeightMeasurement::signal_t signal){
+	std::cout<<"[TEST] COUT: "<< " signal-ID: " << (int)signal.ID << " CODE: " << (int)signal.BIT0 << (int)signal.BIT1 << (int)signal.BIT2 << ", Highest Height " << std::to_string(signal.highestHeight) <<std::endl;
+
 	LOG_SCOPE;
 	PuckManager::ManagerReturn mng_r;
 	PuckSignal::Signal m_sig;
@@ -101,7 +106,14 @@ void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
 }
 
 
-void SignalDistributer::serial(Serial_n::ser_proto_msg){
-	//TODO Implement
+void SignalDistributer::serial(Serial_n::ser_proto_msg signal){
+	LOG_SCOPE;
+	PuckManager::ManagerReturn mng_r;
+	PuckSignal::Signal sig;
+	sig.signalType = PuckSignal::SERIAL_SIGNAL;
+	sig.serialSignal = signal;
+	mng_r = puckManager_->process(sig);
+	DEBUG_MNG_RE(mng_r)
+	actorHandler_->demultiplex(mng_r);
 }
 
