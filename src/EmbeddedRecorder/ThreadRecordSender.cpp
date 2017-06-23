@@ -21,10 +21,14 @@
 #include "ITimer.h"
 #include "TimerService.h"
 
-#include "TestEmbeddedRecorderStub.h"
 #include "SerialProtocoll.h"
 
 #include "PuckSignal.h"
+
+#include "PulseMessageSenderService.h"
+#include "CodeDefinition.h"
+
+#include "EmbeddedRecorderSignals.h"
 
 #include <chrono>
 #include <iostream>
@@ -45,6 +49,10 @@ ThreadRecordSender::~ThreadRecordSender()
 
 void ThreadRecordSender::sendWholeBuffer()
 {
+	// Send a start message.
+    PulseMessageSenderService * sender = new PulseMessageSenderService(m_chid);
+    sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_PLAY);
+
     /* Read the first record, so it will be used
      * to get the duration between records.
      */
@@ -62,6 +70,9 @@ void ThreadRecordSender::sendWholeBuffer()
     }
 
     std::cout << "[ThreadSender] i was " << i << std::endl;
+
+    sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_STOP);
+    //delete sender;
 
     // NOTE: The thread will be delete after the while loop.
 }

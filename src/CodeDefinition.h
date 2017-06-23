@@ -28,8 +28,9 @@ namespace CodeDefinition{
 
 		HEIGHT_MEASUREMENT = 0,
 
-		SORTING_SWITCH = SSC_CLOSE
+		SORTING_SWITCH = SSC_CLOSE,
 
+		EMBEDDED_RECORDER = 30, // Random.
 	};
 }
 

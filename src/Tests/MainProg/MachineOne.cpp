@@ -40,6 +40,9 @@
 
 #include <thread>
 
+#include "EmbeddedRecorder.h"
+#include "EmbeddedRecorderSignals.h"
+
 using namespace HAL;
 
 SETUP(MachineOne){
@@ -147,8 +150,13 @@ TEST_IMPL(MachineOne, programm_m1){
 	//TESTLOOP
 	rcv::msg_t event;
 
+	rec::EmbeddedRecorder * embeddedRecorder = new rec::EmbeddedRecorder(mainChid);
+
 	while(1){
 		event = mainChannel.receivePulseMessage();
+
+        embeddedRecorder->writeMessageIntoBuffer(event);
+
 		std::cout << "Got something \n";
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n"; break; //Height
@@ -165,6 +173,9 @@ TEST_IMPL(MachineOne, programm_m1){
 			cbs.changeState(ConveyorBeltState::STOP);
 			std::cout << "\n\n RESET \n";
 			puckManager = PuckManager(mainChid);
+			embeddedRecorder->playRecordedData();
+
+			while (mainChannel.receivePulseMessage().code != rec::Signals::RECORD_STOP) { };
 		}
 
 		signalDistributer.process(event);
