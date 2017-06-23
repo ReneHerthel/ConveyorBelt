@@ -96,6 +96,11 @@ namespace PuckSignal {
 		bool operator==(PuckType const &type) {
 			return !memcmp(&data, &type.data, sizeof(data));
 		}
+
+		PuckType& operator=(Data other) {
+			data = other;
+			return *this;
+		}
 	};
 }
 

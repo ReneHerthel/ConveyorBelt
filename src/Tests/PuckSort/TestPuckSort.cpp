@@ -16,9 +16,11 @@
 
 #include "TestPuckSort.h"
 #include <iostream>
+
 using namespace std;
 using namespace HeightMeasurement;
 using namespace Serial_n;
+using namespace PuckSignal;
 
 SETUP(TestPuckSort) {
 	REG_TEST(test1, 1, "Test shortest path");
@@ -49,8 +51,8 @@ AFTER(TestPuckSort) {
 
 TEST_IMPL(TestPuckSort, test1) {
 
-	/* PuckType test;
-	test.data = { signal_t { { SignalID::NORMAL_ID, 0, 0, 0} }, 0, 0, 0 }; */
+	PuckType test = nullptr;
+			PuckType::Data({ signal_t {{ SignalID::NORMAL_ID, 0, 0, 0 }} });
 
     /*! \brief Define expected conditionals expected from state machine */
 	bool expectedResults[3] {
