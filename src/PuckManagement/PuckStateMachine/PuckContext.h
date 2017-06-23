@@ -17,7 +17,7 @@
 #include "DistanceEnum.h"
 #include "ISerializable.h"
 
-#define machine (0) // 0 or 1
+#define machine (1) // 0 or 1
 #define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
@@ -35,7 +35,7 @@ private:
 
 public:
 	PuckContext(int chid);
-	PuckContext(int chid, PuckSignal::PuckType puckType);
+	PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckId);
 
 	PuckSignal::Return process(PuckSignal::Signal signal);
 
