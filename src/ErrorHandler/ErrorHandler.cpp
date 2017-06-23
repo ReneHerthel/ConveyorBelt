@@ -32,7 +32,7 @@ ErrorHandler::ErrorHandler( int chid,
     ,    m_conveyorBeltService(conveyorBeltService)
     ,    m_lightSystemService(lightSystemService)
 {
-    m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+    //m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
     m_lightSystemService->setWarningLevel(Level::OPERATING);
 }
 
@@ -49,7 +49,7 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
     m_hasError = true;
 
-    m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+    //m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
     m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 
     DistanceObservable &distO = DistanceObservable::getInstance();
@@ -92,6 +92,7 @@ bool ErrorHandler::hasError()
 
 void ErrorHandler::handleMessage(rcv::msg_t message)
 {
+	cout << "[ErrorHandler] handleMessage()" << endl;
     bool buttonReset = false;
     bool buttonStart = false;
 
@@ -116,14 +117,23 @@ void ErrorHandler::handleMessage(rcv::msg_t message)
 
     if (buttonReset && m_hasError) {
         m_resetPressed = true;
-        m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+        //m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
         m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
     }
 
     if (buttonStart && m_hasError && m_resetPressed) { // Only go further when reset was pressed before.
         m_resetPressed = false;
-        m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
-        m_lightSystemService->setWarningLevel(Level::OPERATING);
+        //m_lightSystemService->setWarningLevel(Level::CLEAR_ALL);
+
+        if (m_resetPressed) {
+        	cout << "[ErrorHandler] clear error" << endl;
+        	m_lightSystemService->setWarningLevel(Level::CLEAR_ERROR);
+        	m_lightSystemService->setWarningLevel(Level::OPERATING);
+        }
+        else {
+            m_lightSystemService->setWarningLevel(Level::ERROR_GONE_UNACKNOWLEDGED);
+        }
+
         m_hasError = false;
     }
 }

@@ -70,6 +70,8 @@ TEST_IMPL(TestErrorHandler, test1) {
     LightSystemController * controller = new LightSystemController(chid, hal);
     ErrorHandler * errorHandler = new ErrorHandler(chid, *cbs, service);
 
+    this_thread::sleep_for(chrono::seconds(1));
+
     // random trash signal
     PuckSignal::Signal m_sig;
     m_sig.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
@@ -80,7 +82,6 @@ TEST_IMPL(TestErrorHandler, test1) {
     // random but needed managerReturn
     PuckManager::ManagerReturn manager;
     manager = puckManager->process(m_sig);
-    this_thread::sleep_for(chrono::seconds(1));
 
     if (!errorHandler->hasError()) {
         errorHandler->demultiplex(manager);
@@ -93,7 +94,7 @@ TEST_IMPL(TestErrorHandler, test1) {
     message.code = 5;
     message.value = interrupts::BUTTON_RESET;
     errorHandler->handleMessage(message);
-    this_thread::sleep_for(chrono::seconds(2));
+    this_thread::sleep_for(chrono::seconds(4));
 
     message.code = 5;
     message.value = interrupts::BUTTON_START;
