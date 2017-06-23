@@ -38,7 +38,7 @@ namespace rec {
         /* The value of the pulse message. */
         uint32_t value;
         /* The serialized puck object */
-        uint8_t puck[sizeof(PuckSignal::PuckType::Data)];
+        uint8_t puck[sizeof(PuckSignal::Data)];
     } record_t;
 
 } /* namespace rec */

@@ -50,17 +50,17 @@ ThreadRecordSender::~ThreadRecordSender()
 void ThreadRecordSender::sendWholeBuffer()
 {
 	// Send a start message.
-    PulseMessageSenderService * sender = new PulseMessageSenderService(m_chid);
-    sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_PLAY);
+    //PulseMessageSenderService * sender = new PulseMessageSenderService(m_chid);
+    //sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_PLAY);
 
     /* Read the first record, so it will be used
      * to get the duration between records.
      */
     record_t start;
-    int ret = m_buffer->readFromIndex(&start, 0);
+    m_buffer->readFromIndex(&start, 0);
     windUpClockAndSend(start, start.timestamp);
 
-    int i = 0;
+    int i = 1;
     record_t next;
 
     // Get the next records and wind up a clock to send a pulse message.
@@ -71,7 +71,7 @@ void ThreadRecordSender::sendWholeBuffer()
 
     std::cout << "[ThreadSender] i was " << i << std::endl;
 
-    sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_STOP);
+    //sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_STOP);
     //delete sender;
 
     // NOTE: The thread will be delete after the while loop.
@@ -90,10 +90,12 @@ void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_poi
             std::cout << "[ThreadRecordSender] windUpClockAndSend() deserialize failed." << std::endl;
         }
 
-        //std::cout << "[ThreadRecordSender] puck values: " << (int)puck->data.height1 << " & " << (int)puck->data.height2 << std::endl;
+        std::cout << "[ThreadRecordSender] puck values: " << (int)puck->data.height1 << " & " << (int)puck->data.height2 << std::endl;
 
         next.value = (int)puck;
     }
+
+    std::cout << "[ThreadRecordSender] send code/value: " << (int)next.code << " | " << (int)next.value << std::endl;
 
     auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start).count();
     timer->setAlarm(milsec, next.value);

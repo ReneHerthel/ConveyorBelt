@@ -39,6 +39,7 @@
 #include "ErrorHandler.h"
 
 #include <thread>
+#include <chrono>
 
 #include "EmbeddedRecorder.h"
 #include "EmbeddedRecorderSignals.h"
@@ -151,11 +152,24 @@ TEST_IMPL(MachineOne, programm_m1){
 	rcv::msg_t event;
 
 	rec::EmbeddedRecorder * embeddedRecorder = new rec::EmbeddedRecorder(mainChid);
+	bool isPlaying = false;
 
 	while(1){
 		event = mainChannel.receivePulseMessage();
 
-        embeddedRecorder->writeMessageIntoBuffer(event);
+		std::cout << "[MachineOne] " << event.code << " | " << event.value << std::endl;
+
+		if (event.code == rec::Signals::RECORD_PLAY) {
+            isPlaying = true;
+		}
+
+		if (event.code == rec::Signals::RECORD_STOP) {
+			isPlaying = false;
+		}
+
+		if (!isPlaying) {
+            embeddedRecorder->writeMessageIntoBuffer(event);
+		}
 
 		std::cout << "Got something \n";
 		switch(event.code){
@@ -174,8 +188,7 @@ TEST_IMPL(MachineOne, programm_m1){
 			std::cout << "\n\n RESET \n";
 			puckManager = PuckManager(mainChid);
 			embeddedRecorder->playRecordedData();
-
-			while (mainChannel.receivePulseMessage().code != rec::Signals::RECORD_STOP) { };
+			this_thread::sleep_for(chrono::seconds(2)); // because pucks are not debounced.
 		}
 
 		signalDistributer.process(event);
