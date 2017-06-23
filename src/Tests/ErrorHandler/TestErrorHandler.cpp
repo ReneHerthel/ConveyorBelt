@@ -55,6 +55,8 @@ AFTER(TestErrorHandler) {
 }
 
 TEST_IMPL(TestErrorHandler, test1) {
+	SerialService dummySerialService(999); ///TODO Remove hotfix
+
     std::cout << "[TestErrorHandler] started" << std::endl;
     int chid = ChannelCreate_r(0);
 
@@ -68,7 +70,7 @@ TEST_IMPL(TestErrorHandler, test1) {
     LightSystemHal * hal = new LightSystemHal();
     LightSystemService * service = new LightSystemService(chid);
     LightSystemController * controller = new LightSystemController(chid, hal);
-    ErrorHandler * errorHandler = new ErrorHandler(chid, *cbs, service);
+    ErrorHandler * errorHandler = new ErrorHandler(chid, *cbs, service, &dummySerialService);
 
     // random trash signal
     PuckSignal::Signal m_sig;
