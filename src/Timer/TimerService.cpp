@@ -71,7 +71,7 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 }
 
 void TimerService::stopAlarm() throw(int) {
-	//if(timerCreated){
+	if(timerCreated){
 		if(timerRunning){
 			if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
 				LOG_ERROR << "Error in timer_gettime\n";
@@ -87,7 +87,7 @@ void TimerService::stopAlarm() throw(int) {
 
 		timerRunning = false;
 		timerCreated = false;
-	//}
+	}
 }
 
 void TimerService::resumeAlarm() throw(int) {
