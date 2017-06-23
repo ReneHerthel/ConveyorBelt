@@ -41,7 +41,6 @@ int SerialReceiver::fail() {
 
 char* SerialReceiver::receive() {
 	reset();
-    LOG_SCOPE
 	char* msgBuff = new char[1000]; //TODO Move this size to the constructor
 	char headerBuff[FRAME_HEAD_BYTES];
     char tailBuff[FRAME_TAIL_BYTES];
@@ -83,7 +82,6 @@ char* SerialReceiver::receive() {
 }
 
 int SerialReceiver::readFromSerial(char *buff, uint32_t size){
-    LOG_SCOPE;
 	uint32_t bytes_read = 0;
 
     bytes_read = readcond(in, buff, size, size, 0, 60); //return with less then size bytes when SER_REC_TIMEOUT has expired, or size bytes when size bytes are available.
