@@ -60,6 +60,9 @@ int EmbeddedRecorder::writeMessageIntoBuffer(const rcv::msg_t message)
 
     record.value = message.value;
 
+    std::cout << "[EmbeddedRecorder] write to buffer code/value: " << (int)record.code << " | " << (int)record.value << std::endl;
+
+
     return m_recordBuffer->write(record);
 }
 

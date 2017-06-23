@@ -44,6 +44,8 @@
 #include "EmbeddedRecorder.h"
 #include "EmbeddedRecorderSignals.h"
 
+#include "CodeDefinition.h"
+
 using namespace HAL;
 
 SETUP(MachineOne){
@@ -154,41 +156,44 @@ TEST_IMPL(MachineOne, programm_m1){
 	rec::EmbeddedRecorder * embeddedRecorder = new rec::EmbeddedRecorder(mainChid);
 	bool isPlaying = false;
 
-	while(1){
+	while(1) {
+
 		event = mainChannel.receivePulseMessage();
+		std::cout << "[MachineOne]\t" << event.code << "\t|\t" << event.value << std::endl;
 
-		std::cout << "[MachineOne] " << event.code << " | " << event.value << std::endl;
-
-		if (event.code == rec::Signals::RECORD_PLAY) {
-            isPlaying = true;
-		}
-
-		if (event.code == rec::Signals::RECORD_STOP) {
-			isPlaying = false;
-		}
+        if (event.code == CodeDefinition::Code::EMBEDDED_RECORDER) {
+        	if (event.value == rec::Signals::RECORD_PLAY) {
+        		std::cout << "PLAY" << std::endl;
+                isPlaying = true;
+        	}
+        	else if(event.value == rec::Signals::RECORD_STOP) {
+        		std::cout << "STOP" << std::endl;
+                isPlaying = false;
+        	}
+        }
 
 		if (!isPlaying) {
-            embeddedRecorder->writeMessageIntoBuffer(event);
+			/*
+			 * NOTE: DO NOT RECORD PUCK TIMER! Or they will be more than one for a single puck.
+			 * NOTE: DO NOT RECORD THE RESET BUTTON! Or you will have a suuhuuper loop!
+			 */
+			if (event.code != 25 || (event.code == 5 && event.value != 16384)) {
+                embeddedRecorder->writeMessageIntoBuffer(event);
+        		embeddedRecorder->saveRecordedData();
+			}
 		}
-
-		std::cout << "Got something \n";
-		switch(event.code){
-			case 0: std::cout << "\n\n Height \n"; break; //Height
-			case 1: std::cout << "\n\n Serial \n";break; //Serial
-			case 2: std::cout << "\n\n Serial \n";break; //Serial
-			case 3: std::cout << "\n\n Serial \n";break; //Serial
-			case 4: std::cout << "\n\n Serial \n";break; //Serial
-			case 5: std::cout << "\n\n ISR \n";break; //ISR
-		}
-		cout.flush();
-
 
 		if(event.value == interrupts::BUTTON_RESET){
-			cbs.changeState(ConveyorBeltState::STOP);
 			std::cout << "\n\n RESET \n";
-			puckManager = PuckManager(mainChid);
-			embeddedRecorder->playRecordedData();
-			this_thread::sleep_for(chrono::seconds(2)); // because pucks are not debounced.
+
+			if(!isPlaying){
+				isPlaying = true;
+				cbs.changeState(ConveyorBeltState::STOP);
+				puckManager = PuckManager(mainChid);
+				embeddedRecorder->newBuffer();
+				embeddedRecorder->loadRecordedData();
+				embeddedRecorder->playRecordedData();
+			}
 		}
 
 		signalDistributer.process(event);

@@ -30,7 +30,7 @@ namespace rec {
  * @description NOTE: This needs to be defined here, otherwise we need object
  *                    serialization for the buffer.
  */
-#define BUFFER_LENGTH    (65536) // 2^16
+#define BUFFER_LENGTH    (128) // 2^16
 
     class RecordBuffer : public IRecordBuffer {
     public:
@@ -76,22 +76,22 @@ namespace rec {
         /*
          * @brief The size or length of the buffer.
          */
-        size_t m_length;
+        int m_length;
 
         /*
          * @brief The read (tail) index of the buffer.
          */
-        size_t m_read;
+        int m_read;
 
         /*
          * @brief The write (head) index of the buffer.
          */
-        size_t m_write;
+        int m_write;
 
         /*
          * @brief Counts the amount of values in the buffer.
          */
-        size_t m_count;
+        int m_count;
 
         /*
          * @brief The buffer which contains all data.

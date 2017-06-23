@@ -126,11 +126,16 @@ int RecordBuffer::read(record_t *record)
 
 int RecordBuffer::readFromIndex(record_t * record, const int index)
 {
-    if (index > m_length || index < 0 || index >= m_write) {
+	read_write_mutex.lock();
+
+    if (index > m_length || index < 0 || index > m_write) {
+    	read_write_mutex.unlock();
         return OUT_OF_BOUNDS;
     }
 
     *record = m_buffer[index];
+
+    read_write_mutex.unlock();
 
     return BUFFER_SUCCESS;
 }
