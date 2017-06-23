@@ -13,7 +13,7 @@
 
 #include <new>
 
-PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
+PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckId) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
 	LOG_SCOPE;
 
 #if !machine
@@ -24,8 +24,9 @@ PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistanc
 	statePtr->wideDistance = &wideDistance;
 
 #else
-	LOG_DEBUG << "Using machine1\n";
+	LOG_DEBUG << "Using machine1" << endl;
 	statePtr = &transferState;
+	setPuckID(puckId);
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;

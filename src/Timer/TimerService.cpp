@@ -82,7 +82,7 @@ void TimerService::stopAlarm() throw(int) {
 
 		if(timer_delete(timerid) == -1) { // delete the timer
 			LOG_ERROR << "Error in timer_delete\n";
-			throw(EXIT_FAILURE);
+			//throw(EXIT_FAILURE);
 		}
 
 		timerRunning = false;

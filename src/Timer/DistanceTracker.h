@@ -61,6 +61,7 @@ public:
 	 */
 	int32_t stopAlarm();
 
+
 };
 
 #endif /* SRC_TIMER_DISTANCETRACKER_H_ */

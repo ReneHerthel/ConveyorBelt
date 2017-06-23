@@ -99,6 +99,7 @@ void SignalDistributer::height(HeightMeasurement::signal_t signal){
 	mng_r = puckManager_->process(m_sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
+	errorHandler_->demultiplex(mng_r);
 }
 
 void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
@@ -110,6 +111,7 @@ void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
 	mng_r = puckManager_->process(m_sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
+	errorHandler_->demultiplex(mng_r);
 }
 
 
@@ -122,5 +124,6 @@ void SignalDistributer::serial(Serial_n::ser_proto_msg signal){
 	mng_r = puckManager_->process(sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
+	errorHandler_->demultiplex(mng_r);
 }
 

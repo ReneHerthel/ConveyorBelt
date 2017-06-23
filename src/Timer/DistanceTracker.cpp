@@ -6,6 +6,7 @@
 #include "DistanceEnum.h"
 #include "Calibration.h"
 #include "Logger.h"
+#include "PuckSignal.h"
 
 DistanceTracker::DistanceTracker(int chid, int8_t code):
 	chid_(chid),
@@ -70,6 +71,9 @@ int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance di
 	lastValue_ = value;
 	timer_.stopAlarm();
 	uint32_t ms = cal.getCalibration(distance, currSpeed_)*delta;
+	PuckSignal::TimerSignal puckTimerSignal;
+	puckTimerSignal.value = value;
+	LOG_DEBUG << "[DistanceTracker]Puck with" << (int)puckTimerSignal.TimerInfo.puckID << "started a distance tracker \n";
 	if(ms > 0){
 		timer_.setAlarm(cal.getCalibration(distance, currSpeed_)*delta, value);
 		LOG_DEBUG << "[DistanceTracker]Starting DistanceTracker with " << ms << "ms \n";

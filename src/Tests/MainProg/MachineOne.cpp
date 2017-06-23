@@ -109,7 +109,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	calibration.loadFromDisk("/Calibration.dat");
 
 	//INIT LIGHTSYSTEM
-	/*PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
+	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
 	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
 
 	std::cout << "LightSystemChid" <<lightsystemChid << "\n";
@@ -117,7 +117,6 @@ TEST_IMPL(MachineOne, programm_m1){
 	BLightSystem *lsHal = new LightSystemHal();
 	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
 	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
-	lightSystem->setWarningLevel(WARNING_OCCURED);*/
 
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
@@ -135,11 +134,9 @@ TEST_IMPL(MachineOne, programm_m1){
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
 
-	LightSystemHal * lhal = new LightSystemHal();
-	LightSystemService * lservice = new LightSystemService(mainChid);
-	LightSystemController * lcontrol = new LightSystemController(mainChid, lhal);
 
-	ErrorHandler errorHandler(mainChid, cbs, lservice);
+	ErrorHandler errorHandler(mainChid, cbs, lightSystem);
+
 
 	//INIT SIGNAL DISTRIBUTER
 	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler, &errorHandler);

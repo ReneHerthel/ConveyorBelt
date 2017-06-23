@@ -30,14 +30,14 @@ PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
 	ManagerReturn ret;
 	ret.actorFlag = true;
 	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;
-	addPuck(new PuckContext(chid, type));
+	addPuck(new PuckContext(chid, type, nextPuckID++));
 	return ret;
 }
 
 void PuckManager::addPuck(PuckContext *puck) {
 	LOG_SCOPE;
-	puck->setPuckID(nextPuckID++);
 	puckList.push_back(puck);
+	LOG_DEBUG << "[PuckManager] Size of puckList" << puckList.size() << endl;
 }
 
 PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
