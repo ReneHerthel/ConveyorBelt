@@ -36,7 +36,11 @@
 #include "SignalDistributer.h"
 #include "SortingSwichtControl.h"
 
+#include "ErrorHandler.h"
+
 #include <thread>
+
+using namespace HAL;
 
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
@@ -131,8 +135,14 @@ TEST_IMPL(MachineOne, programm_m1){
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
 
+	LightSystemHal * lhal = new LightSystemHal();
+	LightSystemService * lservice = new LightSystemService(mainChid);
+	LightSystemController * lcontrol = new LightSystemController(mainChid, lhal);
+
+	ErrorHandler errorHandler(mainChid, cbs, lservice);
+
 	//INIT SIGNAL DISTRIBUTER
-	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler);
+	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler, &errorHandler);
 
 	//TESTLOOP
 	rcv::msg_t event;

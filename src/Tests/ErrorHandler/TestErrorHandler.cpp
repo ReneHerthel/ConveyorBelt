@@ -82,24 +82,25 @@ TEST_IMPL(TestErrorHandler, test1) {
     // random but needed managerReturn
     PuckManager::ManagerReturn manager;
     manager = puckManager->process(m_sig);
+    this_thread::sleep_for(chrono::seconds(3));
 
     if (!errorHandler->hasError()) {
         errorHandler->demultiplex(manager);
     }
 
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::seconds(3));
 
     rcv::msg_t message;
 
     message.code = 5;
     message.value = interrupts::BUTTON_RESET;
     errorHandler->handleMessage(message);
-    this_thread::sleep_for(chrono::seconds(4));
+    this_thread::sleep_for(chrono::seconds(3));
 
     message.code = 5;
     message.value = interrupts::BUTTON_START;
     errorHandler->handleMessage(message);
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::seconds(5));
 
     if (!errorHandler->hasError()) {
         return TEST_PASSED;

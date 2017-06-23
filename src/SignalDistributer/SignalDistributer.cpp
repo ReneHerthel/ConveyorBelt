@@ -12,10 +12,11 @@
 #include "PuckManager.h"
 #include "PuckSignal.h"
 
-SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler):
+SignalDistributer::SignalDistributer(PuckManager *puckManager, SortingSwichtControl *ssCntrl, ActorHandler *actorHandler, ErrorHandler * errorHandler):
 	 puckManager_(puckManager)
 	,ssCntrl_(ssCntrl)
 	,actorHandler_(actorHandler)
+    ,errorHandler_(errorHandler)
 {}
 
 SignalDistributer::~SignalDistributer() {}
@@ -28,30 +29,36 @@ void SignalDistributer::process(rcv::msg_t msg){
 
 	LOG_SCOPE;
 
-	switch(msg.code){
-		case CodeDefinition::ISR :
-			interrupt((interrupts::interruptSignals)msg.value);
-			break;
-		case CodeDefinition::SER_IN :
-			serial((Serial_n::ser_proto_msg)msg.value);
-			break;
-		case CodeDefinition::TRANSM_IN :
-			PuckManager::ManagerReturn mng_r;
-			mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
-			actorHandler_->demultiplex(mng_r);
-			LOG_DEBUG << "[SignalDistributer] Transm_in \n";
-			break;
-		case CodeDefinition::PUCK_TIMER :
-			timer.value = msg.value;
-			timerForPuck(timer);
-			break;
-		case CodeDefinition::HEIGHT_MEASUREMENT :
-			height_.value = msg.value;
-			height(height_);
-			break;
-		case CodeDefinition::SORTING_SWITCH:
-			ssCntrl_->close();
-			break;
+	if (errorHandler_->hasError()) {
+        errorHandler_->handleMessage(msg); // Wait for pressing the buttons.
+	}
+	else {
+		switch(msg.code){
+			case CodeDefinition::ISR :
+				interrupt((interrupts::interruptSignals)msg.value);
+				break;
+			case CodeDefinition::SER_IN :
+				serial((Serial_n::ser_proto_msg)msg.value);
+				break;
+			case CodeDefinition::TRANSM_IN :
+				PuckManager::ManagerReturn mng_r;
+				mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
+				actorHandler_->demultiplex(mng_r);
+				LOG_DEBUG << "[SignalDistributer] Transm_in \n";
+				errorHandler_->demultiplex(mng_r);
+				break;
+			case CodeDefinition::PUCK_TIMER :
+				timer.value = msg.value;
+				timerForPuck(timer);
+				break;
+			case CodeDefinition::HEIGHT_MEASUREMENT :
+				height_.value = msg.value;
+				height(height_);
+				break;
+			case CodeDefinition::SORTING_SWITCH:
+				ssCntrl_->close();
+				break;
+		}
 	}
 }
 using namespace interrupts;
