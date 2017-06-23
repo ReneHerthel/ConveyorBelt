@@ -8,7 +8,7 @@
 #include "PuckManager.h"
 
 #include "logger.h"
-#include "logscope.h"
+#include "logScope.h"
 
 PuckManager::PuckManager(int chid)
 	: puckList()
@@ -19,12 +19,14 @@ PuckManager::PuckManager(int chid)
 PuckManager::~PuckManager() {
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while(it != puckList.end()) {
+		LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 		delete *it;					// delete the puck from memory
 		it = puckList.erase(it);	// delete the puck from list
 	}
 }
 
-ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
+PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
+	LOG_SCOPE;
 	ManagerReturn ret;
 	ret.actorFlag = true;
 	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;
@@ -140,6 +142,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				break;
 			case PuckSignal::PuckReturn::DELETE:
 				acceptCounter++;
+				LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
 				break;
@@ -177,6 +180,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				sort.process(returnVal.puckReturn);
 
 				prioReturnVal.slideFullFlag = true;
+				LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
 				break;

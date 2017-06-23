@@ -36,6 +36,12 @@
 #include "SignalDistributer.h"
 #include "SortingSwichtControl.h"
 
+#include "ErrorHandler.h"
+
+#include <thread>
+
+using namespace HAL;
+
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
 };
@@ -60,6 +66,34 @@ TEST_IMPL(MachineOne, programm_m1){
 	Control isrCntrl(mainChid);
 	ISR isr(&isrCntrl);
 	std::thread isr_th(ref(isr));
+
+
+	//INIT Serial
+	//Init PMR
+	rcv::PulseMessageReceiverService pmrSer1;
+	int pmrSer1Chid = pmrSer1.newChannel();
+
+	//Init PMS
+	rcv::PulseMessageReceiverService pmsChannelCreatorSer1;
+	int pmsSer1Chid = pmsChannelCreatorSer1.newChannel();
+	PulseMessageSenderService pmsSer1(pmsSer1Chid);
+
+	//Init Sender & Receiver
+	char ser1_path[] = "/dev/ser1";
+	SerialSender senderSer1(ser1_path);
+	SerialReceiver receiverSer1(ser1_path);
+
+	//Init Protocol
+	SerialProtocoll protoSer1(SENDER);
+
+	//Init Serial
+	Serial ser1(receiverSer1, senderSer1, protoSer1, pmsSer1Chid, mainChid);
+
+
+	//Init SerialService
+	SerialService serialService(pmsSer1Chid);
+
+	std::thread ser1_thread(ref(ser1));
 
 
 	//INIT CBS
@@ -96,13 +130,19 @@ TEST_IMPL(MachineOne, programm_m1){
 	SortingSwichtControl ssCntrl(mainChid);
 
 	//Init actor handler
-	ActorHandler actorHandler(cbs, heightService, ssCntrl);
+	ActorHandler actorHandler(cbs, heightService, ssCntrl, serialService);
 
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
 
+	LightSystemHal * lhal = new LightSystemHal();
+	LightSystemService * lservice = new LightSystemService(mainChid);
+	LightSystemController * lcontrol = new LightSystemController(mainChid, lhal);
+
+	ErrorHandler errorHandler(mainChid, cbs, lservice);
+
 	//INIT SIGNAL DISTRIBUTER
-	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler);
+	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler, &errorHandler);
 
 	//TESTLOOP
 	rcv::msg_t event;
@@ -112,7 +152,9 @@ TEST_IMPL(MachineOne, programm_m1){
 		std::cout << "Got something \n";
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n"; break; //Height
+			case 1: std::cout << "\n\n Serial \n";break; //Serial
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
+			case 3: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5: std::cout << "\n\n ISR \n";break; //ISR
 		}

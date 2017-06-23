@@ -35,7 +35,6 @@ SerialSender::~SerialSender() {
 }
 
 int32_t SerialSender::send(char *msg, uint16_t size) {
-    LOG_SCOPE
     char buff[size+FRAME_HEAD_BYTES];
     uint16_t framesize = frame(msg, size, buff);
     checksum(framesize, buff);
@@ -59,7 +58,6 @@ void SerialSender::checksum(uint16_t size, char* buff){
 }
 
 int32_t SerialSender::sendSerial(uint16_t size, char* buff) {
-    LOG_SCOPE
     err = write(out, buff, size+1);
     tcdrain(out);
     if(err < 0){

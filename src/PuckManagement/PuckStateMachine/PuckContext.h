@@ -21,7 +21,10 @@
 #define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
+#define QUICK_SHORT_DELTA 0.4
+
 #define WIDE_DELTA 1.25
+#define VERY_WIDE_DELTA 3.0
 class PuckContext {
 private:
 
@@ -97,6 +100,7 @@ public:
 		DistanceTracker *wideDistance;
 
 		void startTimers(DistanceSpeed::lb_distance distance);
+		void startTimersWithDelta(DistanceSpeed::lb_distance distance,double earlyDelta,double lateDelta);
 		void stopTimer();
 	} *statePtr;
 	/*******************************************/
