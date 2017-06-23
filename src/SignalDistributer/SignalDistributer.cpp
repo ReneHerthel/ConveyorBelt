@@ -39,7 +39,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 			PuckManager::ManagerReturn mng_r;
 			mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
 			actorHandler_->demultiplex(mng_r);
-			LOG_DEBUG << "[SignalDistributer] Transm_in not implemented \n";
+			LOG_DEBUG << "[SignalDistributer] Transm_in \n";
 			break;
 		case CodeDefinition::PUCK_TIMER :
 			timer.value = msg.value;
