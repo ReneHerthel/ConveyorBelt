@@ -31,7 +31,8 @@ void Calibration::calibrate(int mainChid){
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
     HeightMeasurementHal hal;
-    uint16_t data;
+    uint16_t data = 0;
+    uint32_t data_avg = 0;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
@@ -50,12 +51,19 @@ void Calibration::calibrate(int mainChid){
 	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	cbs.changeState(RIGHTSLOW);
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
 
-	hal.read(data);
-	hmCal.surfaceHeight = data;
+
+	for(int i = 0; i < 100; i++){
+		hal.read(data);
+		data_avg += data;
+	}
+	data_avg /= 100;
+
+	hmCal.surfaceHeight = (uint16_t)data_avg;
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
@@ -68,6 +76,7 @@ void Calibration::calibrate(int mainChid){
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
 	for(int i = 0; i < 2; i++){
+		break; //TODO REMOVE
 		if(i == 0) 	cbs.changeState(RIGHTFAST);
 		else		cbs.changeState(RIGHTSLOW);
 
@@ -239,7 +248,10 @@ void  Calibration::calibrateHeighMeasurement(void){
 	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
 	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
 
-	hmCal.delta = DELTA;
+	uint16_t delta;
+	delta = (hmCal.invalidHeight - hmCal.lowHeight) / 2;
+
+	hmCal.delta = delta;
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
