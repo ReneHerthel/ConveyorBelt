@@ -31,7 +31,8 @@ void Calibration::calibrate(int mainChid){
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
     HeightMeasurementHal hal;
-    uint16_t data;
+    uint16_t data = 0;
+    uint32_t data_avg = 0;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
@@ -50,12 +51,19 @@ void Calibration::calibrate(int mainChid){
 	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	cbs.changeState(RIGHTSLOW);
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
 
-	hal.read(data);
-	hmCal.surfaceHeight = data;
+
+	for(int i = 0; i < 100; i++){
+		hal.read(data);
+		data_avg += data;
+	}
+	data_avg /= 100;
+
+	hmCal.surfaceHeight = (uint16_t)data_avg;
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
@@ -104,6 +112,12 @@ void Calibration::calibrate(int mainChid){
 	while(pmr.receivePulseMessage().value != interrupts::INLET_OUT);
 	inSwitch[0] = milliseconds((int)((double)outlet[0].count()/2.5)); //TODO make readable
 	inSwitch[1] = milliseconds((int)((double)outlet[1].count()/2.5));
+
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
 
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
@@ -168,7 +182,6 @@ void Calibration::calibrate(void){
 	while(!pollLB(LB_ENTRY));
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-
 	while(!pollLB(LB_HEIGHT));
 	auto lb_in = system_clock::now();
 	while(pollLB(LB_HEIGHT));
@@ -218,6 +231,13 @@ void Calibration::calibrate(void){
 	}
 	sss.sortingSwitchClose(); //Safety
 
+
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
+
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
@@ -233,7 +253,10 @@ void  Calibration::calibrateHeighMeasurement(void){
 	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
 	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
 
-	hmCal.delta = DELTA;
+	uint16_t delta;
+	delta = (hmCal.invalidHeight - hmCal.lowHeight) / 2;
+
+	hmCal.delta = delta;
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
@@ -290,6 +313,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case SWITCH_TO_OUTLET: 	return outlet[slowOrFast].count();
 		case OUT_TO_IN:			return inlet[slowOrFast].count();
 		case IN_SWITCH: 		return inSwitch[slowOrFast].count();
+		case SLIDE:				return slide[slowOrFast].count();
 	}
 
 }

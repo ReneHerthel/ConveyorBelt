@@ -10,15 +10,20 @@
  *  \internal
  *       Created:  06/14/2017
  * Last modified:  06/21/2017
- *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
- *     MIT License
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke
+ *
+ *   This file is subject to the terms and conditions of the MIT
+ *   License. See the file LICENSE in the top level directory for more
+ *   details.
  */
 
 #include "TestPuckSort.h"
 #include <iostream>
+
 using namespace std;
 using namespace HeightMeasurement;
 using namespace Serial_n;
+using namespace PuckSignal;
 
 SETUP(TestPuckSort) {
 	REG_TEST(test1, 1, "Test shortest path");
@@ -48,6 +53,7 @@ AFTER(TestPuckSort) {
 }
 
 TEST_IMPL(TestPuckSort, test1) {
+
     /*! \brief Define expected conditionals expected from state machine */
 	bool expectedResults[3] {
 		false,
@@ -56,10 +62,11 @@ TEST_IMPL(TestPuckSort, test1) {
 	};
 
     /*! \brief Define signals to feed into state machine */
+	/* TODO: Assign to every single data member of array index */
 	PuckType testSignals[3] = {
 			TESTSIGNAL_HOLEWITHOUTMETAL,
 			TESTSIGNAL_HOLEWITHOUTMETAL,
-			TESTSIGNAL_HOLEWITHMETAL,
+			TESTSIGNAL_HOLEWITHMETAL
 	};
 
 
@@ -75,6 +82,7 @@ TEST_IMPL(TestPuckSort, test1) {
 
 TEST_IMPL(TestPuckSort, test2) {
     /*! \brief Define signals to feed into state machine */
+	/* TODO: Assign to every single data member of array index */
 	PuckType testSignals[8] = {
 			TESTSIGNAL_BITCODE1,
 			TESTSIGNAL_BITCODE2,
@@ -124,6 +132,7 @@ TEST_IMPL(TestPuckSort, test2) {
 
 TEST_IMPL(TestPuckSort, test3) {
     /*! \brief Define signals to feed into state machine */
+	/* TODO: Assign to every single data member of array index */
 	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHMETAL,
         TESTSIGNAL_BITCODE4,
@@ -192,6 +201,7 @@ TEST_IMPL(TestPuckSort, test3) {
 TEST_IMPL(TestPuckSort, test4) {
 	LOG_SCOPE;
     /*! \brief Define signals to feed into state machine */
+	/* TODO: Assign to every single data member of array index */
 	PuckType testSignals[8] = {
         TESTSIGNAL_HOLEWITHOUTMETAL,
         TESTSIGNAL_BITCODE1,
