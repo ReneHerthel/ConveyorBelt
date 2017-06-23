@@ -10,15 +10,20 @@
  *  \internal
  *       Created:  06/14/2017
  * Last modified:  06/21/2017
- *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
- *     MIT License
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke
+ *
+ *   This file is subject to the terms and conditions of the MIT
+ *   License. See the file LICENSE in the top level directory for more
+ *   details.
  */
 
 #include "TestPuckSort.h"
 #include <iostream>
+
 using namespace std;
 using namespace HeightMeasurement;
 using namespace Serial_n;
+using namespace PuckSignal;
 
 SETUP(TestPuckSort) {
 	REG_TEST(test1, 1, "Test shortest path");
@@ -48,9 +53,6 @@ AFTER(TestPuckSort) {
 }
 
 TEST_IMPL(TestPuckSort, test1) {
-
-	/* PuckType test;
-	test.data = { signal_t { { SignalID::NORMAL_ID, 0, 0, 0} }, 0, 0, 0 }; */
 
     /*! \brief Define expected conditionals expected from state machine */
 	bool expectedResults[3] {
