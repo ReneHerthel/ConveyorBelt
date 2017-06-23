@@ -154,23 +154,13 @@ TEST_IMPL(MachineOne, programm_m1){
 	rcv::msg_t event;
 
 	rec::EmbeddedRecorder * embeddedRecorder = new rec::EmbeddedRecorder(mainChid);
-	bool isPlaying = false;
+
+	bool isPlaying = false; // NOTE: this is to dirty. D how to fix.
 
 	while(1) {
 
 		event = mainChannel.receivePulseMessage();
 		std::cout << "[MachineOne]\t" << event.code << "\t|\t" << event.value << std::endl;
-
-        if (event.code == CodeDefinition::Code::EMBEDDED_RECORDER) {
-        	if (event.value == rec::Signals::RECORD_PLAY) {
-        		std::cout << "PLAY" << std::endl;
-                isPlaying = true;
-        	}
-        	else if(event.value == rec::Signals::RECORD_STOP) {
-        		std::cout << "STOP" << std::endl;
-                isPlaying = false;
-        	}
-        }
 
 		if (!isPlaying) {
 			/*

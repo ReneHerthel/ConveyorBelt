@@ -51,7 +51,7 @@ void ThreadRecordSender::sendWholeBuffer()
 {
 	// Send a start message.
     PulseMessageSenderService * sender = new PulseMessageSenderService(m_chid);
-    sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_PLAY);
+    //sender->sendPulseMessage(CodeDefinition::Code::EMBEDDED_RECORDER, rec::Signals::RECORD_PLAY);
     std::cout << "[ThreadRecordSender] send 30 | " << rec::Signals::RECORD_PLAY << std::endl;
 
     /* Read the first record, so it will be used
@@ -75,11 +75,10 @@ void ThreadRecordSender::sendWholeBuffer()
     std::cout << "[ThreadSender] num of sent pulse messages " << i << std::endl;
 
     // Send last pulse message with information that the recorder is done playing.
-    record_t fin;
-    fin.code = CodeDefinition::Code::EMBEDDED_RECORDER;
-    fin.value = rec::Signals::RECORD_STOP;
-
-    windUpClockAndSend(fin, start.timestamp);
+    //record_t fin;
+    //fin.code = CodeDefinition::Code::EMBEDDED_RECORDER;
+    //fin.value = rec::Signals::RECORD_STOP;
+    //windUpClockAndSend(fin, start.timestamp);
 }
 
 void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_point<std::chrono::system_clock> start)
