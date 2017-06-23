@@ -59,6 +59,8 @@ void Serial::operator()() {
                 if(pm.value != POL_SER){ //POL doesnt need to be send to the main
                 	LOG_DEBUG << "Serial sends pulse to mainChid";
                     ch_out.sendPulseMessage(pm.code, pm.value);
+                } else {
+                	LOG_DEBUG << "Serial got an ping of life";
                 }
                 polRecTimer.stopAlarm();
                 polRecTimer.setAlarm(4000, 0);
