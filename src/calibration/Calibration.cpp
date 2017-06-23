@@ -76,7 +76,6 @@ void Calibration::calibrate(int mainChid){
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
 	for(int i = 0; i < 2; i++){
-		break; //TODO REMOVE
 		if(i == 0) 	cbs.changeState(RIGHTFAST);
 		else		cbs.changeState(RIGHTSLOW);
 
