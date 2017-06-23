@@ -12,6 +12,7 @@ DistanceTracker::DistanceTracker(int chid, int8_t code):
 	code_(code),
 	timer_(chid, code),
 	stopped_(false),
+	manStopped_(false),
 	currSpeed_(DistanceSpeed::STOP){
 
 	DistanceObservable& distO = DistanceObservable::getInstance();
@@ -32,36 +33,39 @@ DistanceTracker::~DistanceTracker(){
 using namespace DistanceSpeed;
 
 void DistanceTracker::notify(DistanceSpeed::speed_t speed){
-	uint32_t remainingTime = 0;
-	if(stopped_){ //Timer was stopped, resume it
-		timer_.resumeAlarm();
-		stopped_ = false;
-	}
-	if(currSpeed_ != speed){
-		switch(speed){
-			case DistanceSpeed::FAST:
-				remainingTime = timer_.killAlarm();
-				if(remainingTime > 0){
-					timer_.setAlarm((uint32_t)((double)remainingTime*slowToFastFactor_), lastValue_);
-				}
-				currSpeed_ = speed;
-				break;
-			case DistanceSpeed::SLOW:
-				remainingTime = timer_.killAlarm();
-				if(remainingTime > 0){
-					timer_.setAlarm((uint32_t)((double)remainingTime*fastToSlowFactor_), lastValue_);
-				}
-				currSpeed_ = speed;
-				break;
-			case DistanceSpeed::STOP:
-				timer_.stopAlarm();
-				stopped_ = true;
-				break;
+	if(!manStopped_){
+		uint32_t remainingTime = 0;
+		if(stopped_){ //Timer was stopped, resume it
+			timer_.resumeAlarm();
+			stopped_ = false;
+		}
+		if(currSpeed_ != speed){
+			switch(speed){
+				case DistanceSpeed::FAST:
+					remainingTime = timer_.killAlarm();
+					if(remainingTime > 0){
+						timer_.setAlarm((uint32_t)((double)remainingTime*slowToFastFactor_), lastValue_);
+					}
+					currSpeed_ = speed;
+					break;
+				case DistanceSpeed::SLOW:
+					remainingTime = timer_.killAlarm();
+					if(remainingTime > 0){
+						timer_.setAlarm((uint32_t)((double)remainingTime*fastToSlowFactor_), lastValue_);
+					}
+					currSpeed_ = speed;
+					break;
+				case DistanceSpeed::STOP:
+					timer_.stopAlarm();
+					stopped_ = true;
+					break;
+			}
 		}
 	}
 }
 
 int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance distance, double delta){
+	manStopped_ =  false;
 	Calibration& cal = Calibration::getInstance();
 	lastValue_ = value;
 	timer_.stopAlarm();
@@ -76,6 +80,7 @@ int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance di
 
 int32_t DistanceTracker::stopAlarm(){
 	LOG_DEBUG << "[DistanceTracker]Stopped distance tracker \n";
+	manStopped_ = true;
 	timer_.stopAlarm();
 }
 

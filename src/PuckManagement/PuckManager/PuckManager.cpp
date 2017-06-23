@@ -206,6 +206,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 	}
 
+	// metal detect hot fix
+	if(signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL
+			&& signal.interruptSignal == interrupts::interruptSignals::METAL_DETECT
+			&& acceptCounter == 0) {
+		acceptCounter++;
+	}
+
 	if(!prioReturnVal.errorFlag) {
 		if(acceptCounter > 1 || acceptCounter < 0) {
 			prioReturnVal.errorFlag = true;
