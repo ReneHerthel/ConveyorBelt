@@ -188,7 +188,8 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
  */
 
 void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
-
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Started Timers" << endl;
 	PuckSignal::TimerSignal ts;
 	ts.TimerInfo.puckID = puckID;
 	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
@@ -199,7 +200,8 @@ void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
 }
 
 void PuckContext::PuckState::startTimersWithDelta(DistanceSpeed::lb_distance distance,double earlyDelta,double lateDelta) {
-
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Started Timers with Delta" << endl;
 	PuckSignal::TimerSignal ts;
 	ts.TimerInfo.puckID = puckID;
 	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
@@ -209,6 +211,8 @@ void PuckContext::PuckState::startTimersWithDelta(DistanceSpeed::lb_distance dis
 
 }
 void PuckContext::PuckState::stopTimer(){
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Stopped Timer" << endl;
 	wideDistance->stopAlarm();
 }
 /*******************************************
