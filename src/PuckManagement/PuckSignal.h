@@ -73,6 +73,15 @@ namespace PuckSignal {
 
 	// The serialized data
 	struct PuckType : public ISerializable {
+
+        /*!  
+         *  \brief Put input data into data member
+         *  \argument [in] other Data to file
+         *
+         *  Allow assigning Data objects directly to data member
+         */
+		PuckType(Data other): data(other){}
+
 		struct Data {
 			HeightMeasurement::signal_t heightType;
 			uint8_t metal;
@@ -97,10 +106,6 @@ namespace PuckSignal {
 			return !memcmp(&data, &type.data, sizeof(data));
 		}
 
-		PuckType& operator=(Data other) {
-			data = other;
-			return *this;
-		}
 	};
 }
 

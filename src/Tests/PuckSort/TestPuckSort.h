@@ -9,8 +9,11 @@
  *  \internal
  *       Created:  06/14/2017
  * Last modified:  06/21/2017
- *     Copyright:  Copyright (c) 2017 Stephan Jänecke licensed under the
- *     MIT License
+ *     Copyright:  Copyright (c) 2017 Stephan Jänecke
+ *
+ *   This file is subject to the terms and conditions of the MIT
+ *   License. See the file LICENSE in the top level directory for more
+ *   details.
  */
 
 #ifndef TESTPUCKSORT_H_
