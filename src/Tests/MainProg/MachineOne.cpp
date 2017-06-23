@@ -92,7 +92,6 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread ser1_thread(ref(ser1));
 
 
-
 	//INIT CBS
 	ConveyorBeltService cbs;
 
@@ -143,7 +142,9 @@ TEST_IMPL(MachineOne, programm_m1){
 		std::cout << "Got something \n";
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n"; break; //Height
+			case 1: std::cout << "\n\n Serial \n";break; //Serial
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
+			case 3: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5: std::cout << "\n\n ISR \n";break; //ISR
 		}

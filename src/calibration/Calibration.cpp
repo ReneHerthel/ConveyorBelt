@@ -113,6 +113,12 @@ void Calibration::calibrate(int mainChid){
 	inSwitch[0] = milliseconds((int)((double)outlet[0].count()/2.5)); //TODO make readable
 	inSwitch[1] = milliseconds((int)((double)outlet[1].count()/2.5));
 
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
+
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
