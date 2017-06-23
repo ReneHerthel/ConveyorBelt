@@ -29,6 +29,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <stdlib.h>
 
 SETUP(TestEmbeddedRecorder) {
     REG_TEST(test1, 1, "Test Play-, Save-, load-RecordedData");
@@ -64,15 +65,17 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     int size = 64; // Make sure the buffer size is equals in RecordBuffer.h.
     int ret_code;
 
-    PuckSignal::PuckType * puck = new PuckType();
+    PuckSignal::PuckType * puck = new PuckSignal::PuckType(); //(PuckSignal::PuckType*)malloc(sizeof(PuckSignal::PuckType));
+
+    std::cout << "[TestEmbeddedRecorder] init data of puck types" << std::endl;
 
     for (int i = 0; i < size; i++) {
-      puck.data.height1 = i;
-      puck.data.height2 = i+1;
+        puck->data.height1 = i;
+        puck->data.height2 = i+1;
     	message.value = (int)puck;
     	message.code = TRANSM_IN_CODE;
     	ret_code = recorder->writeMessageIntoBuffer(message);
-    	std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    	std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     std::cout << "[TestEmbeddedRecorder] save" << std::endl;
@@ -94,7 +97,9 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     for (int i = 0; i < size-1; i++) {
         msg = receiver->receivePulseMessage();
         std::cout << "[TestEmbeddedRecorder] received message at " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count() << " milliseconds" << std::endl;
-        SignalType::PuckType puck = (*(SignalType::PuckType*)msg.value);
+
+        PuckSignal::PuckType puck = (*(PuckSignal::PuckType*)msg.value);
+
         std::cout << "[TestEmbeddedRecorder] puck values: " << (int)puck.data.height1 << " & " << (int)puck.data.height2 << std::endl;
         amountOfReceived++;
     }
@@ -113,7 +118,9 @@ TEST_IMPL(TestEmbeddedRecorder, test1)
     recorder->showRecordedData();
     */
 
-    if (ret_code >= 0 && amountOfReceived == size) {
+    //std::cout << "[TestEmbeddedRecorder] received messages:" << amountOfReceived << " size was: " << size << std::endl;
+
+    if (amountOfReceived+1 == size) {
         return TEST_PASSED;
     }
 

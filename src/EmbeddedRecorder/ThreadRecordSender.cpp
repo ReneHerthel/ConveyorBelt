@@ -61,6 +61,8 @@ void ThreadRecordSender::sendWholeBuffer()
         i++;
     }
 
+    std::cout << "[ThreadSender] i was " << i << std::endl;
+
     // NOTE: The thread will be delete after the while loop.
 }
 
@@ -72,10 +74,12 @@ void ThreadRecordSender::windUpClockAndSend(record_t next, std::chrono::time_poi
 
         PuckSignal::PuckType * puck = new PuckSignal::PuckType();
 
-        if (!puck->deserialize(next.puck)) {
+        if (!puck->deserialize(&next.puck)) {
             // TODO: Error handling.
             std::cout << "[ThreadRecordSender] windUpClockAndSend() deserialize failed." << std::endl;
         }
+
+        //std::cout << "[ThreadRecordSender] puck values: " << (int)puck->data.height1 << " & " << (int)puck->data.height2 << std::endl;
 
         next.value = (int)puck;
     }

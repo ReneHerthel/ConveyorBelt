@@ -20,6 +20,8 @@
 //#include "TestEmbeddedRecorderStub.h"
 #include "ISerializable.h"
 
+#include "PuckSignal.h"
+
 #include <stdint.h>
 #include <chrono>
 
@@ -36,7 +38,7 @@ namespace rec {
         /* The value of the pulse message. */
         uint32_t value;
         /* The serialized puck object */
-        serialized puck;
+        uint8_t puck[sizeof(PuckSignal::PuckType::Data)];
     } record_t;
 
 } /* namespace rec */

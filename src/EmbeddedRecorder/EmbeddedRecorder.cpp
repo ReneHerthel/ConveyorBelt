@@ -53,7 +53,9 @@ int EmbeddedRecorder::writeMessageIntoBuffer(const rcv::msg_t message)
 
     if (record.code == TRANSM_IN_CODE) {
         PuckSignal::PuckType puck = *((PuckSignal::PuckType*)message.value);
-        record.puck = puck.serialize();
+        serialized serPuck = puck.serialize();
+        std::memcpy(&record.puck,serPuck.obj, serPuck.size);//puck.serialize().obj;
+        //std::cout << "[writeMessageIntoBuffer] puck values: " << (int)puck.data.height1 << " & " << (int)puck.data.height2 << std::endl;
     }
 
     record.value = message.value;
