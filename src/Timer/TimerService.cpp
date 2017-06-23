@@ -71,15 +71,18 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 }
 
 void TimerService::stopAlarm() throw(int) {
-	if(timerRunning && timerCreated){
-		if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
-			LOG_ERROR << "Error in timer_gettime\n";
-			throw(EXIT_FAILURE);
+	if(timerCreated){
+		if(timerRunning){
+			if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
+				LOG_ERROR << "Error in timer_gettime\n";
+				throw(EXIT_FAILURE);
+			}
 		}
+
 
 		if(timer_delete(timerid) == -1) { // delete the timer
 			LOG_ERROR << "Error in timer_delete\n";
-			throw(EXIT_FAILURE);
+			//throw(EXIT_FAILURE);
 		}
 
 		timerRunning = false;
@@ -104,7 +107,7 @@ void TimerService::resumeAlarm() throw(int) {
 
 }
 
-milliseconds TimerService::killAlarm() throw(int) {
+TimerService::milliseconds TimerService::killAlarm() throw(int) {
 	unsigned int mSec = 0;;
 	unsigned int seconds = 0;
 

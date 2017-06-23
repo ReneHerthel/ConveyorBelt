@@ -17,6 +17,7 @@ protected:
     TEST(SimpleTest);
     TEST(ChangeSpeed);
     TEST(StopBelt);
+    TEST(SwitchDistanceTracker);
     TEST_CASE_METHODS
 };
 

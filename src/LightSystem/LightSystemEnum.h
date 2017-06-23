@@ -20,16 +20,15 @@
  * Define warning levels
  */
 enum Level {
-    OPERATING, /**< @brief Unit is operating, green light is on constantly */
-    NOT_OPERATING, /**< @brief Unit is not operating, all lights are out */
-    WARNING_OCCURED, /**< @brief Warning has occurred, yellow light is blinking */
-    CLEAR_WARNING,  /**< @brief  Warning has been cleared, yellow light is off */
-    CLEAR_ERROR, /**< @brief Error has been cleared, red light is off */
-    ERROR_OCCURED, /**< @brief Error occurred, red light blinks quickly */
-    ERROR_ACKNOWLEDGED, /**< @brief Error has been acknowledged, red light is on constantly */
+    OPERATING,                 /**< @brief Unit is operating, green light is on constantly */
+    NOT_OPERATING,             /**< @brief Unit is not operating, all lights are out */
+    WARNING_OCCURED,           /**< @brief Warning has occurred, yellow light is blinking */
+    CLEAR_WARNING,             /**< @brief Warning has been cleared, yellow light is off */
+    CLEAR_ERROR,               /**< @brief Error has been cleared, red light is off */
+    ERROR_OCCURED,             /**< @brief Error occurred, red light blinks quickly */
+    ERROR_ACKNOWLEDGED,        /**< @brief Error has been acknowledged, red light is on constantly */
     ERROR_GONE_UNACKNOWLEDGED, /**< @brief Error has gone unacknowledged, red light blinks slowly */
-    CLEAR_ALL,  /**< @brief Clear everything, all lights are out */
-    LIGHT_SYSTEM_STOP /**< In-Band Message to stop control thread */
+    CLEAR_ALL,                 /**< @brief Clear everything, all lights are out */
 };
 /**
  * Define available colors

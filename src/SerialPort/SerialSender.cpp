@@ -9,9 +9,25 @@
 #include "Serial_def.h"
 #include "../Logger/Logger.h"
 #include "../Logger/LogScope.h"
+#include <fcntl.h>
 
 SerialSender::SerialSender(char *path) {
     out = open(path, O_RDWR | O_CREAT | O_BINARY); //Msg is char based, the Frame is binary, so write binary
+
+   fcntl(out, F_SETFL, 0);
+
+   struct termios ts;
+   tcflush(out, TCIOFLUSH);
+   tcgetattr(out, &ts);
+   cfsetispeed(&ts, B19200);
+   cfsetospeed(&ts, B19200);
+   ts.c_cflag &= ~CSIZE;
+   ts.c_cflag &= ~CSTOPB;
+   ts.c_cflag &= ~PARENB;
+   ts.c_cflag |= CS8;
+   ts.c_cflag |= CREAD;
+   ts.c_cflag |= CLOCAL;
+   tcsetattr(out, TCSANOW, &ts);
 }
 
 SerialSender::~SerialSender() {
@@ -19,7 +35,6 @@ SerialSender::~SerialSender() {
 }
 
 int32_t SerialSender::send(char *msg, uint16_t size) {
-    LOG_SCOPE
     char buff[size+FRAME_HEAD_BYTES];
     uint16_t framesize = frame(msg, size, buff);
     checksum(framesize, buff);
@@ -43,8 +58,8 @@ void SerialSender::checksum(uint16_t size, char* buff){
 }
 
 int32_t SerialSender::sendSerial(uint16_t size, char* buff) {
-    LOG_SCOPE
     err = write(out, buff, size+1);
+    tcdrain(out);
     if(err < 0){
         LOG_ERROR << "Serial write failed with err code: " << err << "\n";
         //TODO Serial error handling
@@ -53,6 +68,13 @@ int32_t SerialSender::sendSerial(uint16_t size, char* buff) {
 
 int SerialSender::fail() {
     return err;
+}
+
+void SerialSender::reset(){
+    LOG_SCOPE
+    #ifndef WINDOWS
+	tcflush(out, TCIOFLUSH);
+    #endif
 }
 
 

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <Logger.h>
 #include <Logscope.h>
+#include "PuckSignal.h"
 
 
 using namespace Serial_n;
@@ -31,7 +32,6 @@ SerialProtocoll::~SerialProtocoll() {
 }
 
 pulse SerialProtocoll::convToPulse(void *buff) {
-	LOG_SCOPE;
     pulse resu;
     ser_proto_msg msg_in = *(ser_proto_msg*)buff;
     resu.code = SER_IN;
@@ -47,7 +47,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
         case TRANSM_SER:
             {
             	resu.code = TRANSM_IN;
-                ISerializable *obj = new SerialTestStub;
+                ISerializable *obj = new PuckSignal::PuckType;
                 obj->deserialize(((char*)buff) + sizeof(ser_proto_msg)); //cast to char* because void* cant be used in arith
                 resu.value = (uint32_t) obj;
             }
@@ -60,7 +60,6 @@ pulse SerialProtocoll::convToPulse(void *buff) {
 
 
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
-	LOG_SCOPE;
     serialized resu;
     switch(code){
         case SER_IN: //Inout nothing needs to be done

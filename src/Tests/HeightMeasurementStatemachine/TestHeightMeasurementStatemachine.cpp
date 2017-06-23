@@ -20,6 +20,8 @@
 #include <sys/neutrino.h>
 #include <iostream>
 
+using namespace HeightMeasurement;
+
 SETUP(TestHeightMeasurementStatemachine) {
     REG_TEST(test1, 1, "Test the Normal type");
     REG_TEST(test2, 2, "Test the Flipped type");

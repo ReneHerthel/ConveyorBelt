@@ -1,0 +1,26 @@
+title Puck Transmission 
+MainController-> Puckmanager : LB_OUTLET_IN
+note right of MainController : ??? realy this way
+Puckmanager->Puck : process(LB_OUTLET_IN)
+Puck->Puckmanager : sendPuck()
+Puckmanager->MainController : sendPuck()
+MainController->SerielController : puckInTransmission()
+SerielController-->MainController : Transmission accepted
+note right of SerielController : ??? seriel must ack the Transmission
+MainController-> Puckmanager : PuckinSeriel()
+SerielController -> MainController_2 : sendObject(Puck)
+note right of SerielController : ??? unsicher
+Puckmanager-> Puck : process(inSeriel)
+note right of Puckmanager : !!! new Signal for Puck ck
+Puck-> Puckmanager : deletePuck()
+MainController_2->Puckmanager_2 : newPuck()
+note right of MainController_2 : ??? wer erzeugt den neuen Puck
+Puckmanager_2 -> Puck_2: createPuck();
+Puck_2->Timer : startTimers();
+Timer->Puckmanager_2 : EARLY_TIMER
+note right of Puckmanager_2  : ???
+Puckmanager_2->Puck_2 : process(EARLY_TIMER)
+MainController_2->Puckmanager_2 : LB_INLET_IN
+Puckmanager_2 ->Puck_2 : process(EARLY_TIMER) 
+
+

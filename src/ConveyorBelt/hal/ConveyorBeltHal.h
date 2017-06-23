@@ -16,13 +16,15 @@
 #ifndef CONVEYORBELTHAL_H_
 #define CONVEYORBELTHAL_H_
 
+#include <stdint.h>
+
 class ConveyorBeltHal {
 public:
 	/*
 	 * @brief Set the corresponding mask in the port.
 	 * @param A constant mask which is set in the corresponding bit.
 	 */
-	void setMask(const int mask);
+	void setMask(const uint8_t mask);
 };
 
 #endif /* CONVEYORBELTHAL_H_ */

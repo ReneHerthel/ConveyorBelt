@@ -23,10 +23,10 @@
 
 LedService::LedService() {
 	// Put new LedHal objects at the end of the vector.
-	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_0)); /**< START */
-	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_1)); /**< RESET */
-	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_2)); /**< Q1    */
-	halObjects_.push_back(new LedHal(PORT_ADDR_C, PIN_3)); /**< Q2    */
+	m_leds.push_back(new LedHal(PORT_ADDR_C, PIN_0)); /**< START */
+	m_leds.push_back(new LedHal(PORT_ADDR_C, PIN_1)); /**< RESET */
+	m_leds.push_back(new LedHal(PORT_ADDR_C, PIN_2)); /**< Q1    */
+	m_leds.push_back(new LedHal(PORT_ADDR_C, PIN_3)); /**< Q2    */
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1)
 	{
@@ -35,11 +35,11 @@ LedService::LedService() {
 }
 
 void LedService::ledOn(const Led led) {
-	halObjects_.at(led)->set();
+	m_leds.at(led)->set();
 }
 
 void LedService::ledOff(const Led led) {
-	halObjects_.at(led)->clear();
+	m_leds.at(led)->clear();
 }
 
 /** @} */
