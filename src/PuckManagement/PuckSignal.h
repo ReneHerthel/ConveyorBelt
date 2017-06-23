@@ -71,23 +71,26 @@ namespace PuckSignal {
 		Serial_n::ser_proto_msg serialSignal;
 	};
 
+	struct Data {
+		HeightMeasurement::signal_t heightType;
+		uint8_t metal;
+		uint16_t height1;
+		uint16_t height2;
+	};
+
 	// The serialized data
 	struct PuckType : public ISerializable {
-
         /*!  
          *  \brief Put input data into data member
          *  \argument [in] other Data to file
          *
          *  Allow assigning Data objects directly to data member
          */
-		PuckType(Data other): data(other){}
+		PuckType(Data data)
+		: data(data)
+		{};
 
-		struct Data {
-			HeightMeasurement::signal_t heightType;
-			uint8_t metal;
-			uint16_t height1;
-			uint16_t height2;
-		} data;
+		Data data;
 
 		serialized serialize() override {
 			serialized ser;
