@@ -30,7 +30,7 @@ PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType) : shortDistanc
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;
 
-	statePtr->startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+	statePtr->startTimersWithDelta(DistanceSpeed::lb_distance::OUT_TO_IN, QUICK_SHORT_DELTA, VERY_WIDE_DELTA); //we want a quick earlytimer but a very late Latetimer
 #endif
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck
@@ -54,7 +54,7 @@ PuckContext::PuckContext(int chid) : shortDistance(chid, TIMERCODE), wideDistanc
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;
 
-	statePtr->startTimers(DistanceSpeed::lb_distance::OUT_TO_IN);
+	statePtr->startTimersWithDelta(DistanceSpeed::lb_distance::OUT_TO_IN, QUICK_SHORT_DELTA, VERY_WIDE_DELTA); //we want a quick earlytimer but a very late Latetimer
 #endif
 
 	// set invalid value for height signal - in case heightmeasurement gets stuck
@@ -183,8 +183,13 @@ PuckSignal::Return PuckContext::process(PuckSignal::Signal signal) {
 	return statePtr->returnValue;
 }
 
-void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
+/*************************************************************************************************
+ * TIMERMETHODS
+ */
 
+void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Started Timers" << endl;
 	PuckSignal::TimerSignal ts;
 	ts.TimerInfo.puckID = puckID;
 	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
@@ -193,7 +198,21 @@ void PuckContext::PuckState::startTimers(DistanceSpeed::lb_distance distance) {
 	wideDistance->startAlarm(ts.value,distance,WIDE_DELTA);
 
 }
+
+void PuckContext::PuckState::startTimersWithDelta(DistanceSpeed::lb_distance distance,double earlyDelta,double lateDelta) {
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Started Timers with Delta" << endl;
+	PuckSignal::TimerSignal ts;
+	ts.TimerInfo.puckID = puckID;
+	ts.TimerInfo.type = PuckSignal::TimerType::EARLY_TIMER;
+	shortDistance->startAlarm(ts.value,distance,earlyDelta);
+	ts.TimerInfo.type = PuckSignal::TimerType::LATE_TIMER;
+	wideDistance->startAlarm(ts.value,distance,lateDelta);
+
+}
 void PuckContext::PuckState::stopTimer(){
+	LOG_SCOPE;
+	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Stopped Timer" << endl;
 	wideDistance->stopAlarm();
 }
 /*******************************************
@@ -492,7 +511,12 @@ void PuckContext::TypeKnown::slideIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TypeKnown]->[SlideArea]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	startTimers(DistanceSpeed::lb_distance::OUT_TO_IN); //TODO need right distance
+
+	PuckSignal::TimerSignal ts;
+	ts.TimerInfo.puckID = puckID;
+	ts.TimerInfo.type = PuckSignal::TimerType::LATE_TIMER;
+	wideDistance->startAlarm(ts.value,DistanceSpeed::lb_distance::SLIDE,WIDE_DELTA);   //is made here because only one Timer is needed
+
 	new (this) SlideArea;
 }
 /*******************************************/

@@ -50,9 +50,16 @@ void TestHeightMeasurement::startTest() {
     LOG_DEBUG << "[TestHeightMeasurement] startTest() Testing Hal start\n";
     HeightMeasurementHal hal;
     uint16_t data = 0;
-    hal.read(data);
-    LOG_DEBUG << "[TestHeightMeasurement] startTest() Hal data: " << (int)data << "\n";
-    LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
+    std::cout.flush();
+    while(1) {
+    	int32_t in = 0;
+		hal.read(data);
+		std::cout << "data: " << (int)data << std::endl;
+		LOG_DEBUG << "[TestHeightMeasurement] startTest() Hal data: " << (int)data << "\n";
+		LOG_DEBUG << "TestHeightMeasurement] startTest() Testing service done\n";
+
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
 #endif /* TEST_HEIGHT_HAL */
 
 #if TEST_HEIGHT_STATEMACHINE
@@ -97,7 +104,7 @@ void TestHeightMeasurement::startTest() {
     // THIS IS CALIBRATED BY HAND!
 
     Calibration& hmCal = Calibration::getInstance();
-    //hmCal.calibrateHeighMeasurement();
+    hmCal.loadFromDisk("/Calibration.dat");
 #if CALIBRATION
     cal = hmCal.getHmCalibration();
 #else

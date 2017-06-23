@@ -49,10 +49,10 @@ public:
 
 	ManagerReturn process(PuckSignal::Signal signal);
 
-	void newPuck(PuckSignal::PuckType type);
+	ManagerReturn newPuck(PuckSignal::PuckType type);
 
 private:
-	ManagerReturn addPuck(PuckContext *puck);
+	void addPuck(PuckContext *puck);
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
 	int chid; /**< @brief ID for the pucks to give the timers*/

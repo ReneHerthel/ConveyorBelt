@@ -57,7 +57,10 @@ void Serial::operator()() {
             	//Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
                 if(pm.value != POL_SER){ //POL doesnt need to be send to the main
+                	LOG_DEBUG << "Serial sends pulse to mainChid";
                     ch_out.sendPulseMessage(pm.code, pm.value);
+                } else {
+                	LOG_DEBUG << "Serial got an ping of life \n";
                 }
                 polRecTimer.stopAlarm();
                 polRecTimer.setAlarm(4000, 0);
@@ -67,11 +70,13 @@ void Serial::operator()() {
                 //TODO Send Serial error msg
                 break;
             case SER_OUT:
+            	LOG_DEBUG << "Serial sends msg \n";
                 ser =  proto.wrapInFrame(SER_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
                 delete (char*)ser.obj;
                 break;
             case TRANSM_OUT:
+            	LOG_DEBUG << "Serial sends obj \n";
                 ser =  proto.wrapInFrame(TRANSM_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
                 delete (char*)ser.obj;
