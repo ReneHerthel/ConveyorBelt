@@ -75,6 +75,7 @@ int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance di
 }
 
 int32_t DistanceTracker::stopAlarm(){
+	LOG_DEBUG << "[DistanceTracker]Stopped distance tracker \n";
 	timer_.stopAlarm();
 }
 
