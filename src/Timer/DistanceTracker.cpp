@@ -78,7 +78,9 @@ int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance di
 		timer_.setAlarm(cal.getCalibration(distance, currSpeed_)*delta, value);
 		LOG_DEBUG << "[DistanceTracker]Starting DistanceTracker with " << ms << "ms \n";
 	} else {
-		LOG_DEBUG << "[DistanceTracker]Trying to start Distance tracker with 0 \n";
+		timer_.setAlarm(cal.getCalibration(distance, DistanceSpeed::speed_t::FAST)*delta, value); //TODO Quick and dirty fix for creating timer while band is stopped
+		notify(DistanceSpeed::speed_t::STOP);
+		LOG_DEBUG << "[DistanceTracker]Trying to start Distance tracker with 0, started fast instead and stopped it \n";
 	}
 }
 
