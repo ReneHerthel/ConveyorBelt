@@ -42,9 +42,13 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
+	cout << "[ErrorHandler] demultiplex()" << endl;
+
     if (!manager.errorFlag) {
         return; // Do not do anything without a errorFlag.
     }
+
+    cout << "[ErrorHandler] demultiplex() errorFlag = true" << endl;
 
     m_hasError = true;
 
