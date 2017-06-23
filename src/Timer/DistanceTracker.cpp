@@ -83,5 +83,6 @@ int32_t DistanceTracker::stopAlarm(){
 		LOG_DEBUG << "[DistanceTracker]Stopped distance tracker \n";
 		timer_.stopAlarm();
 	}
+	stopped_ = true;
 }
 
