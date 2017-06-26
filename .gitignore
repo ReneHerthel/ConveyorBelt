@@ -23,6 +23,8 @@
 
 #LaTex Files
 !*.tex
+# MarkDown
+!*.md
 
 #UMLet Files
 !*.uxf

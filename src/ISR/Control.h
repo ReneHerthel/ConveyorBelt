@@ -71,7 +71,8 @@ public:
 
     void b_Start();
     void b_STOP();
-    void b_EStop();
+    void b_EStopReleased();
+	void b_EStopPressed();
     void b_Reset();
 private:
     /*

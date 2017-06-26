@@ -26,6 +26,7 @@
 #define POL_VAL 		0xABCD
 #define NO_CON_VAL 		0xDBCA
 #define ERROR_VAL 		0xFABF
+#define ESTOP_VAL 		0xABFC
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver
 enum Serial_mode {
@@ -49,6 +50,7 @@ namespace Serial_n{
 		POL_SER = POL_VAL, 				/*!<Ping of life */
 		NO_CON_SER = NO_CON_VAL, 		/*!<Serial Disconnected, no POL */
 		ERROR_SER = ERROR_VAL,			/*!<Serial received something it can not handle, maybe Char loss */
+		ESTOP_SER = ESTOP_VAL			/*!<Other machine got an estop pressed */
 	};
 
 	/// Pulse code identifies in and outgoing signals, transmission need extra code, so the 32Bit pointer can fit into Value
