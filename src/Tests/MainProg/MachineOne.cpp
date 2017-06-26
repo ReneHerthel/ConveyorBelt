@@ -36,7 +36,11 @@
 #include "SignalDistributer.h"
 #include "SortingSwichtControl.h"
 
+#include "ErrorHandler.h"
+
 #include <thread>
+
+using namespace HAL;
 
 SETUP(MachineOne){
 	REG_TEST(programm_m1, 1, "Just Create some distance trackers an let them run (no changes on the way)");
@@ -92,7 +96,6 @@ TEST_IMPL(MachineOne, programm_m1){
 	std::thread ser1_thread(ref(ser1));
 
 
-
 	//INIT CBS
 	ConveyorBeltService cbs;
 
@@ -106,7 +109,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	calibration.loadFromDisk("/Calibration.dat");
 
 	//INIT LIGHTSYSTEM
-	/*PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
+	PulseMessageReceiverService lightsystemChannel; ///Lightsystem cntrl channel
 	int lightsystemChid = ChannelCreate_r(0); //lightsystemChannel.newChannel();
 
 	std::cout << "LightSystemChid" <<lightsystemChid << "\n";
@@ -114,7 +117,6 @@ TEST_IMPL(MachineOne, programm_m1){
 	BLightSystem *lsHal = new LightSystemHal();
 	LightSystemController *lightSystemCntrl = new LightSystemController(lightsystemChid, lsHal);
 	LightSystemService *lightSystem = new LightSystemService(lightsystemChid);
-	lightSystem->setWarningLevel(WARNING_OCCURED);*/
 
 	//INIT HEIGHTMEASUREMENT
 	PulseMessageReceiverService heightMChannelCreator; ///Create channel for heightm
@@ -132,8 +134,12 @@ TEST_IMPL(MachineOne, programm_m1){
 	//INIT PUCK MNG
 	PuckManager puckManager(mainChid);
 
+
+	ErrorHandler errorHandler(mainChid, cbs, lightSystem);
+
+
 	//INIT SIGNAL DISTRIBUTER
-	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler);
+	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler, &errorHandler);
 
 	//TESTLOOP
 	rcv::msg_t event;
@@ -143,7 +149,9 @@ TEST_IMPL(MachineOne, programm_m1){
 		std::cout << "Got something \n";
 		switch(event.code){
 			case 0: std::cout << "\n\n Height \n"; break; //Height
+			case 1: std::cout << "\n\n Serial \n";break; //Serial
 			case 2: std::cout << "\n\n Serial \n";break; //Serial
+			case 3: std::cout << "\n\n Serial \n";break; //Serial
 			case 4: std::cout << "\n\n Serial \n";break; //Serial
 			case 5: std::cout << "\n\n ISR \n";break; //ISR
 		}

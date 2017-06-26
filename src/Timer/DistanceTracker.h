@@ -21,6 +21,7 @@ private:
 	int chid_;
 	TimerService timer_;
 	bool stopped_;
+	bool manStopped_; ///Distance tracker has been stopped from the outside
 	DistanceSpeed::speed_t currSpeed_;
 	int32_t lastValue_;
 	double fastToSlowFactor_;
@@ -59,6 +60,7 @@ public:
 	 *@return -1 if the disabling of the alarm failed
 	 */
 	int32_t stopAlarm();
+
 
 };
 

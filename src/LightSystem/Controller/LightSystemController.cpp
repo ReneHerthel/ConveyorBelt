@@ -21,7 +21,7 @@ LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
 	, boundary(boundary)
 {
 	LOG_SCOPE;
-	LOG_DEBUG << "__FUNCTION__: Create threads" << endl;
+	LOG_DEBUG << "Create threads" << endl;
 	taskThread = new thread(&LightSystemController::task, this);
 	controlThread = new thread(&LightSystemController::control, this,chid);
 }
@@ -98,7 +98,6 @@ int LightSystemController::task(){
 			boundary->lightOff(ALL_COLORS);
 		}
 		this_thread::sleep_for(std::chrono::milliseconds(frequency));
-		LOG_DEBUG << thread_id << ": isRunning = " << isRunning << " | frequency = " << frequency << " | color = " << color << endl;
 	}
 
 	return 0;
@@ -125,19 +124,6 @@ int LightSystemController::control(int chid) {
 		/* FIXME: Typesafe conversion */
 		Level warningLevel = (Level) pulse.value.sival_int;
 
-        /* FIXME: Move this up onto class level */
-	    static const LightMessage LightMessageMapping[] = {
-	            { GREEN, ALWAYS_ON }, // OPERATING
-	            { GREEN, ALWAYS_OFF }, // NOT_OPERATING
-	            { YELLOW, SLOW_BLINKING }, // WARNING_OCCURED
-	            { YELLOW, ALWAYS_OFF }, // CLEAR_WARNING
-	            { RED, ALWAYS_OFF }, // CLEAR_ERROR
-	            { RED, FAST_BLINKING }, // ERROR_OCCURED
-	            { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
-	            { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
-	            { ALL_COLORS, ALWAYS_OFF } // CLEAR_ALL
-	    };
-
 	    color = LightMessageMapping[warningLevel].color;
 	    LOG_DEBUG << thread_id << ": Set color " << color << endl;
 	    frequency = LightMessageMapping[warningLevel].frequency;
@@ -147,3 +133,16 @@ int LightSystemController::control(int chid) {
 	return 0;
 }
 
+static const LightMessage MessageToColorFrequency[] = {
+        { GREEN, ALWAYS_ON }, // OPERATING
+        { GREEN, ALWAYS_OFF }, // NOT_OPERATING
+        { YELLOW, SLOW_BLINKING }, // WARNING_OCCURED
+        { YELLOW, ALWAYS_OFF }, // CLEAR_WARNING
+        { RED, ALWAYS_OFF }, // CLEAR_ERROR
+        { RED, FAST_BLINKING }, // ERROR_OCCURED
+        { RED, ALWAYS_ON }, // ERROR_ACKNOWLEDGED
+        { RED, SLOW_BLINKING }, // ERROR_GONE_UNACKNOWLEDGED
+        { ALL_COLORS, ALWAYS_OFF } // CLEAR_ALL
+};
+
+const LightMessage* LightSystemController::LightMessageMapping = MessageToColorFrequency;

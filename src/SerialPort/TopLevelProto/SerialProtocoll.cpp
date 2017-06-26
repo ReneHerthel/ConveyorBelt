@@ -32,7 +32,6 @@ SerialProtocoll::~SerialProtocoll() {
 }
 
 pulse SerialProtocoll::convToPulse(void *buff) {
-	LOG_SCOPE;
     pulse resu;
     ser_proto_msg msg_in = *(ser_proto_msg*)buff;
     resu.code = SER_IN;
@@ -61,7 +60,6 @@ pulse SerialProtocoll::convToPulse(void *buff) {
 
 
 serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
-	LOG_SCOPE;
     serialized resu;
     switch(code){
         case SER_IN: //Inout nothing needs to be done

@@ -30,40 +30,24 @@ void Calibration::calibrate(int mainChid){
 	ConveyorBeltService cbs;
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
-    HeightMeasurementHal hal;
-    uint16_t data = 0;
-    uint32_t data_avg = 0;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 			return;
 	}
 
-	hal.read(data);
-	hmCal.refHeight = data;
-
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
 	cbs.changeState(ConveyorBeltState::STOP);
 
+	calibrateHeighMeasurement(&pmr);
 
 	//CENTER THE PUCK AND CALC TIME FOR RUNNING THROUGH A LB
 	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	cbs.changeState(RIGHTSLOW);
+
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
-
-
-	for(int i = 0; i < 100; i++){
-		hal.read(data);
-		data_avg += data;
-	}
-	data_avg /= 100;
-
-	hmCal.surfaceHeight = (uint16_t)data_avg;
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
@@ -76,7 +60,6 @@ void Calibration::calibrate(int mainChid){
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
 	for(int i = 0; i < 2; i++){
-		break; //TODO REMOVE
 		if(i == 0) 	cbs.changeState(RIGHTFAST);
 		else		cbs.changeState(RIGHTSLOW);
 
@@ -114,10 +97,15 @@ void Calibration::calibrate(int mainChid){
 	inSwitch[0] = milliseconds((int)((double)outlet[0].count()/2.5)); //TODO make readable
 	inSwitch[1] = milliseconds((int)((double)outlet[1].count()/2.5));
 
+	inlet[0] = std::chrono::milliseconds(INLET_CAL_FAST); //Measured ~1.8 seconds for, so half is a good gues
+	inlet[1] = std::chrono::milliseconds(INLET_CAL_SLOW); //Measured ~1.8 seconds for slow
+
+	slide[0] = std::chrono::milliseconds(SLIDE_TIMER_FAST);
+	slide[1] = std::chrono::milliseconds(SLIDE_TIMER_SLOW);
+
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
-	calibrateHeighMeasurement();
 }
 
 
@@ -238,20 +226,39 @@ void Calibration::calibrate(void){
 
 }
 
-void  Calibration::calibrateHeighMeasurement(void){
+void  Calibration::calibrateHeighMeasurement(rcv::PulseMessageReceiverService *pmr){
+	HeightMeasurementHal HMU;
 
-	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight; /*!< Height of Puck */
-	puckHeight /= SURFACE;
+	std::cout << "Bitte raeumen Sie das Band und bestaetigen mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.refHeight);
 
-	hmCal.holeHeight = hmCal.refHeight - ((uint16_t)(puckHeight * HOLE));
-	hmCal.highHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_1));
-	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
-	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach unten unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.surfaceHeight);
 
-	uint16_t delta;
-	delta = (hmCal.invalidHeight - hmCal.lowHeight) / 2;
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach oben unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.holeHeight);
 
-	hmCal.delta = delta;
+	std::cout << "Bitte legen Sie einen kleinen Puck unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.invalidHeight);
+
+	std::cout << "Bitte legen Sie eine logische [0] unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.lowHeight);
+
+	std::cout << "Bitte legen Sie eine logische [1] unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	HMU.read(hmCal.highHeight);
+
+	hmCal.delta = (hmCal.highHeight - hmCal.invalidHeight) / 2;
+	if(hmCal.delta > 50) {
+		hmCal.delta = 50;
+	}
+
+	std::cout << "Legen Sie einen puck auf das Band" << std::endl;
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
