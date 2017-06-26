@@ -97,6 +97,8 @@ private:
 
 	void calibrateHeighMeasurement(rcv::PulseMessageReceiverService *pmr);
 
+	uint16_t getAvg();
+
 	//v slow and fast, distances between lightbarriers (lb) in ms, lb_out to lb_in time v//
 	std::chrono::milliseconds overall[2]; 		///Overall distance from inlet to outlet
 	std::chrono::milliseconds heightMeasure[2];	///Distance from inlet to height Measurement lb
