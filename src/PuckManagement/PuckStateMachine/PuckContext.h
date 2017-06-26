@@ -124,9 +124,13 @@ public:
 		void serialResume();
 	};
 
-
 	struct TransferTimer : public PuckState {
 		void inletIn();
+		void serialStop();
+	};
+
+	struct TransferStoppedInletTimer : public PuckState {
+		void serialResume();
 	};
 	/*******************************************/
 #endif

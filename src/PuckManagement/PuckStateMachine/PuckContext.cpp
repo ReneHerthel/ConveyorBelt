@@ -388,6 +388,28 @@ void PuckContext::TransferTimer::inletIn() {
 	stopTimer();
 	new (this) Inlet;
 }
+
+void PuckContext::TransferTimer::serialStop() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferTimer]->[TransferStoppedInletTimer]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) TransferStoppedInletTimer;
+}
+/*******************************************/
+
+
+/*******************************************
+ * TransferStoppedInlet
+ */
+void PuckContext::TransferStoppedInletTimer::serialResume() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferStoppedInletTimer]->[TransferTimer]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	new (this) TransferTimer;
+}
+
 /*******************************************/
 #endif
 
