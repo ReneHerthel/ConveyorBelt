@@ -1,58 +1,70 @@
 # Protokoll 1
+
 ## Themen
+
 * Teamorgansisation
   * Verantwortlichkeiten
   * Absprachen
   * Repository
 * Arbeitspakete
 
-Anwesende:		Alle
-Abwesende:		-
-Start: 			08:48 Uhr 	
-Ende: 			11:00 Uhr
-Protokollant: 	Matthis
-Moderator:		Sebastian
+Anwesende: Alle
+
+Abwesende: Keine
+
+Start: 08:48 Uhr
+
+Ende: 11:00 Uhr
+
+Protokollant: Matthis
+
+Moderator: Sebastian
 
 ## Teamorgansisation
 
 ### Verantwortlichkeiten
+
 Wir werden Scrum benutzen.
 
-	Produktowner: Sebastian
-		Sorgt für den Informationsfluss
-	Scrummaster: Jonas
-		behält den Roten Faden im Auge
-	Team: Der Rest
+Produktowner: Sebastian
+* Sorgt für den Informationsfluss
+
+Scrummaster: Jonas 
+* behält den Roten Faden im Auge
+	
+Team: Der Rest
 
 Protokollant und Moderator werden bei den wöchentlichen Treffen rotierned wechseln.
 
 Latex wurde als Dokumentaionstool festgelegt.		
-		MikTex als Packege 		--> (alle) runterladen
+
+- [ ] MikTex als Packege 		--> (alle) runterladen
 
 Latexverantwortlicher: Stephan
+
 Repositoryverantwortlicher: René
 
 Es wird immer min. ein Teammitglied das Tutorium besuchen. (Sebastian)
 organisiert. Es wird ein wöchentlicher Bericht aus dem Tutorium geben.
 
-### Absprachen:
-	Jour Fixe wird auf Mittwochs, 8:30 bis (max) 12:00 Uhr festgelegt.
-	Wichtige Absprachen sind über Skype zu treffen.
-	Toolchain:
-		UML Tool: Umlet14.2 stand alone
-		IDE: Momentics 5.01 (im Labor vorhanden)
-		Dokumentaion: MikTex
-	Coding Style:
-		keine \n für {
-		Camelcase für Variablennamen vergabe
-		Für Konstanten mit ALLCAPS Snakecase (gilt auch für ENUMs)
-		Doxygen
-		Kommentar auf Englisch
-		EP02_coding bis zum 5.4.17 lesen --> alle
-	Das Protokoll des Jour Fixe soll spätestens am Folgetag online im Repo sein
-	Die Milestones und Tasks Funktion von GitHub wird verwendet --> René eintragen
+### Absprachen
 
-	Design for testabilties
+* Jour Fixe wird auf Mittwochs, 8:30 bis (max) 12:00 Uhr festgelegt.
+* Wichtige Absprachen sind über Skype zu treffen.
+* Toolchain
+  * UML Tool: Umlet14.2 stand alone
+  * IDE: Momentics 5.01 (im Labor vorhanden)
+  * Dokumentaion: MikTex
+* Coding Style
+  * keine \n für {
+  * Camelcase für Variablennamen vergabe
+  * Für Konstanten mit ALLCAPS Snakecase (gilt auch für ENUMs)
+  * Doxygen
+  * Kommentar auf Englisch
+  - [ ] EP02_coding bis zum 5.4.17 lesen --> alle
+* Das Protokoll des Jour Fixe soll spätestens am Folgetag online im Repo sein
+* Die Milestones und Tasks Funktion von GitHub wird verwendet --> René eintragen
+* Design for testabilties
 
 ### Git Repository
 
@@ -64,6 +76,7 @@ Das Repository wird bei GitHub geführt.
 * keine PDFs
 
 #### Ordnerstruktur
+
 * doc
   * rdd
   * Uml
