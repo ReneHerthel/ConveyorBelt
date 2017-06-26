@@ -347,6 +347,14 @@ void PuckContext::TransferArea::inletIn() {
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 }
 
+void PuckContext::TransferArea::serialStop() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferArea]->[TransferArea]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::STOP;
+	new (this) TransferStoppedInlet;
+}
+
 void PuckContext::TransferArea::earlyTimer() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferArea]->[TransferTimer]\n";
@@ -354,6 +362,19 @@ void PuckContext::TransferArea::earlyTimer() {
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
 	new (this) TransferTimer;
 }
+/*******************************************/
+
+/*******************************************
+ * TransferStoppedInlet
+ */
+void PuckContext::TransferStoppedInlet::serialResume() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TransferStoppedInlet]->[TransferArea]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLOW;
+	new (this) TransferArea;
+}
+
 /*******************************************/
 
 /*******************************************
