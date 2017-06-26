@@ -21,7 +21,8 @@
 //include the error handler
 
 #define DEBUG_MNG_RE(mr) \
-				switch(mr.errorSignal){ 									\
+				if(mr.errorFlag){ \
+					switch(mr.errorSignal){ 									\
 						case PuckManager::ErrorSignal::PUCK_LOST:			\
 							std::cout << "PUCK_LOST - Late Timer \n";		\
 							break;											\
@@ -37,6 +38,7 @@
 						case PuckManager::ErrorSignal::MULTIPLE_WARNING:	\
 							std::cout << "MULTIPLE_WARNING \n";				\
 							break;											\
+					} \
 				}
 
 class SignalDistributer {

@@ -116,8 +116,9 @@ void ISR::operator()() {
 		if((diff & BUTTONESTOP) == BUTTONESTOP){
 			if ((portbc & BUTTONESTOP) == BUTTONESTOP) {
 				//running = true;
-				ctrl->b_EStop();
+				ctrl->b_EStopReleased();
 			} else {
+				ctrl->b_EStopPressed();
 				//cout << "button_estop_released: " << endl;
 				//running = false;
 			}
@@ -165,10 +166,10 @@ void ISR::operator()() {
 		}
 		else if((diff & BUTTONSTOP) == BUTTONSTOP){
 				if ((portbc &BUTTONSTOP) == BUTTONSTOP) {
-					//cout << "button_stop_pressed" << endl;
-					ctrl->b_STOP();
+					//cout << "button_stop_released" << endl;	
 				} else {
-					//cout << "button_stop_released" << endl;
+					ctrl->b_STOP();
+					//cout << "button_stop_pressed" << endl;
 				}
 		}
 		else if((diff & BUTTONRESET) == BUTTONRESET){

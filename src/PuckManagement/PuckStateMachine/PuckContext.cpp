@@ -19,6 +19,7 @@ PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckI
 #if !machine
 	LOG_DEBUG << "Using machine0\n";
 	statePtr = &inletState;
+	setPuckID(puckId);
 	statePtr->returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	statePtr->shortDistance = &shortDistance;
 	statePtr->wideDistance = &wideDistance;
@@ -491,6 +492,7 @@ void PuckContext::MetalType::switchIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [MetalType]->[TypeKnown]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::EVALUATE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	new (this) TypeKnown;
 }
 /*******************************************/

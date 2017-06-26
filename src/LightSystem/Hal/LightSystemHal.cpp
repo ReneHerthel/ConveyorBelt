@@ -51,6 +51,8 @@ namespace HAL {
 				;
         }
 
+    	/* Clear all before setting */
+    	PortA::getInstance().bitClear(ALL_MASK);
         /* Set requested bit */
         PortA::getInstance().bitSet(bitMask);
     }

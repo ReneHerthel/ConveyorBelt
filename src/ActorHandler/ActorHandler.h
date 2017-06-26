@@ -68,6 +68,8 @@ private:
     SortingSwichtControl &m_sortingSwitchControl;
 
     SerialService &m_serialService;
+
+    PuckSignal::PuckSpeed lastSpeed;
 };
 
 #endif /* SRC_ACTORHANDLER_ACTORHANDLER_H_ */
