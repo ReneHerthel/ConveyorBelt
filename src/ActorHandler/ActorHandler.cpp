@@ -67,9 +67,8 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     	            // Nothing todo so far.
     	            break;
     	}
-    	lastSpeed = manager.speedSignal;
     }
-
+    lastSpeed = manager.speedSignal;
 
 
     if (manager.actorFlag) {
