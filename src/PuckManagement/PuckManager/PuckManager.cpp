@@ -74,11 +74,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	// signal can be passed for speed prio -> every puck should return deny
 #endif
 
-	if(puckList.empty()) {
-		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
-		prioReturnVal.errorFlag = true;
-		prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
-		return prioReturnVal;
+	if (signal.signalType != PuckSignal::SignalType::SERIAL_SIGNAL) {
+		if(puckList.empty()) {
+			prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+			prioReturnVal.errorFlag = true;
+			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+			return prioReturnVal;
+		}
 	}
 
 	// Pass the timer signal to the given puckID
