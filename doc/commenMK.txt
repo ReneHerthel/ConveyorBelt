@@ -5,12 +5,12 @@ EXTRA_SRCVPATH+= \
 	$(PROJECT_ROOT)/src/SerialPort/TopLevelProto  \
 	$(PROJECT_ROOT)/src/TestFramework  \
 	$(PROJECT_ROOT)/src/Tests/Serial  \
-	$(PROJECT_ROOT)/src/ConveyorBelt \
-	$(PROJECT_ROOT)/src/ConveyorBelt/hal \
-	$(PROJECT_ROOT)/src/ConveyorBelt/service \
-	$(PROJECT_ROOT)/src/SortingSwitch \
-	$(PROJECT_ROOT)/src/SortingSwitch/hal \
-	$(PROJECT_ROOT)/src/SortingSwitch/service \
+	$(PROJECT_ROOT)/src/ConveyorBelt  \
+	$(PROJECT_ROOT)/src/ConveyorBelt/hal  \
+	$(PROJECT_ROOT)/src/ConveyorBelt/service  \
+	$(PROJECT_ROOT)/src/SortingSwitch  \
+	$(PROJECT_ROOT)/src/SortingSwitch/hal  \
+	$(PROJECT_ROOT)/src/SortingSwitch/service  \
 	$(PROJECT_ROOT)/src  \
 	$(PROJECT_ROOT)/src/Wrapper/PulseMessageReceiver  \
 	$(PROJECT_ROOT)/src/Wrapper/PulseMessageSender  \
@@ -18,30 +18,33 @@ EXTRA_SRCVPATH+= \
 	$(PROJECT_ROOT)/src/LightSystem/Controller  \
 	$(PROJECT_ROOT)/src/LightSystem/Hal  \
 	$(PROJECT_ROOT)/src/LightSystem/Service  \
-	$(PROJECT_ROOT)/src/Tests \
-	$(PROJECT_ROOT)/src/Tests/PulseMessageWrapper \
-	$(PROJECT_ROOT)/src/Tests/HeightMeasurementStatemachine \
-	$(PROJECT_ROOT)/src/Tests/HeightMeasurementTest\
-	$(PROJECT_ROOT)/src/Tests/Timer \
-	$(PROJECT_ROOT)/src/Tests/DistanceTracker \
-	$(PROJECT_ROOT)/src/Tests/Calibration \
-	$(PROJECT_ROOT)/src/Tests/MainProg \
-	$(PROJECT_ROOT)/src/Tests/PortA \
-	$(PROJECT_ROOT)/src/Tests/PuckSort \
-	$(PROJECT_ROOT)/src/Tests/LightSystem \
-	$(PROJECT_ROOT)/src/Tests/PuckManager \
-	$(PROJECT_ROOT)/src/Tests/PuckStateMachine \
-	$(PROJECT_ROOT)/src/Timer \
-	$(PROJECT_ROOT)/src/HeightMeasurement \
-	$(PROJECT_ROOT)/src/HeightMeasurement/hal \
-	$(PROJECT_ROOT)/src/HeightMeasurement/service \
-	$(PROJECT_ROOT)/src/HeightMeasurement/stateMachine \
-	$(PROJECT_ROOT)/src/HeightMeasurement/test \
-	$(PROJECT_ROOT)/src/Calibration \
-	$(PROJECT_ROOT)/src/PortA \
-	$(PROJECT_ROOT)/src/ISR \
-	$(PROJECT_ROOT)/src/ActorHandler \
-	$(PROJECT_ROOT)/src/PuckManagement \
-	$(PROJECT_ROOT)/src/PuckManagement/PuckManager \
-	$(PROJECT_ROOT)/src/PuckManagement/PuckStateMachine \
-	$(PROJECT_ROOT)/src/PuckManagement/PuckSort \
+	$(PROJECT_ROOT)/src/Tests  \
+	$(PROJECT_ROOT)/src/Tests/PulseMessageWrapper  \
+	$(PROJECT_ROOT)/src/Tests/HeightMeasurementStatemachine  \
+	$(PROJECT_ROOT)/src/Tests/HeightMeasurementTest  \
+	$(PROJECT_ROOT)/src/Tests/Timer  \
+	$(PROJECT_ROOT)/src/Tests/DistanceTracker  \
+	$(PROJECT_ROOT)/src/Tests/Calibration  \
+	$(PROJECT_ROOT)/src/Tests/MainProg  \
+	$(PROJECT_ROOT)/src/Tests/PortA  \
+	$(PROJECT_ROOT)/src/Tests/LightSystem  \
+	$(PROJECT_ROOT)/src/Tests/PuckStateMachine  \
+	$(PROJECT_ROOT)/src/Tests/PuckManager  \
+	$(PROJECT_ROOT)/src/Tests/PuckSort  \
+	$(PROJECT_ROOT)/src/Timer  \
+	$(PROJECT_ROOT)/src/HeightMeasurement  \
+	$(PROJECT_ROOT)/src/HeightMeasurement/hal  \
+	$(PROJECT_ROOT)/src/HeightMeasurement/controller  \
+	$(PROJECT_ROOT)/src/HeightMeasurement/stateMachine  \
+	$(PROJECT_ROOT)/src/HeightMeasurement/test  \
+	$(PROJECT_ROOT)/src/Calibration  \
+	$(PROJECT_ROOT)/src/PortA  \
+	$(PROJECT_ROOT)/src/ISR  \
+	$(PROJECT_ROOT)/src/ActorHandler  \
+	$(PROJECT_ROOT)/src/PuckManagement  \
+	$(PROJECT_ROOT)/src/PuckManagement/PuckManager  \
+	$(PROJECT_ROOT)/src/PuckManagement/PuckStateMachine  \
+	$(PROJECT_ROOT)/src/PuckManagement/PuckSort  \
+	$(PROJECT_ROOT)/src/SignalDistributer  \
+	$(PROJECT_ROOT)/src/ErrorHandler  \
+	$(PROJECT_ROOT)/src/Tests/ErrorHandler
