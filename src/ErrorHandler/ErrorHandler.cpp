@@ -94,6 +94,8 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 				m_hasError = true;
+				bool buttonReset = false;
+				bool buttonStart = false;
 			}
 			break;
 		case CodeDefinition::ISR :
@@ -102,6 +104,8 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 				m_hasError = true;
 				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+				bool buttonReset = false;
+				bool buttonStart = false;
 			}
 			break;
 		default :
