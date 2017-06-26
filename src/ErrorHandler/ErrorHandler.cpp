@@ -89,6 +89,7 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     }
 }
 void ErrorHandler::demultiplex(rcv::msg_t event){
+	LOG_DEBUG << "[ErrorHandler] Trying to demux " << event.code << " " << event.value << "\n";
 	switch(event.code){
 		case CodeDefinition::SER_IN :
 			if( event.value == Serial_n::ser_proto_msg::ESTOP_SER ||
@@ -103,6 +104,7 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 			break;
 		case CodeDefinition::ISR :
 			if(event.value == interrupts::BUTTON_ESTOP_IN){
+				LOG_DEBUG << "[ErrorHandler] Got Estop from ISR \n";
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
