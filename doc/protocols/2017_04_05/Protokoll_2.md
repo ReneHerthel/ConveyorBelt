@@ -14,6 +14,7 @@
 * Architektur
 
 *Start*: 8:42 Uhr
+
 *Ende*: 11:30 Uhr
 
 ## Protokoll 1
