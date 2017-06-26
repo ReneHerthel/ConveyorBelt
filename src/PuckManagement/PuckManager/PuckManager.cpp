@@ -214,6 +214,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		acceptCounter++;
 	}
 
+	/* Accept serial RESUME and STOP signals */
+	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
+			&& ( signal.serialSignal == Serial_n::ser_proto_msg::STOP_SER
+					|| signal.serialSignal == Serial_n::ser_proto_msg::RESUME_SER ) ) {
+		acceptCounter++;
+	}
+
 	if(!prioReturnVal.errorFlag) {
 		if(acceptCounter > 1 || acceptCounter < 0) {
 			prioReturnVal.errorFlag = true;
