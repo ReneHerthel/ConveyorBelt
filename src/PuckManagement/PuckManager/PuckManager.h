@@ -39,7 +39,6 @@ public:
 		ActorSignal actorSignal;
 		bool errorFlag;
 		ErrorSignal errorSignal;
-		bool slideFullFlag;
 		PuckSignal::PuckType *puckType;					// Null except on send Signal
 	};
 
