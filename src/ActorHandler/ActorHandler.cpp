@@ -24,6 +24,7 @@ ActorHandler::ActorHandler ( ConveyorBeltService &conveyorBeltService,
     ,    m_heightService(heightService)
     ,    m_sortingSwitchControl(sortingSwichtControl)
 	, 	 m_serialService(serialService)
+	, 	 lastSpeed(PuckSignal::PuckSpeed::STOP)
 {
     // Nothing todo so far.
 }
@@ -38,30 +39,38 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     LOG_SCOPE
     DistanceObservable &distO = DistanceObservable::getInstance();
 
-    switch (manager.speedSignal) {
+    if(lastSpeed != manager.speedSignal){
+    	switch (manager.speedSignal) {
 
-        case PuckSignal::PuckSpeed::STOP:
-            m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
-            distO.updateSpeed(DistanceSpeed::STOP);
-            LOG_DEBUG << "[ActorHandler] STOPPED \n";
-            break;
+    	        case PuckSignal::PuckSpeed::STOP:
+    	            m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+    	            distO.updateSpeed(DistanceSpeed::STOP);
+    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::STOP_SER);
+    	            LOG_DEBUG << "[ActorHandler] STOPPED \n";
+    	            break;
 
-        case PuckSignal::PuckSpeed::SLOW:
-            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
-            distO.updateSpeed(DistanceSpeed::SLOW);
-            LOG_DEBUG << "[ActorHandler] SLOW \n";
-            break;
+    	        case PuckSignal::PuckSpeed::SLOW:
+    	            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
+    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
+    	            distO.updateSpeed(DistanceSpeed::SLOW);
+    	            LOG_DEBUG << "[ActorHandler] SLOW \n";
+    	            break;
 
-        case PuckSignal::PuckSpeed::FAST:
-            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
-            distO.updateSpeed(DistanceSpeed::FAST);
-            LOG_DEBUG << "[ActorHandler] FAST \n";
-            break;
+    	        case PuckSignal::PuckSpeed::FAST:
+    	            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
+    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
+    	            distO.updateSpeed(DistanceSpeed::FAST);
+    	            LOG_DEBUG << "[ActorHandler] FAST \n";
+    	            break;
 
-        default:
-            // Nothing todo so far.
-            break;
+    	        default:
+    	            // Nothing todo so far.
+    	            break;
+    	}
+    	lastSpeed = manager.speedSignal;
     }
+
+
 
     if (manager.actorFlag) {
         switch (manager.actorSignal) {
