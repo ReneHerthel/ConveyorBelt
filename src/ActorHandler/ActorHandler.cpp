@@ -39,6 +39,8 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     LOG_SCOPE
     DistanceObservable &distO = DistanceObservable::getInstance();
 
+    LOG_DEBUG << "[ActorHandler] lastspeed " << lastSpeed << " manger speed " << manager.speedSignal << "\n" ;
+
     if(lastSpeed != manager.speedSignal){
 
     	switch (manager.speedSignal) {
