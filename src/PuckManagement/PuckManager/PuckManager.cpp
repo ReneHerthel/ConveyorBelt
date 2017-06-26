@@ -210,6 +210,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL
 			&& signal.interruptSignal == interrupts::interruptSignals::METAL_DETECT
 			&& acceptCounter == 0) {
+		prioReturnVal.errorFlag = false;
 		acceptCounter++;
 	}
 
@@ -218,6 +219,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			&& ( signal.serialSignal == Serial_n::ser_proto_msg::STOP_SER
 					|| signal.serialSignal == Serial_n::ser_proto_msg::RESUME_SER )
 					&& acceptCounter == 0 ) {
+		prioReturnVal.errorFlag = false;
 		acceptCounter++;
 	}
 
