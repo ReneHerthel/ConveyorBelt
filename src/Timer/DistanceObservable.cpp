@@ -6,9 +6,10 @@
  */
 
 #include "DistanceObservable.h"
-
+#include "LogScope.h"
 
 void DistanceObservable::updateSpeed(DistanceSpeed::speed_t speed){
+	LOG_SCOPE;
 	currSpeed_ = speed;
 	for (set<DistanceTracker*>::iterator it = dtlist_.begin(); it != dtlist_.end(); ++it) {
 				(*it)->notify(speed);

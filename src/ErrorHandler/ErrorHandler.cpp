@@ -59,6 +59,7 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     distO.updateSpeed(DistanceSpeed::STOP);
 
     m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+    m_serialService->sendMsg(Serial_n::ser_proto_msg::STOP_SER);
 
     switch (manager.errorSignal) {
 

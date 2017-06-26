@@ -7,6 +7,7 @@
 #include "Calibration.h"
 #include "Logger.h"
 #include "PuckSignal.h"
+#include "LogScope.h"
 
 DistanceTracker::DistanceTracker(int chid, int8_t code):
 	chid_(chid),
@@ -34,6 +35,7 @@ DistanceTracker::~DistanceTracker(){
 using namespace DistanceSpeed;
 
 void DistanceTracker::notify(DistanceSpeed::speed_t speed){
+	LOG_SCOPE;
 	if(!manStopped_){
 		uint32_t remainingTime = 0;
 		if(stopped_){ //Timer was stopped, resume it
@@ -66,6 +68,7 @@ void DistanceTracker::notify(DistanceSpeed::speed_t speed){
 }
 
 int32_t DistanceTracker::startAlarm(int32_t value, DistanceSpeed::lb_distance distance, double delta){
+	LOG_SCOPE;
 	manStopped_ =  false;
 	Calibration& cal = Calibration::getInstance();
 	lastValue_ = value;

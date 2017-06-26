@@ -22,6 +22,7 @@ private:
 	int coid;
 	bool timerRunning;
 	bool timerCreated;
+	bool timerWasRunning;
 	struct sigevent event;
 	struct itimerspec timer;
 public:
