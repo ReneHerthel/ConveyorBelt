@@ -17,7 +17,12 @@
 #include "DistanceEnum.h"
 #include "ISerializable.h"
 
+#ifdef VARIANT_Belt1
 #define machine (0) // 0 or 1
+#else
+#define machine (1) // 0 or 1
+#endif
+
 #define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
@@ -167,16 +172,7 @@ public:
 
 	struct TypeKnown : public PuckState {
 		void switchOut();
-		void slideIn();
-	};
-	/*******************************************/
 
-	/*******************************************
-	 * Slide
-	 */
-	struct SlideArea : public PuckState {
-		void slideOut();
-		void lateTimer();
 	};
 	/*******************************************/
 
@@ -186,10 +182,20 @@ public:
 	struct SwitchArea : public PuckState {
 		void earlyTimer();
 		void outletIn();
+		void slideIn();
 	};
 
 	struct SwitchTimer : public PuckState {
 		void outletIn();  //with guards
+	};
+	/*******************************************/
+
+	/*******************************************
+	 * Slide
+	 */
+	struct SlideArea : public PuckState {
+		void slideOut();
+		void lateTimer();
 	};
 	/*******************************************/
 

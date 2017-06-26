@@ -20,7 +20,13 @@
 #include "SerialProtocoll.h"
 
 /* FIXME: Move to global header */
-#define MACHINE 1
+
+#ifdef VARIANT_Belt1
+#define MACHINE (0) // 0 or 1
+#else
+#define MACHINE (1) // 0 or 1
+#endif
+
 #define FIFO_SORT 1 /*!< \brief If set, disables sort algorithm and let all pucks pass */
 
 using namespace PuckSignal;
