@@ -41,35 +41,46 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
     LOG_DEBUG << "[ActorHandler] lastspeed " << lastSpeed << " manger speed " << manager.speedSignal << "\n" ;
 
-    if(lastSpeed != manager.speedSignal){
+    ConveyorBeltState newCbsSpeed;
+    DistanceSpeed::speed_t newDistanceTrackerSpeed;
+    Serial_n::ser_proto_msg newSerialMsg;
 
-    	switch (manager.speedSignal) {
-    	        case PuckSignal::PuckSpeed::STOP:
-    	            m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
-    	            distO.updateSpeed(DistanceSpeed::STOP);
-    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::STOP_SER);
-    	            LOG_DEBUG << "[ActorHandler] STOPPED \n";
-    	            break;
+    switch (manager.speedSignal) { //Choose the wanted signals
+        	        case PuckSignal::PuckSpeed::STOP:
+        	            LOG_DEBUG << "[ActorHandler] STOPPED \n";
+        	            newCbsSpeed = ConveyorBeltState::STOP;
+        	            newDistanceTrackerSpeed = DistanceSpeed::STOP;
+        	            newSerialMsg = Serial_n::ser_proto_msg::STOP_SER;
+        	            break;
 
-    	        case PuckSignal::PuckSpeed::SLOW:
-    	            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
-    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
-    	            distO.updateSpeed(DistanceSpeed::SLOW);
-    	            LOG_DEBUG << "[ActorHandler] SLOW \n";
-    	            break;
+        	        case PuckSignal::PuckSpeed::SLOW:
+        	            LOG_DEBUG << "[ActorHandler] SLOW \n";
+        	            newCbsSpeed = ConveyorBeltState::RIGHTSLOW;
+        	            newDistanceTrackerSpeed = DistanceSpeed::SLOW;
+        	            newSerialMsg = Serial_n::ser_proto_msg::RESUME_SER;
+        	            break;
 
-    	        case PuckSignal::PuckSpeed::FAST:
-    	            m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
-    	            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
-    	            distO.updateSpeed(DistanceSpeed::FAST);
-    	            LOG_DEBUG << "[ActorHandler] FAST \n";
-    	            break;
+        	        case PuckSignal::PuckSpeed::FAST:
+        	            LOG_DEBUG << "[ActorHandler] FAST \n";
+        	            newCbsSpeed = ConveyorBeltState::RIGHTFAST;
+        	            newDistanceTrackerSpeed = DistanceSpeed::FAST;
+        	            newSerialMsg = Serial_n::ser_proto_msg::RESUME_SER;
+        	            break;
 
-    	        default:
-    	        	 LOG_DEBUG << "[ActorHandler] Cant handle speed, unknown enum " << (int)manager.speedSignal << "\n";
-    	            break;
-    	}
+        	        default:
+        	        	LOG_DEBUG << "[ActorHandler] Cant set speed, unknown enum " << (int)manager.speedSignal << "\n";
+        	            break;
     }
+
+    //Set updated speeds
+    m_conveyorBeltService.changeState(newCbsSpeed);
+    distO.updateSpeed(newDistanceTrackerSpeed);
+
+
+    //Only send over serial if something changed
+	if(lastSpeed != manager.speedSignal){
+		m_serialService.sendMsg(newSerialMsg);
+	}
     lastSpeed = manager.speedSignal;
 
 
@@ -100,7 +111,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::ACCEPT_SER);
             	break;
             default:
-                // Nothing todo so far.
+            	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.speedSignal << "\n";
                 break;
         }
     } /* if */
