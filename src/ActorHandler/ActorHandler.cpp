@@ -40,8 +40,8 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     DistanceObservable &distO = DistanceObservable::getInstance();
 
     if(lastSpeed != manager.speedSignal){
-    	switch (manager.speedSignal) {
 
+    	switch (manager.speedSignal) {
     	        case PuckSignal::PuckSpeed::STOP:
     	            m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
     	            distO.updateSpeed(DistanceSpeed::STOP);
@@ -64,7 +64,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     	            break;
 
     	        default:
-    	            // Nothing todo so far.
+    	        	 LOG_DEBUG << "[ActorHandler] Cant handle speed, unknown enum " << (int)manager.speedSignal << "\n";
     	            break;
     	}
     }
