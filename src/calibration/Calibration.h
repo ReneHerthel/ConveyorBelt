@@ -12,6 +12,7 @@
 #include "DistanceEnum.h"
 #include "SortingSwitchService.h"
 #include "HeightMeasurementController.h"
+#include "PulseMessageReceiverService.h"
 #include "Signals.h"
 #include <string>
 
@@ -94,7 +95,7 @@ private:
 	Calibration();
 	~Calibration();
 
-	void calibrateHeighMeasurement(void);
+	void calibrateHeighMeasurement(rcv::PulseMessageReceiverService *pmr);
 
 	//v slow and fast, distances between lightbarriers (lb) in ms, lb_out to lb_in time v//
 	std::chrono::milliseconds overall[2]; 		///Overall distance from inlet to outlet

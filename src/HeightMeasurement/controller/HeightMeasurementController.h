@@ -57,13 +57,13 @@ public:
      * @brief The calibration data, which is initialized at the begining once.
      */
     struct CalibrationData {
-        int16_t delta;         /*< The range, which makes the data still valid.*/
-        int16_t refHeight;     /*< The height of the belt.*/
-        int16_t holeHeight;    /*< The height of the puck's hole.*/
-        int16_t surfaceHeight; /*< The height of the puck's top.*/
-        int16_t highHeight;    /*< The height of the Bit-coded puck's 1.*/
-        int16_t lowHeight;     /*< The height of the Bit-coded puck's 0.*/
-        int16_t invalidHeight; /*< The height of the Invalid puck.*/
+        uint16_t delta;         /*< The range, which makes the data still valid.*/
+        uint16_t refHeight;     /*< The height of the belt.*/
+        uint16_t holeHeight;    /*< The height of the puck's hole.*/
+        uint16_t surfaceHeight; /*< The height of the puck's top.*/
+        uint16_t highHeight;    /*< The height of the Bit-coded puck's 1.*/
+        uint16_t lowHeight;     /*< The height of the Bit-coded puck's 0.*/
+        uint16_t invalidHeight; /*< The height of the Invalid puck.*/
     };
 
     /*
