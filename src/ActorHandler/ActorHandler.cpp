@@ -43,17 +43,20 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
         case PuckSignal::PuckSpeed::STOP:
             m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
             distO.updateSpeed(DistanceSpeed::STOP);
+            m_serialService.sendMsg(Serial_n::ser_proto_msg::STOP_SER);
             LOG_DEBUG << "[ActorHandler] STOPPED \n";
             break;
 
         case PuckSignal::PuckSpeed::SLOW:
             m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTSLOW);
+            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
             distO.updateSpeed(DistanceSpeed::SLOW);
             LOG_DEBUG << "[ActorHandler] SLOW \n";
             break;
 
         case PuckSignal::PuckSpeed::FAST:
             m_conveyorBeltService.changeState(ConveyorBeltState::RIGHTFAST);
+            m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
             distO.updateSpeed(DistanceSpeed::FAST);
             LOG_DEBUG << "[ActorHandler] FAST \n";
             break;
