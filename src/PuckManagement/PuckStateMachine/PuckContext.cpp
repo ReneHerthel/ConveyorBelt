@@ -492,6 +492,7 @@ void PuckContext::MetalType::switchIn() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [MetalType]->[TypeKnown]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::EVALUATE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	stopTimer();
 	new (this) TypeKnown;
 }
 /*******************************************/

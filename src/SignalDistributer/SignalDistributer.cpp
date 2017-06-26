@@ -85,6 +85,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 			mng_r = puckManager_->process(m_sig);
 			DEBUG_MNG_RE(mng_r)
 			actorHandler_->demultiplex(mng_r);
+			errorHandler_->demultiplex(mng_r);
 			break;
 			//TODO give the buttons to the error handle
 	}

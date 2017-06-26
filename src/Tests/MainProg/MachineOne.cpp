@@ -132,14 +132,14 @@ TEST_IMPL(MachineOne, programm_m1){
 	ActorHandler actorHandler(cbs, heightService, ssCntrl, serialService);
 
 	//INIT PUCK MNG
-	PuckManager puckManager(mainChid);
+	PuckManager *puckManager = new PuckManager(mainChid);
 
 
 	ErrorHandler errorHandler(mainChid, cbs, lightSystem, &serialService);
 
 
 	//INIT SIGNAL DISTRIBUTER
-	SignalDistributer signalDistributer(&puckManager, &ssCntrl, &actorHandler, &errorHandler);
+	SignalDistributer signalDistributer(puckManager, &ssCntrl, &actorHandler, &errorHandler);
 
 	//TESTLOOP
 	rcv::msg_t event;
@@ -161,7 +161,8 @@ TEST_IMPL(MachineOne, programm_m1){
 		if(event.value == interrupts::BUTTON_RESET){
 			cbs.changeState(ConveyorBeltState::STOP);
 			std::cout << "\n\n RESET \n";
-			puckManager = PuckManager(mainChid);
+			delete puckManager;
+			puckManager = new PuckManager(mainChid);
 		}
 
 		signalDistributer.process(event);

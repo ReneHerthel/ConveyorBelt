@@ -240,11 +240,11 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 
 		// acceptCounter == 1
-		if(warningCounter > 1 || warningCounter < 0) {
+		/*if(warningCounter > 1 || warningCounter < 0) {
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::MULTIPLE_WARNING;
 			return prioReturnVal;
-		}
+		}*/
 
 		// warning can be ignored
 	}
