@@ -17,7 +17,7 @@
 #include "DistanceEnum.h"
 #include "ISerializable.h"
 
-#ifdef VARIANT_BELT_0
+#ifdef VARIANT_Belt0
 #define machine (0) // 0 or 1
 #else
 #define machine (1) // 0 or 1

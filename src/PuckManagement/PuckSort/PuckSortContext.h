@@ -21,7 +21,7 @@
 
 /* FIXME: Move to global header */
 
-#ifdef VARIANT_BELT_0
+#ifdef VARIANT_Belt0
 #define MACHINE (0) // 0 or 1
 #else
 #define MACHINE (1) // 0 or 1
