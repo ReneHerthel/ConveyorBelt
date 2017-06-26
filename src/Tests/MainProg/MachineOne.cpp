@@ -135,7 +135,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	PuckManager puckManager(mainChid);
 
 
-	ErrorHandler errorHandler(mainChid, cbs, lightSystem);
+	ErrorHandler errorHandler(mainChid, cbs, lightSystem, &serialService);
 
 
 	//INIT SIGNAL DISTRIBUTER

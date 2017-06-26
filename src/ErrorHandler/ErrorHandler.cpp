@@ -19,6 +19,9 @@
 #include "DistanceObservable.h"
 #include "DistanceEnum.h"
 #include "Signals.h"
+#include "CodeDefinition.h"
+#include "SerialProtocoll.h"
+#include "Signals.h"
 
 #include <iostream>
 using namespace std;
@@ -26,11 +29,13 @@ using namespace HAL;
 
 ErrorHandler::ErrorHandler( int chid,
                             ConveyorBeltService &conveyorBeltService,
-                            LightSystemService * lightSystemService)
+                            LightSystemService * lightSystemService,
+                            SerialService * serialService)
     :    m_hasError(false)
     ,    m_resetPressed(false)
     ,    m_conveyorBeltService(conveyorBeltService)
     ,    m_lightSystemService(lightSystemService)
+	, 	 m_serialService(serialService)
 {
     m_lightSystemService->setWarningLevel(Level::OPERATING);
 }
@@ -82,6 +87,29 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             break;
     }
 }
+void ErrorHandler::demultiplex(rcv::msg_t event){
+	switch(event.code){
+		case CodeDefinition::SER_IN :
+			if(event.value == Serial_n::ser_proto_msg::ESTOP_SER){
+				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
+				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+				m_hasError = true;
+			}
+			break;
+		case CodeDefinition::ISR :
+			if(event.value == interrupts::BUTTON_ESTOP){
+				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
+				m_hasError = true;
+				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
+				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+			}
+			break;
+		default :
+			//Nothing to do
+			break;
+	}
+}
+
 
 bool ErrorHandler::hasError()
 {
@@ -93,7 +121,7 @@ void ErrorHandler::handleMessage(rcv::msg_t message)
     bool buttonReset = false;
     bool buttonStart = false;
 
-    if (message.code != 5) { // 5 is hardcoded in the ISR.
+    if (message.code != 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
         return; // Do not do anything without code 5!
     }
 

@@ -29,6 +29,8 @@ void SignalDistributer::process(rcv::msg_t msg){
 
 	LOG_SCOPE;
 
+	errorHandler_->demultiplex(msg);
+
 	if (errorHandler_->hasError()) {
         errorHandler_->handleMessage(msg); // Wait for pressing the buttons.
 	}

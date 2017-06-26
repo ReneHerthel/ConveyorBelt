@@ -24,13 +24,14 @@
 #include "LightSystemService.h"
 #include "LightSystemHal.h"
 #include "LightSystemController.h"
+#include "SerialService.h"
 
 class ErrorHandler {
 public:
     /*
      * @brief Default constructor.
      */
-    ErrorHandler(int chid, ConveyorBeltService &conveyorBeltService, LightSystemService * lightSystemService);
+    ErrorHandler(int chid, ConveyorBeltService &conveyorBeltService, LightSystemService * lightSystemService, SerialService * serialService);
 
     /*
      * @brief Default destructor.
@@ -41,6 +42,12 @@ public:
      * @brief demultiplex the error flags of the puck manager.
      */
     void demultiplex(PuckManager::ManagerReturn &manager);
+
+    /*
+     * @brief demultiplex the error flags of the puck manager.
+     */
+    void demultiplex(rcv::msg_t event);
+
 
     /*
      * @brief return if there is actual an error.
@@ -72,6 +79,8 @@ private:
      * @brief A reference to the LightSystem.
      */
     LightSystemService * m_lightSystemService;
+
+    SerialService * m_serialService;
 
 };
 
