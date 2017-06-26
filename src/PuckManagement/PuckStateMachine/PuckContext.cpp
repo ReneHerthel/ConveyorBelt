@@ -509,11 +509,35 @@ void PuckContext::TypeKnown::switchOut() {
 	new (this) SwitchArea;
 }
 
-void PuckContext::TypeKnown::slideIn() {
+
+/*******************************************/
+
+/*******************************************
+ * SwitchArea
+ */
+void PuckContext::SwitchArea::outletIn() {
 	LOG_SCOPE;
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [TypeKnown]->[SlideArea]\n";
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchArea]->[SwitchArea]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+}
+
+void PuckContext::SwitchArea::earlyTimer() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchArea]->[SwitchTimer]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	new (this) SwitchTimer;
+}
+
+void PuckContext::SwitchArea::slideIn() {
+	LOG_SCOPE;
+	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchArea]->[SlideArea]\n";
+	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	//clear timers from switch to out distance
+	shortDistance->stopAlarm();
+	wideDistance->stopAlarm();
 
 	PuckSignal::TimerSignal ts;
 	ts.TimerInfo.puckID = puckID;
@@ -542,25 +566,6 @@ void PuckContext::SlideArea::lateTimer() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::SLIDE_FULL;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	// dies here
-}
-/*******************************************/
-
-/*******************************************
- * SwitchArea
- */
-void PuckContext::SwitchArea::outletIn() {
-	LOG_SCOPE;
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchArea]->[SwitchArea]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::WARNING;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-}
-
-void PuckContext::SwitchArea::earlyTimer() {
-	LOG_SCOPE;
-	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SwitchArea]->[SwitchTimer]\n";
-	returnValue.puckReturn = PuckSignal::PuckReturn::ACCEPT;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
-	new (this) SwitchTimer;
 }
 /*******************************************/
 
