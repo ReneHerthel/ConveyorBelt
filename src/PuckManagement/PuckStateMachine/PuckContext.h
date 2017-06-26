@@ -117,7 +117,13 @@ public:
 	struct TransferArea : public PuckState {
 		void inletIn();
 		void earlyTimer();
+		void serialStop();
 	} transferState;
+
+	struct TransferStoppedInlet : public PuckState {
+		void serialResume();
+	};
+
 
 	struct TransferTimer : public PuckState {
 		void inletIn();
