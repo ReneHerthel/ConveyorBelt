@@ -113,7 +113,7 @@ bool  Calibration::saveToDisk(std::string path){
 	std::ofstream file(path);
 	for(int i = 0; i < 2; i++){
 		file << overall[i].count() << " " << heightMeasure[i].count() << " " << sortingSwitch[i].count()
-			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
+			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count() << " " << slide[i].count()
 			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
 	}
 	file << hmCal.delta << " " << hmCal.highHeight << " " << hmCal.holeHeight << " " << hmCal.invalidHeight << " " << hmCal.lowHeight << " " << hmCal.refHeight << " " << hmCal.surfaceHeight;
@@ -127,11 +127,12 @@ bool  Calibration::loadFromDisk(std::string path){
 	uint32_t outlet_in;
 	uint32_t inlet_in;
 	uint32_t inSwitch_in;
+	uint32_t slide_in;
 	double slowToFastFactor_in;
 	double fastToSlowFactor_in;
 
 	for(int i = 0; i < 2; i++){
-		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in
+		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in >> slide_in
 			 >> slowToFastFactor_in >> fastToSlowFactor_in;
 		overall[i] 			= milliseconds(overall_in);
 		heightMeasure[i] 	= milliseconds(heightMeasure_in);
@@ -139,6 +140,7 @@ bool  Calibration::loadFromDisk(std::string path){
 		outlet[i] 			= milliseconds(outlet_in);
 		inlet[i] 			= milliseconds(inlet_in);
 		inSwitch[i] 		= milliseconds(inSwitch_in);
+		slide[i]			= milliseconds(slide_in);
 		slowToFastFactor    = slowToFastFactor_in;
 		fastToSlowFactor 	= fastToSlowFactor_in;
 	}
