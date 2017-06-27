@@ -43,11 +43,9 @@ msg_t PulseMessageReceiverService::receivePulseMessage()
 
     // First check if there is a vaild channel ID.
     if (chid_ < 0) {
-        LOG_DEBUG << "[PulseMessageReceiverService] receivePulseMessage() chid was an error [" << chid_ << "]\n";
+        LOG_ERROR << "[PulseMessageReceiverService] receivePulseMessage() chid was an error [" << chid_ << "]\n";
         //return chid_;
     }
-
-    LOG_DEBUG << "Checked chid " << chid_ <<"\n";
 
     // The struct that defines a pulse.
     struct _pulse pulse;
@@ -55,12 +53,10 @@ msg_t PulseMessageReceiverService::receivePulseMessage()
     // Blocks and wait for an incoming pulse message.
     int err = MsgReceive_r(chid_, &pulse, sizeof(_pulse), NULL);
 
-    LOG_DEBUG << "Checked err " << err <<"\n";
-
     // Check if an error occurs from the MsgReceive_r function.
     if (err < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageReceiverService] receivePulseMessage() Error occurs on MsgReceive_r [" << err << "]\n";
+    	LOG_ERROR << "[PulseMessageReceiverService] receivePulseMessage() Error occurs on MsgReceive_r [" << err << "]\n";
         //return err;
     }
 
@@ -78,7 +74,7 @@ int PulseMessageReceiverService::newChannel()
 
     // Log if there occures an error.
     if (chid < 0) {
-        LOG_DEBUG << "[PulseMessageReceiverService] PulseMessageReceiverService() Channel creation failed\n";
+    	LOG_ERROR << "[PulseMessageReceiverService] PulseMessageReceiverService() Channel creation failed\n";
     }
 
     // Remember the channel ID for the whole object.
