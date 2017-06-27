@@ -46,6 +46,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     Serial_n::ser_proto_msg newSerialMsg;
 
     switch (manager.speedSignal) { //Choose the wanted signals
+    				case PuckSignal::PuckSpeed::SLIDE_STOP:
         	        case PuckSignal::PuckSpeed::STOP:
         	            LOG_DEBUG << "[ActorHandler] STOPPED \n";
         	            newCbsSpeed = ConveyorBeltState::STOP;

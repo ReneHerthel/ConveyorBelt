@@ -61,10 +61,6 @@ PuckSignal::PuckSpeed PuckManager::getCurrentSpeed() {
 void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal) {
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while (it != puckList.end()) {
-		if ((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) {
-			// Check for speed prio
-			prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
-		}
 		// check for puckID
 		uint16_t currentPuckID = (*it)->getPuckID();
 		if (currentPuckID == signal.timerSignal.TimerInfo.puckID) {
@@ -75,9 +71,6 @@ void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerRetur
 				sort.process(returnVal.puckReturn);
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
-				if (puckList.size() == 1) {
-					prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
-				}
 			} else if (returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT
 					&& returnVal.puckReturn != PuckSignal::PuckReturn::ERROR) {
 				// puck should be triggered on accept or error -> unexpected otherwise
@@ -103,10 +96,6 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while (it != puckList.end()) {
 		PuckSignal::Return returnVal = (*it)->process(signal);
-
-		if (returnVal.puckSpeed > prioReturnVal.speedSignal) { // Check for speed prio
-			prioReturnVal.speedSignal = returnVal.puckSpeed;
-		}
 
 		switch (returnVal.puckReturn) {
 		case PuckSignal::PuckReturn::ACCEPT:
@@ -179,6 +168,8 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 		}
 	}
 
+	prioReturnVal.speedSignal = getCurrentSpeed();
+
 	/* No one Accepted the signal, so it is likely to be unexpected*/
 	if(acceptCounter == 0) {
 		prioReturnVal.errorFlag = true;
@@ -192,7 +183,6 @@ bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn
 		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER)){
 
 		sort.process(signal.serialSignal);
-		prioReturnVal.speedSignal = getCurrentSpeed();
 		LOG_DEBUG << "[PuckManager] Returning with with Slide management only \n";
 		return true;
 	} else {
@@ -226,6 +216,12 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	int32_t acceptCounter = 0; // count all accepted signals
 	int32_t warningCounter = 0; // count all warnings
 
+	prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
+
+	if(passToPuckSort(signal, prioReturnVal)){ //Only pucksort is intrested in signal
+			return prioReturnVal;
+	}
+
 #if !machine // machine0
 	// check for first interrupt signal - puck must be created
 	if(	signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL &&
@@ -233,7 +229,6 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 		addPuck(new PuckContext(chid));
 
-		prioReturnVal.speedSignal = getCurrentSpeed();
 
 		return prioReturnVal;
 	}
@@ -246,15 +241,10 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		handlePuckTimer(signal, prioReturnVal);
 		LOG_DEBUG << "[PuckManager] Returning with with timer management only \n";
 		return prioReturnVal;
+	} else {
+		// check the signal for every puck in the list
+		handlePuckSignal(signal, acceptCounter, warningCounter, prioReturnVal);
 	}
-
-	if(passToPuckSort(signal, prioReturnVal)){
-		return prioReturnVal;
-	}
-
-	// check the signal for every puck in the list
-	handlePuckSignal(signal, acceptCounter, warningCounter, prioReturnVal);
-
 
 	/* Signal was unexpected for the pucks, might be expected somewhere else */
 	if(prioReturnVal.errorFlag && prioReturnVal.errorSignal == ErrorSignal::NOT_ACCEPTED){
