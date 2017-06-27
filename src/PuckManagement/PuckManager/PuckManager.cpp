@@ -217,6 +217,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	int32_t warningCounter = 0; // count all warnings
 
 	if(passToPuckSort(signal, prioReturnVal)){ //Only pucksort is intrested in signal
+			prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
 			return prioReturnVal;
 	}
 
@@ -241,6 +242,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	// Pass the timer signal to the given puckID
 	if(signal.signalType == PuckSignal::SignalType::TIMER_SIGNAL) {
 		handlePuckTimer(signal, prioReturnVal);
+		prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
 		LOG_DEBUG << "[PuckManager] Returning with with timer management only \n";
 		return prioReturnVal;
 	} else {
@@ -271,6 +273,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(puckList.empty()) {
 		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
 	}
+
+	prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
 
 	LOG_DEBUG << "Puck Manager returns: Speed " << prioReturnVal.speedSignal << " Actor Flag " << prioReturnVal.actorFlag
 			 << " Actor Signal " << prioReturnVal.actorSignal << " Error Flag " << prioReturnVal.errorFlag
