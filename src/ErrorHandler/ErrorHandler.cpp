@@ -47,12 +47,17 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
+	LOG_DEBUG << "[ErrorHandler] Demux Manager return \n";
+	LOG_DEBUG << "[ErrorHandler] Actor Flag " << manager.actorFlag << "actorSignal " << manager.actorSignal;
+
 	//if slide full return a warning
 	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_FULL){
 		 m_lightSystemService->setWarningLevel(Level::WARNING_OCCURED);
+		 LOG_DEBUG << "[ErrorHandler] Slide is full \n";
 	}
 	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_EMPTY){
 		 m_lightSystemService->setWarningLevel(Level::CLEAR_WARNING);
+		 LOG_DEBUG << "[ErrorHandler] Slide is empty \n";
 	}
 
 

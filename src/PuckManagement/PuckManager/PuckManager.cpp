@@ -98,7 +98,15 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				PuckSignal::Return returnVal = (*it)->process(signal);
 
 				// check return value
-				if(	returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT &&
+				if( returnVal.puckReturn == PuckSignal::PuckReturn::SLIDE_FULL) {
+					sort.process(returnVal.puckReturn);
+
+					prioReturnVal.actorFlag = true;
+					prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
+					if(puckList.size() == 1) {
+						prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+					}
+				} else if(	returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT &&
 					returnVal.puckReturn != PuckSignal::PuckReturn::ERROR) {
 					// puck should be triggered on accept or error -> unexpected otherwise
 					prioReturnVal.errorFlag = true;
@@ -112,6 +120,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			it++;
 		}
 
+		LOG_DEBUG << "[PuckManager] Returning with with timer management only \n";
 		return prioReturnVal;
 	}
 
@@ -125,7 +134,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			}
 			it++;
 		}
-
+		LOG_DEBUG << "[PuckManager] Returning with with Slide management only \n";
 		return prioReturnVal;
 	}
 
@@ -176,16 +185,6 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::STOP_MEASUREMENT;
 				break;
-			case PuckSignal::PuckReturn::SLIDE_FULL:
-				acceptCounter++;
-
-				sort.process(returnVal.puckReturn);
-
-				prioReturnVal.actorFlag = true;
-				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
-
-				break;
-
 
 			case PuckSignal::PuckReturn::SLIDE_EMPTY:
 				acceptCounter++;
@@ -210,6 +209,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 			default:
 				prioReturnVal.errorFlag = true;
 				prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+				LOG_DEBUG << "[PuckManager] Returning with Default UNEXPECTED_SIGNAL";
 				return prioReturnVal;
 		}
 
@@ -238,12 +238,14 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 	if(!prioReturnVal.errorFlag) {
 		if(acceptCounter > 1 || acceptCounter < 0) {
+			LOG_DEBUG << "[PuckManager] Returning with MULTIPLE_ACCEPT";
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::MULTIPLE_ACCEPT;
 			return prioReturnVal;
 		}
 
 		if(acceptCounter == 0) {
+			LOG_DEBUG << "[PuckManager] Returning with UNEXPECTED_SIGNAL";
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
 			return prioReturnVal;
@@ -262,6 +264,10 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(puckList.empty()) {
 		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
 	}
+
+	LOG_DEBUG << "Puck Manager returns: Speed " << prioReturnVal.speedSignal << " Actor Flag " << prioReturnVal.actorFlag
+			 << " Actor Signal " << prioReturnVal.actorSignal << " Error Flag " << prioReturnVal.errorFlag
+			 << " Error Signal " << prioReturnVal.errorSignal << " \n";
 
 	// everything OK
 	return prioReturnVal;
