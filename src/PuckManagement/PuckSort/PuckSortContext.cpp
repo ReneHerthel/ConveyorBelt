@@ -37,8 +37,8 @@ PuckSortContext::PuckSortContext()
 	statePtr->isOnMachine0 = false;
 	statePtr->isOnMachine1 = true;
 #endif
-	statePtr->rampe0IsEmpty = true;
-	statePtr->rampe1IsEmpty = true;
+	statePtr->slide0IsEmpty = true;
+	statePtr->slide1IsEmpty = true;
 	statePtr->returnValue = false;
 }
 
@@ -106,16 +106,16 @@ void PuckSortContext::process(PuckReturn message) {
 	switch (message) {
 	case SLIDE_FULL:
 #ifdef VARIANT_Belt0
-		statePtr->rampe0IsEmpty = false;
+		statePtr->slide0IsEmpty = false;
 #else
-		statePtr->rampe1IsEmpty = false;
+		statePtr->slide1IsEmpty = false;
 #endif
 		break;
 	case SLIDE_EMPTY:
 #ifdef VARIANT_Belt0
-		statePtr->rampe0IsEmpty = true;
+		statePtr->slide0IsEmpty = true;
 #else
-		statePtr->rampe1IsEmpty = true;
+		statePtr->slide1IsEmpty = true;
 #endif
 		break;
 	default:
@@ -130,16 +130,16 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	switch (message) {
 	case Serial_n::SLIDE_FULL_SER:
 #ifdef VARIANT_Belt0
-		statePtr->rampe1IsEmpty = false;
+		statePtr->slide1IsEmpty = false;
 #else
-		statePtr->rampe0IsEmpty = false;
+		statePtr->slide0IsEmpty = false;
 #endif
 		break;
 	case Serial_n::SLIDE_EMTPY_SER:
 #ifdef VARIANT_Belt0
-		statePtr->rampe1IsEmpty = true;
+		statePtr->slide1IsEmpty = true;
 #else
-		statePtr->rampe0IsEmpty = true;
+		statePtr->slide0IsEmpty = true;
 #endif
 		break;
 	default:
@@ -149,16 +149,16 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 }
 
 void PuckSortContext::PuckSort::logConditionals(void) {
-	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(rampe0IsEmpty) << " rampe1IsEmpty: " <<  int(rampe1IsEmpty)
+	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(slide0IsEmpty) << " rampe1IsEmpty: " <<  int(slide1IsEmpty)
 			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine1: " << int(isOnMachine1) << endl;
 }
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -169,9 +169,9 @@ void PuckSortContext::PuckSort::bitCode1() {
 void PuckSortContext::PuckSort::bitCode2() {
 	LOG_SCOPE;
 
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if ( !rampe1IsEmpty && isOnMachine0 ) {
+	} else if ( !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -183,9 +183,9 @@ void PuckSortContext::PuckSort::bitCode2() {
 void PuckSortContext::PuckSort::bitCode4() {
 	LOG_SCOPE;
 
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if (!rampe1IsEmpty && isOnMachine0) {
+	} else if (!slide1IsEmpty && isOnMachine0) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -196,9 +196,9 @@ void PuckSortContext::PuckSort::bitCode4() {
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -208,9 +208,9 @@ void PuckSortContext::PuckSort::bitCode5() {
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -221,9 +221,9 @@ void PuckSortContext::PuckSort::flipped() {
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine0 ) {
+	if ( !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -233,9 +233,9 @@ void PuckSortContext::PuckSort::holeWithoutMetal() {
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine0 ) {
+	if ( !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -245,9 +245,9 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;

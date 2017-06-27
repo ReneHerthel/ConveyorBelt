@@ -113,8 +113,8 @@ class PuckSortContext {
          */
         virtual void invalid();
 
-        bool rampe0IsEmpty; /*!< \brief Set if slide 0 is empty */
-        bool rampe1IsEmpty; /*!< \brief Set if slide 1 is empty */
+        bool slide0IsEmpty; /*!< \brief Set if slide 0 is empty */
+        bool slide1IsEmpty; /*!< \brief Set if slide 1 is empty */
         bool isOnMachine0; /*!< \brief Set if PuckSort is running on machine 0 */
         bool isOnMachine1; /*!< \brief Set if PuckSort is running on machine 1 */
         bool returnValue; /*!< \brief Contains result of taken transition */
