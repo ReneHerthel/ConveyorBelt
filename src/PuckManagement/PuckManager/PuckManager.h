@@ -23,7 +23,8 @@ public:
 		SEND_PUCK,
 		RECEIVED_PUCK,
 		ACCEPTED_PUCK,
-		SEND_SLIDE_FULL
+		SEND_SLIDE_FULL,
+		SEND_SLIDE_EMPTY
 	};
 
 	enum ErrorSignal {

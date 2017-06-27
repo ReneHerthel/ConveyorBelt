@@ -51,7 +51,9 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_FULL){
 		 m_lightSystemService->setWarningLevel(Level::WARNING_OCCURED);
 	}
-
+	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_EMPTY){
+		 m_lightSystemService->setWarningLevel(Level::CLEAR_WARNING);
+	}
 
 
     if (!manager.errorFlag) {
