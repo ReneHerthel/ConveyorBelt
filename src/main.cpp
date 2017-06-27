@@ -41,6 +41,16 @@ int main() {
     //ts.REG_TESTCASE(new TestExample(3, "And a third one"));
     // END Example Tests
 
+    std::cout
+#ifdef VARIANT_Belt0
+    		<< "VARIANT_Belt0"
+#else
+    		<< "VARIANT_Belt1"
+#endif
+#ifdef ENABLE_FIFO_SORT
+    		<< "ENABLE_FIFO_SORT"
+#endif
+    		<< std::endl;
 
     // PulseMessageWrapper tests
     ts.REG_TESTCASE(new TestPulseMessageWrapper(1, "Send and Receive pulse messages"));
