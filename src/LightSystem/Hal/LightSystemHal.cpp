@@ -30,19 +30,15 @@ namespace HAL {
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
-		        LOG_DEBUG << "lightOff: Clear bitmask: GREEN" << endl;
 				bitMask = GREEN_MASK;
 				break;
 			case YELLOW:
-		        LOG_DEBUG << "lightOff: Clear bitmask: YELLOW" << endl;
 				bitMask = YELLOW_MASK;
 				break;
 			case RED:
-		        LOG_DEBUG << "lightOff: Clear bitmask: RED" << endl;
 				bitMask = RED_MASK;
 				break;
 			case ALL_COLORS:
-		        LOG_DEBUG << "lightOff: Clear bitmask: ALL" << endl;
 				bitMask = ALL_MASK;
 				break;
 			default:
@@ -62,19 +58,15 @@ namespace HAL {
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
-		        LOG_DEBUG << "lightOff: Clear bitmask: GREEN" << endl;
 				bitMask = GREEN_MASK;
 				break;
 			case YELLOW:
-		        LOG_DEBUG << "lightOff: Clear bitmask: YELLOW" << endl;
 				bitMask = YELLOW_MASK;
 				break;
 			case RED:
-		        LOG_DEBUG << "lightOff: Clear bitmask: RED" << endl;
 				bitMask = RED_MASK;
 				break;
 			case ALL_COLORS:
-		        LOG_DEBUG << "lightOff: Clear bitmask: ALL" << endl;
 				bitMask = ALL_MASK;
 				break;
 			default:
