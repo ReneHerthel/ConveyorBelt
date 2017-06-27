@@ -91,7 +91,7 @@ serialized SerialProtocoll::wrapInFrame(int8_t code, int32_t value) {
                 break;
             }
         default: //TODO error handler
-        	LOG_WARNING << "[SerialProtocoll] Trying to wrap unknown code: " << (int)msg_in << endl;
+        	LOG_WARNING << "[SerialProtocoll] Trying to wrap unknown code: " << (int)code << endl;
             break;
     }
 
