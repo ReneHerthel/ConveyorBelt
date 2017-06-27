@@ -103,9 +103,12 @@ void Control::b_STOP() {
     //cout << "Control buttonStop" << endl;
 }
 
-void Control::b_EStop() {
-    sender->sendPulseMessage(code, BUTTON_ESTOP);
+void Control::b_EStopPressed() {
+    sender->sendPulseMessage(code, BUTTON_ESTOP_IN);
     //cout << "Control buttonEStop" << endl;
+}
+void Control::b_EStopReleased(){
+	sender->sendPulseMessage(code, BUTTON_ESTOP_OUT);
 }
 
 void Control::b_Reset() {

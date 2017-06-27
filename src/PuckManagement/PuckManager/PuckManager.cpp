@@ -30,12 +30,13 @@ PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
 	ManagerReturn ret;
 	ret.actorFlag = true;
 	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;
-	addPuck(new PuckContext(chid, type, nextPuckID++));
+	puckList.push_back(new PuckContext(chid, type, nextPuckID++));
 	return ret;
 }
 
 void PuckManager::addPuck(PuckContext *puck) {
 	LOG_SCOPE;
+	puck->setPuckID(nextPuckID++);
 	puckList.push_back(puck);
 	LOG_DEBUG << "[PuckManager] Size of puckList" << puckList.size() << endl;
 }
@@ -47,7 +48,6 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.speedSignal = PuckSignal::PuckSpeed::FAST;
 	prioReturnVal.actorFlag = false;
 	prioReturnVal.errorFlag = false;
-	prioReturnVal.slideFullFlag = false;
 	prioReturnVal.puckType = nullptr;
 
 	int32_t acceptCounter = 0; // count all accepted signals
@@ -74,11 +74,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	// signal can be passed for speed prio -> every puck should return deny
 #endif
 
-	if(puckList.empty()) {
-		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
-		prioReturnVal.errorFlag = true;
-		prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
-		return prioReturnVal;
+	if (signal.signalType != PuckSignal::SignalType::SERIAL_SIGNAL) {
+		if(puckList.empty()) {
+			prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+			prioReturnVal.errorFlag = true;
+			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
+			return prioReturnVal;
+		}
 	}
 
 	// Pass the timer signal to the given puckID
@@ -179,12 +181,23 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 				sort.process(returnVal.puckReturn);
 
-				prioReturnVal.slideFullFlag = true;
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
+
+				break;
+
+
+			case PuckSignal::PuckReturn::SLIDE_EMPTY:
+				acceptCounter++;
+
+				sort.process(returnVal.puckReturn);
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_EMPTY;
 				LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
 				break;
-			//
+				//
 			case PuckSignal::PuckReturn::WARNING:
 				warningCounter++;
 				break;
@@ -210,6 +223,16 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	if(signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL
 			&& signal.interruptSignal == interrupts::interruptSignals::METAL_DETECT
 			&& acceptCounter == 0) {
+		prioReturnVal.errorFlag = false;
+		acceptCounter++;
+	}
+
+	/* Accept serial RESUME and STOP signals */
+	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
+			&& ( signal.serialSignal == Serial_n::ser_proto_msg::STOP_SER
+					|| signal.serialSignal == Serial_n::ser_proto_msg::RESUME_SER )
+					&& acceptCounter == 0 ) {
+		prioReturnVal.errorFlag = false;
 		acceptCounter++;
 	}
 
@@ -227,11 +250,11 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 
 		// acceptCounter == 1
-		if(warningCounter > 1 || warningCounter < 0) {
+		/*if(warningCounter > 1 || warningCounter < 0) {
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::MULTIPLE_WARNING;
 			return prioReturnVal;
-		}
+		}*/
 
 		// warning can be ignored
 	}

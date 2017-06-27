@@ -17,7 +17,12 @@
 #include "DistanceEnum.h"
 #include "ISerializable.h"
 
+#ifdef VARIANT_Belt1
+#define machine (0) // 0 or 1
+#else
 #define machine (1) // 0 or 1
+#endif
+
 #define ONE_MACHINE_TESTING 0
 #define TIMERCODE 25 //TODO fill with right PulseCode
 #define SHORT_DELTA 0.9
@@ -112,10 +117,20 @@ public:
 	struct TransferArea : public PuckState {
 		void inletIn();
 		void earlyTimer();
+		void serialStop();
 	} transferState;
+
+	struct TransferStoppedInlet : public PuckState {
+		void serialResume();
+	};
 
 	struct TransferTimer : public PuckState {
 		void inletIn();
+		void serialStop();
+	};
+
+	struct TransferStoppedInletTimer : public PuckState {
+		void serialResume();
 	};
 	/*******************************************/
 #endif
@@ -167,7 +182,21 @@ public:
 
 	struct TypeKnown : public PuckState {
 		void switchOut();
+
+	};
+	/*******************************************/
+
+	/*******************************************
+	 * Switch
+	 */
+	struct SwitchArea : public PuckState {
+		void earlyTimer();
+		void outletIn();
 		void slideIn();
+	};
+
+	struct SwitchTimer : public PuckState {
+		void outletIn();  //with guards
 	};
 	/*******************************************/
 
@@ -178,19 +207,11 @@ public:
 		void slideOut();
 		void lateTimer();
 	};
-	/*******************************************/
 
-	/*******************************************
-	 * Switch
-	 */
-	struct SwitchArea : public PuckState {
-		void earlyTimer();
-		void outletIn();
+	struct SlideFull : public PuckState {
+		void slideOut();
 	};
 
-	struct SwitchTimer : public PuckState {
-		void outletIn();  //with guards
-	};
 	/*******************************************/
 
 	/*******************************************

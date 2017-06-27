@@ -90,7 +90,10 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 void ErrorHandler::demultiplex(rcv::msg_t event){
 	switch(event.code){
 		case CodeDefinition::SER_IN :
-			if(event.value == Serial_n::ser_proto_msg::ESTOP_SER){
+			if( event.value == Serial_n::ser_proto_msg::ESTOP_SER ||
+				event.value == Serial_n::ser_proto_msg::ERROR_SER ||
+				event.value == Serial_n::ser_proto_msg::NO_CON_SER  ){
+				LOG_DEBUG << "[ErrorHandler] Got error from serial \n";
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 				m_hasError = true;
@@ -99,7 +102,7 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 			}
 			break;
 		case CodeDefinition::ISR :
-			if(event.value == interrupts::BUTTON_ESTOP){
+			if(event.value == interrupts::BUTTON_ESTOP_IN){
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_hasError = true;
 				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
@@ -117,6 +120,7 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 
 bool ErrorHandler::hasError()
 {
+	LOG_DEBUG << "[ErrorHandler] Error: " << m_hasError << "\n";
     return m_hasError;
 }
 
