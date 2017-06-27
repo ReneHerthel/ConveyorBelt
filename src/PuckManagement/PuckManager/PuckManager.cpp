@@ -189,7 +189,7 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal) {
 	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
 		 && (signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER
-		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_EMPTY)){
+		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER)){
 
 		sort.process(signal.serialSignal);
 		prioReturnVal.speedSignal = getCurrentSpeed();
@@ -267,26 +267,14 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 	}
 
-	/* Accept Serial Slide Messages and handle */
-	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
-			&& ( signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER
-					|| signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER )
-					&& acceptCounter == 0 ) {
-		prioReturnVal.errorFlag = false;
-		sort.process(signal.serialSignal);
-		acceptCounter++;
-
-		prioReturnVal.speedSignal = getCurrentSpeed();
-	}
-
-	if(!prioReturnVal.errorFlag) {
+	/*if(!prioReturnVal.errorFlag) {
 		if(acceptCounter > 1 || acceptCounter < 0) {
 			LOG_DEBUG << "[PuckManager] Returning with MULTIPLE_ACCEPT";
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::MULTIPLE_ACCEPT;
 			return prioReturnVal;
 		}
-	}
+	}*/
 
 	if(puckList.empty()) {
 		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
