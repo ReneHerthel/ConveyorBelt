@@ -48,7 +48,6 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	prioReturnVal.speedSignal = PuckSignal::PuckSpeed::FAST;
 	prioReturnVal.actorFlag = false;
 	prioReturnVal.errorFlag = false;
-	prioReturnVal.slideFullFlag = false;
 	prioReturnVal.puckType = nullptr;
 
 	int32_t acceptCounter = 0; // count all accepted signals
@@ -182,7 +181,9 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 				sort.process(returnVal.puckReturn);
 
-				prioReturnVal.slideFullFlag = true;
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
+
 				LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
