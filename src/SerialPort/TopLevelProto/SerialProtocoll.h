@@ -27,6 +27,7 @@
 #define NO_CON_VAL 		0xDBCA
 #define ERROR_VAL 		0xFABF
 #define ESTOP_VAL 		0xABFC
+#define SLIDE_EMPTY_VAL 0xCFCF
 
 /// Used to dertermin if SerialProtocoll is Sender of receiver
 enum Serial_mode {
@@ -47,6 +48,7 @@ namespace Serial_n{
 		TRANSM_SER  = TRANSM_VAL,		/*!<Used only between two serial endpoints to signal an transmission*/
 		RECEIVED_SER = RECEIVED_VAL, 	/*!<Signal that a puck was received (detected in light barrier  on other Serial), puck can be deleted */
 		SLIDE_FULL_SER = SLIDE_FULL_VAL,/*!<IN: Signal Receiver that that the Sender's slide is full */
+		SLIDE_EMTPY_SER = SLIDE_EMPTY_VAL, /*!<Signal other puck sort that the slide is empty again*/
 		POL_SER = POL_VAL, 				/*!<Ping of life */
 		NO_CON_SER = NO_CON_VAL, 		/*!<Serial Disconnected, no POL */
 		ERROR_SER = ERROR_VAL,			/*!<Serial received something it can not handle, maybe Char loss */

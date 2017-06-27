@@ -45,6 +45,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
         case POL_SER:
         case ERROR_SER:
         case ESTOP_SER:
+        case SLIDE_EMTPY_SER:
             resu.value = msg_in;
             break;
         case TRANSM_SER:
