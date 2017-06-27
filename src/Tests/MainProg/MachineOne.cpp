@@ -148,12 +148,12 @@ TEST_IMPL(MachineOne, programm_m1){
 		event = mainChannel.receivePulseMessage();
 		std::cout << "Got something \n";
 		switch(event.code){
-			case 0: std::cout << "\n\n Height \n"; break; //Height
-			case 1: std::cout << "\n\n Serial \n";break; //Serial
-			case 2: std::cout << "\n\n Serial \n";break; //Serial
-			case 3: std::cout << "\n\n Serial \n";break; //Serial
-			case 4: std::cout << "\n\n Serial \n";break; //Serial
-			case 5: std::cout << "\n\n ISR \n";break; //ISR
+			case 0: std::cout << "Height \n"; LOG_DEBUG << " -->Height<--\n"; break; //Height
+			case 1: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n"; break; //Heightbreak; //Serial
+			case 2: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 3: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 4: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 5: std::cout << "ISR \n";	  LOG_DEBUG << " -->ISR<--\n";break; //ISR
 		}
 		cout.flush();
 
@@ -166,6 +166,7 @@ TEST_IMPL(MachineOne, programm_m1){
 		}
 
 		signalDistributer.process(event);
+		LOG_DEBUG << "----------------------------------------------------------------------------------------------------------- \n"
 	}
 
 }
