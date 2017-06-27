@@ -117,7 +117,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_FULL_SER);
             	break;
             case PuckManager::SEND_SLIDE_EMPTY:
-               	//m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMPTY_SER);
+               	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMTPY_SER);
 				break;
             default:
             	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.speedSignal << "\n";
