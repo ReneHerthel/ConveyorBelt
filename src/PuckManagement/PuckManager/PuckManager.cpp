@@ -200,11 +200,18 @@ bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn
 	}
 }
 
-bool PuckManager::checkErrorMetal(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal) {
+bool PuckManager::checkErrorMetal(const PuckSignal::Signal& signal) {
 	// metal detect hot fix
 	return (signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL
 			&& signal.interruptSignal
 			== interrupts::interruptSignals::METAL_DETECT);
+}
+
+bool PuckManager::checkSerialError(const PuckSignal::Signal& signal) {
+	/* Accept serial RESUME and STOP signals */
+	return (signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
+			&& (signal.serialSignal == Serial_n::ser_proto_msg::STOP_SER
+			|| signal.serialSignal == Serial_n::ser_proto_msg::RESUME_SER));
 }
 
 PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
@@ -251,30 +258,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 	/* Signal was unexpected for the pucks, might be expected somewhere else */
 	if(prioReturnVal.errorFlag && prioReturnVal.errorSignal == ErrorSignal::NOT_ACCEPTED){
-		if(checkErrorMetal(signal, prioReturnVal)){
+		if(checkErrorMetal(signal)){
 			prioReturnVal.errorFlag = false;
-		} else if(){
-
-		} else if(){
-
+		} else if(checkSerialError(signal)){
+			prioReturnVal.errorFlag = false;
 		} else {
-
+			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
 		}
-		//was serial resume/stop
-		//was serial slide
-	}
-	// metal detect hot fix
-	checkErrorMetal(signal, acceptCounter, prioReturnVal);
-
-	/* Accept serial RESUME and STOP signals */
-	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
-			&& ( signal.serialSignal == Serial_n::ser_proto_msg::STOP_SER
-					|| signal.serialSignal == Serial_n::ser_proto_msg::RESUME_SER )
-					&& acceptCounter == 0 ) {
-		prioReturnVal.errorFlag = false;
-		acceptCounter++;
-
-		prioReturnVal.speedSignal = getCurrentSpeed();
 	}
 
 	/* Accept Serial Slide Messages and handle */

@@ -59,7 +59,8 @@ private:
 	void handlePuckTimer(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal);
 	void handlePuckSignal(const PuckSignal::Signal& signal, int32_t &acceptCounter, int32_t &warningCounter, ManagerReturn& prioReturnVal);
 	bool passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal);
-	bool checkErrorMetal(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal);
+	bool checkErrorMetal(const PuckSignal::Signal& signal);
+	bool checkSerialError(const PuckSignal::Signal& signal);
 
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;
