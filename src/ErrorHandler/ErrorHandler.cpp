@@ -47,6 +47,13 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
+	//if slide full return a warning
+	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_FULL){
+		 m_lightSystemService->setWarningLevel(Level::WARNING_OCCURED);
+	}
+
+
+
     if (!manager.errorFlag) {
         return; // Do not do anything without a errorFlag.
     }
