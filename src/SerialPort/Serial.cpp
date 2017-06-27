@@ -35,9 +35,7 @@ void Serial::operator()() {
         uint32_t  value;
         rcv::msg_t msg;
         serialized ser;
-        LOG_DEBUG << "Serial Waiting for pulse \n";
         msg = ch_in.receivePulseMessage();
-        LOG_DEBUG << "Serial received Pulse \n";
         code = msg.code;
         value = msg.value;
         pulse pm;
@@ -48,7 +46,6 @@ void Serial::operator()() {
                 ch_out.sendPulseMessage(SER_OUT, POL_SER);
                 break;
             case SERIAL_SEND_POL:
-            	LOG_DEBUG << "Serial received send pol \n";
                 ser =  proto.wrapInFrame(SER_OUT, POL_SER);
                 sender.send((char *) ser.obj, ser.size);
                 polSendTimer.setAlarm(1000, 0);
@@ -57,32 +54,30 @@ void Serial::operator()() {
             	//Msg from serial receiver
             	pm = proto.convToPulse((void *) value);
                 if(pm.value != POL_SER){ //POL doesnt need to be send to the main
-                	LOG_DEBUG << "Serial sends pulse to mainChid";
+                	LOG_DEBUG << "[Serial] sends pulse to mainChid \n";
                     ch_out.sendPulseMessage(pm.code, pm.value);
-                } else {
-                	LOG_DEBUG << "Serial got an ping of life \n";
                 }
                 polRecTimer.stopAlarm();
                 polRecTimer.setAlarm(4000, 0);
                 break;
             case SER_REC_FAIL:
-                LOG_ERROR << "Serial Recorder could'nt read msg from ser \n";
+                LOG_ERROR << "[Serial] Recorder could'nt read msg from ser \n";
                 //TODO Send Serial error msg
                 break;
             case SER_OUT:
-            	LOG_DEBUG << "Serial sends msg \n";
+            	LOG_DEBUG << "[Serial] sends msg \n";
                 ser =  proto.wrapInFrame(SER_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
                 delete (char*)ser.obj;
                 break;
             case TRANSM_OUT:
-            	LOG_DEBUG << "Serial sends obj \n";
+            	LOG_DEBUG << "[Serial] sends obj \n";
                 ser =  proto.wrapInFrame(TRANSM_OUT, value);
                 sender.send((char *) ser.obj, ser.size);
                 delete (char*)ser.obj;
                 break;
             default:
-                LOG_ERROR<< "Serial received unknown cmd: " << code << "\n";
+                LOG_ERROR<< "[Serial] received unknown cmd: " << code << "\n";
                 //TODO Serial Error handling, send error to main
         }
     }

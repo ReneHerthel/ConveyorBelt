@@ -20,7 +20,6 @@ TimerService::TimerService(int chid, char code) throw(int)
 	, timerRunning(false)
 	, timerCreated(false)
 	, timerWasRunning(false){
-	LOG_SCOPE;
 
 	coid = ConnectAttach_r(0, 0, chid, 0, 0);
 	if(coid < 0) {
@@ -30,7 +29,6 @@ TimerService::TimerService(int chid, char code) throw(int)
 }
 
 TimerService::~TimerService() throw(int) {
-	LOG_SCOPE;
 	if(timerCreated){
 		if(timer_delete(timerid) == -1) { // delete the timer
 			LOG_ERROR << "Error in timer_delete\n";
@@ -41,7 +39,6 @@ TimerService::~TimerService() throw(int) {
 }
 
 void TimerService::setAlarm(milliseconds time, int value) throw(int) {
-	LOG_SCOPE;
 	// initialize the sigevent
 	timerRunning = true;
 	SIGEV_PULSE_INIT(&event, coid, SIGEV_PULSE_PRIO_INHERIT, code, value);
@@ -75,7 +72,6 @@ void TimerService::setAlarm(milliseconds time, int value) throw(int) {
 }
 
 void TimerService::stopAlarm() throw(int) {
-	LOG_SCOPE;
 	if(timerCreated){
 		if(timerRunning){
 			if(timer_gettime(timerid, &timer) == -1) { // get the current time of timer
@@ -96,7 +92,6 @@ void TimerService::stopAlarm() throw(int) {
 }
 
 void TimerService::resumeAlarm() throw(int) {
-	LOG_SCOPE;
 	if(timerWasRunning && !timerRunning){
 		if (timer_create(CLOCK_REALTIME, &event, &timerid) == -1) { // create new timer with last values
 			LOG_ERROR << "Error in timer_create\n";
@@ -117,7 +112,6 @@ void TimerService::resumeAlarm() throw(int) {
 }
 
 TimerService::milliseconds TimerService::killAlarm() throw(int) {
-	LOG_SCOPE;
 	unsigned int mSec = 0;;
 	unsigned int seconds = 0;
 
@@ -133,6 +127,8 @@ TimerService::milliseconds TimerService::killAlarm() throw(int) {
 		}
 
 		mSec = timer.it_value.tv_nsec / MILLISECOND + timer.it_value.tv_sec * SECOND; //Inacurate, but sowhat
+	} else {
+		LOG_WARNING << "[TimerService] Tried to kill a timer that was not running\n";
 	}
 	timerRunning = false;
 	timerCreated = false;
