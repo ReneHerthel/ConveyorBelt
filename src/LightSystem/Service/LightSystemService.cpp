@@ -18,7 +18,6 @@ LightSystemService::LightSystemService(int chid):
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
-    LOG_SET_LEVEL(WARNING);
     /* FIXME: Discuss Priorities */
     /* 80 is ID for lightSystem */
 	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);

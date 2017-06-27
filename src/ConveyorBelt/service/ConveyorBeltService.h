@@ -17,6 +17,8 @@
 #ifndef CONVEYORBELTSERVICE_H_
 #define CONVEYORBELTSERVICE_H_
 
+#include "Logger.h"
+#include "LogScope.h"
 #include "IConveyorBelt.h"
 #include "ConveyorBeltHal.h"
 

@@ -22,7 +22,6 @@ namespace HAL {
 
     /* TODO: Merge methods lightOn and lightOff to reduce code duplication */
     void LightSystemHal::lightOn(Color color) {
-        LOG_SET_LEVEL(WARNING);
         /* Remember last color */
         lastColor = color;
 
@@ -58,7 +57,6 @@ namespace HAL {
     }
 
     void LightSystemHal::lightOff(Color color) {
-        LOG_SET_LEVEL(WARNING);
     	unsigned char bitMask = 0;
 
         /* Prepare bitmask according to color */
