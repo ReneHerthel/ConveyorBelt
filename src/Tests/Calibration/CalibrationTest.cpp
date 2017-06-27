@@ -40,8 +40,8 @@ TEST_IMPL(CalibrationTest, Calibrate){
 	cal.calibrate(chid);
 
 	HeightMeasurementController::CalibrationData hmCal = cal.getHmCalibration();
-	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
-				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
+	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\nSurface: " << hmCal.surfaceHeight << "\nHole: " << hmCal.holeHeight
+				<< "\nlogical1: " <<  hmCal.highHeight << "\nlogical0: " << hmCal.lowHeight << "\ninvalid: "  << hmCal.invalidHeight << "\ndelta: " << hmCal.delta << "\n";
 	std::cout.flush();
 
 	cal.saveToDisk("/Calibration.dat");
@@ -49,8 +49,9 @@ TEST_IMPL(CalibrationTest, Calibrate){
 	cal.loadFromDisk("/Calibration.dat");
 
 	hmCal = cal.getHmCalibration();
-	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\n Surface: " << hmCal.surfaceHeight << "\n Hole " << hmCal.holeHeight
-				<< "\n logical1 " <<  hmCal.highHeight << "\n logical0 " << hmCal.lowHeight << "\n invalid"  << hmCal.invalidHeight << "\n";
+	std::cout 	<< "Surface Height (Ref): " << hmCal.refHeight << "\nSurface: " << hmCal.surfaceHeight << "\nHole: " << hmCal.holeHeight
+				<< "\nlogical1: " <<  hmCal.highHeight << "\nlogical0: " << hmCal.lowHeight << "\ninvalid: "  << hmCal.invalidHeight << "\ndelta: " << hmCal.delta << "\n";
+	std::cout.flush();
 
 }
 
