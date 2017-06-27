@@ -7,8 +7,9 @@
  *  are standard actions defined in the super state performed on other
  *  pucks and pucks out of sequence.
  *
- *  When FIFO_SORT is set, no sorting will happen and all pucks will be
- *  passed.
+ *  When ENABLE_FIFO_SORT is set, no sorting will happen and all pucks
+ *  will be passed. If VARIANT_Belt0 is set the machine will execute
+ *  the specific algorithm for machine 0.
  *
  *  \author  Stephan Jänecke <stephan.jaenecke@haw-hamburg.de>
  *
@@ -46,7 +47,7 @@ PuckSortContext::PuckSortContext()
 /* PuckType */
 bool PuckSortContext::process(PuckType signal) {
 	LOG_SCOPE;
-#if FIFO_SORT
+#ifdef ENABLE_FIFO_SORT /*!< \brief If set, disables sort algorithm and let all pucks pass */
     /* Keep all pucks for now */
     return false;
 #else
@@ -103,7 +104,6 @@ bool PuckSortContext::process(PuckType signal) {
 /* SlideFull */
 void PuckSortContext::process(PuckReturn message) {
 	if (SLIDE_FULL == message) {
-
 	#ifdef VARIANT_Belt0
 			statePtr->rampe1IsEmpty = false;
 	#else
@@ -115,7 +115,7 @@ void PuckSortContext::process(PuckReturn message) {
 /* SLIDE_FULL_SER */
 void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	if (SLIDE_FULL_VAL == message) {
-#if MACHINE
+#ifdef VARIANT_Belt0
 		/* FIXME: Probably unnecessary */
 		statePtr->rampe0IsEmpty = false;
 #else

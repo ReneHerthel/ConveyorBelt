@@ -69,6 +69,9 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
         	        default:
         	        	LOG_DEBUG << "[ActorHandler] Cant set speed, unknown enum " << (int)manager.speedSignal << "\n";
+        	            newCbsSpeed = ConveyorBeltState::STOP;
+        	            newDistanceTrackerSpeed = DistanceSpeed::STOP;
+        	            newSerialMsg = Serial_n::ser_proto_msg::STOP_SER;
         	            break;
     }
 

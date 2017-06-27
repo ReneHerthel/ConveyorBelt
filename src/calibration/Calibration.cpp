@@ -30,40 +30,24 @@ void Calibration::calibrate(int mainChid){
 	ConveyorBeltService cbs;
     SortingSwitchService sss;
     rcv::PulseMessageReceiverService pmr(mainChid);
-    HeightMeasurementHal hal;
-    uint16_t data = 0;
-    uint32_t data_avg = 0;
 
 	if (ThreadCtl(_NTO_TCTL_IO_PRIV, 0) == -1) {
 			LOG_ERROR << "Can't get Hardware access, therefore can't do anything." << std::endl;
 			return;
 	}
 
-	hal.read(data);
-	hmCal.refHeight = data;
-
 	LOG_DEBUG << "GOT HW ACCESS" << std::endl;
 
 	cbs.changeState(ConveyorBeltState::STOP);
 
+	calibrateHeighMeasurement(&pmr);
 
 	//CENTER THE PUCK AND CALC TIME FOR RUNNING THROUGH A LB
 	while(pmr.receivePulseMessage().value != interrupts::INLET_IN);
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	cbs.changeState(RIGHTFAST);
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	cbs.changeState(RIGHTSLOW);
+
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_IN);
 	auto lb_in = system_clock::now();
-
-
-	for(int i = 0; i < 100; i++){
-		hal.read(data);
-		data_avg += data;
-	}
-	data_avg /= 100;
-
-	hmCal.surfaceHeight = (uint16_t)data_avg;
 
 	while(pmr.receivePulseMessage().value != interrupts::HEIGHTMEASUREMENT_OUT);
 	auto lb_out = system_clock::now();
@@ -122,7 +106,6 @@ void Calibration::calibrate(int mainChid){
 	slowToFastFactor = (double)overall[0].count() / (double)overall[1].count();
 	fastToSlowFactor = (double)overall[1].count() / (double)overall[0].count();
 
-	calibrateHeighMeasurement();
 }
 
 
@@ -130,7 +113,7 @@ bool  Calibration::saveToDisk(std::string path){
 	std::ofstream file(path);
 	for(int i = 0; i < 2; i++){
 		file << overall[i].count() << " " << heightMeasure[i].count() << " " << sortingSwitch[i].count()
-			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count()
+			 << " " << outlet[i].count() << " " << inlet[i].count() << " " << inSwitch[i].count() << " " << slide[i].count()
 			 << " " << slowToFastFactor << " " << fastToSlowFactor << " ";
 	}
 	file << hmCal.delta << " " << hmCal.highHeight << " " << hmCal.holeHeight << " " << hmCal.invalidHeight << " " << hmCal.lowHeight << " " << hmCal.refHeight << " " << hmCal.surfaceHeight;
@@ -144,11 +127,12 @@ bool  Calibration::loadFromDisk(std::string path){
 	uint32_t outlet_in;
 	uint32_t inlet_in;
 	uint32_t inSwitch_in;
+	uint32_t slide_in;
 	double slowToFastFactor_in;
 	double fastToSlowFactor_in;
 
 	for(int i = 0; i < 2; i++){
-		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in
+		file >> overall_in >> heightMeasure_in >> sortingSwitch_in >> outlet_in >> inlet_in >> inSwitch_in >> slide_in
 			 >> slowToFastFactor_in >> fastToSlowFactor_in;
 		overall[i] 			= milliseconds(overall_in);
 		heightMeasure[i] 	= milliseconds(heightMeasure_in);
@@ -156,6 +140,7 @@ bool  Calibration::loadFromDisk(std::string path){
 		outlet[i] 			= milliseconds(outlet_in);
 		inlet[i] 			= milliseconds(inlet_in);
 		inSwitch[i] 		= milliseconds(inSwitch_in);
+		slide[i]			= milliseconds(slide_in);
 		slowToFastFactor    = slowToFastFactor_in;
 		fastToSlowFactor 	= fastToSlowFactor_in;
 	}
@@ -243,20 +228,59 @@ void Calibration::calibrate(void){
 
 }
 
-void  Calibration::calibrateHeighMeasurement(void){
+void  Calibration::calibrateHeighMeasurement(rcv::PulseMessageReceiverService *pmr){
+	std::cout << "Bitte raeumen Sie das Band und bestaetigen mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.refHeight = getAvg();
 
-	double puckHeight = hmCal.refHeight - hmCal.surfaceHeight; /*!< Height of Puck */
-	puckHeight /= SURFACE;
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach unten unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.surfaceHeight = getAvg();
 
-	hmCal.holeHeight = hmCal.refHeight - ((uint16_t)(puckHeight * HOLE));
-	hmCal.highHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_1));
-	hmCal.lowHeight = hmCal.refHeight - ((uint16_t)(puckHeight * LOGICAL_0));
-	hmCal.invalidHeight = hmCal.refHeight - ((uint16_t)(puckHeight * INVALID));
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach oben unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.holeHeight = getAvg();
 
-	uint16_t delta;
-	delta = (hmCal.invalidHeight - hmCal.lowHeight) / 2;
+	std::cout << "Bitte legen Sie einen kleinen Puck unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.invalidHeight = getAvg();
 
-	hmCal.delta = delta;
+	std::cout << "Bitte legen Sie eine logische [0] unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.lowHeight = getAvg();
+
+	std::cout << "Bitte legen Sie eine logische [1] unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
+	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
+	hmCal.highHeight = getAvg();
+
+	int16_t delta1 = hmCal.invalidHeight - hmCal.lowHeight;
+	int16_t delta2 = hmCal.invalidHeight - hmCal.highHeight;
+	int16_t delta3 = hmCal.lowHeight - hmCal.highHeight;
+
+	if(delta1 < 0) delta1 *= -1;
+	if(delta2 < 0) delta2 *= -1;
+	if(delta3 < 0) delta3 *= -1;
+
+	if(delta1 < delta2 && delta1 < delta3) hmCal.delta = (uint16_t)delta1;
+	if(delta2 < delta1 && delta2 < delta3) hmCal.delta = (uint16_t)delta2;
+	if(delta3 < delta1 && delta3 < delta2) hmCal.delta = (uint16_t)delta1;
+
+	hmCal.delta /= 2;
+
+	std::cout << "Legen Sie einen puck auf das Band" << std::endl;
+}
+
+uint16_t Calibration::getAvg() {
+	HeightMeasurementHal HMU;
+	uint32_t data = 0;
+	uint16_t temp = 0;
+	for(int i = 0; i < 100; ++i) {
+		HMU.read(temp);
+		data += temp;
+	}
+	data /= 100;
+
+	return (uint16_t) data;
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
@@ -316,6 +340,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case SLIDE:				return slide[slowOrFast].count();
 	}
 
+	return 0;
 }
 
 double Calibration::getFastToSlow(void){

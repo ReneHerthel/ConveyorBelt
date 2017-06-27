@@ -20,14 +20,14 @@ LightSystemController::LightSystemController(int chid, BLightSystem* boundary)
     , chid(chid)
 	, boundary(boundary)
 {
-	LOG_SCOPE;
+    LOG_SET_LEVEL(WARNING);
 	LOG_DEBUG << "Create threads" << endl;
 	taskThread = new thread(&LightSystemController::task, this);
 	controlThread = new thread(&LightSystemController::control, this,chid);
 }
 
 LightSystemController::~LightSystemController() {
-	LOG_SCOPE;
+    LOG_SET_LEVEL(WARNING);
 	isRunning = false;
 
 	/*
@@ -59,7 +59,7 @@ LightSystemController::~LightSystemController() {
 }
 
 int LightSystemController::task(){
-	LOG_SCOPE;
+    LOG_SET_LEVEL(WARNING);
 	thread::id thread_id = this_thread::get_id();
 
     /* FIXME: Move to PortA singleton */
@@ -104,7 +104,7 @@ int LightSystemController::task(){
 }
 
 int LightSystemController::control(int chid) {
-	LOG_SCOPE;
+    LOG_SET_LEVEL(WARNING);
     /*! Last received message will be stored here */
 	struct _pulse pulse;
 	int err;
