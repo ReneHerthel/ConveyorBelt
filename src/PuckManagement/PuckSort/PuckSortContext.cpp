@@ -126,7 +126,7 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 
 void PuckSortContext::PuckSort::logConditionals(void) {
 	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(rampe0IsEmpty) << " rampe1IsEmpty: " <<  int(rampe1IsEmpty)
-			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine0: " << int(isOnMachine1) << endl;
+			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine1: " << int(isOnMachine1) << endl;
 }
 
 /* Define default transitions */
