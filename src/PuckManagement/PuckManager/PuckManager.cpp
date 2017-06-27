@@ -184,11 +184,20 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
 
+				break;
+
+
+			case PuckSignal::PuckReturn::SLIDE_EMPTY:
+				acceptCounter++;
+
+				sort.process(returnVal.puckReturn);
+				prioReturnVal.actorFlag = true;
+				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_EMPTY;
 				LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 				delete *it;					// delete the puck from memory
 				it = puckList.erase(it);	// delete the puck from list
 				break;
-			//
+				//
 			case PuckSignal::PuckReturn::WARNING:
 				warningCounter++;
 				break;
