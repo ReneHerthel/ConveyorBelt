@@ -79,26 +79,31 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
         case PuckManager::ErrorSignal::PUCK_LOST:
             cout << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
+            LOG_DEBUG << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
             break;
 
         case PuckManager::ErrorSignal::PUCK_MOVED:
             cout << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
+            LOG_DEBUG << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
             break;
 
         case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
             cout << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
+            LOG_DEBUG << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
             break;
 
         case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
             cout << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
+            LOG_DEBUG << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
             break;
 
         case PuckManager::ErrorSignal::MULTIPLE_WARNING:
             cout << "[ErrorHandler] MULTIPLE_WARNING" << endl;
+            LOG_DEBUG << "[ErrorHandler] MULTIPLE_WARNING" << endl;
             break;
 
         default:
-            // Nothing todo so far.
+        	 LOG_DEBUG << "[ErrorHandler] Unkown Error !!!" << endl;
             break;
     }
 }
