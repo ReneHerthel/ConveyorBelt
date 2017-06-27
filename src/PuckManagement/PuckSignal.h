@@ -28,6 +28,7 @@ namespace PuckSignal {
 		START_HEIGHT,
 		STOP_HEIGHT,
 		SLIDE_FULL,
+		SLIDE_EMPTY,
 		RECEIVED,
 		WARNING
 	};

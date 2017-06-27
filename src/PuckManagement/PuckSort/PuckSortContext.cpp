@@ -28,15 +28,16 @@ PuckSortContext::PuckSortContext()
 {
 	LOG_SCOPE;
 	statePtr = &startState;
-#if MACHINE
+
+#ifdef VARIANT_Belt0
+	statePtr->isOnMachine0 = true;
 	statePtr->isOnMachine1 = false;
-	statePtr->isOnMachine2 = true;
 #else
+	statePtr->isOnMachine0 = false;
 	statePtr->isOnMachine1 = true;
-	statePtr->isOnMachine2 = false;
 #endif
+	statePtr->rampe0IsEmpty = true;
 	statePtr->rampe1IsEmpty = true;
-	statePtr->rampe2IsEmpty = true;
 	statePtr->returnValue = false;
 }
 
@@ -102,10 +103,11 @@ bool PuckSortContext::process(PuckType signal) {
 /* SlideFull */
 void PuckSortContext::process(PuckReturn message) {
 	if (SLIDE_FULL == message) {
-	#if MACHINE
-			statePtr->rampe2IsEmpty = false;
-	#else
+
+	#ifdef VARIANT_Belt0
 			statePtr->rampe1IsEmpty = false;
+	#else
+			statePtr->rampe0IsEmpty = false;
 	#endif
 		}
 }
@@ -115,106 +117,119 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	if (SLIDE_FULL_VAL == message) {
 #if MACHINE
 		/* FIXME: Probably unnecessary */
-		statePtr->rampe1IsEmpty = false;
+		statePtr->rampe0IsEmpty = false;
 #else
-		statePtr->rampe2IsEmpty = false;
+		statePtr->rampe1IsEmpty = false;
 #endif
 	}
+}
+
+void PuckSortContext::PuckSort::logConditionals(void) {
+	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(rampe0IsEmpty) << " rampe1IsEmpty: " <<  int(rampe1IsEmpty)
+			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine0: " << int(isOnMachine1) << endl;
 }
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( rampe0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::bitCode2() {
 	LOG_SCOPE;
 
-	if ( rampe2IsEmpty && isOnMachine2 ) {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if ( !rampe2IsEmpty && isOnMachine1 ) {
+	} else if ( !rampe1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::bitCode4() {
 	LOG_SCOPE;
 
-	if ( rampe2IsEmpty && isOnMachine2 ) {
+	if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if (!rampe2IsEmpty && isOnMachine1) {
+	} else if (!rampe1IsEmpty && isOnMachine0) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( rampe0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( rampe0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	if ( !rampe2IsEmpty && isOnMachine1 ) {
+	if ( !rampe1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	if ( !rampe2IsEmpty && isOnMachine1 ) {
+	if ( !rampe1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( rampe0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe2IsEmpty && isOnMachine2 ) {
+	} else if ( rampe1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
 	}
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
+	logConditionals();
 }
 
 /* Define transitions for Start state */
