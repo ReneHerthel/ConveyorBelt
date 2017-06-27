@@ -216,11 +216,12 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	int32_t acceptCounter = 0; // count all accepted signals
 	int32_t warningCounter = 0; // count all warnings
 
-	prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
-
 	if(passToPuckSort(signal, prioReturnVal)){ //Only pucksort is intrested in signal
 			return prioReturnVal;
 	}
+
+	prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
+
 
 #if !machine // machine0
 	// check for first interrupt signal - puck must be created
@@ -228,6 +229,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		signal.interruptSignal == interrupts::interruptSignals::INLET_IN) {
 
 		addPuck(new PuckContext(chid));
+		prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
 
 
 		return prioReturnVal;
