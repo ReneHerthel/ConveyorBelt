@@ -227,38 +227,58 @@ void Calibration::calibrate(void){
 }
 
 void  Calibration::calibrateHeighMeasurement(rcv::PulseMessageReceiverService *pmr){
-	HeightMeasurementHal HMU;
-
-	std::cout << "Bitte raeumen Sie das Band und bestaetigen mit [ENTER]" << std::endl;
+	std::cout << "Bitte raeumen Sie das Band und bestaetigen mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.refHeight);
+	hmCal.refHeight = getAvg();
 
-	std::cout << "Bitte legen Sie einen Puck mit Loch nach unten unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach unten unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.surfaceHeight);
+	hmCal.surfaceHeight = getAvg();
 
-	std::cout << "Bitte legen Sie einen Puck mit Loch nach oben unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	std::cout << "Bitte legen Sie einen Puck mit Loch nach oben unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.holeHeight);
+	hmCal.holeHeight = getAvg();
 
-	std::cout << "Bitte legen Sie einen kleinen Puck unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	std::cout << "Bitte legen Sie einen kleinen Puck unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.invalidHeight);
+	hmCal.invalidHeight = getAvg();
 
-	std::cout << "Bitte legen Sie eine logische [0] unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	std::cout << "Bitte legen Sie eine logische [0] unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.lowHeight);
+	hmCal.lowHeight = getAvg();
 
-	std::cout << "Bitte legen Sie eine logische [1] unter die Hoehenmessung.\n Bestaetigen Sie dann mit [ENTER]" << std::endl;
+	std::cout << "Bitte legen Sie eine logische [1] unter die Hoehenmessung.\nBestaetigen Sie dann mit [START]" << std::endl;
 	while(pmr->receivePulseMessage().value != interrupts::BUTTON_START);
-	HMU.read(hmCal.highHeight);
+	hmCal.highHeight = getAvg();
 
-	hmCal.delta = (hmCal.highHeight - hmCal.invalidHeight) / 2;
-	if(hmCal.delta > 50) {
-		hmCal.delta = 50;
-	}
+	int16_t delta1 = hmCal.invalidHeight - hmCal.lowHeight;
+	int16_t delta2 = hmCal.invalidHeight - hmCal.highHeight;
+	int16_t delta3 = hmCal.lowHeight - hmCal.highHeight;
+
+	if(delta1 < 0) delta1 *= -1;
+	if(delta2 < 0) delta2 *= -1;
+	if(delta3 < 0) delta3 *= -1;
+
+	if(delta1 < delta2 && delta1 < delta3) hmCal.delta = (uint16_t)delta1;
+	if(delta2 < delta1 && delta2 < delta3) hmCal.delta = (uint16_t)delta2;
+	if(delta3 < delta1 && delta3 < delta2) hmCal.delta = (uint16_t)delta1;
+
+	hmCal.delta /= 2;
 
 	std::cout << "Legen Sie einen puck auf das Band" << std::endl;
+}
+
+uint16_t Calibration::getAvg() {
+	HeightMeasurementHal HMU;
+	uint32_t data = 0;
+	uint16_t temp = 0;
+	for(int i = 0; i < 100; ++i) {
+		HMU.read(temp);
+		data += temp;
+	}
+	data /= 100;
+
+	return (uint16_t) data;
 }
 
 HeightMeasurementController::CalibrationData Calibration::getHmCalibration(void){
@@ -318,6 +338,7 @@ uint32_t Calibration::getCalibration(DistanceSpeed::lb_distance distance, Distan
 		case SLIDE:				return slide[slowOrFast].count();
 	}
 
+	return 0;
 }
 
 double Calibration::getFastToSlow(void){
