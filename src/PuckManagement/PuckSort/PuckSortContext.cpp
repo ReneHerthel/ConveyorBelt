@@ -171,7 +171,7 @@ void PuckSortContext::PuckSort::bitCode2() {
 
 	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if ( !slide1IsEmpty && isOnMachine0 ) {
+	} else if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -185,7 +185,7 @@ void PuckSortContext::PuckSort::bitCode4() {
 
 	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if (!slide1IsEmpty && isOnMachine0) {
+	} else if (slide0IsEmpty && !slide1IsEmpty && isOnMachine0) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -221,7 +221,7 @@ void PuckSortContext::PuckSort::flipped() {
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	if ( !slide1IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
@@ -231,9 +231,10 @@ void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 	logConditionals();
 }
+/* TODO: Update State machine diagram */
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	if ( !slide1IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
