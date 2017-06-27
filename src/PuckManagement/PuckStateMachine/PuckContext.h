@@ -207,6 +207,11 @@ public:
 		void slideOut();
 		void lateTimer();
 	};
+
+	struct SlideFull : public PuckState {
+		void slideOut();
+	};
+
 	/*******************************************/
 
 	/*******************************************
