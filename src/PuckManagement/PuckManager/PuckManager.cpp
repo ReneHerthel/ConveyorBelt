@@ -234,6 +234,15 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 					&& acceptCounter == 0 ) {
 		prioReturnVal.errorFlag = false;
 		acceptCounter++;
+
+		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
+		std::list<PuckContext*>::iterator it = puckList.begin();
+		while(it != puckList.end()) {
+			if((*it)->getCurrentSpeed() > prioReturnVal.speedSignal) { // Check for speed prio
+				prioReturnVal.speedSignal = (*it)->getCurrentSpeed();
+			}
+			it++;
+		}
 	}
 
 	if(!prioReturnVal.errorFlag) {
