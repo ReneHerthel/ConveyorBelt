@@ -101,32 +101,56 @@ bool PuckSortContext::process(PuckType signal) {
 #endif
 }
 
-/* SlideFull */
+/* Slide */
 void PuckSortContext::process(PuckReturn message) {
-	if (SLIDE_FULL == message) {
-	#ifdef VARIANT_Belt0
-			statePtr->rampe1IsEmpty = false;
-	#else
-			statePtr->rampe0IsEmpty = false;
-	#endif
-		}
-}
-
-/* SLIDE_FULL_SER */
-void PuckSortContext::process(Serial_n::ser_proto_msg message) {
-	if (SLIDE_FULL_VAL == message) {
+	switch (message) {
+	case SLIDE_FULL:
 #ifdef VARIANT_Belt0
-		/* FIXME: Probably unnecessary */
 		statePtr->rampe0IsEmpty = false;
 #else
 		statePtr->rampe1IsEmpty = false;
 #endif
-	}
+		break;
+	case SLIDE_EMPTY:
+#ifdef VARIANT_Belt0
+		statePtr->rampe0IsEmpty = true;
+#else
+		statePtr->rampe1IsEmpty = true;
+#endif
+		break;
+	default:
+		/* Ignore unhandled messages */
+		;
+	};
+}
+
+/* SLIDE_SER */
+void PuckSortContext::process(Serial_n::ser_proto_msg message) {
+
+	switch (message) {
+	case Serial_n::SLIDE_FULL_SER:
+#ifdef VARIANT_Belt0
+		statePtr->rampe1IsEmpty = false;
+#else
+		statePtr->rampe0IsEmpty = false;
+#endif
+		break;
+	case Serial_n::SLIDE_EMTPY_SER:
+#ifdef VARIANT_Belt0
+		statePtr->rampe1IsEmpty = true;
+#else
+		statePtr->rampe0IsEmpty = true;
+#endif
+		break;
+	default:
+		/* Ignore unhandled messages */
+		;
+	};
 }
 
 void PuckSortContext::PuckSort::logConditionals(void) {
 	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(rampe0IsEmpty) << " rampe1IsEmpty: " <<  int(rampe1IsEmpty)
-			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine0: " << int(isOnMachine1) << endl;
+			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine1: " << int(isOnMachine1) << endl;
 }
 
 /* Define default transitions */
