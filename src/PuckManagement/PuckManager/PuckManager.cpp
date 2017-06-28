@@ -210,9 +210,7 @@ bool PuckManager::checkErrorMetal(const PuckSignal::Signal& signal) {
 }
 
 void PuckManager::setErrorOnBothSlidesAreFull(ManagerReturn &prioReturnVal) {
-	bool conditionIsMet = sort.areBothSlidesFull();
-	LOG_DEBUG << "[PuckManager] areBothSlidesFull: " << int(conditionIsMet) << endl;
-	if (conditionIsMet) {
+	if (sort.areBothSlidesFull()) {
 			prioReturnVal.errorFlag = true;
 			prioReturnVal.errorSignal = ErrorSignal::BOTH_SLIDES_FULL;
 	}
