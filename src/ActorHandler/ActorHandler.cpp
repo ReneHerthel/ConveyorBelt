@@ -123,6 +123,10 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             	LOG_DEBUG << "[ActorHandler] SEND_SLIDE_EMPTY\n";
                	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMTPY_SER);
 				break;
+            case PuckManager::SEND_RESUME:
+            	LOG_DEBUG << "[ActorHandler] SEND_SLIDE_EMPTY\n";
+               	m_serialService.sendMsg(Serial_n::ser_proto_msg::RESUME_SER);
+               	break;
             default:
             	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.actorSignal << "\n";
                 break;

@@ -121,6 +121,8 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 			acceptCounter++;
 			break;
 		case PuckSignal::PuckReturn::DELETE:
+			prioReturnVal.actorFlag = true;
+			prioReturnVal.actorSignal = ActorSignal::SEND_RESUME;
 			acceptCounter++;
 			LOG_DEBUG << "[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 			delete *it;					// delete the puck from memory
