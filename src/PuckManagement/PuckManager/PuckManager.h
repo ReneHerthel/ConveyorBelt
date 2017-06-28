@@ -49,6 +49,8 @@ public:
 	PuckManager(int chid);
 	~PuckManager();
 
+	void reset();
+
 	ManagerReturn process(PuckSignal::Signal signal);
 
 	ManagerReturn newPuck(PuckSignal::PuckType type);

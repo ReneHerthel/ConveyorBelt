@@ -64,8 +64,6 @@ int LightSystemController::task(){
              * entering this condition block
              */
 			boundary->lightOff(ALL_COLORS);
-		} else if ( ( frequency == ALWAYS_ON ) & boundary->checkIfPreviouslySetTo(color) ) {
-			/* Do nothing */
 		} else {
 			boundary->lightOn(color);
 		}

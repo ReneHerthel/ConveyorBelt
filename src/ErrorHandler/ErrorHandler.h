@@ -31,7 +31,7 @@ public:
     /*
      * @brief Default constructor.
      */
-    ErrorHandler(int chid, ConveyorBeltService &conveyorBeltService, LightSystemService * lightSystemService, SerialService * serialService);
+    ErrorHandler(int chid, ConveyorBeltService *conveyorBeltService, LightSystemService * lightSystemService, SerialService * serialService, PuckManager *puckManager);
 
     /*
      * @brief Default destructor.
@@ -69,14 +69,16 @@ private:
     /*
      * @brief A reference to the ConveyorBelt.
      */
-    ConveyorBeltService &m_conveyorBeltService;
+    ConveyorBeltService *m_conveyorBeltService;
 
     /*
      * @brief A reference to the LightSystem.
      */
-    LightSystemService * m_lightSystemService;
+    LightSystemService *m_lightSystemService;
 
-    SerialService * m_serialService;
+    SerialService *m_serialService;
+
+    PuckManager *m_puckManager;
 
 };
 

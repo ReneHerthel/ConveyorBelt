@@ -135,7 +135,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	PuckManager *puckManager = new PuckManager(mainChid);
 
 
-	ErrorHandler errorHandler(mainChid, cbs, lightSystem, &serialService);
+	ErrorHandler errorHandler(mainChid, &cbs, lightSystem, &serialService, puckManager);
 
 
 	//INIT SIGNAL DISTRIBUTER
@@ -156,14 +156,6 @@ TEST_IMPL(MachineOne, programm_m1){
 			case 5: std::cout << "ISR \n";	  LOG_DEBUG << " -->ISR<--\n";break; //ISR
 		}
 		cout.flush();
-
-
-		if(event.value == interrupts::BUTTON_RESET){
-			cbs.changeState(ConveyorBeltState::STOP);
-			std::cout << "\n\n RESET \n";
-			delete puckManager;
-			puckManager = new PuckManager(mainChid);
-		}
 
 		signalDistributer.process(event);
 		LOG_DEBUG << "----------------------------------------------------------------------------------------------------------- \n";

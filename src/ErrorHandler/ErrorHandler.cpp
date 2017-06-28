@@ -28,14 +28,16 @@ using namespace std;
 using namespace HAL;
 
 ErrorHandler::ErrorHandler( int chid,
-                            ConveyorBeltService &conveyorBeltService,
-                            LightSystemService * lightSystemService,
-                            SerialService * serialService)
+                            ConveyorBeltService *conveyorBeltService,
+                            LightSystemService *lightSystemService,
+                            SerialService *serialService,
+                            PuckManager *puckManager)
     :    m_hasError(false)
     ,    m_resetPressed(false)
     ,    m_conveyorBeltService(conveyorBeltService)
     ,    m_lightSystemService(lightSystemService)
 	, 	 m_serialService(serialService)
+	, 	 m_puckManager(puckManager)
 {
     m_lightSystemService->setWarningLevel(Level::OPERATING);
 }
@@ -70,7 +72,7 @@ void ErrorHandler::process(PuckManager::ManagerReturn &manager)
 		DistanceObservable &distO = DistanceObservable::getInstance();
 		distO.updateSpeed(DistanceSpeed::STOP);
 
-		m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+		m_conveyorBeltService->changeState(ConveyorBeltState::STOP);
 		m_serialService->sendMsg(Serial_n::ser_proto_msg::STOP_SER);
 
 		switch (manager.errorSignal) {
@@ -124,7 +126,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 				event.value == Serial_n::ser_proto_msg::NO_CON_SER  ){
 				LOG_DEBUG << "[ErrorHandler] Got error from serial \n";
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
-				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+				m_conveyorBeltService->changeState(ConveyorBeltState::STOP);
 				m_hasError = true;
 				m_resetPressed = false;
 			}
@@ -134,7 +136,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 				LOG_DEBUG << "[ErrorHandler] Got Estop from ISR \n";
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
-				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+				m_conveyorBeltService->changeState(ConveyorBeltState::STOP);
 				m_hasError = true;
 				m_resetPressed = false;
 			}
@@ -172,6 +174,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		        cout << "Error acknowledged" << endl;
 		        m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
 		    } else if (buttonStart && m_resetPressed && m_hasError) { // Only go further when reset was pressed before.
+		    	m_puckManager->reset();
 				cout << "Clear error" << endl;
 				m_lightSystemService->setWarningLevel(Level::OPERATING);
 				m_resetPressed = false;

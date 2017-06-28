@@ -17,6 +17,10 @@ PuckManager::PuckManager(int chid)
 {}
 
 PuckManager::~PuckManager() {
+	reset();
+}
+
+void PuckManager::reset() {
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while(it != puckList.end()) {
 		LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
