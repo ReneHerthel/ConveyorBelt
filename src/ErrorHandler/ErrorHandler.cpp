@@ -180,6 +180,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 				}
 		    } else if(event.code == CodeDefinition::Code::SER_IN) {
 		    	if(event.value == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER){
+		    		m_puckManager->reset();
 		    		PuckSignal::Signal signal;
 					signal.signalType = PuckSignal::SignalType::SERIAL_SIGNAL;
 					signal.serialSignal = (Serial_n::ser_proto_msg) event.value;
