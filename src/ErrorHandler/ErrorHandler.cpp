@@ -195,7 +195,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		        cout << "Error acknowledged" << endl;
 		        m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
 		    } else if (buttonStart && m_resetPressed && m_hasError) { // Only go further when reset was pressed before.
-		    	m_puckManager->reset();
+		    	m_puckManager->resetPucks();
 				cout << "Clear error" << endl;
 				m_lightSystemService->setWarningLevel(Level::OPERATING);
 				m_resetPressed = false;

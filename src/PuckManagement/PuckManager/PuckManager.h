@@ -49,8 +49,18 @@ public:
 
 	PuckManager(int chid);
 	~PuckManager();
-
+	/*!
+     *  \brief Reset all
+     */
 	void reset();
+	/*!
+     *  \brief Reset the puck list
+     */
+	void resetPucks();
+	/*!
+     *  \brief Reset the slide conditionals
+     */
+    void resetSlides(void);
 
 	ManagerReturn process(PuckSignal::Signal signal);
 

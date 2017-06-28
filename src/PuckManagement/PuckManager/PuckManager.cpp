@@ -17,16 +17,25 @@ PuckManager::PuckManager(int chid)
 {}
 
 PuckManager::~PuckManager() {
-	reset();
+	resetPucks();
 }
 
 void PuckManager::reset() {
+	resetPucks();
+	resetSlides();
+}
+
+void PuckManager::resetPucks() {
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while(it != puckList.end()) {
 		LOG_DEBUG <<"[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
 		delete *it;					// delete the puck from memory
 		it = puckList.erase(it);	// delete the puck from list
 	}
+}
+
+void PuckManager::resetSlides(void) {
+	sort.resetSlides();
 }
 
 PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
