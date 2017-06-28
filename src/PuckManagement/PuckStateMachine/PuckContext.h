@@ -11,11 +11,13 @@
 #include "HeightSignal.h"
 #include "Signals.h"
 #include "PuckSignal.h"
-#include <stdint.h>
 #include "SerialProtocoll.h"
 #include "DistanceTracker.h"
 #include "DistanceEnum.h"
 #include "ISerializable.h"
+
+#include <string>
+#include <stdint.h>
 
 #ifdef VARIANT_Belt0
 #define machine (0) // 0 or 1

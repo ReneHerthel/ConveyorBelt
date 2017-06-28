@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "LogScope.h"
 #include <iostream>
+#include <sstream>
 #include <new>
 
 PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckId) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
@@ -222,14 +223,38 @@ void PuckContext::PuckState::stopTimer(){
  */
 
 std::string PuckContext::PuckState::toString(){
-	/*
-	std:string string = "";
 
-	string.append("[ACCEPTED PUCK] \n PuckID: " + std::to_string(puckID) + "\n");
-	switch(statePtr->puckType){
-		case PuckSignal::PuckType::
+	std:stringstream outString;
+
+	outString << "[ACCEPTED PUCK] \n PuckID: " << std::to_string(puckID) << "\n";
+	switch(statePtr->puckType.data.heightType.ID){
+		case INVALID_ID :
+			outString <<"PuckType: INVALID \n";
+			break;
+		case NORMAL_ID :
+			if(statePtr->puckType.data.metal) {
+				outString << "PuckType: METAL  \n";
+			} else {
+				outString << ("PuckType: NORMAL  \n";
+			}
+			break;
+		case FLIPPED_ID :
+			outString << "PuckType: FLIPPED  \n";
+			break;
+		case PATTERN_ID :
+			outString << "PuckType: BITPATTERN: " << std::to_string(statePtr->puckType.data.heightType.BIT0)
+							<< statePtr->puckType.data.heightType.BIT1
+							<< statePtr->puckType.data.heightType.BIT2 << "\n";
+			break;
+		case UNEXPECTED_ID :
+			outString << "PuckType: UNEXPECTED  \n";
+			break;
+		default :
+			LOG_DEBUG <<"[PUCK toString()] unexpected Signal" <<endl;
 	}
-*/
+	outString << "Height1: " << std::to_string(statePtr->puckType.data.height1) <<
+			"\nHeight2: " << std::to_string(statePtr->puckType.data.height1) << "\n";
+	return outString.str();
 }
 
 
@@ -691,8 +716,8 @@ void PuckContext::OutletArea::outletOut() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Printing puck infos<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
-
+	std::cout << statePtr->toString() << "\n";
+	std::cout.flush();
 
 	// dies here
 }
