@@ -32,7 +32,9 @@ void PuckManager::reset() {
 PuckManager::ManagerReturn PuckManager::newPuck(PuckSignal::PuckType type) {
 	LOG_SCOPE;
 	ManagerReturn ret;
+	ret.errorFlag = false;
 	ret.actorFlag = true;
+	ret.speedSignal = PuckSignal::PuckSpeed::SLOW;
 	ret.actorSignal = ActorSignal::ACCEPTED_PUCK;
 	puckList.push_back(new PuckContext(chid, type, nextPuckID++));
 	return ret;
