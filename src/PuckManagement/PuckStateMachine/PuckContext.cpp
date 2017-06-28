@@ -10,7 +10,7 @@
 #include "Signals.h"
 #include "Logger.h"
 #include "LogScope.h"
-
+#include <iostream>
 #include <new>
 
 PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckId) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
@@ -217,6 +217,22 @@ void PuckContext::PuckState::stopTimer(){
 	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Stopped Timer" << endl;
 	wideDistance->stopAlarm();
 }
+/*************************************************************************************************
+ * TOSTRING
+ */
+
+std::string PuckContext::PuckState::toString(){
+	/*
+	std:string string = "";
+
+	string.append("[ACCEPTED PUCK] \n PuckID: " + std::to_string(puckID) + "\n");
+	switch(statePtr->puckType){
+		case PuckSignal::PuckType::
+	}
+*/
+}
+
+
 /*******************************************
  * SuperState
  */
@@ -674,6 +690,10 @@ void PuckContext::OutletArea::outletOut() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [OutletArea]->[dead]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Printing puck infos<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+
+
 	// dies here
 }
 #endif

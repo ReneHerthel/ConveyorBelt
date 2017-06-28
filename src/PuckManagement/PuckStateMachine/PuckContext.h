@@ -107,6 +107,8 @@ public:
 		void startTimers(DistanceSpeed::lb_distance distance);
 		void startTimersWithDelta(DistanceSpeed::lb_distance distance,double earlyDelta,double lateDelta);
 		void stopTimer();
+
+		 std::string toString();
 	} *statePtr;
 	/*******************************************/
 
