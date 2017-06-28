@@ -33,7 +33,7 @@ PulseMessageSenderService::PulseMessageSenderService(const int chid)
     // Check if there occurs an error.
     if (coid < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageSenderService] PulseMessageSenderService() An error occurs on ConnectAttach_r [" << coid << "]\n";
+        LOG_ERROR << "[PulseMessageSenderService] PulseMessageSenderService() An error occurs on ConnectAttach_r [" << coid << "]\n";
     }
 
     // Remember the coid for the whole object.
@@ -45,7 +45,7 @@ void PulseMessageSenderService::sendPulseMessage(const int code, const int value
     // Check if there is a valid connection ID.
     if (coid_ < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() The coid is identified as error [" << coid_ << "], exit method.\n";
+        LOG_ERROR << "[PulseMessageSenderService] sendPulseMessage() The coid is identified as error [" << coid_ << "], exit method.\n";
         return;
     }
 
@@ -55,7 +55,7 @@ void PulseMessageSenderService::sendPulseMessage(const int code, const int value
     // Check if an error occurs on MsgSendPulse_r.
     if (err < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() Error occurs on MsgSendPulse_r [" << err << "]\n";
+        LOG_ERROR << "[PulseMessageSenderService] sendPulseMessage() Error occurs on MsgSendPulse_r [" << err << "]\n";
     }
 }
 
@@ -64,7 +64,7 @@ void PulseMessageSenderService::sendPulseMessage(struct _pulse p)
     // Check if there is a valid connection ID.
     if (coid_ < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() The coid is identified as error [" << coid_ << "], exit method.\n";
+        LOG_ERROR << "[PulseMessageSenderService] sendPulseMessage() The coid is identified as error [" << coid_ << "], exit method.\n";
         return;
     }
 
@@ -74,7 +74,7 @@ void PulseMessageSenderService::sendPulseMessage(struct _pulse p)
     // Check if an error occurs on MsgSendPulse_r.
     if (err < 0) {
         // TODO: Error handling.
-        LOG_DEBUG << "[PulseMessageSenderService] sendPulseMessage() Error occurs on MsgSendPulse_r [" << err << "]\n";
+        LOG_ERROR << "[PulseMessageSenderService] sendPulseMessage() Error occurs on MsgSendPulse_r [" << err << "]\n";
     }
 }
 

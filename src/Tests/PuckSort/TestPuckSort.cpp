@@ -26,6 +26,7 @@ using namespace Serial_n;
 using namespace PuckSignal;
 
 SETUP(TestPuckSort) {
+	/* TODO: Add test for repeatet sorting pattern */
 	REG_TEST(test1, 1, "Test shortest path");
 	REG_TEST(test2, 2, "Test all transitions in Start");
 	REG_TEST(test3, 3, "Test SLIDE_FULL reported by machine 1");

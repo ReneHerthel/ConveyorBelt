@@ -29,6 +29,8 @@
 /** TODO: Explain purpose */
 #define DEFAULT_PORTS_SETTINGS 0x8A
 
+#include "Logger.h"
+#include "LogScope.h"
 #include <mutex>
 #include <stdint.h>
 

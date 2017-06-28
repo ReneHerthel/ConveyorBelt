@@ -24,6 +24,7 @@
 #include "LightSystemService.h"
 #include "LightSystemHal.h"
 #include "LightSystemController.h"
+#include "PuckManager.h"
 
 #include <iostream>
 #include <thread>
@@ -56,6 +57,7 @@ AFTER(TestErrorHandler) {
 
 TEST_IMPL(TestErrorHandler, test1) {
 	SerialService dummySerialService(999); ///TODO Remove hotfix
+	PuckManager dummyPuckManager(999);
 
     std::cout << "[TestErrorHandler] started" << std::endl;
     int chid = ChannelCreate_r(0);
@@ -70,7 +72,7 @@ TEST_IMPL(TestErrorHandler, test1) {
     LightSystemHal * hal = new LightSystemHal();
     LightSystemService * service = new LightSystemService(chid);
     LightSystemController * controller = new LightSystemController(chid, hal);
-    ErrorHandler * errorHandler = new ErrorHandler(chid, *cbs, service, &dummySerialService);
+    ErrorHandler * errorHandler = new ErrorHandler(chid, cbs, service, &dummySerialService, &dummyPuckManager);
 
     // random trash signal
     PuckSignal::Signal m_sig;
@@ -85,7 +87,7 @@ TEST_IMPL(TestErrorHandler, test1) {
     this_thread::sleep_for(chrono::seconds(3));
 
     if (!errorHandler->hasError()) {
-        errorHandler->demultiplex(manager);
+        errorHandler->process(manager);
     }
 
     this_thread::sleep_for(chrono::seconds(3));
@@ -94,12 +96,12 @@ TEST_IMPL(TestErrorHandler, test1) {
 
     message.code = 5;
     message.value = interrupts::BUTTON_RESET;
-    errorHandler->handleMessage(message);
+    errorHandler->handleEvent(message);
     this_thread::sleep_for(chrono::seconds(3));
 
     message.code = 5;
     message.value = interrupts::BUTTON_START;
-    errorHandler->handleMessage(message);
+    errorHandler->handleEvent(message);
     this_thread::sleep_for(chrono::seconds(5));
 
     if (!errorHandler->hasError()) {

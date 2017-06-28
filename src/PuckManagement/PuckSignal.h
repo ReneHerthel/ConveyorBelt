@@ -34,6 +34,7 @@ namespace PuckSignal {
 	};
 
 	enum PuckSpeed {
+		SLIDE_STOP, //Low prio for stopping in slide
 		FAST,
 		SLOW,
 		STOP

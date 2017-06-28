@@ -18,7 +18,6 @@ LightSystemService::LightSystemService(int chid):
 {};
 
 void LightSystemService::setWarningLevel(Level warningLevel) {
-    LOG_SET_LEVEL(WARNING);
     /* FIXME: Discuss Priorities */
     /* 80 is ID for lightSystem */
 	int coid = ConnectAttach_r(ND_LOCAL_NODE, 0, chid, 0, 0);
@@ -28,7 +27,6 @@ void LightSystemService::setWarningLevel(Level warningLevel) {
 	}
 
     /* FIXME: Discuss log message format */
-	LOG_DEBUG << "Send message | Channel " << chid << " | ID " << LIGHT_SYSTEM << " | Warning Level " << warningLevel << endl;
     int err = MsgSendPulse_r(coid, sched_get_priority_min(0), LIGHT_SYSTEM, warningLevel);
     if(err) {
         /* FIXME: Discuss sane error handling for message infrastructure failure */

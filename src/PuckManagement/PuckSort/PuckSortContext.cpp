@@ -37,8 +37,8 @@ PuckSortContext::PuckSortContext()
 	statePtr->isOnMachine0 = false;
 	statePtr->isOnMachine1 = true;
 #endif
-	statePtr->rampe0IsEmpty = true;
-	statePtr->rampe1IsEmpty = true;
+	statePtr->slide0IsEmpty = true;
+	statePtr->slide1IsEmpty = true;
 	statePtr->returnValue = false;
 }
 
@@ -101,40 +101,73 @@ bool PuckSortContext::process(PuckType signal) {
 #endif
 }
 
-/* SlideFull */
+/* Slide */
 void PuckSortContext::process(PuckReturn message) {
-	if (SLIDE_FULL == message) {
-	#ifdef VARIANT_Belt0
-			statePtr->rampe1IsEmpty = false;
-	#else
-			statePtr->rampe0IsEmpty = false;
-	#endif
-		}
+	switch (message) {
+	case SLIDE_FULL:
+#ifdef VARIANT_Belt0
+		statePtr->slide0IsEmpty = false;
+#else
+		statePtr->slide1IsEmpty = false;
+#endif
+		break;
+	case SLIDE_EMPTY:
+#ifdef VARIANT_Belt0
+		statePtr->slide0IsEmpty = true;
+#else
+		statePtr->slide1IsEmpty = true;
+#endif
+		break;
+	default:
+		/* Ignore unhandled messages */
+		;
+	};
 }
 
-/* SLIDE_FULL_SER */
+/* SLIDE_SER */
 void PuckSortContext::process(Serial_n::ser_proto_msg message) {
-	if (SLIDE_FULL_VAL == message) {
+
+	switch (message) {
+	case Serial_n::SLIDE_FULL_SER:
 #ifdef VARIANT_Belt0
-		/* FIXME: Probably unnecessary */
-		statePtr->rampe0IsEmpty = false;
+		statePtr->slide1IsEmpty = false;
 #else
-		statePtr->rampe1IsEmpty = false;
+		statePtr->slide0IsEmpty = false;
 #endif
-	}
+		break;
+	case Serial_n::SLIDE_EMTPY_SER:
+#ifdef VARIANT_Belt0
+		statePtr->slide1IsEmpty = true;
+#else
+		statePtr->slide0IsEmpty = true;
+#endif
+		break;
+	default:
+		/* Ignore unhandled messages */
+		;
+	};
+}
+
+void PuckSortContext::resetSlides(void) {
+	statePtr->slide0IsEmpty = true;
+	statePtr->slide1IsEmpty = true;
+}
+
+bool PuckSortContext::areBothSlidesFull(void) {
+	return(!statePtr->slide0IsEmpty && !statePtr->slide1IsEmpty);
 }
 
 void PuckSortContext::PuckSort::logConditionals(void) {
-	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(rampe0IsEmpty) << " rampe1IsEmpty: " <<  int(rampe1IsEmpty)
-			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine0: " << int(isOnMachine1) << endl;
+	LOG_DEBUG << "[PuckSortContext] slide0IsEmpty: " << int(slide0IsEmpty) << " slide1IsEmpty: " <<  int(slide1IsEmpty)
+			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine1: " << int(isOnMachine1) << endl;
 }
 
 /* Define default transitions */
 void PuckSortContext::PuckSort::bitCode1() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -145,9 +178,9 @@ void PuckSortContext::PuckSort::bitCode1() {
 void PuckSortContext::PuckSort::bitCode2() {
 	LOG_SCOPE;
 
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if ( !rampe1IsEmpty && isOnMachine0 ) {
+	} else if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -159,9 +192,9 @@ void PuckSortContext::PuckSort::bitCode2() {
 void PuckSortContext::PuckSort::bitCode4() {
 	LOG_SCOPE;
 
-	if ( rampe1IsEmpty && isOnMachine1 ) {
+	if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
-	} else if (!rampe1IsEmpty && isOnMachine0) {
+	} else if (slide0IsEmpty && !slide1IsEmpty && isOnMachine0) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -172,9 +205,9 @@ void PuckSortContext::PuckSort::bitCode4() {
 }
 void PuckSortContext::PuckSort::bitCode5() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -184,9 +217,9 @@ void PuckSortContext::PuckSort::bitCode5() {
 }
 void PuckSortContext::PuckSort::flipped() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -197,9 +230,9 @@ void PuckSortContext::PuckSort::flipped() {
 }
 void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -207,11 +240,12 @@ void PuckSortContext::PuckSort::holeWithoutMetal() {
 	LOG_DEBUG << "[PuckSort]->[PuckSort] Discard: " << returnValue << endl;
 	logConditionals();
 }
+/* TODO: Update State machine diagram */
 void PuckSortContext::PuckSort::holeWithMetal() {
 	LOG_SCOPE;
-	if ( !rampe1IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && !slide1IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -221,9 +255,9 @@ void PuckSortContext::PuckSort::holeWithMetal() {
 }
 void PuckSortContext::PuckSort::invalid() {
 	LOG_SCOPE;
-	if ( rampe0IsEmpty && isOnMachine0 ) {
+	if ( slide0IsEmpty && isOnMachine0 ) {
 		returnValue = true;
-	} else if ( rampe1IsEmpty && isOnMachine1 ) {
+	} else if ( slide1IsEmpty && isOnMachine1 ) {
 		returnValue = true;
 	} else {
 		returnValue = false;
@@ -254,4 +288,13 @@ void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	returnValue = false;
 	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpMetal;
+}
+
+/* TODO: Document in state machine diagramm */
+/* Define transitions for GotHoleUpMetal state */
+void PuckSortContext::GotHoleUpMetal::holeWithoutMetal() {
+	LOG_SCOPE;
+	returnValue = false;
+	LOG_DEBUG << "[GotHoleUpMetal]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
+	new (this) GotHoleUpWoMetal;
 }

@@ -46,6 +46,7 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     Serial_n::ser_proto_msg newSerialMsg;
 
     switch (manager.speedSignal) { //Choose the wanted signals
+    				case PuckSignal::PuckSpeed::SLIDE_STOP:
         	        case PuckSignal::PuckSpeed::STOP:
         	            LOG_DEBUG << "[ActorHandler] STOPPED \n";
         	            newCbsSpeed = ConveyorBeltState::STOP;
@@ -94,33 +95,36 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
                 LOG_DEBUG << "[ActorHandler] OPEN SWITCH \n";
                 m_sortingSwitchControl.open();
                 break;
-
             case PuckManager::START_MEASUREMENT:
                 LOG_DEBUG << "[ActorHandler] START HEIGHT MEASURE \n";
                 m_heightService.startMeasuring();
                 break;
-
             case PuckManager::STOP_MEASUREMENT:
                 LOG_DEBUG << "[ActorHandler] STOP HEIGHT MEASURE \n";
                 m_heightService.stopMeasuring();
                 break;
             case PuckManager::SEND_PUCK:
+            	LOG_DEBUG << "[ActorHandler] SEND_PUCK\n";
             	m_serialService.sendObj(manager.puckType);
             	break;
             case PuckManager::RECEIVED_PUCK:
+            	LOG_DEBUG << "[ActorHandler] RECEIVED_PUCK\n";
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::RECEIVED_SER);
             	break;
             case PuckManager::ACCEPTED_PUCK:
+            	LOG_DEBUG << "[ActorHandler] ACCEPTED_PUCK\n";
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::ACCEPT_SER);
             	break;
             case PuckManager::SEND_SLIDE_FULL:
+            	LOG_DEBUG << "[ActorHandler] SEND_SLIDE_FULL\n";
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_FULL_SER);
             	break;
             case PuckManager::SEND_SLIDE_EMPTY:
-               	//m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMPTY_SER);
+            	LOG_DEBUG << "[ActorHandler] SEND_SLIDE_EMPTY\n";
+               	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMTPY_SER);
 				break;
             default:
-            	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.speedSignal << "\n";
+            	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.actorSignal << "\n";
                 break;
         }
     } /* if */
