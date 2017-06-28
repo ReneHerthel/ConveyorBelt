@@ -76,8 +76,8 @@ void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerRetur
 			// check return value
 			if (returnVal.puckReturn == PuckSignal::PuckReturn::SLIDE_FULL) {
 				LOG_DEBUG << "[PuckManager] Puck returned Slide full \n";
-				setErrorOnBothSlidesAreFull(prioReturnVal);
 				sort.process(returnVal.puckReturn);
+				setErrorOnBothSlidesAreFull(prioReturnVal);
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
 			} else if (returnVal.puckReturn != PuckSignal::PuckReturn::ACCEPT
@@ -134,6 +134,7 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::OPEN_SWITCH;
 			}
+			setErrorOnBothSlidesAreFull(prioReturnVal);
 			break;
 		case PuckSignal::PuckReturn::START_HEIGHT:
 			acceptCounter++;
@@ -148,8 +149,8 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 
 		case PuckSignal::PuckReturn::SLIDE_EMPTY:
 			acceptCounter++;
-
 			sort.process(returnVal.puckReturn);
+			setErrorOnBothSlidesAreFull(prioReturnVal);
 			prioReturnVal.actorFlag = true;
 			prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_EMPTY;
 			LOG_DEBUG << "[Puck" + std::to_string((*it)->getPuckID()) + "] was deleted \n";
@@ -192,9 +193,8 @@ bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn
 	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
 		 && (signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER
 		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER)){
-
-		setErrorOnBothSlidesAreFull(prioReturnVal);
 		sort.process(signal.serialSignal);
+		setErrorOnBothSlidesAreFull(prioReturnVal);
 		LOG_DEBUG << "[PuckManager] Returning with with Slide management only \n";
 		return true;
 	} else {
