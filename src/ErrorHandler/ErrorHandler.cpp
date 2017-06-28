@@ -159,6 +159,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		        return; // Do not do anything without code 5!
 		    }
 
+		    LOG_DEBUG << "[ErrorHandler] Trying to handle error event " << int(event.value) << endl;
 		    switch(event.value) {
 
 		        case interrupts::BUTTON_RESET:
@@ -170,6 +171,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		            break;
 
 		        case interrupts::SLIDE_OUT:
+				    LOG_DEBUG << "[ErrorHandler] Handling SLIDE_OUT error event " << endl;
 		        	PuckSignal::Signal signal;
 		        	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
 		        	signal.interruptSignal = (interrupts::interruptSignals) event.value;
