@@ -295,6 +295,8 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 		}
 	}*/
 
+	setErrorOnBothSlidesAreFull(prioReturnVal);
+
 	if(puckList.empty()) {
 		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
 	}
