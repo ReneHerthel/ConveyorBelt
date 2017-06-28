@@ -167,7 +167,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		        case interrupts::SLIDE_OUT:
 		        	PuckSignal::Signal signal;
 		        	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
-		        	signal.interruptSignal = event.value;
+		        	signal.interruptSignal = (interrupts::interruptSignals) event.value;
 		        	m_puckManager->process(signal);
 		        	break;
 		        default:
