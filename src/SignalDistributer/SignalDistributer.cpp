@@ -31,11 +31,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 
 	errorHandler_->handleEvent(msg);
 
-	if (errorHandler_->hasError()) {
-        errorHandler_->handleEvent(msg); // Wait for pressing the buttons.
-	}
-
-	else {
+	if (!errorHandler_->hasError()){ //Not error
 		switch(msg.code){
 			case CodeDefinition::ISR :
 				interrupt((interrupts::interruptSignals)msg.value);

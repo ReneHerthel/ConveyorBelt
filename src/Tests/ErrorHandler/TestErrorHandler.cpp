@@ -85,7 +85,7 @@ TEST_IMPL(TestErrorHandler, test1) {
     this_thread::sleep_for(chrono::seconds(3));
 
     if (!errorHandler->hasError()) {
-        errorHandler->demultiplex(manager);
+        errorHandler->process(manager);
     }
 
     this_thread::sleep_for(chrono::seconds(3));
@@ -94,12 +94,12 @@ TEST_IMPL(TestErrorHandler, test1) {
 
     message.code = 5;
     message.value = interrupts::BUTTON_RESET;
-    errorHandler->handleMessage(message);
+    errorHandler->handleEvent(message);
     this_thread::sleep_for(chrono::seconds(3));
 
     message.code = 5;
     message.value = interrupts::BUTTON_START;
-    errorHandler->handleMessage(message);
+    errorHandler->handleEvent(message);
     this_thread::sleep_for(chrono::seconds(5));
 
     if (!errorHandler->hasError()) {

@@ -41,12 +41,12 @@ public:
     /*
      * @brief demultiplex the error flags of the puck manager.
      */
-    void demultiplex(PuckManager::ManagerReturn &manager);
+    void process(PuckManager::ManagerReturn &manager);
 
     /*
-     * @brief demultiplex the error flags of the puck manager.
+     * @brief Check if event indicates an error
      */
-    void demultiplex(rcv::msg_t event);
+    void handleEvent(rcv::msg_t event);
 
 
     /*
@@ -54,10 +54,6 @@ public:
      */
     bool hasError();
 
-    /*
-     * @brief Handle incoming pulse messages as error.
-     */
-    void handleMessage(rcv::msg_t message);
 
 private:
     /*

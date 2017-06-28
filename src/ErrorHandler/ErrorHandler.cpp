@@ -45,10 +45,10 @@ ErrorHandler::~ErrorHandler()
     // Nothing todo so far.
 }
 
-void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
+void ErrorHandler::process(PuckManager::ManagerReturn &manager)
 {
 	LOG_DEBUG << "[ErrorHandler] Demux Manager return \n";
-	LOG_DEBUG << "[ErrorHandler] Actor Flag " << manager.actorFlag << "actorSignal " << manager.actorSignal;
+	LOG_DEBUG << "[ErrorHandler] Actor Flag " << manager.actorFlag << " actorSignal " << (int)manager.actorSignal << "\n";
 
 	//if slide full return a warning
 	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_FULL){
@@ -57,57 +57,65 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 	}
 	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_EMPTY){
 		 m_lightSystemService->setWarningLevel(Level::CLEAR_WARNING);
+		 m_lightSystemService->setWarningLevel(Level::OPERATING);
 		 LOG_DEBUG << "[ErrorHandler] Slide is empty \n";
 	}
 
+	//Only handle when error code
+    if (manager.errorFlag) {
+		m_hasError = true;
 
-    if (!manager.errorFlag) {
-        return; // Do not do anything without a errorFlag.
-    }
+		m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 
-    m_hasError = true;
+		DistanceObservable &distO = DistanceObservable::getInstance();
+		distO.updateSpeed(DistanceSpeed::STOP);
 
-    m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
+		m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+		m_serialService->sendMsg(Serial_n::ser_proto_msg::STOP_SER);
 
-    DistanceObservable &distO = DistanceObservable::getInstance();
-    distO.updateSpeed(DistanceSpeed::STOP);
+		switch (manager.errorSignal) {
 
-    m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
-    m_serialService->sendMsg(Serial_n::ser_proto_msg::STOP_SER);
+			case PuckManager::ErrorSignal::PUCK_LOST:
+				cout << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
+				LOG_DEBUG << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
+				break;
 
-    switch (manager.errorSignal) {
+			case PuckManager::ErrorSignal::PUCK_MOVED:
+				cout << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
+				LOG_DEBUG << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
+				break;
 
-        case PuckManager::ErrorSignal::PUCK_LOST:
-            cout << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
-            LOG_DEBUG << "[ErrorHandler] PUCK_LOST - Late Timer" << endl;
-            break;
+			case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
+				cout << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
+				LOG_DEBUG << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
+				break;
 
-        case PuckManager::ErrorSignal::PUCK_MOVED:
-            cout << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
-            LOG_DEBUG << "[ErrorHandler] PUCK_MOVED - Puck triggered light barrier before early timer" << endl;
-            break;
+			case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
+				cout << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
+				LOG_DEBUG << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
+				break;
 
-        case PuckManager::ErrorSignal::UNEXPECTED_SIGNAL:
-            cout << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
-            LOG_DEBUG << "[ErrorHandler] UNEXPECTED_SIGNAL - Signal could not be processed" << endl;
-            break;
+			case PuckManager::ErrorSignal::MULTIPLE_WARNING:
+				cout << "[ErrorHandler] MULTIPLE_WARNING" << endl;
+				LOG_DEBUG << "[ErrorHandler] MULTIPLE_WARNING" << endl;
+				break;
 
-        case PuckManager::ErrorSignal::MULTIPLE_ACCEPT:
-            cout << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
-            LOG_DEBUG << "[ErrorHandler] MULTIPLE_ACCEPT - Shouldn't happen - multiple pucks were triggered" << endl;
-            break;
-
-        case PuckManager::ErrorSignal::MULTIPLE_WARNING:
-            cout << "[ErrorHandler] MULTIPLE_WARNING" << endl;
-            LOG_DEBUG << "[ErrorHandler] MULTIPLE_WARNING" << endl;
-            break;
-
-        default:
-        	 LOG_DEBUG << "[ErrorHandler] Unkown Error !!!" << endl;
-            break;
+			default:
+				 LOG_DEBUG << "[ErrorHandler] Unkown Error !!!" << endl;
+				break;
+		}
     }
 }
-void ErrorHandler::demultiplex(rcv::msg_t event){
+
+
+bool ErrorHandler::hasError()
+{
+	LOG_DEBUG << "[ErrorHandler] Error: " << m_hasError << "\n";
+    return m_hasError;
+}
+
+void ErrorHandler::handleEvent(rcv::msg_t event)
+{
 	LOG_DEBUG << "[ErrorHandler] Trying to demux " << event.code << " " << event.value << "\n";
 	switch(event.code){
 		case CodeDefinition::SER_IN :
@@ -135,60 +143,41 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 			//Nothing to do
 			break;
 	}
-}
 
+	if(m_hasError){
+		 	 bool buttonReset = false;
+		    bool buttonStart = false;
 
-bool ErrorHandler::hasError()
-{
-	LOG_DEBUG << "[ErrorHandler] Error: " << m_hasError << "\n";
-    return m_hasError;
-}
+		    if (event.code != 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
+		        return; // Do not do anything without code 5!
+		    }
 
-void ErrorHandler::handleMessage(rcv::msg_t message)
-{
-    bool buttonReset = false;
-    bool buttonStart = false;
+		    switch(event.value) {
 
-    if (message.code != 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
-        return; // Do not do anything without code 5!
-    }
+		        case interrupts::BUTTON_RESET:
+		            buttonReset = true;
+		            break;
 
-    switch(message.value) {
+		        case interrupts::BUTTON_START:
+		            buttonStart = true;
+		            break;
 
-        case interrupts::BUTTON_RESET:
-            buttonReset = true;
-            break;
+		        default:
+		            // Nothing todo so far.
+		            break;
+		    }
 
-        case interrupts::BUTTON_START:
-            buttonStart = true;
-            break;
-
-        default:
-            // Nothing todo so far.
-            break;
-    }
-
-    if (buttonReset && m_hasError) {
-        m_resetPressed = true;
-        cout << "Error acknowledged" << endl;
-        m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
-    }
-
-    if (buttonStart && m_hasError) { // Only go further when reset was pressed before.
-
-        if (m_resetPressed) {
-        	cout << "Clear error" << endl;
-            m_lightSystemService->setWarningLevel(Level::CLEAR_ERROR);
-            m_lightSystemService->setWarningLevel(Level::OPERATING);
-            m_resetPressed = false;
-        }
-        else {
-        	cout << "Error gone unacknowledged" << endl;
-        	m_lightSystemService->setWarningLevel(Level::ERROR_GONE_UNACKNOWLEDGED);
-        }
-
-        m_hasError = false;
-    }
+		    if (buttonReset && m_hasError) {
+		        m_resetPressed = true;
+		        cout << "Error acknowledged" << endl;
+		        m_lightSystemService->setWarningLevel(Level::ERROR_ACKNOWLEDGED);
+		    } else if (buttonStart && m_resetPressed && m_hasError) { // Only go further when reset was pressed before.
+				cout << "Clear error" << endl;
+				m_lightSystemService->setWarningLevel(Level::OPERATING);
+				m_resetPressed = false;
+				m_hasError = false;
+		    }
+	}
 }
 
 /** @} */
