@@ -42,7 +42,7 @@ void PuckManager::addPuck(PuckContext *puck) {
 }
 
 PuckSignal::PuckSpeed PuckManager::getCurrentSpeed() {
-	PuckSignal::PuckSpeed speed = PuckSignal::PuckSpeed::FAST;
+	PuckSignal::PuckSpeed speed = PuckSignal::PuckSpeed::SLIDE_STOP;
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while (it != puckList.end()) {
 		if ((*it)->getCurrentSpeed() > speed) {
@@ -59,6 +59,7 @@ PuckSignal::PuckSpeed PuckManager::getCurrentSpeed() {
 }
 
 void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal) {
+	LOG_DEBUG << "[PuckManager] Handle Puck Timer \n";
 	std::list<PuckContext*>::iterator it = puckList.begin();
 	while (it != puckList.end()) {
 		// check for puckID
@@ -68,6 +69,7 @@ void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerRetur
 			PuckSignal::Return returnVal = (*it)->process(signal);
 			// check return value
 			if (returnVal.puckReturn == PuckSignal::PuckReturn::SLIDE_FULL) {
+				LOG_DEBUG << "[PuckManager] Puck returned Slide full \n";
 				sort.process(returnVal.puckReturn);
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
@@ -86,6 +88,7 @@ void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerRetur
 }
 
 void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &acceptCounter, int32_t &warningCounter, ManagerReturn &prioReturnVal) {
+	LOG_DEBUG << "[PuckManager] Handle Puck Signal \n";
 	// check the signal for every puck in the list
 	if(puckList.empty()) {
 		prioReturnVal.speedSignal = PuckSignal::PuckSpeed::STOP;
@@ -178,6 +181,7 @@ void PuckManager::handlePuckSignal(const PuckSignal::Signal &signal, int32_t &ac
 }
 
 bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal) {
+	LOG_DEBUG << "[PuckManager] Pass to Pucksort \n";
 	if ( signal.signalType == PuckSignal::SignalType::SERIAL_SIGNAL
 		 && (signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER
 		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER)){
@@ -253,10 +257,13 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 	/* Signal was unexpected for the pucks, might be expected somewhere else */
 	if(prioReturnVal.errorFlag && prioReturnVal.errorSignal == ErrorSignal::NOT_ACCEPTED){
 		if(checkErrorMetal(signal)){
+			LOG_DEBUG << "[PuckManager] Error was from Metall \n";
 			prioReturnVal.errorFlag = false;
 		} else if(checkSerialError(signal)){
+			LOG_DEBUG << "[PuckManager] Error was from Serial \n";
 			prioReturnVal.errorFlag = false;
 		} else {
+			LOG_DEBUG << "[PuckManager] Transform NOT_ACCEPTED to UNEXPECTED_SIGNAL \n";
 			prioReturnVal.errorSignal = ErrorSignal::UNEXPECTED_SIGNAL;
 		}
 	}

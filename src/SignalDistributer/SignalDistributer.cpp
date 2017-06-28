@@ -29,10 +29,10 @@ void SignalDistributer::process(rcv::msg_t msg){
 
 	LOG_SCOPE;
 
-	errorHandler_->demultiplex(msg);
+	errorHandler_->handleEvent(msg);
 
 	if (errorHandler_->hasError()) {
-        errorHandler_->handleMessage(msg); // Wait for pressing the buttons.
+        errorHandler_->handleEvent(msg); // Wait for pressing the buttons.
 	}
 
 	else {
@@ -48,7 +48,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 				mng_r = puckManager_->newPuck(*((PuckSignal::PuckType*)msg.value));
 				actorHandler_->demultiplex(mng_r);
 				LOG_DEBUG << "[SignalDistributer] Transm_in \n";
-				errorHandler_->demultiplex(mng_r);
+				errorHandler_->process(mng_r);
 				break;
 			case CodeDefinition::PUCK_TIMER :
 				timer.value = msg.value;
@@ -86,7 +86,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 			mng_r = puckManager_->process(m_sig);
 			DEBUG_MNG_RE(mng_r)
 			actorHandler_->demultiplex(mng_r);
-			errorHandler_->demultiplex(mng_r);
+			errorHandler_->process(mng_r);
 			break;
 			//TODO give the buttons to the error handle
 	}
@@ -103,7 +103,7 @@ void SignalDistributer::height(HeightMeasurement::signal_t signal){
 	mng_r = puckManager_->process(m_sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
-	errorHandler_->demultiplex(mng_r);
+	errorHandler_->process(mng_r);
 }
 
 void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
@@ -115,7 +115,7 @@ void SignalDistributer::timerForPuck(PuckSignal::TimerSignal signal){
 	mng_r = puckManager_->process(m_sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
-	errorHandler_->demultiplex(mng_r);
+	errorHandler_->process(mng_r);
 }
 
 
@@ -128,6 +128,6 @@ void SignalDistributer::serial(Serial_n::ser_proto_msg signal){
 	mng_r = puckManager_->process(sig);
 	DEBUG_MNG_RE(mng_r)
 	actorHandler_->demultiplex(mng_r);
-	errorHandler_->demultiplex(mng_r);
+	errorHandler_->process(mng_r);
 }
 

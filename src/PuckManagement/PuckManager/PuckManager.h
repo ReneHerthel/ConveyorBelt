@@ -16,7 +16,7 @@
 
 class PuckManager {
 public:
-	enum ActorSignal {
+	enum ActorSignal : int32_t{
 		START_MEASUREMENT,
 		STOP_MEASUREMENT,
 		OPEN_SWITCH,
@@ -27,7 +27,7 @@ public:
 		SEND_SLIDE_EMPTY
 	};
 
-	enum ErrorSignal {
+	enum ErrorSignal : int32_t{
 		PUCK_LOST,			// Late timer expired
 		PUCK_MOVED,			// Puck triggered light barrier before early timer expired
 		UNEXPECTED_SIGNAL,	// Signal could not be processed
