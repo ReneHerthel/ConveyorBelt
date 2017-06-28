@@ -48,7 +48,12 @@ class PuckSortContext {
          *  \argument [in] message Message to process
          */
         void process(Serial_n::ser_proto_msg message);
-
+        /*!
+         *  \brief Check if all slides are full
+         *  \return true All slides are full
+         *  		false Either one of the slides is full or none
+         */
+        bool areBothSlidesFull();
     /*!
      *  \brief  Define standard transitions
      *
