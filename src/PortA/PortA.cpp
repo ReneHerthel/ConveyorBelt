@@ -38,7 +38,6 @@ PortA& PortA::getInstance()
 void PortA::bitSet(uint8_t bit)
 {
     m_mutex.lock();
-	LOG_DEBUG << "[PortA] Set bits" << std::endl;
     out8(PORT_ADDR_A, (in8(PORT_ADDR_A) | bit));
     m_mutex.unlock();
 }
@@ -46,7 +45,6 @@ void PortA::bitSet(uint8_t bit)
 void PortA::bitClear(uint8_t bit)
 {
     m_mutex.lock();
-	LOG_DEBUG << "[PortA] Clear bits" << std::endl;
     out8(PORT_ADDR_A, (in8(PORT_ADDR_A) & ~(bit)));
     m_mutex.unlock();
 }
