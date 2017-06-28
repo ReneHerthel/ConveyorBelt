@@ -102,6 +102,11 @@ void ErrorHandler::process(PuckManager::ManagerReturn &manager)
 				LOG_DEBUG << "[ErrorHandler] MULTIPLE_WARNING" << endl;
 				break;
 
+			case PuckManager::ErrorSignal::BOTH_SLIDES_FULL:
+				 cout << "[ErrorHandler] BOTH_SLIDES_FULL" << endl;
+				 LOG_DEBUG << "[ErrorHandler] BOTH_SLIDES_FULL" << endl;
+				 break;
+
 			default:
 				 LOG_DEBUG << "[ErrorHandler] Unkown Error !!!" << endl;
 				break;
