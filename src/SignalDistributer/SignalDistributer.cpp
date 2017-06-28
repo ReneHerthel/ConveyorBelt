@@ -34,6 +34,7 @@ void SignalDistributer::process(rcv::msg_t msg){
 	if (errorHandler_->hasError()) {
         errorHandler_->handleMessage(msg); // Wait for pressing the buttons.
 	}
+
 	else {
 		switch(msg.code){
 			case CodeDefinition::ISR :
@@ -77,7 +78,7 @@ void SignalDistributer::interrupt(interrupts::interruptSignals signal){
 		case HEIGHTMEASUREMENT_OUT:
 		case SWITCH_IN	 		  :
 		case METAL_DETECT	 	  :
-		case SWITCH_OUT	 	  :
+		case SWITCH_OUT	 	  	  :
 		case SLIDE_IN	 		  :
 		case SLIDE_OUT	 		  :
 		case OUTLET_IN	 		  :

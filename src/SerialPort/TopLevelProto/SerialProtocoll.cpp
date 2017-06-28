@@ -41,7 +41,11 @@ pulse SerialProtocoll::convToPulse(void *buff) {
         case RESUME_SER:
         case INVALID_SER:
         case RECEIVED_SER:
+        case SLIDE_FULL_SER:
         case POL_SER:
+        case ERROR_SER:
+        case ESTOP_SER:
+        case SLIDE_EMTPY_SER:
             resu.value = msg_in;
             break;
         case TRANSM_SER:
@@ -53,6 +57,7 @@ pulse SerialProtocoll::convToPulse(void *buff) {
             }
             break;
         default:
+        	LOG_DEBUG << "[SerialProtocoll] Sending undefined messages: " << (int)msg_in << endl;
             break; //TODO ERROR
     }
     return resu;

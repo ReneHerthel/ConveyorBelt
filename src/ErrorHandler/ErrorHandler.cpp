@@ -47,6 +47,15 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 {
+	//if slide full return a warning
+	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_FULL){
+		 m_lightSystemService->setWarningLevel(Level::WARNING_OCCURED);
+	}
+	if (manager.actorFlag && manager.actorSignal == PuckManager::ActorSignal::SEND_SLIDE_EMPTY){
+		 m_lightSystemService->setWarningLevel(Level::CLEAR_WARNING);
+	}
+
+
     if (!manager.errorFlag) {
         return; // Do not do anything without a errorFlag.
     }
@@ -59,6 +68,7 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     distO.updateSpeed(DistanceSpeed::STOP);
 
     m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
+    m_serialService->sendMsg(Serial_n::ser_proto_msg::STOP_SER);
 
     switch (manager.errorSignal) {
 
@@ -88,6 +98,7 @@ void ErrorHandler::demultiplex(PuckManager::ManagerReturn &manager)
     }
 }
 void ErrorHandler::demultiplex(rcv::msg_t event){
+	LOG_DEBUG << "[ErrorHandler] Trying to demux " << event.code << " " << event.value << "\n";
 	switch(event.code){
 		case CodeDefinition::SER_IN :
 			if( event.value == Serial_n::ser_proto_msg::ESTOP_SER ||
@@ -97,18 +108,17 @@ void ErrorHandler::demultiplex(rcv::msg_t event){
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
 				m_hasError = true;
-				bool buttonReset = false;
-				bool buttonStart = false;
+				m_resetPressed = false;
 			}
 			break;
 		case CodeDefinition::ISR :
 			if(event.value == interrupts::BUTTON_ESTOP_IN){
+				LOG_DEBUG << "[ErrorHandler] Got Estop from ISR \n";
 				m_lightSystemService->setWarningLevel(Level::ERROR_OCCURED);
-				m_hasError = true;
 				m_serialService->sendMsg(Serial_n::ser_proto_msg::ESTOP_SER);
 				m_conveyorBeltService.changeState(ConveyorBeltState::STOP);
-				bool buttonReset = false;
-				bool buttonStart = false;
+				m_hasError = true;
+				m_resetPressed = false;
 			}
 			break;
 		default :

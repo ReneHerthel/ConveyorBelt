@@ -64,23 +64,23 @@ private:
 	};
 
 	PuckManager::ManagerReturn returnArrayLongestPath[16] {
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},	// changed from nothing -> need to test
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			/*{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},*/
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, false, (PuckType*)0x123456},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr}
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},	// changed from nothing -> need to test
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			/*{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},*/
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, (PuckType*)0x123456},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr}
 	};
 
 	PuckSignal::Signal signalArrayMultiplePucks[42] {
@@ -151,67 +151,67 @@ private:
 
 	PuckManager::ManagerReturn returnArrayMultiplePucks[42] {
 			// Puck 1 : Accept FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Deny FAST	Puck 2 : Accept FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : START_Height SLOW Puck 2 : Warning FAST
-			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},	// changed from nothing -> need to test
+			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},	// changed from nothing -> need to test
 			// Puck 1 : Deny FAST Puck 2 : START_Height SLOW
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},	// changed from nothing -> need to test
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},	// changed from nothing -> need to test
 			// Puck 1 : EVALUATE FAST Puck 2 : Deny FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Deny FAST Puck 2 : Deny FAST Puck 3 Accept FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Accept FAST Puck 2 : Deny FAST Puck 3 : DENY FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Deny FAST Puck 2 : EVALUATE FAST Puck 3 : DENY FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			/*{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},*/
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			/*{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},*/
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Deny FAST Puck 2 : Deny FAST Puck 3 : START_Height SLOW
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},	// changed from nothing -> need to test
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, true, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, true, PuckManager::ActorSignal::STOP_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},	// changed from nothing -> need to test
 			// Puck 1 : Deny FAST Puck 2 : Accept FAST Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Accept FAST Puck 2 : Deny FAST Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, false, (PuckType*)0x123456},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, (PuckType*)0x123456},
 			// Puck 1 : Deny STOP Puck 2 : Deny FAST Puck 3 : Evaluate FAST
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			/*{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},*/
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::OPEN_SWITCH, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Accept SLOW Puck 2 : Deny FAST Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 1 : Delete SLOW Puck 2 : Deny FAST Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 2 : Accept FAST Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, false, (PuckType*)0x123456},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, true, PuckManager::ActorSignal::SEND_PUCK, false, PuckManager::ErrorSignal::PUCK_LOST, (PuckType*)0x123456},
 			// Puck 2 : Deny STOP Puck 3 : Accept FAST
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 2 : Accept SLOW Puck 3 : Deny FAST
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::SLOW, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
 			// Puck 3 : Accept FAST
-			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr}
+			{PuckSignal::PuckSpeed::STOP, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr}
 	};
 
 	PuckSignal::Signal signalArrayWarningToError[3] {
@@ -220,9 +220,9 @@ private:
 			{PuckSignal::SignalType::INTERRUPT_SIGNAL, {0},{ .TimerInfo = { .puckID = 0, .type = PuckSignal::TimerType::EARLY_TIMER } }, interrupts::interruptSignals::HEIGHTMEASUREMENT_IN, Serial_n::ser_proto_msg::ACCEPT_SER}
 	};
 	PuckManager::ManagerReturn returnArrayWarningToError[3] {
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, false, nullptr},
-			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, true, PuckManager::ErrorSignal::PUCK_MOVED, false, nullptr}
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, false, PuckManager::ErrorSignal::PUCK_LOST, nullptr},
+			{PuckSignal::PuckSpeed::FAST, false, PuckManager::ActorSignal::START_MEASUREMENT, true, PuckManager::ErrorSignal::PUCK_MOVED, nullptr}
 	};
 
 

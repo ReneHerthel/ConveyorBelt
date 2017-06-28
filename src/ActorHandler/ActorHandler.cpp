@@ -69,6 +69,9 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
 
         	        default:
         	        	LOG_DEBUG << "[ActorHandler] Cant set speed, unknown enum " << (int)manager.speedSignal << "\n";
+        	            newCbsSpeed = ConveyorBeltState::STOP;
+        	            newDistanceTrackerSpeed = DistanceSpeed::STOP;
+        	            newSerialMsg = Serial_n::ser_proto_msg::STOP_SER;
         	            break;
     }
 
@@ -110,6 +113,12 @@ void ActorHandler::demultiplex(PuckManager::ManagerReturn &manager)
             case PuckManager::ACCEPTED_PUCK:
             	m_serialService.sendMsg(Serial_n::ser_proto_msg::ACCEPT_SER);
             	break;
+            case PuckManager::SEND_SLIDE_FULL:
+            	m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_FULL_SER);
+            	break;
+            case PuckManager::SEND_SLIDE_EMPTY:
+               	//m_serialService.sendMsg(Serial_n::ser_proto_msg::SLIDE_EMPTY_SER);
+				break;
             default:
             	LOG_DEBUG << "[ActorHandler] Cant set actor, unknown enum " << (int)manager.speedSignal << "\n";
                 break;

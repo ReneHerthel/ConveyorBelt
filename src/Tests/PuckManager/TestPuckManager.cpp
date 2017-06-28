@@ -85,11 +85,6 @@ TEST_IMPL(TestPuckManager, test1) {
 			return TEST_FAILED;
 		}
 
-		if(returnVal.slideFullFlag != returnArrayLongestPath[i].slideFullFlag) {
-			std::cout << "[TEST 1] SlideFlag differs!" << std::endl;
-			return TEST_FAILED;
-		}
-
 		if(		(returnVal.puckType != nullptr && returnArrayLongestPath[i].puckType == nullptr) ||
 				(returnVal.puckType == nullptr && returnArrayLongestPath[i].puckType != nullptr)) {
 			std::cout << "[TEST 1] Puck pointer differs!" << std::endl;
@@ -116,11 +111,6 @@ TEST_IMPL(TestPuckManager, test2) {
 
 		if((returnVal.errorFlag != returnArrayMultiplePucks[i].errorFlag && returnVal.errorSignal != returnArrayMultiplePucks[i].errorSignal) || returnVal.errorFlag != returnArrayMultiplePucks[i].errorFlag) {
 			std::cout << "[TEST 2] ErrorSignal differs! Should be: " + std::to_string(returnArrayMultiplePucks[i].errorSignal) + " but was: " + std::to_string(returnVal.errorSignal) << std::endl;
-			return TEST_FAILED;
-		}
-
-		if(returnVal.slideFullFlag != returnArrayMultiplePucks[i].slideFullFlag) {
-			std::cout << "[TEST 2] SlideFlag differs!" << std::endl;
 			return TEST_FAILED;
 		}
 
@@ -154,11 +144,6 @@ TEST_IMPL(TestPuckManager, test3) {
 
 			if((returnVal.errorFlag != returnArrayLongestPath[j].errorFlag && returnVal.errorSignal != returnArrayLongestPath[j].errorSignal) || returnVal.errorFlag != returnArrayLongestPath[j].errorFlag) {
 				std::cout << "[TEST 3] ErrorSignal differs!" << std::endl;
-				return TEST_FAILED;
-			}
-
-			if(returnVal.slideFullFlag != returnArrayLongestPath[j].slideFullFlag) {
-				std::cout << "[TEST 3] SlideFlag differs!" << std::endl;
 				return TEST_FAILED;
 			}
 
@@ -197,11 +182,6 @@ TEST_IMPL(TestPuckManager, test4) {
 
 			if((returnVal.errorFlag != returnArrayWarningToError[i].errorFlag && returnVal.errorSignal != returnArrayWarningToError[i].errorSignal) || returnVal.errorFlag != returnArrayWarningToError[i].errorFlag) {
 				std::cout << "[TEST 4] ErrorSignal differs! Should be: " + std::to_string(returnArrayWarningToError[i].errorSignal) + " but was: " + std::to_string(returnVal.errorSignal) << std::endl;
-				return TEST_FAILED;
-			}
-
-			if(returnVal.slideFullFlag != returnArrayWarningToError[i].slideFullFlag) {
-				std::cout << "[TEST 4] SlideFlag differs!" << std::endl;
 				return TEST_FAILED;
 			}
 

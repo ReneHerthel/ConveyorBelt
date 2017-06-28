@@ -19,16 +19,6 @@
 #include "PuckSignal.h"
 #include "SerialProtocoll.h"
 
-/* FIXME: Move to global header */
-
-#ifdef VARIANT_Belt1
-#define MACHINE (0) // 0 or 1
-#else
-#define MACHINE (1) // 0 or 1
-#endif
-
-#define FIFO_SORT 1 /*!< \brief If set, disables sort algorithm and let all pucks pass */
-
 using namespace PuckSignal;
 
 /* FIXME: Adapt state names to puck naming conventions */
@@ -69,28 +59,28 @@ class PuckSortContext {
         /*!
          *  \brief  Standard transition for binary 1 encoded puck
          *
-         *  Puck will be discarded on machine 1 provided the slide is
+         *  Puck will be discarded on machine 0 provided the slide is
          *  not full.
          */
         virtual void bitCode1();
         /*!
          *  \brief  Standard transition for binary 2 encoded puck
          *
-         *  Puck will be discarded on machine 2 provided the slide is
+         *  Puck will be discarded on machine 1 provided the slide is
          *  not full.
          */
         virtual void bitCode2();
         /*!
          *  \brief  Standard transition for binary 4 encoded puck
          *
-         *  Puck will be discarded on machine 2 provided the slide is
+         *  Puck will be discarded on machine 1 provided the slide is
          *  not full.
          */
         virtual void bitCode4();
         /*!
          *  \brief  Standard transition for binary 5 encoded puck
          *
-         *  Puck will be discarded on machine 1 provided the slide is
+         *  Puck will be discarded on machine 0 provided the slide is
          *  not full.
          */
         virtual void bitCode5();
@@ -104,30 +94,35 @@ class PuckSortContext {
         /*!
          *  \brief  Standard transition for puck without metal
          *
-         *  Puck is out of order and will be discarded on machine 2
+         *  Puck is out of order and will be discarded on machine 1
          *  provided the slide is not full.
          */
         virtual void holeWithoutMetal();
         /*!
          *  \brief  Standard transition for puck with metal
          *
-         *  Puck is out of order and will be discarded on machine 2
+         *  Puck is out of order and will be discarded on machine 1
          *  provided the slide is not full.
          */
         virtual void holeWithMetal();
         /*!
          *  \brief  Standard transition for invalid puck
          *
-         *  Puck will be discarded on machine 1 provided the slide is
+         *  Puck will be discarded on machine 0 provided the slide is
          *  not full.
          */
         virtual void invalid();
 
+        bool rampe0IsEmpty; /*!< \brief Set if slide 0 is empty */
         bool rampe1IsEmpty; /*!< \brief Set if slide 1 is empty */
-        bool rampe2IsEmpty; /*!< \brief Set if slide 2 is empty */
+        bool isOnMachine0; /*!< \brief Set if PuckSort is running on machine 0 */
         bool isOnMachine1; /*!< \brief Set if PuckSort is running on machine 1 */
-        bool isOnMachine2; /*!< \brief Set if PuckSort is running on machine 2 */
         bool returnValue; /*!< \brief Contains result of taken transition */
+
+		/*!
+		 *  \brief  Print current state of state machine conditionals
+		 */
+		void logConditionals(void);
     } *statePtr;
 
     /*!
@@ -139,7 +134,7 @@ class PuckSortContext {
         /*!
          *  \brief  Transition for puck without metal from Start
          *
-         *  Puck is in order and will be passed on to machine 2.
+         *  Puck is in order and will be passed on to machine 1.
          */
         virtual void holeWithoutMetal();
     } startState;
@@ -153,7 +148,7 @@ class PuckSortContext {
          *  \brief  Transition for puck without metal from
          *  GotHoleUpWoMetal
          *
-         *  Puck is in order and will be passed on to machine 2.
+         *  Puck is in order and will be passed on to machine 1.
          */
         virtual void holeWithoutMetal();
     };
@@ -167,7 +162,7 @@ class PuckSortContext {
          *  \brief  Transition for puck with metal from
          *  GotTwoHoleUpWoMetal
          *
-         *  Puck is in order and will be passed on to machine 2.
+         *  Puck is in order and will be passed on to machine 1.
          */
         virtual void holeWithMetal();
     };

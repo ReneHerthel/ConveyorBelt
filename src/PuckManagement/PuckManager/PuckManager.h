@@ -22,7 +22,9 @@ public:
 		OPEN_SWITCH,
 		SEND_PUCK,
 		RECEIVED_PUCK,
-		ACCEPTED_PUCK
+		ACCEPTED_PUCK,
+		SEND_SLIDE_FULL,
+		SEND_SLIDE_EMPTY
 	};
 
 	enum ErrorSignal {
@@ -39,7 +41,6 @@ public:
 		ActorSignal actorSignal;
 		bool errorFlag;
 		ErrorSignal errorSignal;
-		bool slideFullFlag;
 		PuckSignal::PuckType *puckType;					// Null except on send Signal
 	};
 
