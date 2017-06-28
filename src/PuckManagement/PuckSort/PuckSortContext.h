@@ -178,10 +178,16 @@ class PuckSortContext {
     /*!
      *  \brief  Got two pucks without metal and one puck with metal
      *
-     *  All pucks from the sequence have been detected in order. No
-     *  further state transitions.
+     *  All pucks from the sequence have been detected in order. Repeat
+     *  expecting puck without metal.
      */
     struct GotHoleUpMetal: public PuckSort {
+       /*!
+        *  \brief  Transition for puck without metal from GotHoleUpMetal
+        *
+        *  Puck is in order and will be passed on to machine 1.
+        */
+       virtual void holeWithoutMetal();
     };
 };
 

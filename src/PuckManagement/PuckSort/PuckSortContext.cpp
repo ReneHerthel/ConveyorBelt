@@ -289,3 +289,12 @@ void PuckSortContext::GotTwoHoleUpWoMetal::holeWithMetal() {
 	LOG_DEBUG << "[GotTwoHoleUpWoMetal]->[GotHoleUpMetal] Discard: " << returnValue << endl;
 	new (this) GotHoleUpMetal;
 }
+
+/* TODO: Document in state machine diagramm */
+/* Define transitions for GotHoleUpMetal state */
+void PuckSortContext::GotHoleUpMetal::holeWithoutMetal() {
+	LOG_SCOPE;
+	returnValue = false;
+	LOG_DEBUG << "[GotHoleUpMetal]->[GotHoleUpWoMetal] Discard: " << returnValue << endl;
+	new (this) GotHoleUpWoMetal;
+}
