@@ -227,33 +227,33 @@ std::string PuckContext::PuckState::toString(){
 	std:stringstream outString;
 
 	outString << "[ACCEPTED PUCK] \n PuckID: " << std::to_string(puckID) << "\n";
-	switch(statePtr->puckType.data.heightType.ID){
-		case INVALID_ID :
+	switch(puckType.data.heightType.ID){
+		case HeightMeasurement::INVALID_ID :
 			outString <<"PuckType: INVALID \n";
 			break;
-		case NORMAL_ID :
-			if(statePtr->puckType.data.metal) {
+		case HeightMeasurement::NORMAL_ID :
+			if(puckType.data.metal) {
 				outString << "PuckType: METAL  \n";
 			} else {
-				outString << ("PuckType: NORMAL  \n";
+				outString << "PuckType: NORMAL  \n";
 			}
 			break;
-		case FLIPPED_ID :
+		case HeightMeasurement::FLIPPED_ID :
 			outString << "PuckType: FLIPPED  \n";
 			break;
-		case PATTERN_ID :
-			outString << "PuckType: BITPATTERN: " << std::to_string(statePtr->puckType.data.heightType.BIT0)
-							<< statePtr->puckType.data.heightType.BIT1
-							<< statePtr->puckType.data.heightType.BIT2 << "\n";
+		case HeightMeasurement::PATTERN_ID :
+			outString << "PuckType: BITPATTERN: " << std::to_string(puckType.data.heightType.BIT0)
+							<< puckType.data.heightType.BIT1
+							<< puckType.data.heightType.BIT2 << "\n";
 			break;
-		case UNEXPECTED_ID :
+		case HeightMeasurement::UNEXPECTED_ID :
 			outString << "PuckType: UNEXPECTED  \n";
 			break;
 		default :
 			LOG_DEBUG <<"[PUCK toString()] unexpected Signal" <<endl;
 	}
-	outString << "Height1: " << std::to_string(statePtr->puckType.data.height1) <<
-			"\nHeight2: " << std::to_string(statePtr->puckType.data.height1) << "\n";
+	outString << "Height1: " << std::to_string(puckType.data.height1) <<
+			"\nHeight2: " << std::to_string(puckType.data.height1) << "\n";
 	return outString.str();
 }
 
@@ -716,7 +716,7 @@ void PuckContext::OutletArea::outletOut() {
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
 	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Printing puck infos<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-	std::cout << statePtr->toString() << "\n";
+	std::cout << toString() << "\n";
 	std::cout.flush();
 
 	// dies here
