@@ -714,7 +714,7 @@ void PuckContext::OutletArea::outletOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [OutletArea]->[dead]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLIDE_STOP;
 	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Printing puck infos<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 	std::cout << toString() << "\n";
 	std::cout.flush();
