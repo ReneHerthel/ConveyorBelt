@@ -148,12 +148,17 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	};
 }
 
+void PuckSortContext::resetSlides(void) {
+	statePtr->slide0IsEmpty = true;
+	statePtr->slide1IsEmpty = true;
+}
+
 bool PuckSortContext::areBothSlidesFull(void) {
 	return(!statePtr->slide0IsEmpty && !statePtr->slide1IsEmpty);
 }
 
 void PuckSortContext::PuckSort::logConditionals(void) {
-	LOG_DEBUG << "[PuckSortContext] rampe0IsEmpty: " << int(slide0IsEmpty) << " rampe1IsEmpty: " <<  int(slide1IsEmpty)
+	LOG_DEBUG << "[PuckSortContext] slide0IsEmpty: " << int(slide0IsEmpty) << " slide1IsEmpty: " <<  int(slide1IsEmpty)
 			<< " isOnMachine0: " << int(isOnMachine0) << " isOnMachine1: " << int(isOnMachine1) << endl;
 }
 
