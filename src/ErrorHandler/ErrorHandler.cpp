@@ -102,11 +102,6 @@ void ErrorHandler::process(PuckManager::ManagerReturn &manager)
 				LOG_DEBUG << "[ErrorHandler] MULTIPLE_WARNING" << endl;
 				break;
 
-			case PuckManager::ErrorSignal::BOTH_SLIDES_FULL:
-				cout << "[ErrorHandler] BOTH_SLIDES_FULL" << endl;
-				LOG_DEBUG << "[ErrorHandler] BOTH_SLIDES_FULL" << endl;
-				break;
-
 			default:
 				 LOG_DEBUG << "[ErrorHandler] Unkown Error !!!" << endl;
 				break;
@@ -152,7 +147,7 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 	}
 
 	if(m_hasError){
-		 	 bool buttonReset = false;
+		 	bool buttonReset = false;
 		    bool buttonStart = false;
 
 		    if (event.code != 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
@@ -169,6 +164,12 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		            buttonStart = true;
 		            break;
 
+		        case interrupts::SLIDE_OUT:
+		        	PuckSignal::Signal signal;
+		        	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+		        	signal.interruptSignal = event.value;
+		        	m_puckManager->process(signal);
+		        	break;
 		        default:
 		            // Nothing todo so far.
 		            break;
