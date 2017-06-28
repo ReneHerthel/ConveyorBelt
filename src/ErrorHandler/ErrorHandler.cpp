@@ -155,32 +155,40 @@ void ErrorHandler::handleEvent(rcv::msg_t event)
 		 	bool buttonReset = false;
 		    bool buttonStart = false;
 
-		    if (event.code != 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
-		        return; // Do not do anything without code 5!
+		    if (event.code == 5) { // 5 is hardcoded in the ISR. TODO Serial signal needs to get through when error is acknowledged on other machine
+		    	switch(event.value) {
+
+					case interrupts::BUTTON_RESET:
+						buttonReset = true;
+						break;
+
+					case interrupts::BUTTON_START:
+						buttonStart = true;
+						break;
+
+					case interrupts::SLIDE_OUT:
+						LOG_DEBUG << "[ErrorHandler] Handling SLIDE_OUT error event " << endl;
+						PuckSignal::Signal signal;
+						signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
+						signal.interruptSignal = (interrupts::interruptSignals) event.value;
+						m_puckManager->process(signal);
+						m_serialService->sendMsg(Serial_n::ser_proto_msg::SLIDE_EMTPY_SER); //huge bawrf
+						break;
+					default:
+						// Nothing todo so far.
+						break;
+				}
+		    } else if(event.code == CodeDefinition::Code::SER_IN) {
+		    	if(event.value == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER){
+		    		PuckSignal::Signal signal;
+					signal.signalType = PuckSignal::SignalType::SERIAL_SIGNAL;
+					signal.serialSignal = (Serial_n::ser_proto_msg) event.value;
+					m_puckManager->process(signal);
+		    	}
 		    }
 
 		    LOG_DEBUG << "[ErrorHandler] Trying to handle error event " << int(event.value) << endl;
-		    switch(event.value) {
 
-		        case interrupts::BUTTON_RESET:
-		            buttonReset = true;
-		            break;
-
-		        case interrupts::BUTTON_START:
-		            buttonStart = true;
-		            break;
-
-		        case interrupts::SLIDE_OUT:
-				    LOG_DEBUG << "[ErrorHandler] Handling SLIDE_OUT error event " << endl;
-		        	PuckSignal::Signal signal;
-		        	signal.signalType = PuckSignal::SignalType::INTERRUPT_SIGNAL;
-		        	signal.interruptSignal = (interrupts::interruptSignals) event.value;
-		        	m_puckManager->process(signal);
-		        	break;
-		        default:
-		            // Nothing todo so far.
-		            break;
-		    }
 
 		    if (buttonReset && m_hasError) {
 		        m_resetPressed = true;
