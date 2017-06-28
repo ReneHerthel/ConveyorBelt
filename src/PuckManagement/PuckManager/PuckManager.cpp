@@ -235,6 +235,7 @@ PuckManager::ManagerReturn PuckManager::process(PuckSignal::Signal signal) {
 
 	if(passToPuckSort(signal, prioReturnVal)){ //Only pucksort is intrested in signal
 			prioReturnVal.speedSignal = getCurrentSpeed(); //Always set speed
+			LOG_DEBUG << "[PuckManager] Returning with pass to puck sort only \n";
 			return prioReturnVal;
 	}
 
