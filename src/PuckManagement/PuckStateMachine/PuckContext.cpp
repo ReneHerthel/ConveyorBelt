@@ -10,7 +10,8 @@
 #include "Signals.h"
 #include "Logger.h"
 #include "LogScope.h"
-
+#include <iostream>
+#include <sstream>
 #include <new>
 
 PuckContext::PuckContext(int chid, PuckSignal::PuckType puckType, uint16_t puckId) : shortDistance(chid, TIMERCODE), wideDistance(chid, TIMERCODE) {
@@ -217,6 +218,46 @@ void PuckContext::PuckState::stopTimer(){
 	LOG_DEBUG <<"[Puck" + std::to_string(puckID) + "] Stopped Timer" << endl;
 	wideDistance->stopAlarm();
 }
+/*************************************************************************************************
+ * TOSTRING
+ */
+
+std::string PuckContext::PuckState::toString(){
+
+	std:stringstream outString;
+
+	outString << "[ACCEPTED PUCK] \n PuckID: " << std::to_string(puckID) << "\n";
+	switch(puckType.data.heightType.ID){
+		case HeightMeasurement::INVALID_ID :
+			outString <<"PuckType: INVALID \n";
+			break;
+		case HeightMeasurement::NORMAL_ID :
+			if(puckType.data.metal) {
+				outString << "PuckType: METAL  \n";
+			} else {
+				outString << "PuckType: NORMAL  \n";
+			}
+			break;
+		case HeightMeasurement::FLIPPED_ID :
+			outString << "PuckType: FLIPPED  \n";
+			break;
+		case HeightMeasurement::PATTERN_ID :
+			outString << "PuckType: BITPATTERN: " << std::to_string(puckType.data.heightType.BIT0)
+							<< puckType.data.heightType.BIT1
+							<< puckType.data.heightType.BIT2 << "\n";
+			break;
+		case HeightMeasurement::UNEXPECTED_ID :
+			outString << "PuckType: UNEXPECTED  \n";
+			break;
+		default :
+			LOG_DEBUG <<"[PUCK toString()] unexpected Signal" <<endl;
+	}
+	outString << "Height1: " << std::to_string(puckType.data.height1) <<
+			"\nHeight2: " << std::to_string(puckType.data.height1) << "\n";
+	return outString.str();
+}
+
+
 /*******************************************
  * SuperState
  */
@@ -674,6 +715,10 @@ void PuckContext::OutletArea::outletOut() {
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [OutletArea]->[dead]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::DELETE;
 	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Printing puck infos<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+	std::cout << toString() << "\n";
+	std::cout.flush();
+
 	// dies here
 }
 #endif
