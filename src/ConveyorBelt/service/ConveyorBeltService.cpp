@@ -45,22 +45,27 @@ void ConveyorBeltService::changeState(const ConveyorBeltState state)
 
 		case RIGHTFAST:
 			mask = ENGINE_RIGHT_MASK;
+			LOG_DEBUG << "[ConveyorBeltService] Set RIGHTFAST" << std::endl;
 			break;
 
 		case RIGHTSLOW:
 			mask = ENGINE_SLOW_MASK | ENGINE_RIGHT_MASK;
+			LOG_DEBUG << "[ConveyorBeltService] Set RIGHTSLOW" << std::endl;
 			break;
 
 		case LEFTFAST:
 			mask = ENGINE_LEFT_MASK;
+			LOG_DEBUG << "[ConveyorBeltService] Set LEFTFAST" << std::endl;
 			break;
 
 		case LEFTSLOW:
 			mask = ENGINE_SLOW_MASK | ENGINE_LEFT_MASK;
+			LOG_DEBUG << "[ConveyorBeltService] Set LEFTSLOW" << std::endl;
 			break;
 
 		case STOP:
 			mask = ENGINE_STOP_MASK;
+			LOG_DEBUG << "[ConveyorBeltService] Set STOP" << std::endl;
 			break;
 	}
 

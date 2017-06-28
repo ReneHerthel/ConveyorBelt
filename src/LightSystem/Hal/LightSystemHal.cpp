@@ -22,7 +22,6 @@ namespace HAL {
 
     /* TODO: Merge methods lightOn and lightOff to reduce code duplication */
     void LightSystemHal::lightOn(Color color) {
-        LOG_SET_LEVEL(WARNING);
         /* Remember last color */
         lastColor = color;
 
@@ -31,19 +30,15 @@ namespace HAL {
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
-		        LOG_DEBUG << "lightOff: Clear bitmask: GREEN" << endl;
 				bitMask = GREEN_MASK;
 				break;
 			case YELLOW:
-		        LOG_DEBUG << "lightOff: Clear bitmask: YELLOW" << endl;
 				bitMask = YELLOW_MASK;
 				break;
 			case RED:
-		        LOG_DEBUG << "lightOff: Clear bitmask: RED" << endl;
 				bitMask = RED_MASK;
 				break;
 			case ALL_COLORS:
-		        LOG_DEBUG << "lightOff: Clear bitmask: ALL" << endl;
 				bitMask = ALL_MASK;
 				break;
 			default:
@@ -58,25 +53,20 @@ namespace HAL {
     }
 
     void LightSystemHal::lightOff(Color color) {
-        LOG_SET_LEVEL(WARNING);
     	unsigned char bitMask = 0;
 
         /* Prepare bitmask according to color */
     	switch (color) {
 			case GREEN:
-		        LOG_DEBUG << "lightOff: Clear bitmask: GREEN" << endl;
 				bitMask = GREEN_MASK;
 				break;
 			case YELLOW:
-		        LOG_DEBUG << "lightOff: Clear bitmask: YELLOW" << endl;
 				bitMask = YELLOW_MASK;
 				break;
 			case RED:
-		        LOG_DEBUG << "lightOff: Clear bitmask: RED" << endl;
 				bitMask = RED_MASK;
 				break;
 			case ALL_COLORS:
-		        LOG_DEBUG << "lightOff: Clear bitmask: ALL" << endl;
 				bitMask = ALL_MASK;
 				break;
 			default:

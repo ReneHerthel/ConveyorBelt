@@ -32,8 +32,8 @@
 #define INLET_CAL_SLOW 1550 //Measured 1.8, for seftys sake make it slower
 #define INLET_CAL_FAST 500  //Unmeasured, educated gues
 
-#define SLIDE_TIMER_FAST 5000 //5 seconds, (un)educated guess
-#define SLIDE_TIMER_SLOW 10000 //5 seconds, (un)educated guess
+#define SLIDE_TIMER_FAST 2000 //2 seconds, (un)educated guess
+#define SLIDE_TIMER_SLOW 4000 //4 seconds, (un)educated guess
 
 using namespace std::chrono;
 

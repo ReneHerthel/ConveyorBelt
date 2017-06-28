@@ -48,7 +48,16 @@ class PuckSortContext {
          *  \argument [in] message Message to process
          */
         void process(Serial_n::ser_proto_msg message);
-
+        /*!
+         *  \brief Check if all slides are full
+         *  \return true All slides are full
+         *  		false Either one of the slides is full or none
+         */
+        bool areBothSlidesFull(void);
+        /*!
+         *  \brief Reset the slide conditionals
+         */
+        void resetSlides(void);
     /*!
      *  \brief  Define standard transitions
      *
@@ -169,10 +178,16 @@ class PuckSortContext {
     /*!
      *  \brief  Got two pucks without metal and one puck with metal
      *
-     *  All pucks from the sequence have been detected in order. No
-     *  further state transitions.
+     *  All pucks from the sequence have been detected in order. Repeat
+     *  expecting puck without metal.
      */
     struct GotHoleUpMetal: public PuckSort {
+       /*!
+        *  \brief  Transition for puck without metal from GotHoleUpMetal
+        *
+        *  Puck is in order and will be passed on to machine 1.
+        */
+       virtual void holeWithoutMetal();
     };
 };
 

@@ -135,7 +135,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	PuckManager *puckManager = new PuckManager(mainChid);
 
 
-	ErrorHandler errorHandler(mainChid, cbs, lightSystem, &serialService);
+	ErrorHandler errorHandler(mainChid, &cbs, lightSystem, &serialService, puckManager);
 
 
 	//INIT SIGNAL DISTRIBUTER
@@ -148,24 +148,17 @@ TEST_IMPL(MachineOne, programm_m1){
 		event = mainChannel.receivePulseMessage();
 		std::cout << "Got something \n";
 		switch(event.code){
-			case 0: std::cout << "\n\n Height \n"; break; //Height
-			case 1: std::cout << "\n\n Serial \n";break; //Serial
-			case 2: std::cout << "\n\n Serial \n";break; //Serial
-			case 3: std::cout << "\n\n Serial \n";break; //Serial
-			case 4: std::cout << "\n\n Serial \n";break; //Serial
-			case 5: std::cout << "\n\n ISR \n";break; //ISR
+			case 0: std::cout << "Height \n"; LOG_DEBUG << " -->Height<--\n"; break; //Height
+			case 1: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n"; break; //Heightbreak; //Serial
+			case 2: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 3: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 4: std::cout << "Serial \n"; LOG_DEBUG << " -->Serial<--\n";break; //Serial
+			case 5: std::cout << "ISR \n";	  LOG_DEBUG << " -->ISR<--\n";break; //ISR
 		}
 		cout.flush();
 
-
-		if(event.value == interrupts::BUTTON_RESET){
-			cbs.changeState(ConveyorBeltState::STOP);
-			std::cout << "\n\n RESET \n";
-			delete puckManager;
-			puckManager = new PuckManager(mainChid);
-		}
-
 		signalDistributer.process(event);
+		LOG_DEBUG << "----------------------------------------------------------------------------------------------------------- \n";
 	}
 
 }

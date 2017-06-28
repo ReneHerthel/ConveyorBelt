@@ -648,7 +648,7 @@ void PuckContext::SlideArea::lateTimer() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SlideArea]->[SlideFull]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::SLIDE_FULL;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLIDE_STOP;
 	new (this) SlideFull;
 }
 /*******************************************/
@@ -661,7 +661,7 @@ void PuckContext::SlideFull::slideOut() {
 	LOG_SCOPE;
 	LOG_DEBUG << "[Puck" + std::to_string(puckID) + "] [SlideFull]->[dead]\n";
 	returnValue.puckReturn = PuckSignal::PuckReturn::SLIDE_EMPTY;
-	returnValue.puckSpeed = PuckSignal::PuckSpeed::FAST;
+	returnValue.puckSpeed = PuckSignal::PuckSpeed::SLIDE_STOP;
 	// dies here
 }
 /*******************************************/
