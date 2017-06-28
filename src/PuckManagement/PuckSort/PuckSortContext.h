@@ -53,7 +53,7 @@ class PuckSortContext {
          *  \return true All slides are full
          *  		false Either one of the slides is full or none
          */
-        bool areBothSlidesFull();
+        bool areBothSlidesFull(void);
     /*!
      *  \brief  Define standard transitions
      *

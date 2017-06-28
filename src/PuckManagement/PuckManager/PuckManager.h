@@ -33,7 +33,8 @@ public:
 		UNEXPECTED_SIGNAL,	// Signal could not be processed
 		NOT_ACCEPTED,		// Signal was not accepted by the pucks
 		MULTIPLE_ACCEPT,	// Shouldn't happen - multiple pucks were triggered
-		MULTIPLE_WARNING	// Shouldn't happen - multiple pucks were triggered
+		MULTIPLE_WARNING,	// Shouldn't happen - multiple pucks were triggered
+		BOTH_SLIDES_FULL /*!< All slides are full*/
 	};
 
 	struct ManagerReturn {
@@ -63,6 +64,11 @@ private:
 	bool passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn& prioReturnVal);
 	bool checkErrorMetal(const PuckSignal::Signal& signal);
 	bool checkSerialError(const PuckSignal::Signal& signal);
+    /*!
+     *  \brief Check if all slides are full and set error signal accordingly
+     *  \argument [in] prioReturnVal to set error in
+     */
+	void setErrorOnBothSlidesAreFull(ManagerReturn &prioReturnVal);
 
 	std::list<PuckContext*> puckList;
 	uint16_t nextPuckID;

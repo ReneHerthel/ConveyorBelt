@@ -148,7 +148,7 @@ void PuckSortContext::process(Serial_n::ser_proto_msg message) {
 	};
 }
 
-bool PuckSortContext::areBothSlidesFull() {
+bool PuckSortContext::areBothSlidesFull(void) {
 	return(!statePtr->slide0IsEmpty && !statePtr->slide1IsEmpty);
 }
 

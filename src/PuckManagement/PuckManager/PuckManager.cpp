@@ -74,6 +74,7 @@ void PuckManager::handlePuckTimer(const PuckSignal::Signal& signal, ManagerRetur
 			// check return value
 			if (returnVal.puckReturn == PuckSignal::PuckReturn::SLIDE_FULL) {
 				LOG_DEBUG << "[PuckManager] Puck returned Slide full \n";
+				setErrorOnBothSlidesAreFull(prioReturnVal);
 				sort.process(returnVal.puckReturn);
 				prioReturnVal.actorFlag = true;
 				prioReturnVal.actorSignal = ActorSignal::SEND_SLIDE_FULL;
@@ -190,6 +191,7 @@ bool PuckManager::passToPuckSort(const PuckSignal::Signal& signal, ManagerReturn
 		 && (signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_FULL_SER
 		 || signal.serialSignal == Serial_n::ser_proto_msg::SLIDE_EMTPY_SER)){
 
+		setErrorOnBothSlidesAreFull(prioReturnVal);
 		sort.process(signal.serialSignal);
 		LOG_DEBUG << "[PuckManager] Returning with with Slide management only \n";
 		return true;
@@ -203,6 +205,13 @@ bool PuckManager::checkErrorMetal(const PuckSignal::Signal& signal) {
 	return (signal.signalType == PuckSignal::SignalType::INTERRUPT_SIGNAL
 			&& signal.interruptSignal
 			== interrupts::interruptSignals::METAL_DETECT);
+}
+
+void PuckManager::setErrorOnBothSlidesAreFull(ManagerReturn &prioReturnVal) {
+	if (sort.areBothSlidesFull()) {
+			prioReturnVal.errorFlag = true;
+			prioReturnVal.errorSignal = ErrorSignal::BOTH_SLIDES_FULL;
+	}
 }
 
 bool PuckManager::checkSerialError(const PuckSignal::Signal& signal) {
