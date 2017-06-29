@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>230</y>
+      <w>280</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>PuckManager
+--
+- puckList : vector&lt;PuckContext&gt;
+- currentPuckReturn : PuckReturn
+- currentSpeed : PuckSpeed
+--
++ process(signal : Signal) : ManagerReturn</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
