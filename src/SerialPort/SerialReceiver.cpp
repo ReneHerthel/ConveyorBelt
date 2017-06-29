@@ -104,7 +104,7 @@ char SerialReceiver::checksum(char *buff, uint16_t size) {
 
 
 void SerialReceiver::reset(){
-    LOG_SCOPE
+    //LOG_SCOPE
     #ifndef WINDOWS
 	tcflush(in, TCIOFLUSH);
     #endif

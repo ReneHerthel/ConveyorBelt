@@ -43,7 +43,7 @@ void Serial::operator()() {
             case SERIAL_TIMEOUT_SIG:
                 LOG_ERROR << "Ping of life was not received \n";
                 //TODO Serial Error handling, send error to main
-                ch_out.sendPulseMessage(SER_OUT, POL_SER);
+                ch_out.sendPulseMessage(SER_IN, NO_CON_SER);
                 break;
             case SERIAL_SEND_POL:
                 ser =  proto.wrapInFrame(SER_OUT, POL_SER);

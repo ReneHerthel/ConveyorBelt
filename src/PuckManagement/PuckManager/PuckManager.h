@@ -24,7 +24,8 @@ public:
 		RECEIVED_PUCK,
 		ACCEPTED_PUCK,
 		SEND_SLIDE_FULL,
-		SEND_SLIDE_EMPTY
+		SEND_SLIDE_EMPTY,
+		SEND_RESUME
 	};
 
 	enum ErrorSignal : int32_t{
