@@ -160,7 +160,7 @@ TEST_IMPL(MachineOne, programm_m1){
 	while(1) {
 
 		event = mainChannel.receivePulseMessage();
-		std::cout << "[MachineOne]\t" << event.code << "\t|\t" << event.value << std::endl;
+		std::cout << "[MachineOne] " << event.code << " | " << event.value << std::endl;
 
 		if (!isPlaying) {
 			/*
@@ -173,6 +173,16 @@ TEST_IMPL(MachineOne, programm_m1){
 			}
 		}
 
+		if (event.code == CodeDefinition::Code::EMBEDDED_RECORDER) {
+			if (event.value == rec::Signals::RECORD_PLAY) {
+				std::cout << "PLAY NOW" << std::endl;
+			}
+
+			if (event.value == rec::Signals::RECORD_STOP){
+				std::cout << "STOP NOW" << std::endl;
+			}
+		}
+
 		if(event.value == interrupts::BUTTON_RESET){
 			std::cout << "\n\n RESET \n";
 
@@ -180,13 +190,16 @@ TEST_IMPL(MachineOne, programm_m1){
 				isPlaying = true;
 				cbs.changeState(ConveyorBeltState::STOP);
 				puckManager = PuckManager(mainChid);
+				embeddedRecorder->showRecordedData();
 				embeddedRecorder->newBuffer();
 				embeddedRecorder->loadRecordedData();
 				embeddedRecorder->playRecordedData();
 			}
 		}
 
-		signalDistributer.process(event);
+		if (event.code != CodeDefinition::Code::EMBEDDED_RECORDER || event.code != CodeDefinition::Code::EMBEDDED_RECORDER) {
+			signalDistributer.process(event);
+		}
 	}
 
 }

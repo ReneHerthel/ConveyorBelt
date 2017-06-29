@@ -45,19 +45,19 @@ void BufferFileStreamer::printBufferToTxt(RecordBuffer * buffer)
 
     record_t start;
     buffer->readFromIndex(&start, 0);
-    auto smilsec = std::chrono::duration_cast<std::chrono::milliseconds>(start.timestamp - start.timestamp).count();
-    auto ssec = std::chrono::duration_cast<std::chrono::seconds>(start.timestamp - start.timestamp).count();
+    unsigned int smilsec = std::chrono::duration_cast<std::chrono::milliseconds>(start.timestamp - start.timestamp).count();
+    unsigned int ssec = std::chrono::duration_cast<std::chrono::seconds>(start.timestamp - start.timestamp).count();
     file  << "[" << (int)ssec << "::" << (int)smilsec << "]\t| code[" << (int)start.code << "]\t| value[" << (int)start.value << "]\n";
 
     record_t next;
-    int index = 0;
+    int index = 1;
 
-    while (buffer->readFromIndex(&next, index) >= 0) {
-        auto milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start.timestamp).count();
-        auto sec = std::chrono::duration_cast<std::chrono::seconds>(next.timestamp - start.timestamp).count();
+    do {
+        unsigned int milsec = std::chrono::duration_cast<std::chrono::milliseconds>(next.timestamp - start.timestamp).count();
+        unsigned int sec = std::chrono::duration_cast<std::chrono::seconds>(next.timestamp - start.timestamp).count();
         file  << "[" << (int)sec << "::" << (int)milsec << "]\t| code[" << (int)next.code << "]\t| value[" << (int)next.value << "]\n";
         index++;
-    }
+    } while (buffer->readFromIndex(&next, index) >= 0);
 
     /*
     do {
