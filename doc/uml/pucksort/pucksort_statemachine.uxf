@@ -4,7 +4,7 @@
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>308</x>
+      <x>315</x>
       <y>0</y>
       <w>14</w>
       <h>14</h>
@@ -15,7 +15,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>308</x>
+      <x>315</x>
       <y>98</y>
       <w>126</w>
       <h>105</h>
@@ -29,7 +29,7 @@ lt=-&gt;
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>217</x>
+      <x>224</x>
       <y>294</y>
       <w>182</w>
       <h>42</h>
@@ -40,7 +40,7 @@ lt=-&gt;
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>217</x>
+      <x>224</x>
       <y>406</y>
       <w>182</w>
       <h>42</h>
@@ -51,7 +51,7 @@ lt=-&gt;
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>217</x>
+      <x>224</x>
       <y>189</y>
       <w>182</w>
       <h>42</h>
@@ -62,7 +62,7 @@ lt=-&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>294</x>
+      <x>301</x>
       <y>224</y>
       <w>126</w>
       <h>84</h>
@@ -75,7 +75,7 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>294</x>
+      <x>301</x>
       <y>329</y>
       <w>105</w>
       <h>91</h>
@@ -88,7 +88,7 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>217</x>
+      <x>224</x>
       <y>63</y>
       <w>182</w>
       <h>42</h>
@@ -99,7 +99,7 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>308</x>
+      <x>315</x>
       <y>0</y>
       <w>21</w>
       <h>77</h>
@@ -111,14 +111,14 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>196</x>
+      <x>203</x>
       <y>574</y>
       <w>182</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>( BITCODE1 || BITCODE5 ||
 FLIPPED || INVALID )
-[rampe1IsEmpty &amp;&amp; isOnMachine1]
+[slide0IsEmpty &amp;&amp; isOnMachine0]
 /return(true)
 lt=-&gt;</panel_attributes>
     <additional_attributes>240.0;70.0;240.0;20.0;10.0;20.0;10.0;90.0;220.0;90.0</additional_attributes>
@@ -126,22 +126,24 @@ lt=-&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>399</x>
-      <y>588</y>
-      <w>315</w>
-      <h>63</h>
+      <x>406</x>
+      <y>581</y>
+      <w>224</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>( BITCODE2 || BITCODE4 ||
-FLIPPED || HOLEWITHOUTMETAL || HOLEWITHMETAL )
-[!rampe2IsEmpty &amp;&amp; isOnMachine1]
+FLIPPED || HOLEWITHOUTMETAL || 
+HOLEWITHMETAL )
+[slide0IsEmpty &amp;&amp; !slide1IsEmpty
+&amp;&amp; isOnMachine0]
 /return(true)
 lt=-&gt;</panel_attributes>
-    <additional_attributes>50.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>50.0;80.0;70.0;80.0;70.0;20.0;10.0;20.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>350</x>
+      <x>357</x>
       <y>623</y>
       <w>84</w>
       <h>42</h>
@@ -153,9 +155,9 @@ symbol=substate</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>133</x>
+      <x>77</x>
       <y>0</y>
-      <w>329</w>
+      <w>392</w>
       <h>483</h>
     </coordinates>
     <panel_attributes>PuckSort</panel_attributes>
@@ -164,7 +166,7 @@ symbol=substate</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>119</x>
       <y>644</y>
       <w>259</w>
       <h>91</h>
@@ -172,10 +174,24 @@ symbol=substate</panel_attributes>
     <panel_attributes>( BITCODE1 || BITCODE2 || BITCODE4 || 
 BITCODE5 || FLIPPED || HOLEWITHOUTMETAL ||
 HOLEWITHMETAL || INVALID )
-[rampe2IsEmpty &amp;&amp;
-isOnMachine2]
+[slide1IsEmpty &amp;&amp;
+isOnMachine1]
 /return(true)
 lt=-&gt;</panel_attributes>
     <additional_attributes>340.0;10.0;10.0;10.0;10.0;110.0;350.0;110.0;350.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>98</x>
+      <y>203</y>
+      <w>140</w>
+      <h>238</h>
+    </coordinates>
+    <panel_attributes>HOLEWITHOUTMETAL
+/return(false)
+lt=-&gt;
+</panel_attributes>
+    <additional_attributes>180.0;320.0;10.0;320.0;10.0;10.0;180.0;10.0</additional_attributes>
   </element>
 </diagram>
